@@ -12,3 +12,9 @@ venv/
 
 # Excel temp
 ~$*.xlsx
+
+# OECD ICIO bulk data (large, reproducible via tools/download_icio.py)
+data/icio/*.zip
+
+# GHGFP (TeCO2 successor) bulk data - reproducible via tools/download_ghgfp.py
+data/ghgfp/
