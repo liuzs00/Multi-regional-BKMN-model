@@ -1,10 +1,4 @@
-# Transition-risk core: how `L`, `Δp`, and the GVA shock are computed
-
-This documents the calculation in [`compute_transition.py`](compute_transition.py):
-the **transition-risk** block of the multi-regional BKMN model. From the current
-data alone — OECD **ICIO 2025** (2022) inter-country input-output table plus
-**Scope-1 carbon intensity** — it produces, for a carbon price `XCE` and a
-pass-through sweep `φ = 0…100%`:
+# Transition-risk core: how `L`, `Δp`, and the GVA shock
 
 - `A` — technical coefficients (global MRIO)
 - `L` — the Leontief inverse
@@ -152,29 +146,4 @@ own sectors.
 | `out_gva_shock_by_sector_phi.csv` | full **650 region-sectors × φ** GVA shock (%) |
 | `out_price_change_by_sector_phi.csv` | full **650 region-sectors × φ** `Δp` (%) |
 
-Cells are `NaN` where a sector has zero GVA (relative shock = 0/0, e.g. UK
-metal-ore mining `B07`); `Δp` is a well-defined 0 there.
 
----
-
-## 8. Scope and caveats
-
-- **Transition channel only.** No physical/temperature term yet. When added
-  (Proposition 1), the charge vector becomes
-  $ct_i \rightarrow CI_i\,XCE + \text{VL}_i\,\alpha(t)$ and flows through the
-  *same* Eq. 10, so physical damage cascades identically.
-- **Uniform `XCE` and `φ`** across all regions/sectors. Both can be made
-  region- or sector-specific by replacing the scalars with vectors
-  (`ct` per region carbon price; `φ̂` a diagonal of sector pass-throughs).
-- **Not a numeric reproduction of the paper's Table 4** — that used UK ONS
-  20-sector data in GBP; this uses ICIO/GHGFP 50-sector data in USD. The
-  *structure* matches (carbon-intensive sectors most negative, zero-crossing near
-  φ≈50–60%, ±mirror at the endpoints); magnitudes differ.
-
----
-
-## 9. Run
-
-Run `py -3 compute_transition.py` from the repo root. It requires `numpy` and
-`pandas` (see `requirements.txt`), reads only the two `DATA_13R/*.csv` inputs, and
-writes the four `out_*.csv` tables above.
