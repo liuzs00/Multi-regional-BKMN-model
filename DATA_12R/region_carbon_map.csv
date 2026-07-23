@@ -1,0 +1,13 @@
+region,currency,fx_role,scenario_zone,carbon_price_regime,cbam_role,phys_vuln_tier,ppp_gdp_weight
+EU27,EUR,base,R5.2OECD,EU ETS (~EUR80/t),levier,low-med,0.149
+USA,USD,analytical,R5.2OECD,none (state-level only),exposed-minor,med,0.148
+CHN,CNY,analytical,R5.2ASIA,national ETS (~USD8/t),exposed-major,med-high,0.185
+GBR,GBP,analytical,R5.2OECD,UK ETS (~GBP40/t) + CBAM 2027,levier,low-med,0.023
+JPN,JPY,analytical,R5.2OECD,GX-ETS (nascent),exposed-minor,med,0.035
+IND,INR,analytical,R5.2ASIA,none (PAT scheme),exposed,high,0.072
+CAN,CAD,analytical,R5.2OECD,carbon tax (~CAD80/t),exposed/part-levier,med,0.014
+NOR,NOK,analytical,R5.2OECD,EU ETS + high national tax,inside-perimeter,low,0.004
+IDN,IDR,analytical,R5.2ASIA,coal tax (2022 low),exposed,high,0.023
+MEA,USD-peg,structural,R5.2MAF,~0,exposed,high,0.021
+AFR,mixed,structural,R5.2MAF,~0 (ZAF tax low),exposed,high,0.035
+ROW,mixed,closure,mixed (LAM+REF+ASIA),mixed,mixed,mixed,0.291
