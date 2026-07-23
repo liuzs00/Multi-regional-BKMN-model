@@ -1,5 +1,5 @@
 """
-Build the 13-region Scope-1 emissions and direct carbon-intensity tables for
+Build the 12-region Scope-1 emissions and direct carbon-intensity tables for
 2022 - the inputs for the transition-risk charge ct_direct in the
 multi-regional BKMN model (paper Eq. 6: E_direct = CI x output).
 
@@ -7,13 +7,13 @@ Inputs
   data/ghgfp/SCOPE/2022.csv.gz      GHGFP 2025: emissions by scope (Mt CO2e,
                                     OBS_VALUE x 10^UNIT_MULT tonnes), filtered
                                     to EMISSIONS_SCOPE == "S1"
-  DATA_13R/ICIO2025_13R_2022.csv    gross output x (OUT row, current USD m)
-  DATA_13R/region_mapping.csv       the 81-economy -> 13-region map
+  DATA_12R/ICIO2025_12R_2022.csv    gross output x (OUT row, current USD m)
+  DATA_12R/region_mapping.csv       the 81-economy -> 12-region map
 
-Outputs (DATA_13R/)
-  GHG_S1_13R_2022.csv               Scope-1 emissions, Mt CO2e
-                                    rows = 50 industries, cols = 13 regions
-  CARBON_INTENSITY_13R_2022.csv     CI = tonnes CO2e per million USD of gross
+Outputs (DATA_12R/)
+  GHG_S1_12R_2022.csv               Scope-1 emissions, Mt CO2e
+                                    rows = 50 industries, cols = 12 regions
+  CARBON_INTENSITY_12R_2022.csv     CI = tonnes CO2e per million USD of gross
                                     output, same shape (multi-region Table 2)
 
 Unit note for the model: with CI in t/MUSD and a carbon price XCE in USD/t,
@@ -25,11 +25,11 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D13 = os.path.join(ROOT, "DATA_13R")
+D12 = os.path.join(ROOT, "DATA_12R")
 YEAR = 2022
 
-REGIONS = ["GBR", "EU27", "ZAF", "RUS", "CHN", "KOR", "JPN", "IND", "AUS",
-           "CAN", "USA", "BRA", "ROW"]
+REGIONS = ["EU27", "USA", "CHN", "GBR", "JPN", "IND", "CAN", "NOR", "IDN",
+           "MEA", "AFR", "ROW"]
 FD_CATS = {"HFCE", "NPISH", "GGFC", "GFCF", "INVNT", "DPABR"}
 
 
@@ -39,7 +39,7 @@ def load_s1() -> pd.DataFrame:
     df = pd.read_csv(src)
     df = df[(df["EMISSIONS_SCOPE"] == "S1") & (df["TIME_PERIOD"] == YEAR)]
 
-    mapping = pd.read_csv(os.path.join(D13, "region_mapping.csv"))
+    mapping = pd.read_csv(os.path.join(D12, "region_mapping.csv"))
     region_of = dict(zip(mapping["country"], mapping["region"]))
     # GHGFP labels the rest-of-world residual WXD where ICIO uses ROW
     # (verified 2022: 4.3 Gt, sector mix consistent with undisclosed economies)
@@ -60,8 +60,8 @@ def load_s1() -> pd.DataFrame:
 
 
 def load_output() -> pd.DataFrame:
-    """Gross output x per region x industry (USD millions) from the 13R ICIO."""
-    icio = pd.read_csv(os.path.join(D13, f"ICIO2025_13R_{YEAR}.csv"), index_col=0)
+    """Gross output x per region x industry (USD millions) from the 12R ICIO."""
+    icio = pd.read_csv(os.path.join(D12, f"ICIO2025_12R_{YEAR}.csv"), index_col=0)
     out_row = icio.loc["OUT"]
     rows = {}
     for col, val in out_row.items():
@@ -88,9 +88,9 @@ def main():
     ci = e / x.replace(0.0, np.nan)          # tonnes per USD million
     ci = ci.fillna(0.0)
 
-    (e / 1e6).to_csv(os.path.join(D13, f"GHG_S1_13R_{YEAR}.csv"),
+    (e / 1e6).to_csv(os.path.join(D12, f"GHG_S1_12R_{YEAR}.csv"),
                      float_format="%.4f")
-    ci.to_csv(os.path.join(D13, f"CARBON_INTENSITY_13R_{YEAR}.csv"),
+    ci.to_csv(os.path.join(D12, f"CARBON_INTENSITY_12R_{YEAR}.csv"),
               float_format="%.4f")
 
     print(f"industries: {len(e.index)}, regions: {list(e.columns)}")
