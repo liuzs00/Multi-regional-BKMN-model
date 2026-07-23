@@ -80,7 +80,7 @@ analytical region's intermediate inputs.)
   USD/t the per-output charge is `ct = CI × XCE × 1e-6`.
 
 
-## Units & conventions (unchanged from DATA_13R)
+## Units & conventions
 
 - ICIO cells: current **USD millions**, basic prices (flows `Z`, final demand,
   `TLS`, `VA`, `OUT`).
