@@ -24,8 +24,8 @@ import urllib.request
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D12 = os.path.join(ROOT, "DATA_12R")
-CARBON_MAP = os.path.join(D12, "region_carbon_map.csv")
+D20 = os.path.join(ROOT, "DATA_20R")
+CARBON_MAP = os.path.join(D20, "region_carbon_map.csv")
 YEAR = 2022
 INDICATOR = "NY.GDP.MKTP.PP.CD"
 API = (f"https://api.worldbank.org/v2/country/all/indicator/{INDICATOR}"
@@ -49,7 +49,7 @@ def fetch_ppp() -> dict:
 
 def market_gdp_shares() -> dict:
     """Region market-GDP shares from the ICIO VA row (for the printed contrast)."""
-    icio = pd.read_csv(os.path.join(D12, f"ICIO2025_12R_{YEAR}.csv"), index_col=0)
+    icio = pd.read_csv(os.path.join(D20, f"ICIO2025_20R_{YEAR}.csv"), index_col=0)
     va = icio.loc["VA"]
     fd = {"HFCE", "NPISH", "GGFC", "GFCF", "INVNT", "DPABR"}
     reg = {}
@@ -67,7 +67,7 @@ def market_gdp_shares() -> dict:
 def main():
     ppp = fetch_ppp()
     world = ppp["WLD"]
-    mapping = pd.read_csv(os.path.join(D12, "region_mapping.csv"))
+    mapping = pd.read_csv(os.path.join(D20, "region_mapping.csv"))
 
     named = mapping[mapping.region != "ROW"]
     missing = [c for c in named.country if c not in ppp]

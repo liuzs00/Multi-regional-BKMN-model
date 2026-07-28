@@ -12,14 +12,14 @@
 
 | Symbol | Meaning | Source |
 |---|---|---|
-| `Z` | inter-industry flow matrix (600×600) | `DATA_12R/ICIO2025_12R_2022.csv`, region-industry block |
-| `x` | gross output per sector (600) | ICIO `OUT` row |
-| `GVA` | value added per sector (600) | ICIO `VA` row |
-| `CI` | direct carbon intensity, tCO₂e per USD-million output | `DATA_12R/CARBON_INTENSITY_12R_2022.csv` |
+| `Z` | inter-industry flow matrix (1000×1000) | `DATA_20R/ICIO2025_20R_2022.csv`, region-industry block |
+| `x` | gross output per sector (1000) | ICIO `OUT` row |
+| `GVA` | value added per sector (1000) | ICIO `VA` row |
+| `CI` | direct carbon intensity, tCO₂e per USD-million output | `DATA_20R/CARBON_INTENSITY_20R_2022.csv` |
 | `XCE` | carbon price, USD/tCO₂e | parameter = **70** (paper's Table 4 value) |
 | `φ` | cost pass-through fraction | parameter, swept **0 → 1** in 10% steps |
 
-The index is 12 regions × 50 ISIC industries = **600 region-sectors** (labels like
+The index is 20 regions × 50 ISIC industries = **1000 region-sectors** (labels like
 `GBR_C24A`). ROW is the accounting closure region and is kept in the matrix so the
 global IO system balances, but carries no financial interpretation.
 
@@ -53,7 +53,7 @@ The price side uses the **transpose (dual)** form $\tilde{L} = (I - A^{\top})^{-
 (Eq. 4).
 
 A validity check: the spectral radius of `A` must be < 1 (productive economy).
-For this data it is ≈ **0.579**, so `(I − A)` is invertible.
+For this data it is ≈ **0.587**, so `(I − A)` is invertible.
 
 ---
 
@@ -139,9 +139,9 @@ own sectors.
 
 | File | Content |
 |---|---|
-| `out_gva_shock_by_region_phi.csv` | national GVA/GDP shock (%), 12 regions × φ |
-| `out_price_change_by_region_phi.csv` | national output-weighted `Δp` (%), 12 regions × φ |
-| `out_gva_shock_by_sector_phi.csv` | full **600 region-sectors × φ** GVA shock (%) |
-| `out_price_change_by_sector_phi.csv` | full **600 region-sectors × φ** `Δp` (%) |
+| `out_gva_shock_by_region_phi.csv` | national GVA/GDP shock (%), 20 regions × φ |
+| `out_price_change_by_region_phi.csv` | national output-weighted `Δp` (%), 20 regions × φ |
+| `out_gva_shock_by_sector_phi.csv` | full **1000 region-sectors × φ** GVA shock (%) |
+| `out_price_change_by_sector_phi.csv` | full **1000 region-sectors × φ** `Δp` (%) |
 
 

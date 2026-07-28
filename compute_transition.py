@@ -15,11 +15,12 @@ import pandas as pd
 
 XCE = 70.0                                   # USD/tCO2e  (paper Table 4 uses GBP 70)
 PHIS = np.round(np.arange(0, 1.0001, 0.10), 2)
-REG_ORDER = ["EU27", "USA", "CHN", "GBR", "JPN", "IND", "CAN",
-             "NOR", "IDN", "MEA", "AFR", "ROW"]
+REG_ORDER = ["EU27", "USA", "CHN", "GBR", "JPN", "IND", "CAN", "NOR", "IDN",
+             "RUS", "CHL", "AUS", "SGP", "TUR", "KOR", "KAZ",
+             "MEA", "AFR", "LAM", "ROW"]
 
 # --- load ICIO -------------------------------------------------------------
-ic = pd.read_csv("DATA_12R/ICIO2025_12R_2022.csv", index_col=0)
+ic = pd.read_csv("DATA_20R/ICIO2025_20R_2022.csv", index_col=0)
 ri = [r for r in ic.index if r not in ("TLS", "VA", "OUT")]     # 650 region_industry
 Z   = ic.loc[ri, ri].to_numpy(float)                            # intermediate flows
 x   = ic.loc["OUT", ri].to_numpy(float)                         # gross output
@@ -36,7 +37,7 @@ L = np.linalg.inv(Ide - A)
 AT = A.T
 
 # --- carbon charge per unit output ct_direct = CI*XCE*1e-6 -----------------
-ci = pd.read_csv("DATA_12R/CARBON_INTENSITY_12R_2022.csv", index_col=0)
+ci = pd.read_csv("DATA_20R/CARBON_INTENSITY_20R_2022.csv", index_col=0)
 ci_vec = np.array([ci.loc[j, r] for j, r in zip(inds, regions)], float)
 ct = ci_vec * XCE * 1e-6
 
