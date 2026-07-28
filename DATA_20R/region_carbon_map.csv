@@ -8,6 +8,14 @@ IND,INR,analytical,R5.2ASIA,none (PAT scheme),exposed,high,0.072
 CAN,CAD,analytical,R5.2OECD,carbon tax (~CAD80/t),exposed/part-levier,med,0.014
 NOR,NOK,analytical,R5.2OECD,EU ETS + high national tax,inside-perimeter,low,0.004
 IDN,IDR,analytical,R5.2ASIA,coal tax (2022 low),exposed,high,0.023
+RUS,RUB,structural,R5.2REF,~0,exposed,med,0.034
+CHL,CLP,analytical,R5.2LAM,carbon tax (~USD5/t),exposed-minor,med-high,0.003
+AUS,AUD,analytical,R5.2OECD,safeguard mechanism (low),exposed,high,0.010
+SGP,SGD,analytical,R5.2ASIA,carbon tax (~USD25/t),exposed-minor,med,0.005
+TUR,TRY,analytical,R5.2MAF,none (ETS planned),exposed-major,med-high,0.019
+KOR,KRW,analytical,R5.2ASIA,K-ETS (~USD8/t),exposed,med,0.016
+KAZ,KZT,analytical,R5.2REF,ETS (low),exposed,med,0.004
 MEA,USD-peg,structural,R5.2MAF,~0,exposed,high,0.021
 AFR,mixed,structural,R5.2MAF,~0 (ZAF tax low),exposed,high,0.035
-ROW,mixed,closure,mixed (LAM+REF+ASIA),mixed,mixed,mixed,0.291
+LAM,mixed,structural,R5.2LAM,mixed (low),exposed,high,0.058
+ROW,mixed,closure,mixed (ASIA+other),mixed,mixed,mixed,0.142

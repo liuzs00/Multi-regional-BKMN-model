@@ -2,14 +2,14 @@
 Robustness test: is the single ROW closure region sufficient?
 
 Question: does lumping the ~31 non-analytical economies into one ROW block bias
-the results for the 11 analytical regions?  (ROW's own outputs are never
+the results for the 19 analytical regions?  (ROW's own outputs are never
 interpreted, so only the analytical regions matter.)
 
 Method (aggregation-invariance / convergence test): rebuild the model from the
-81-economy source under two partitions that share the 11 analytical regions,
-  * COARSE — single ROW (the DATA_12R model), and
+81-economy source under two partitions that share the 19 analytical regions,
+  * COARSE — single ROW (the DATA_20R model), and
   * FINE   — ROW split into its largest, most carbon-intensive, most-linked
-             economies (RUS, KOR, TWN, MEX, BRA, TUR) + a residual,
+             economies (CHE, TWN, VNM, THA, MYS, UKR) + a residual,
 then compare the analytical regions' transition GVA shocks and Leontief output
 multipliers.  Those six are the worst case for aggregation bias; if breaking
 them out barely moves the analytical results, any finer ROW split moves less —
@@ -20,12 +20,12 @@ the region's own -CT/GVA), so the test is run at intermediate pass-through.
 
 Inputs : D:\\2016-2022_SML\\2022_SML.csv  (OECD ICIO 2025 source)
          data/ghgfp/SCOPE/2022.csv.gz      (GHGFP Scope-1)
-         DATA_12R/region_mapping.csv        (the coarse map)
+         DATA_20R/region_mapping.csv        (the coarse map)
 Output : prints the deviation table + headline claim; writes
          out_row_sufficiency.csv (per region x φ: coarse, fine, Δpp).
 
-Result (2022): max |Δ| in GVA shock = 0.005 pp, max |Δ| in output multiplier =
-0.11% relative -> the single-ROW closure is sufficient.
+Result (2022): max |Δ| in GVA shock = 0.007 pp, max |Δ| in output multiplier =
+0.15% relative -> the single-ROW closure is sufficient.
 
 Usage: py -3 tools/test_row_sufficiency.py
 """
@@ -37,15 +37,16 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = r"D:\2016-2022_SML\2022_SML.csv"
 SPECIAL = {"TLS", "VA", "OUT"}
 REN = {"C241_2431": "C24A", "C242_2432": "C24B", "C30X301": "C302T309"}
-ANALYTIC = ["EU27", "USA", "CHN", "GBR", "JPN", "IND", "CAN", "NOR", "IDN", "MEA", "AFR"]
-SPLIT = ["RUS", "KOR", "TWN", "MEX", "BRA", "TUR"]   # broken out of ROW in the fine model
+ANALYTIC = ["EU27", "USA", "CHN", "GBR", "JPN", "IND", "CAN", "NOR", "IDN",
+            "RUS", "CHL", "AUS", "SGP", "TUR", "KOR", "KAZ", "MEA", "AFR", "LAM"]
+SPLIT = ["CHE", "TWN", "VNM", "THA", "MYS", "UKR"]   # ROW's biggest remaining economies
 PHIS = (0.3, 0.5, 0.7)
 XCE = 70.0
 
 
 def load():
     df = pd.read_csv(SRC, index_col=0)
-    cm = pd.read_csv(os.path.join(ROOT, "DATA_12R", "region_mapping.csv"))
+    cm = pd.read_csv(os.path.join(ROOT, "DATA_20R", "region_mapping.csv"))
     coarse = dict(zip(cm.country, cm.region))
     fine = dict(coarse)
     for c in SPLIT:
@@ -136,7 +137,7 @@ def main():
 
     pd.DataFrame(rows).to_csv(os.path.join(ROOT, "out_row_sufficiency.csv"),
                               index=False, float_format="%.5f")
-    print(f"\n>>> MAX |Δ| in GVA shock (11 regions x {len(PHIS)} φ) = {maxd:.4f} pp")
+    print(f"\n>>> MAX |Δ| in GVA shock (19 regions x {len(PHIS)} φ) = {maxd:.4f} pp")
     print(f">>> MAX |Δ| in output multiplier              = {mm:.4f} ({relm*100:.3f}% relative)")
     print(">>> single-ROW closure is sufficient: analytical results are invariant to "
           "ROW granularity to within rounding.")
