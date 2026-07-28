@@ -1,5 +1,5 @@
 """
-Build the `ppp_gdp_weight` column of DATA_12R/region_carbon_map.csv from World
+Build the `ppp_gdp_weight` column of DATA_20R/region_carbon_map.csv from World
 Bank PPP GDP (2022).
 
 These are welfare-relevant aggregation weights for the **physical-damage**

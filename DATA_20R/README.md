@@ -3,7 +3,7 @@
 20-region Inter-Country Input-Output tables from the **OECD ICIO 2025 edition**
 (SML, current USD millions, 2022). Extends the 16-region design with **Singapore,
 Turkey, Korea, and Kazakhstan** — the dominant economies inside the old ROW by
-EU trade and by carbon embodied in EU imports. Supersedes `DATA_16R/`.
+EU trade and by carbon embodied in EU imports. Supersedes the earlier 12- and 16-region builds.
 
 Produced by [`tools/build_multiregion.py`](../tools/build_multiregion.py) (IO)
 and [`tools/build_ghg.py`](../tools/build_ghg.py) (emissions + intensity) from
