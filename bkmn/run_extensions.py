@@ -22,7 +22,7 @@ import os
 import numpy as np
 import pandas as pd
 
-from . import equity, fx, macro, mixture, oprisk, physical, transition, volatility
+from . import equity, fx, macro, mixture, oprisk, physical, rates, transition, volatility
 from .regions import load
 from .run_fx import BASE, HORIZONS, PHI, xce_annual
 from .scenarios import Scenarios
@@ -39,6 +39,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #                    also what Eq 13 telescopes to. This charges today's 1.29 K of
 #                    warming as if it were a future shock, so damages are ~17x larger.
 WARMING_BASELINE = "incremental"
+
+# Rate tenors reported, mirroring the paper's Table 11 (Deposit 1D/6M, Swap 1Y..20Y).
+RATE_TENORS = {"1D": 1 / 365, "6M": 0.5, "1Y": 1.0, "5Y": 5.0, "10Y": 10.0, "20Y": 20.0}
 
 
 def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
@@ -142,6 +145,19 @@ def main():
     table(dv, "equity", allreg, 100).to_csv(f"{ROOT}/out_ext_equity.csv")
     table(dv, "opConduct", allreg, 100).to_csv(f"{ROOT}/out_ext_oprisk_conduct.csv")
     table(dv, "opExecution", allreg, 100).to_csv(f"{ROOT}/out_ext_oprisk_execution.csv")
+
+    # --- §2.8 long-rate term structure (Prop 2), paper Table 11 layout -------
+    rows = {}
+    for s_, c in chains.items():
+        for r in allreg:
+            for lbl, tau in RATE_TENORS.items():
+                rows[(s_, r, lbl)] = {
+                    t: float(rates.zero_rate_shift(c["dr"][r][t], tau)) * 1e4
+                    for t in HORIZONS}
+    rt = pd.DataFrame(rows).T
+    rt.index = pd.MultiIndex.from_tuples(rt.index,
+                                        names=["scenario", "region", "tenor"])
+    rt[HORIZONS].to_csv(f"{ROOT}/out_ext_rate_term_structure.csv")
 
     # --- Phase M: mixture over scenarios ------------------------------------
     for prior in mixture.PRIORS:

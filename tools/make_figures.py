@@ -302,11 +302,41 @@ def fig_drift():
     plt.close(fig); print("  fig9_scenario_drift_sensitivity.png")
 
 
+# --- 10. rate term structure (Prop 2) ---------------------------------------
+def fig_term_structure():
+    d = load("out_ext_rate_term_structure", idx=(0, 1, 2))
+    ten = ["1D", "6M", "1Y", "5Y", "10Y", "20Y"]
+    tau = [1/365, 0.5, 1, 5, 10, 20]
+    show = ["IND", "CHN", "TUR", "KOR", "USA", "EU27", "NOR"]
+    cols = [WARM, "#d08b5c", "#c9a227", TEAL, COOL, "#0e7c86", "#3f5f8a"]
+    fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.6), sharey=True)
+    for ax, s, ttl in zip(axes, (NZ, NDC), ("Net Zero 2050", "NDCs")):
+        for r, c in zip(show, cols):
+            y = [d.loc[(s, r, t), H] for t in ten]
+            ax.plot(tau, y, color=c, lw=1.9, marker="o", ms=3.5, label=r)
+        ax.axhline(0, color=MUTED, lw=1)
+        ax.set_xscale("log"); ax.set_xticks(tau); ax.set_xticklabels(ten)
+        ax.set_title(ttl, fontsize=10, fontweight="600", pad=8)
+        ax.set_xlabel("tenor")
+        ax.grid(color=GRID, lw=0.8, zorder=0); ax.set_axisbelow(True)
+    axes[0].set_ylabel("zero-rate shift at 2040 (bp)")
+    axes[1].legend(frameon=False, fontsize=8, ncol=2)
+    fig.suptitle("Long-rate term structure: the shift decays with maturity (Prop 2)",
+                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.085)
+    fig.text(0.012, 1.015, "Hull-White 1F with a = 0.04: dR(t,T) = B(tau)/tau . dr(t), "
+             "sigma-independent. 20Y/1D ratio = 0.688 by construction.",
+             fontsize=8.5, color=MUTED, ha="left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig10_rate_term_structure.png"), dpi=300,
+                bbox_inches="tight")
+    plt.close(fig); print("  fig10_rate_term_structure.png")
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
     os.makedirs(FIG, exist_ok=True)
     print("writing figures/")
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
-    fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift()
+    fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure()
     print("done.")
