@@ -143,3 +143,64 @@ toward the stationary distribution, so the three priors converge — by 2045 at
 λ has no value in the paper (Table 17: *"the narrative users set the value of λ"*),
 so it is swept over 5.0 / 2.0 / 0.5. Gate: λ → ∞ reproduces the static mixture
 exactly.
+
+
+## F. Deviation register — everything we do not follow from the paper
+
+Complete list of departures, for the dissertation's limitations section.
+Reasons: **[data]** licensed/unavailable · **[scope]** out of the agreed scope ·
+**[multi-R]** forced by the multi-region generalisation · **[ambiguous]** the
+paper admits more than one reading · **[deferred]** planned, not yet built.
+
+### F1. Paper features not implemented
+
+| # | Paper | What it is | Why not | Consequence |
+|---|---|---|---|---|
+| 1 | §2.9 (CDS half) | CDS-spread shifts from GVA, per sector | [data] needs licensed CDS histories | credit channel absent; equity only |
+| 2 | §2.10 | IFRS 9 expected credit loss, SICR | [data] hangs off CDS-implied PDs | no banking-book loss output |
+| 3 | §3.1.3, Tables 7–8 | Government-sector ↔ CDS-sector mapping | [data] follows from 1 | equity is region-index level, not sector level |
+| 4 | §4.2.1 | CCVA / Green KVA | [scope] | — |
+| 5 | §4.2.2 | Green PD / Green RWA | [scope] | — |
+| 6 | §4.2.3 | Green Return on Tangible Equity | [scope] | — |
+| 7 | §3.2, Table 11 | Benchmarking against the ISDA short-term stresses | [scope] ISDA is UK/single-region | no external validation of magnitudes |
+| 8 | §3.2, Table 12 | PFE(99.9 %) reporting | [deferred] machinery exists (Phase V) at 95 % | quantile level only |
+| 9 | §2.1, §2.6, §2.8 | Anchoring on **observed market curves** — the paper starts from real yield/inflation curves and reports stressed *levels* | [scope] we report *shifts*, which need no curve data | cannot quote absolute stressed rates/inflation; FX is a shift, not a level |
+| 10 | §2.6 (2nd eq.) | Inflation term-structure overlay `Π(t,T,T+1) = Π_market + ∫ΔΠ·f ds` | follows from 9 | annual deviation only, no forward-inflation curve |
+| 11 | §3.3 | Volatility as **regime-switching Hull–White SDEs** for ΔT and ln XCE | [deferred] we stress inputs by z·σ instead (valid because the chain is monotone) | no simulated paths, no correlation structure |
+| 12 | §2.2 | Scenario **scope** dynamics — ΔΩ_XCE changing over time | [deferred] scope is static at its 2025 value | understates long-horizon inflation under ambitious scenarios |
+
+### F2. Implemented differently
+
+| # | Paper | Ours | Reason |
+|---|---|---|---|
+| 13 | SSP/RCP scenario set (5 RCP × 5 SSP = 25 paired states, some inadmissible) | 7 NGFS Phase-5 narratives, flat (no pair structure, no inadmissible combinations) | [multi-R] project brief mandates NGFS; only NGFS publishes *regional* carbon prices |
+| 14 | Two independent Dirichlets (SSP ⟂ RCP) | one Dirichlet over the 7 narratives | follows from 13 |
+| 15 | Prior = 90 % on SSP2/RCP4.5 (§3.1.4) | three named priors, reported as a range | [ambiguous] no NGFS analogue of that anchor; ours are asserted too |
+| 16 | Eq 1 transition matrix, `d = \|j−k\|` on RCP labels | implemented as a **sensitivity**, `d` = standardised (T₂₁₀₀, XCE) distance | [multi-R] narratives have no numeric label — see §E |
+| 17 | Eq 15 `Δr(t) = ∫Δr^Policy ds` | Taylor output at *t* used directly | [ambiguous] our ΔΠ/ΔY are already level deviations; integrating double-counts |
+| 18 | §2.6 `ΔΠ ∝ ΔXCE · ΔΩ_XCE` (product of two *changes*) | `ΔΠ ∝ ΔXCE · scope` (scope as a level) | [ambiguous] the paper's literal form is second-order and reads as a typo |
+| 19 | Prop 1 ΔT "relative to pre-industrial" | ΔT incremental from 2022 (switchable) | [ambiguous] §2.1 implies incremental; ~17× difference, see §B1 |
+| 20 | Prop 1 direct **and** cascading physical effect | direct only | [ambiguous] applying both double-counts |
+| 21 | Prop 1 applied within one economy | applied across all 1000 region-sectors (world-level Ω) | [multi-R] our generalisation choice |
+| 22 | Table 6 vulnerability, UK sectors | same sector *pattern* × ND-GAIN *region* scale | [multi-R] paper gives no cross-region vulnerability |
+| 23 | Table 9 equity/CDS β (UK, FTSE) | β re-calibrated per region where free data exists (12/13); paper's β = 2.00 as proxy for JPN, CHL, KAZ | [data] |
+| 24 | Table 10 op-risk β (UK/ORX) | used as-is for all 20 regions | [data] ORX is licensed |
+| 25 | Okun κ = −0.182 (UK, Goto–Burgi) | UK value kept; literature-range defaults elsewhere | [data] κ is published for few countries |
+| 26 | Table 15/16 σ by RCP | σ from the MAGICC p10/p90 fan and the NGFS cross-model spread | [multi-R] NGFS-native analogue |
+
+### F3. Data substitutions (method unchanged)
+
+| # | Paper | Ours |
+|---|---|---|
+| 27 | UK ONS input-output table, 20 SIC sectors, 2021 | OECD ICIO 2025, 20 regions × 50 ISIC industries, 2022 |
+| 28 | ONS carbon intensity (Table 2) | OECD GHGFP 2025 Scope-1 ÷ ICIO gross output |
+| 29 | IPCC AR6 SSP/RCP temperature | NGFS MAGICC v7.5.3 GSAT |
+
+### F4. Followed exactly (for contrast)
+
+Input-output core (Eqs. 2–4), the CO₂-as-tax cost-push with pass-through
+(Eqs. 5–10), the damage-function form (Eq. 11), Prop 1's allocation identity,
+Moessner's 0.08 %/$10, the Taylor rule with φΠ = φY = 0.5, Prop 2 with a = 0.04,
+the log-linear GVA→market link (§2.9), Okun with β_Phillips = 0 (§2.11), the
+Dirichlet-categorical conjugacy (§2.2), and the FX-from-yield-curve-differences
+route (§4.3).
