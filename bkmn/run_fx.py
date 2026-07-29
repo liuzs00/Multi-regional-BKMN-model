@@ -29,7 +29,6 @@ from .scenarios import Scenarios
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = 2022
 HORIZONS = [2025, 2030, 2035, 2040, 2045]
-TENORS = [1, 5, 10]
 PHI = 0.5
 HEADLINE = ["Net Zero 2050", "Delayed transition",
             "Nationally Determined Contributions (NDCs)", "Current Policies"]

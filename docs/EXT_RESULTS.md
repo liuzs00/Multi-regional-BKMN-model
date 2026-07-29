@@ -128,6 +128,24 @@ relative, not absolute, and see caveat 4.
 6. Still excluded: CDS/IFRS 9 (licensed data), tariff/trade-flow shocks,
    Green KVA/RWA.
 
+## 6b. Long-rate term structure (§2.8, Prop 2)
+
+`out_ext_rate_term_structure.csv` / `figures/fig10` report the zero-rate shift by
+tenor — the paper's Table-11 layout (1D, 6M, 1Y, 5Y, 10Y, 20Y) — for every
+scenario × region × horizon. Example, Net Zero 2050 at 2040 (bp):
+
+| region | 1D | 6M | 1Y | 5Y | 10Y | 20Y |
+|---|--:|--:|--:|--:|--:|--:|
+| EU27 | −132 | −131 | −130 | −120 | −109 | −91 |
+| USA | −101 | −100 | −99 | −91 | −83 | −69 |
+| IND | −522 | −517 | −511 | −473 | −430 | −359 |
+| NOR | −47 | −47 | −46 | −43 | −39 | −33 |
+
+The decay is Prop 2 exactly: `ΔR(t,T) = B(τ)/τ · Δr(t)` with `a = 0.04`, so the
+20Y/1D ratio is `B(20)/20 = 0.688` for every region and scenario, independent of
+σ. Same qualitative shape as the paper's Table 11 (largest at the short end,
+~30 % smaller at 20Y).
+
 ## 7. Outputs
 
 `out_ext_gdp_{transition,physical,total}.csv`, `out_ext_rate_shift.csv`,

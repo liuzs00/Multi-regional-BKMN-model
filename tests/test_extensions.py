@@ -53,6 +53,24 @@ check("damage monotone in ΔT", all(d2[r] < d1[r] < 0 for r in m.regions_order))
 check("vulnerable regions hit harder", d1["AFR"] < d1["NOR"],
       f"AFR {d1['AFR']*100:.2f}% < NOR {d1['NOR']*100:.2f}%")
 
+# --- 2.8 long-rate term structure (Prop 2) -----------------------------------
+from bkmn import rates as _rates                                            # noqa: E402
+_rt = pd.read_csv(f"{ROOT}/out_ext_rate_term_structure.csv", index_col=[0, 1, 2])
+_dr = pd.read_csv(f"{ROOT}/out_ext_rate_shift.csv", index_col=[0, 1])
+_k = ("Net Zero 2050", "EU27")
+check("term-structure 1D shift equals the short-rate shift",
+      abs(_rt.loc[_k + ("1D",), "2040"] - _dr.loc[_k, "2040"]) < 0.5,
+      f"{_rt.loc[_k+('1D',),'2040']:.1f} vs {_dr.loc[_k,'2040']:.1f} bp")
+_ten = ["1D", "6M", "1Y", "5Y", "10Y", "20Y"]
+_v = [abs(_rt.loc[_k + (t,), "2040"]) for t in _ten]
+check("shift decays monotonically with tenor (Prop 2)",
+      all(a >= b - 1e-9 for a, b in zip(_v, _v[1:])),
+      " > ".join(f"{x:.0f}" for x in _v))
+_ratio = _rt.loc[_k + ("20Y",), "2040"] / _rt.loc[_k + ("1D",), "2040"]
+_theory = float(_rates.hw_B(20.0)) / 20.0
+check("20Y/1D ratio matches B(20)/20 exactly",
+      abs(_ratio - _theory) < 2e-3, f"{_ratio:.4f} vs {_theory:.4f}")
+
 # --- Phase E: equity ---------------------------------------------------------
 b = equity.betas()
 check("betas positive for all 20 regions",

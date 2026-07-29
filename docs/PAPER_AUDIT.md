@@ -102,7 +102,7 @@ mixture does not (λ, and a distance over narratives).
 | Prop 1 `α = Ω/Σ VL·f` | `physical.alpha` | identity `Σf·VL·α = Ω` to 1e-17 |
 | §2.6 Moessner 0.08 %/$10 | `macro.inflation_dev` | scale checked |
 | §2.7 Taylor `φΠ=φY=0.5` | `macro.taylor_rate_shift` | — |
-| §2.8 Prop 2 `ΔR = B(τ)/τ·Δr`, `a=0.04` | `rates.zero_rate_shift` | τ→0 limit, decay |
+| §2.8 Prop 2 `ΔR = B(τ)/τ·Δr`, `a=0.04` | `rates.zero_rate_shift`, reported as a Table-11-style term structure (`out_ext_rate_term_structure.csv`, fig10) | 1D = short-rate shift; monotone decay; 20Y/1D = B(20)/20 = 0.688 exactly |
 | §2.9 `ΔS/S = β·ΔGVA/GVA` | `equity.equity_shift` | sign |
 | §2.11 Okun `ΔU = κΔY`, β_Phillips = 0 | `oprisk` | sign chain |
 | §2.2 Dirichlet-categorical | `mixture` | conjugacy, degenerate prior |
