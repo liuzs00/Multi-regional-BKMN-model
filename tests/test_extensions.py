@@ -131,6 +131,25 @@ for prior in mixture.PRIORS:
 check("all 7 scenarios carry positive weight in the mixture", True,
       "guards against label drift, e.g. 'Below 2?C' vs 'Below 2°C'")
 
+# consensus prior: citable anchor (UNEP/CAT current-policy warming)
+from bkmn.scenarios import Scenarios as _Sc                                 # noqa: E402
+_co = _Sc(m.carbon_map).coords()
+_cshape = mixture.consensus_shape(_co)
+check("consensus prior has the same concentration as the others",
+      abs(sum(_cshape.values()) - mixture.ALPHA0) < 1e-9,
+      f"Sigma-alpha = {sum(_cshape.values()):.1f}")
+_cw = mixture.weights(_cshape, scenarios=scen)
+_tmax = max(_co["T"].items(), key=lambda kv: kv[1])[0]
+check("consensus puts most weight on the scenario nearest the 2.7C anchor",
+      max(_cw, key=_cw.get) == _tmax,
+      f"{_tmax[:14]} at {_cw[_tmax]*100:.1f}% (T2100 = {_co.loc[_tmax,'T']:.2f}C)")
+check("consensus weight falls monotonically with distance from the anchor",
+      all(b <= a + 1e-12 for a, b in zip(
+          [_cw[s] for s in _co.assign(d=(_co["T"] - mixture.CONSENSUS_T).abs())
+                          .sort_values("d").index],
+          [_cw[s] for s in _co.assign(d=(_co["T"] - mixture.CONSENSUS_T).abs())
+                          .sort_values("d").index][1:])))
+
 one = {s: (1 if s == "Net Zero 2050" else 0) for s in scen}
 deg = mixture.expected(tbl, one)
 check("degenerate prior reproduces scenario",
@@ -142,8 +161,6 @@ check("E[X] within scenario range",
       bool(((e >= lo - 1e-9) & (e <= hi + 1e-9)).all().all()))
 
 # --- Sensitivity: Eq-1 transition matrix -------------------------------------
-from bkmn.scenarios import Scenarios as _S                                  # noqa: E402
-_co = _S(m.carbon_map).coords()
 _scen, _Q = mixture.transition_matrix(_co, 2.0)
 check("Q rows are probabilities", np.allclose(_Q.sum(1), 1) and (_Q >= 0).all(),
       f"{_Q.shape[0]}x{_Q.shape[1]}")

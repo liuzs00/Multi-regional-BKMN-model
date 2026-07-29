@@ -116,22 +116,23 @@ def fig_fx_rank():
 
 # --- 3. mixture: expected FX by prior ----------------------------------------
 def fig_mixture():
-    priors = ["policy-sceptic", "uniform", "ambition"]
-    cols = [COOL, TEAL, WARM]
+    priors = ["consensus", "policy-sceptic", "uniform", "ambition"]
+    cols = [INK, COOL, TEAL, WARM]
     data = {p: load(f"out_ext_fx_expected_{p}", idx=(0,)) for p in priors}
     order = data["uniform"][H].sort_values().index.tolist()
     y = np.arange(len(order))
     fig, ax = plt.subplots(figsize=(8.2, 5.6))
     for k, (p, c) in enumerate(zip(priors, cols)):
-        ax.barh(y + (k - 1) * 0.27, [data[p].loc[r, H] for r in order],
-                height=0.25, color=c, label=p, zorder=3)
+        ax.barh(y + (k - 1.5) * 0.21, [data[p].loc[r, H] for r in order],
+                height=0.19, color=c, label=p, zorder=3)
     ax.axvline(0, color=MUTED, lw=1)
     ax.set_yticks(y, order, fontsize=8.5)
     ax.invert_yaxis()
-    ax.legend(title="scenario prior", loc="lower right", frameon=False, fontsize=8.5,
+    ax.legend(title="scenario prior", loc="lower left", frameon=False, fontsize=8.5,
               title_fontsize=8.5)
     finish(fig, ax, "Expected FX shift under the Bayesian scenario mixture, 2040",
-           "Probability-weighted across the seven NGFS scenarios; the prior is a narrative choice.",
+           "Probability-weighted across the seven NGFS scenarios. 'consensus' is anchored on the "
+           "published current-policy warming estimate (UNEP/CAT, 2.7 C); the others are conventional or asserted.",
            "fig3_mixture_expected_fx.png", "expected 5y forward FX vs EUR (%)")
 
 

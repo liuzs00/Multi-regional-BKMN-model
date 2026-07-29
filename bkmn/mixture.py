@@ -38,6 +38,41 @@ PRIOR_SHAPES = {
     "policy-sceptic": {NZ: 1, B2: 1, DT: 2, LD: 1, ND: 4, FW: 3, CP: 4},
     "ambition":       {NZ: 4, B2: 4, DT: 2, LD: 3, ND: 2, FW: 1, CP: 1},
 }
+# NOTE on provenance: `uniform` is the conventional uninformative prior;
+# `policy-sceptic` and `ambition` are **illustrative bookends we assert** — the
+# directions are narrative logic, the magnitudes are arbitrary, and NGFS
+# deliberately publishes no scenario probabilities. The `consensus` prior built
+# by `consensus_shape()` below is the one anchored on a citable source.
+
+# --- citable anchor: published end-century warming under current policies -----
+# UNEP Emissions Gap Report 2025: current policies 2.8 C; full NDCs 2.3-2.5 C.
+#   https://www.unep.org/resources/emissions-gap-report-2025
+# Climate Action Tracker, COP30 global update (2025-11): policies & action and
+# pledges & targets both ~2.6 C; optimistic (all net-zero announcements) 1.6 C.
+#   https://climateactiontracker.org/publications/warming-projections-global-update-2025/
+CONSENSUS_T = 2.7      # midpoint of CAT 2.6 and UNEP 2.8, degC vs pre-industrial
+CONSENSUS_SD = 0.3     # spread across the two assessments and their stated ranges
+
+
+def consensus_shape(coords, mu=CONSENSUS_T, sd=CONSENSUS_SD):
+    """
+    Prior weights from proximity to the published current-policy warming estimate.
+
+    Mirrors the paper's own construction: §3.1.4 takes an authoritative statement
+    about where current policies lead ("a path closer to SSP2 combined with
+    RCP4.5 or RCP6.0", IPCC 2023) and puts 90 % of the mass on that pair.  Here
+    the authoritative statement is the UNEP/CAT current-policy warming estimate,
+    and scenarios are weighted by a Gaussian in their own end-century warming:
+
+        α_s ∝ exp(−½ ((T₂₁₀₀,s − μ) / sd)²)
+
+    Like the paper's 90 %, this is concentrated — which is itself informative: on
+    the published trajectory most probability sits on the low-carbon-price end, so
+    transition-driven FX risk lives in the tail rather than the expectation.
+    """
+    t = coords["T"].astype(float)
+    w = np.exp(-0.5 * ((t - mu) / sd) ** 2)
+    return (w / w.sum() * ALPHA0).to_dict()
 
 #: α per scenario, normalised to Σα = ALPHA0 for every named prior.
 PRIORS = {name: {s: v / sum(shape.values()) * ALPHA0 for s, v in shape.items()}

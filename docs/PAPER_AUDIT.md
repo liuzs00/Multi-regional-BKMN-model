@@ -188,7 +188,7 @@ paper admits more than one reading · **[deferred]** planned, not yet built.
 |---|---|---|---|
 | 13 | SSP/RCP scenario set (5 RCP × 5 SSP = 25 paired states, some inadmissible) | 7 NGFS Phase-5 narratives, flat (no pair structure, no inadmissible combinations) | [multi-R] project brief mandates NGFS; only NGFS publishes *regional* carbon prices |
 | 14 | Two independent Dirichlets (SSP ⟂ RCP) | one Dirichlet over the 7 narratives | follows from 13 |
-| 15 | Prior = 90 % on SSP2/RCP4.5 (§3.1.4) | three named priors, reported as a range | [ambiguous] no NGFS analogue of that anchor; ours are asserted too |
+| 15 | Prior = 90 % on SSP2/RCP4.5 (§3.1.4) | **`consensus`** prior built the same way but anchored on UNEP EGR 2025 / CAT COP30 2025 current-policy warming, plus `uniform` and two asserted bookends | method retained; anchor updated to the NGFS era (§H) |
 | 16 | Eq 1 transition matrix, `d = \|j−k\|` on RCP labels | implemented as a **sensitivity**, `d` = standardised (T₂₁₀₀, XCE) distance | [multi-R] narratives have no numeric label — see §E |
 | 17 | Eq 15 `Δr(t) = ∫Δr^Policy ds` | Taylor output at *t* used directly | [ambiguous] our ΔΠ/ΔY are already level deviations; integrating double-counts |
 | 18 | §2.6 `ΔΠ ∝ ΔXCE · ΔΩ_XCE` (product of two *changes*) | `ΔΠ ∝ ΔXCE · scope` (scope as a level) | [ambiguous] the paper's literal form is second-order and reads as a typo |
@@ -250,3 +250,47 @@ two decades** — a strong assumption worth stating.
 
 Note this does not touch the forward/CIP channel's driver (ΔY), which is where
 most of the FX signal lives.
+
+
+## H. The scenario prior: provenance
+
+`uniform` is the conventional uninformative prior. **`policy-sceptic` and
+`ambition` are asserted bookends** — the directions are narrative logic, the
+magnitudes arbitrary. There is no standard to borrow: NGFS deliberately publishes
+no scenario probabilities.
+
+**`consensus` is the citable one**, built by the paper's own method. §3.1.4 takes
+an authoritative statement about where current policies lead (IPCC 2023: "a path
+closer to SSP2 combined with RCP4.5 or RCP6.0") and puts 90 % on that pair. The
+NGFS-era equivalents are the published current-policy warming estimates:
+
+| Source | Current policies | NDCs | Optimistic |
+|---|--:|--:|--:|
+| UNEP Emissions Gap Report 2025 | **2.8 °C** | 2.3–2.5 °C | — |
+| Climate Action Tracker, COP30 update (Nov 2025) | **~2.6 °C** | 2.6 °C | 1.6 °C |
+
+Anchor μ = **2.7 °C** (midpoint), sd = **0.3 °C** (spread across the two
+assessments). Weights are Gaussian in each scenario's own end-century warming,
+`α_s ∝ exp(−½((T₂₁₀₀,s − μ)/sd)²)`, normalised to Σα = 14:
+
+| scenario | T₂₁₀₀ | weight |
+|---|--:|--:|
+| Current Policies | 2.75 | **80.7 %** |
+| Fragmented World | 2.11 | 11.8 % |
+| NDCs | 2.03 | 6.7 % |
+| Delayed transition | 1.75 | 0.5 % |
+| Below 2 °C | 1.69 | 0.3 % |
+| Low demand / Net Zero 2050 | 1.47 / 1.45 | ~0 % |
+
+Current Policies lands within 0.05 K of the anchor, so the fit is tight. Like the
+paper's 90 %, the result is concentrated — and that concentration is itself the
+finding: **on the published trajectory the carbon price stays near zero, so
+expected transition-FX moves collapse** (IND −6.20 % under `uniform` → **−0.54 %**
+under `consensus` at 2040). Transition FX risk therefore lives in the *tail*, not
+the expectation — which is an argument for reading the volatility band (§ Phase V)
+and the ambitious scenarios as stress cases rather than central forecasts.
+
+⚠️ One caveat on the mapping: NGFS's own "NDCs" scenario reaches 2.03 °C, while
+UNEP and CAT put full NDC implementation at 2.3–2.6 °C. The NGFS NDC narrative is
+therefore *more optimistic* than the external assessments, which is part of why
+weight shifts onto Current Policies.

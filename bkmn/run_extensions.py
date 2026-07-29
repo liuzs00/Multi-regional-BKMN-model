@@ -160,8 +160,12 @@ def main():
     rt[HORIZONS].to_csv(f"{ROOT}/out_ext_rate_term_structure.csv")
 
     # --- Phase M: mixture over scenarios ------------------------------------
-    for prior in mixture.PRIORS:
-        mixture.expected(fwd, prior).to_csv(f"{ROOT}/out_ext_fx_expected_{prior}.csv")
+    # `consensus` is the citable prior (UNEP/CAT current-policy warming anchor);
+    # the other three are uninformative + asserted bookends.
+    priors = dict(mixture.PRIORS)
+    priors["consensus"] = mixture.consensus_shape(sc.coords())
+    for prior, shape in priors.items():
+        mixture.expected(fwd, shape).to_csv(f"{ROOT}/out_ext_fx_expected_{prior}.csv")
     mixture.quantile(fwd, 0.95, "uniform").to_csv(f"{ROOT}/out_ext_fx_q95_scen.csv")
 
     # --- Sensitivity: scenario drift under the Eq-1 transition matrix --------
