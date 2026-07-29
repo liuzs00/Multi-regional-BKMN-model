@@ -60,11 +60,18 @@ physical damage adds to ΔY — see caveat 1.
 
 Expected 5y-forward vs EUR at 2040 (%), by named prior:
 
-| Prior | IND | CHN | USA | NOR |
-|---|--:|--:|--:|--:|
-| uniform | −13.7 | −10.7 | +0.6 | +1.6 |
-| policy-sceptic | −11.0 | −7.8 | +0.7 | +1.0 |
-| ambition | −16.6 | −13.9 | +0.4 | +2.3 |
+| Prior | IND | CHN | KAZ | NOR | provenance |
+|---|--:|--:|--:|--:|---|
+| **consensus** | **−0.54** | **−0.52** | **−0.40** | **+0.09** | **citable** — UNEP EGR 2025 / CAT COP30 2025 |
+| uniform | −6.20 | −6.34 | −4.03 | +1.31 | uninformative convention |
+| policy-sceptic | −3.55 | −3.59 | −2.24 | +0.79 | asserted bookend |
+| ambition | −8.53 | −8.75 | −5.56 | +1.79 | asserted bookend |
+
+The **consensus** prior is the one with a source: it applies the paper's §3.1.4
+construction to the published current-policy warming estimate (2.7 °C), and puts
+80.7 % on Current Policies. Its expected moves are an order of magnitude smaller,
+because on that trajectory the carbon price stays near zero — so transition FX
+risk sits in the *tail*, not the expectation. See `PAPER_AUDIT.md` §H.
 
 The prior is a *narrative* choice, so all three are reported and the spread should
 be read as prior uncertainty, not a point estimate. All three are normalised to the
