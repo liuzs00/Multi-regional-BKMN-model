@@ -70,6 +70,23 @@ op = oprisk.oprisk_shift({r: -0.05 for r in m.regions_order}, kap, u0)
 check("⇒ op-risk losses rise", all(v["Conduct"] > 0 and v["Execution"] > 0
                                    for v in op.values()))
 
+# --- Sensitivity: dynamic carbon-pricing scope -------------------------------
+from bkmn import macro as _macro                                            # noqa: E402
+check("scope_at is identity at zero carbon price",
+      _macro.scope_at(0.3, 0.0) == 0.3)
+check("scope_at bounded in [scope0, 1]",
+      all(s0 <= _macro.scope_at(s0, x) <= 1.0
+          for s0 in (0.0, 0.3, 0.82) for x in (0, 50, 100, 400)))
+check("scope_at monotone in the carbon price",
+      all(_macro.scope_at(0.2, a) <= _macro.scope_at(0.2, b)
+          for a, b in [(0, 10), (10, 100), (100, 400)]))
+check("zero-scope regions are no longer indistinguishable",
+      abs(pd.read_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv", index_col=[0, 1])
+          .xs("Net Zero 2050", level=0).loc["IND", "2040"]
+          - pd.read_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv", index_col=[0, 1])
+          .xs("Net Zero 2050", level=0).loc["TUR", "2040"]) > 1e-4,
+      "IND vs TUR differ under dynamic scope (identical under static)")
+
 # --- Phase M: mixture --------------------------------------------------------
 tbl = pd.read_csv(f"{ROOT}/out_ext_fx_forward_5y.csv", index_col=[0, 1])
 tbl.columns = [int(c) for c in tbl.columns]

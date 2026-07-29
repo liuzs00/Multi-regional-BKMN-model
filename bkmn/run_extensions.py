@@ -41,10 +41,22 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WARMING_BASELINE = "incremental"
 
 
-def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None):
-    """One scenario -> all channel outputs (optionally with stressed inputs)."""
+def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
+          dynamic_scope=False):
+    """
+    One scenario -> all channel outputs (optionally with stressed inputs).
+
+    `dynamic_scope` switches the inflation channel from the frozen 2025 coverage
+    to coverage that expands with the scenario's own carbon price (macro.scope_at,
+    the §2.6 ΔΩ_XCE reading). Sensitivity only — the headline uses static scope.
+    """
     xce = xce_annual(sc, scenario) if xce_over is None else xce_over
     out = {k: {} for k in ("trans", "phys", "dY", "dPi", "dr", "cum")}
+
+    def scope_of(r, year):
+        return (macro.scope_at(scope[r], xce.loc[year, r]) if dynamic_scope
+                else scope[r])
+
     for t in HORIZONS:
         tr = transition.region_gdp_shock(m, M, xce.loc[t].to_dict())
         if dT_over is not None:
@@ -58,11 +70,20 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None):
             out["trans"].setdefault(r, {})[t] = tr[r]
             out["phys"].setdefault(r, {})[t] = ph[r]
             out["dY"].setdefault(r, {})[t] = tr[r] + ph[r]
-            dpi = macro.inflation_dev(xce.loc[t, r] - xce.loc[t - 1, r], scope[r])
+            dpi = macro.inflation_dev(xce.loc[t, r] - xce.loc[t - 1, r],
+                                      scope_of(r, t))
             out["dPi"].setdefault(r, {})[t] = dpi
             out["dr"].setdefault(r, {})[t] = macro.taylor_rate_shift(dpi, tr[r] + ph[r])
-            out["cum"].setdefault(r, {})[t] = (macro.INFL_PER_USD * scope[r]
-                                               * (xce.loc[t, r] - xce.loc[BASE, r]))
+            # cumulative price-level effect: with static scope this telescopes to
+            # k*scope*(XCE_t - XCE_base); with a moving scope it must be summed.
+            if dynamic_scope:
+                out["cum"].setdefault(r, {})[t] = sum(
+                    macro.inflation_dev(xce.loc[u, r] - xce.loc[u - 1, r],
+                                        scope_of(r, u))
+                    for u in range(BASE + 1, t + 1))
+            else:
+                out["cum"].setdefault(r, {})[t] = (macro.INFL_PER_USD * scope[r]
+                                                   * (xce.loc[t, r] - xce.loc[BASE, r]))
     return out
 
 
@@ -135,6 +156,12 @@ def main():
         for prior in mixture.PRIORS:
             mixture.expected_drift(fwd, coords, prior, lam=lam, base_year=BASE) \
                    .to_csv(f"{ROOT}/out_sens_fx_drift_{prior}_lam{lam:g}.csv")
+
+    # --- Sensitivity: dynamic carbon-pricing scope (§2.6 dOmega reading) -----
+    dyn = {s_: derive(m, chain(m, sc, s_, M, scope, vl, dynamic_scope=True),
+                      fxregs, betas, kap, u0) for s_ in sc.names}
+    table(dyn, "spot", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv")
+    table(dyn, "fwd5", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_forward_dynscope.csv")
 
     # --- Phase V: volatility band (95th pct of inputs, Net Zero) -------------
     tsig, psig = volatility.temperature_sigma(), volatility.carbon_price_sigma()
