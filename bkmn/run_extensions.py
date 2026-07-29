@@ -29,6 +29,17 @@ from .scenarios import Scenarios
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Which ΔT the damage function is fed (the paper is ambiguous, so make it explicit):
+#   "incremental"    ΔT(t) = GSAT(t) − GSAT(2022) — warming *from today*. Consistent
+#                    with §2.1 ("we only need to look at GDP damage from temperature
+#                    increases"; market curves already embed pre-damage expectations),
+#                    so the output is a shock relative to the market baseline.
+#   "preindustrial"  ΔT(t) = GSAT(t) — the literal reading of Prop 1 ("temperature
+#                    change, at t, relative to pre-industrial temperature"), which is
+#                    also what Eq 13 telescopes to. This charges today's 1.29 K of
+#                    warming as if it were a future shock, so damages are ~17x larger.
+WARMING_BASELINE = "incremental"
+
 
 def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None):
     """One scenario -> all channel outputs (optionally with stressed inputs)."""
@@ -36,7 +47,12 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None):
     out = {k: {} for k in ("trans", "phys", "dY", "dPi", "dr", "cum")}
     for t in HORIZONS:
         tr = transition.region_gdp_shock(m, M, xce.loc[t].to_dict())
-        dT = sc.delta_T(scenario, t, BASE) if dT_over is None else dT_over[t]
+        if dT_over is not None:
+            dT = dT_over[t]
+        elif WARMING_BASELINE == "preindustrial":
+            dT = float(sc.temp.loc[t, scenario])          # GSAT is already vs 1850-1900
+        else:
+            dT = sc.delta_T(scenario, t, BASE)
         ph = physical.region_damage(m, dT, vl)
         for r in m.regions_order:
             out["trans"].setdefault(r, {})[t] = tr[r]

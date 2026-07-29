@@ -28,8 +28,11 @@ import pandas as pd
 from .paper_tables import PATTERN_ICIO
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DAMAGE_COEF = 1.6768 / (2.2 ** 2)      # 0.003467 — Barrage & Nordhaus (Eq 11)
-DAMAGE_COEF_SR = 8.5 / (2.2 ** 2)      # 1.756    — SwissRe variant (Eq 12)
+# Eq 11 is written as 1.6768/(2.2 x 2.2) x dT^2, where 1.6768 is the GDP damage
+# at 2.2 C **in per cent**; the paper's own Eq 13/14 spell the fraction form out
+# as 0.003467.  Dropping the 1/100 makes Omega(2.2 C) = 168% of GDP.
+DAMAGE_COEF = 1.6768e-2 / (2.2 ** 2)   # 0.003467 — Barrage & Nordhaus (Eq 11)
+DAMAGE_COEF_SR = 8.5e-2 / (2.2 ** 2)   # 0.017562 — SwissRe variant (Eq 12)
 
 
 def omega(delta_T, coef=DAMAGE_COEF):

@@ -30,6 +30,14 @@ def check(name, cond, detail=""):
 vl = physical.vl_vector(m)
 check("VL positive & finite", np.all(vl > 0) and np.all(np.isfinite(vl)),
       f"range {vl.min():.2f}-{vl.max():.2f}")
+# Eq 11 anchor: the damage function is DEFINED by 1.6768% of GDP at 2.2 C
+check("Omega(2.2C) = 1.6768% of GDP (Eq 11 anchor)",
+      abs(physical.omega(2.2) - 0.016768) < 1e-12,
+      f"Omega(2.2) = {physical.omega(2.2)*100:.4f}%")
+# paper quotes 0.003467 in Eq 13; 1.6768e-2/2.2^2 = 0.0034645 (their rounding)
+check("damage coefficient ~ 0.003467 (Eq 13)",
+      abs(physical.DAMAGE_COEF - 0.003467) < 1e-5,
+      f"coef = {physical.DAMAGE_COEF:.6f} vs paper 0.003467")
 check("ΔT=0 gives zero damage",
       max(abs(v) for v in physical.region_damage(m, 0.0, vl).values()) == 0.0)
 
