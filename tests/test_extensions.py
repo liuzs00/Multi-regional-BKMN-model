@@ -69,6 +69,17 @@ scen = list(tbl.index.get_level_values(0).unique())
 for prior in mixture.PRIORS:
     w = mixture.weights(prior, scenarios=scen)
     check(f"weights sum to 1 [{prior}]", abs(sum(w.values()) - 1) < 1e-12)
+conc = {p: sum(mixture.PRIORS[p].values()) for p in mixture.PRIORS}
+check("priors share one concentration Σα",
+      max(conc.values()) - min(conc.values()) < 1e-9,
+      f"Σα = {mixture.ALPHA0} for all {len(conc)} priors")
+ev = {"Current Policies": 3}
+for p in mixture.PRIORS:
+    w0, w1 = mixture.weights(p), mixture.weights(p, ev)
+    assert w1["Current Policies"] > w0["Current Policies"], p
+check("event counts shift the posterior toward the counted scenario",
+      True, "+3 Current Policies raises its weight under all priors")
+
 one = {s: (1 if s == "Net Zero 2050" else 0) for s in scen}
 deg = mixture.expected(tbl, one)
 check("degenerate prior reproduces scenario",
