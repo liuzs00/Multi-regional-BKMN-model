@@ -33,6 +33,10 @@ def pull(variable, region, dest):
           f"scenarios={len(df.scenario)}  unit={df.unit}")
 
 
+# Alternate IAMs for the cross-model carbon-price spread (volatility ext. 3.3)
+ALT_MODELS = {"remind": "REMIND-MAgPIE 3.3-4.8", "gcam": "GCAM 6.0 NGFS"}
+
+
 def main():
     os.makedirs(DEST, exist_ok=True)
     print(f"pulling from {DB} / {MODEL} (anonymous IIASA API) ...")
@@ -41,6 +45,13 @@ def main():
     for p in ("50.0", "10.0", "90.0"):
         pull(TVAR.format(p=p), "World",
              os.path.join(DEST, f"temperature_gsat_p{p.split('.')[0]}.csv"))
+    for tag, alt in ALT_MODELS.items():   # cross-model spread -> carbon-price sigma
+        df = pyam.read_iiasa(DB, model=alt, variable="Price|Carbon",
+                             region=R5 + ["World"])
+        dest = os.path.join(DEST, f"price_carbon_r5_{tag}.csv")
+        df.data.to_csv(dest, index=False)
+        print(f"  {os.path.basename(dest):32s} {len(df.data):5d} rows  "
+              f"scenarios={len(df.scenario)}  [{alt}]")
     print("done.")
 
 

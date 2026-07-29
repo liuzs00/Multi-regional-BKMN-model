@@ -1,0 +1,715 @@
+model,scenario,region,variable,unit,year,value
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2025,5.58736059475701
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2030,76.6763250306005
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2035,128.239410129065
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2040,184.564185720052
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2045,251.455475915804
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2050,344.266450545451
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2055,455.916030548697
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2060,626.409212266412
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2065,826.138426923069
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2070,987.15501385592
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2075,1292.85986233606
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2080,1078.44117991557
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2085,937.538850379456
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2090,852.040629579564
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2095,804.899303162976
+GCAM 6.0 NGFS,Below 2?C,World,Price|Carbon,US$2010/t CO2,2100,768.683735624989
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,5.143200160020323
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,83.18728393568615
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,130.062339265736
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,203.0102911873687
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,290.4617728019196
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,401.7260948346241
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,473.1873011188584
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,638.9837862961648
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2065,900.3250142398132
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,1025.518744829531
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2075,1320.384421798671
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,1074.584305129044
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2085,925.8965269341004
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,831.7082772482964
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2095,773.9487970602033
+GCAM 6.0 NGFS,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,724.7179736852211
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2025,4.3410479196547165
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2030,70.55162097913426
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2035,113.6712171970026
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2040,154.7898168486964
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2045,207.5245091836533
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2050,292.5007433294753
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2055,445.3051721861126
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2060,644.9817676010455
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2065,824.4060061409684
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2070,995.3888067454212
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2075,1312.468871299637
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2080,1103.044136439066
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2085,953.1674466519312
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2090,868.4130100193203
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2095,827.2993986887141
+GCAM 6.0 NGFS,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2100,797.2247124002947
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,8.636251738903981
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,69.80955433810189
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,137.9389041612471
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,206.6064313333276
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,279.807942879318
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,371.3765094774963
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,451.2898164278661
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,592.4576975241109
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2065,796.9139256715191
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,975.0868288082792
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2075,1280.214032442552
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,1072.613263354657
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2085,941.355668789853
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,858.5102532013881
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2095,809.9142923738832
+GCAM 6.0 NGFS,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,771.0135450400018
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,7.966997379564567
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,94.8259178454436
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,169.7237449817645
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,240.4233365905417
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,311.4735273953068
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,406.6934439677326
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,495.9607942557279
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,645.6990176919736
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2065,854.5433587963497
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,1004.766379325645
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2075,1316.738923385594
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,1097.238516929752
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2085,956.938193506617
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,862.7488178068525
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2095,805.0827002823286
+GCAM 6.0 NGFS,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,761.5651602292661
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,7.8526962446064354
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,70.70680168222286
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,141.4246919769674
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,204.8607026655591
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,276.019352470892
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,361.691384792549
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,440.1759022837957
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,566.1737559031634
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2065,740.5282908883507
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,925.6732297187584
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2075,1224.189079465616
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,1033.771078573003
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2085,913.8659491664174
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,837.8391869228075
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2095,794.4787590452809
+GCAM 6.0 NGFS,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,762.1560981746389
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2035,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2040,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2045,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2050,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2055,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2060,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2065,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2070,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2075,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2080,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2085,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2090,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2095,0.0
+GCAM 6.0 NGFS,Current Policies,World,Price|Carbon,US$2010/t CO2,2100,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2065,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2075,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2085,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2095,0.0
+GCAM 6.0 NGFS,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2035,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2040,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2045,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2050,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2055,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2060,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2065,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2070,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2075,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2080,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2085,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2090,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2095,0.0
+GCAM 6.0 NGFS,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2100,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2065,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2075,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2085,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2095,0.0
+GCAM 6.0 NGFS,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2065,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2075,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2085,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2095,0.0
+GCAM 6.0 NGFS,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2065,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2075,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2085,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2095,0.0
+GCAM 6.0 NGFS,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,0.0
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2035,76.1927008560636
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2040,153.977774260042
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2045,265.394341787806
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2050,529.225798848785
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2055,629.868691085486
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2060,944.569697770119
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2065,892.284792499914
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2070,952.245542619681
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2075,997.466194643662
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2080,1101.72700545656
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2085,965.760718054627
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2090,876.573850639398
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2095,813.989002205136
+GCAM 6.0 NGFS,Delayed transition,World,Price|Carbon,US$2010/t CO2,2100,768.902018160722
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,82.47344224887931
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,195.696018397947
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,397.9767701725959
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,918.0520501702284
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,776.4226683169179
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,1170.965491325681
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2065,959.4787800527253
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,956.4904608348708
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2075,990.624344201218
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,1108.761997748604
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2085,972.5031775398868
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,865.3422384702142
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2095,781.4016285899997
+GCAM 6.0 NGFS,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,725.7723697978321
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2035,66.87201613829227
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2040,121.8330431909928
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2045,186.255752486573
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2050,371.6979551325943
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2055,638.691426410079
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2060,1015.632300381408
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2065,972.6856979520126
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2070,1009.917630739775
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2075,1009.68115555068
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2080,1073.33401830935
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2085,955.4753805723644
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2090,887.5885056878373
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2095,844.8589738311482
+GCAM 6.0 NGFS,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2100,807.1108074434186
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,77.60546249319904
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,160.8986861904436
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,271.5928975181769
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,469.33640703704
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,508.1993392627902
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,711.2810837237545
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2065,755.4150698797773
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,887.1367363231268
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2075,993.709724732821
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,1134.940288571431
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2085,981.4738460239402
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,882.0956221575515
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2095,812.0133777283097
+GCAM 6.0 NGFS,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,765.4089803527007
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,104.7991305402786
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,208.8871625665523
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,359.2433325295482
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,688.8006662403519
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,678.8178471185655
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,956.955087263738
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2065,880.9235511591659
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,951.8279261939884
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2075,1022.430146050218
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,1157.273530322967
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2085,1006.039052710478
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,894.4749005455556
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2095,812.9463295782683
+GCAM 6.0 NGFS,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,756.40351279316
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,0.0
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,0.0
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,75.87818442451778
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,148.5303650359522
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,240.3319538710957
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,352.9245641724892
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,430.5708517825952
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,571.8499723822889
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2065,686.1804161731035
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,848.3529045987129
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2075,970.8301058395016
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,1114.517754909039
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2085,958.1834035520797
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,861.4136304046392
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2095,795.1786973658279
+GCAM 6.0 NGFS,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,752.5105127667235
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2025,0.251810659855146
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2030,0.9995728265418581
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2035,37.1716014988859
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2040,70.2973973234488
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2045,98.4354450594726
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2050,133.219136747649
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2055,150.617890945054
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2060,183.110581933472
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2065,160.697475342623
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2070,148.781860797945
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2075,144.494505530908
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2080,133.423929927813
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2085,126.934556521555
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2090,120.164667154363
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2095,113.103120804353
+GCAM 6.0 NGFS,Fragmented World,World,Price|Carbon,US$2010/t CO2,2100,107.71766092423
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,0.076490451314947
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,0.267801122337588
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,53.98360116858332
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,120.7273190247683
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,180.831092858147
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,255.9892107749871
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,225.0261602391192
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,243.5552886540952
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2065,211.5033468280502
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,189.8599530374936
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2075,181.5713343947735
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,170.2194189909772
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2085,161.4252855202145
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,150.9419843344153
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2095,142.6658873883916
+GCAM 6.0 NGFS,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,134.1233474363789
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2025,0.180232923521738
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2030,0.7193346233822631
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2035,35.38462825415529
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2040,63.43805295246896
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2045,86.62102395665754
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2050,116.5318492861604
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2055,180.1254974198177
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2060,243.3800991446862
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2065,218.2677557892994
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2070,206.9457552459715
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2075,205.2276761952753
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2080,189.8828654808518
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2085,183.1191445007356
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2090,176.0454305815144
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2095,166.681243830557
+GCAM 6.0 NGFS,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2100,155.9686309801045
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,0.548381773782989
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,2.174957162799591
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,20.60951745579716
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,36.02640561500153
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,49.54705367284371
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,65.795874828872
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,63.50633490177417
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,76.73241477065433
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2065,72.28039492499472
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,72.2095297968307
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2075,71.6863416994911
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,69.2007257540261
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2085,68.21560992469729
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,67.54562875107563
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2095,67.93658009145912
+GCAM 6.0 NGFS,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,70.609449589724
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,0.35957468295736705
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,1.459985633353339
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,53.06983825909013
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,94.61052700282131
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,127.1260928219593
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,168.943253060519
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,149.5619772488656
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,160.5203990688806
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2065,138.9724822755609
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,131.9321594163679
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2075,130.5954172502347
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,124.490305423664
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2085,119.1169566803315
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,111.9392561122724
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2095,103.3907341529456
+GCAM 6.0 NGFS,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,99.12121177409908
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,0.6797525072860741
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,2.7860536404216543
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,8.336785086695064
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,8.839778430895635
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,13.7381903643814
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,20.69739135080372
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,19.81926944657792
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,28.70227903241312
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2065,29.0014830972714
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,31.11595794724844
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2075,33.16593698303197
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,33.70763841477226
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2085,34.93936731781029
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,36.69917029504117
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2095,38.10264423169234
+GCAM 6.0 NGFS,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,44.1017067524299
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2020,1.28564101372834
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2025,12.3280435833712
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2030,94.9566349255741
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2035,183.592229690749
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2040,303.617997164461
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2045,598.540923521343
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2050,1076.16081869822
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2055,873.527137577017
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2060,832.030698984089
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2065,760.076876653309
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2070,748.766233103952
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2075,778.409960282348
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2080,824.590442814712
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2085,838.999333605177
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2090,836.329736707556
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2095,819.780222500261
+GCAM 6.0 NGFS,Low demand,World,Price|Carbon,US$2010/t CO2,2100,795.422481464979
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,0.38022979196725903
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,10.93944608565876
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,87.38571823138908
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,186.6775907666066
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,337.4760152065007
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,624.8479536061456
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,1142.86363547178
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,834.2580308336893
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,790.5183264425385
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2065,722.0614827017861
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,709.4569078630572
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2075,739.3567636008098
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,780.0930003306646
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2085,781.5587841096311
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,770.3006475157628
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2095,748.594514063686
+GCAM 6.0 NGFS,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,722.6719113089913
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2020,2.621289035651296
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2025,11.18513924152255
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2030,91.24381050561236
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2035,158.2855534706193
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2040,256.3165057585859
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2045,588.6920379101748
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2050,1043.573812179439
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2055,884.58384089384
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2060,859.1922451445009
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2065,775.6917340711836
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2070,752.5383028829044
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2075,774.0358879167484
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2080,827.8066362053805
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2085,854.4791710637088
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2090,857.0039536802789
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2095,841.3800328039422
+GCAM 6.0 NGFS,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2100,810.4287604987428
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,1.09491007846202
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,16.6525468355107
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,97.46153531719762
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,206.0577228489472
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,337.0379721752813
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,580.9096621876929
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,1059.237332747851
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,872.3115887736457
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,813.3329719609767
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2065,758.3745895263112
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,763.3815543329529
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2075,799.7455242797985
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,839.5706415988666
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2085,846.7306418302353
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,842.5622375390719
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2095,827.6016408001559
+GCAM 6.0 NGFS,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,806.8603995030369
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,1.340251625367093
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,14.69301907524279
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,118.8816766606962
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,250.2673346252706
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,380.2955770298026
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,635.471862292092
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,1139.243724085826
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,908.1927385959128
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,850.3763998844724
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2065,777.1398302623529
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,772.1719165933071
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2075,806.6747054227478
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,844.1665081748641
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2085,847.7596922631351
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,839.560787432711
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2095,820.6710406204631
+GCAM 6.0 NGFS,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,802.8627251378072
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,1.40581992797412
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,15.91609411875156
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,103.8969827839224
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,210.445438485847
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,334.3966515331439
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,569.2200718810715
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,1037.213276908787
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,881.4282742801075
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,815.3323573577007
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2065,760.5069319651833
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,765.5067800265116
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2075,803.5501551919037
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,843.533654407336
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2085,852.6735728915725
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,850.5730245214179
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2095,836.6472280385303
+GCAM 6.0 NGFS,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,818.936109711129
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2025,5.02026126104147
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2030,33.3693697614326
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2035,38.2776197593853
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2040,48.9142247787028
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2045,54.1784777539771
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2050,60.4332919803743
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2055,66.6706024278279
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2060,74.2371582971887
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2065,81.1226723673348
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2070,86.9262542541575
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2075,91.7574339734607
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2080,89.9681419775478
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2085,99.1518463186808
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2090,107.654016921039
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2095,112.879198470728
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2100,116.839654939999
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,0.010330640825057
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,5.616261240353486
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,77.80314183092018
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,68.90155956895018
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,89.34093067455775
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,97.05827665652744
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,99.84969076965548
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,100.9646305690789
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,101.975690929526
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2065,103.5115078966631
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,98.81015732075764
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2075,93.16683252692722
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,91.23466764166676
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2085,91.29823832972048
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,98.5887283279442
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2095,96.2482695992182
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,93.59385493444832
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2025,4.46001471213533
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2030,9.684010557553089
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2035,17.62157858791217
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2040,21.97256421157363
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2045,25.52338523235505
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2050,32.18216549987069
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2055,38.45582612003081
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2060,47.9862522497852
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2065,58.39420689699327
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2070,68.39858013656074
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2075,76.75689916372632
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2080,67.70252651700915
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2085,83.06198306698107
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2090,94.31971246248814
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2095,103.2975161280609
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2100,108.4761001838662
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,0.0038545673692530003
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,6.049461508064052
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,22.6858080091664
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,40.43405949861977
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,58.84594774517726
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,67.75498572945578
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,77.04903630776732
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,86.40568001431778
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,95.2975307183081
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2065,102.0123932720812
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,108.8381536474342
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2075,113.0962566450512
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,117.6015556185722
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2085,122.8112094753096
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,128.8949541249148
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2095,132.0822526699957
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,135.3183190594593
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2020,0.0001675187552885
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2025,4.142803984705525
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2030,69.10231523577781
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2035,75.76474874819566
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2040,80.36862727507399
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2045,80.94644557309248
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2050,84.79236789993487
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2055,95.46830976670024
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2060,103.6377897322344
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2065,104.3373550246896
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2070,106.3374817464068
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2075,110.2327822192768
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2080,114.9881117804181
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2085,121.1069873160752
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2090,124.0340392040486
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2095,125.5421486673875
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2100,127.5616190116157
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,5.182516630004239
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,9.811085692562926
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,30.73544555447726
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,46.95131964000097
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,56.35905564543955
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,66.81743731784451
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,76.602869968268
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,85.5974099856316
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2065,91.61373071374652
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,99.03496001791493
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2075,105.7120873224543
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,111.7608540244
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2085,117.8687628710962
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,122.9282009466467
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2095,128.1842093168976
+GCAM 6.0 NGFS,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,134.192215473029
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2025,12.454283336185
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2030,102.019050480328
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2035,198.309476538417
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2040,336.746266044859
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2045,658.868773537624
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2050,1260.06508156468
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2055,1167.45821827464
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2060,1164.48611166159
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2065,1061.78868690209
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2070,1037.88825062872
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2075,1075.11583143257
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2080,1147.29522822971
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2085,1168.52617995244
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2090,1158.79472384237
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2095,1179.94639633133
+GCAM 6.0 NGFS,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2100,1194.76998296183
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,12.97964120635672
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,99.00759292662532
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,207.6587938447106
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,383.0278467364974
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,715.3386479474801
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,1493.306665907542
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,1139.366772470815
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,1103.549411371918
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2065,1024.754067591827
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,1022.810262935617
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2075,1077.833583354991
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,1159.241524879022
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2085,1165.316112400256
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,1119.923800285738
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2095,1114.611276112971
+GCAM 6.0 NGFS,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,1118.084291073583
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2025,10.04520273783362
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2030,95.04612214675568
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2035,167.6494105398381
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2040,279.3730034039314
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2045,631.9915288435174
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2050,1143.362621063892
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2055,1149.326521006609
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2060,1227.509088551207
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2065,1083.176066892538
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2070,1018.315314379874
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2075,1033.719025885737
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2080,1108.781869140989
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2085,1148.980991164373
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2090,1159.391303793584
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2095,1195.008023710265
+GCAM 6.0 NGFS,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2100,1206.66485808333
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,17.12402907032761
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,106.0746121858894
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,223.9070973350763
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,376.4378848958318
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,645.4723804129276
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,1200.847279458761
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,1158.329478288187
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,1083.84892677304
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2065,1035.885321686769
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,1059.822384085408
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2075,1116.104136358221
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,1184.507616168144
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2085,1198.355182363304
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,1184.219943323215
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2095,1204.038593947722
+GCAM 6.0 NGFS,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,1226.795772856458
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,14.32466599071267
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,123.8759021589269
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,267.8443383477847
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,423.5784692264219
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,705.0381073973508
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,1562.361517704467
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,1380.280562906819
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,1285.213399980999
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2065,1169.600185318234
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,1152.543455741894
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2075,1186.204350409035
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,1232.550732548752
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2085,1216.894376370991
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,1190.058386137784
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2095,1191.649654496679
+GCAM 6.0 NGFS,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,1201.04525179258
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,0.0
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,15.04388507538372
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,110.974920668204
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,226.598403264764
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,368.4303357643667
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,620.7708206908537
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,1096.605245848305
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,1155.718940927194
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,1059.909103940088
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2065,1017.428619547956
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,1039.393924787595
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2075,1094.943840076939
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,1161.551149573851
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2085,1177.265462790799
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,1170.277705404274
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2095,1195.4564088865
+GCAM 6.0 NGFS,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,1220.752377807422

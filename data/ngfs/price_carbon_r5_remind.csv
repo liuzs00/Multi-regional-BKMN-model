@@ -1,0 +1,547 @@
+model,scenario,region,variable,unit,year,value
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2020,11.170512416
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2025,18.41418208
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2030,32.113372592
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2035,48.73467300800001
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2040,70.01633620800001
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2045,98.08985558400002
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2050,135.003447264
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2055,156.0307336
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2060,177.039858128
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2070,219.163271264
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2080,260.945616176
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2090,302.7307782239999
+REMIND-MAgPIE 3.3-4.8,Below 2?C,World,Price|Carbon,US$2010/t CO2,2100,344.5397873120001
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,23.32083148872387
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,28.45563187340313
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,49.32332924941866
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,71.41018393390632
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,93.5232241879004
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,115.7207138016164
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,138.0893608190827
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,158.9239199072394
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,179.6859702463674
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,221.3539169988067
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,263.0709296861296
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,304.7335326727003
+REMIND-MAgPIE 3.3-4.8,Below 2?C,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,346.395963169444
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2020,4.836915896623897
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2025,11.37879549860652
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2030,21.25447709809679
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2035,35.72751018451091
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2040,57.50009847876723
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2045,89.48840826794923
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2050,134.5004292419286
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2055,155.8216574784249
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2060,177.1818893000264
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2070,219.9678506638894
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2080,261.8431930327421
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2090,303.671995518802
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Asia (R5),Price|Carbon,US$2010/t CO2,2100,345.4670934375272
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,2.800002576
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,22.933385664
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,40.40689184
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,59.368309728
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,80.64986115200001
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,105.083768048
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,133.50225224
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,154.481177648
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,175.460102944
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,217.417953648
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,259.375804352
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,301.3336550560001
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,343.29150576
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,11.200010192
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,18.677705872
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,33.522147568
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,50.97043481600002
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,72.47895592000002
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,99.50409896
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,133.50225224
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,154.481177648
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,175.460102944
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,217.417953648
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,259.375804352
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,301.3336550560001
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,343.29150576
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,2.167211401451681
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,13.73804286212859
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,25.349045936741
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,40.85301638572348
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,62.66931908993245
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,92.70401067070873
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,133.50225224
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,154.481177648
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,175.460102944
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,217.417953648
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,259.375804352
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,301.3336550560001
+REMIND-MAgPIE 3.3-4.8,Below 2?C,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,343.29150576
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2020,11.170512416
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2025,10.693263392
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2030,10.295612768
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2035,10.155810896
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2040,10.251047408
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2045,10.589696432
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2050,11.127344144
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2055,11.920534752
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2060,12.847874928
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2070,15.459263456
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2080,18.829933248
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2090,23.0182092
+REMIND-MAgPIE 3.3-4.8,Current Policies,World,Price|Carbon,US$2010/t CO2,2100,28.000025424
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,23.32083148872387
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,23.28186044073566
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,23.27705035642764
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,23.31220235560375
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,23.39144477859998
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,23.52964512661944
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,23.71263250865933
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,23.94119902155565
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,24.20088770610009
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,24.88475871408067
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,25.78333310729216
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,26.82045319291004
+REMIND-MAgPIE 3.3-4.8,Current Policies,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,28.000025424
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2020,4.836915896623897
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2025,4.800276952842643
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2030,4.94958906979946
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2035,5.325549237184421
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2040,5.8929338828138285
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2045,6.660949226316121
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2050,7.634526802579361
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2055,8.80427219434742
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2060,10.15306502535519
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2070,13.46123555434712
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2080,17.53266348653236
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2090,22.38006902610555
+REMIND-MAgPIE 3.3-4.8,Current Policies,Asia (R5),Price|Carbon,US$2010/t CO2,2100,28.000025424
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,2.800002576
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,2.898440160000001
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,3.193752911999999
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,3.685940832
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,4.375004032
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,5.260942288000001
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,6.343755712
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,7.623444416000001
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,9.100008288
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,12.643761536
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,16.975015456
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,22.093770048
+REMIND-MAgPIE 3.3-4.8,Current Policies,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,28.000025424
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,11.200010192
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,11.265635248
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,11.462510416
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,11.790635696
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,12.250011088
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,12.840636704
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,13.56251232
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,14.41563816
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,15.400014
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,17.762516128
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,20.650018816
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,24.06252184
+REMIND-MAgPIE 3.3-4.8,Current Policies,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,28.000025424
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,2.167211401451681
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,2.257954432262562
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,2.5404705993624788
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,3.034353090671012
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,3.7312647414526223
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,4.622619377830085
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,5.695708780902836
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,6.9965705424967775
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,8.491203256792437
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,12.10593869480148
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,16.55789655248597
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,21.85778306075252
+REMIND-MAgPIE 3.3-4.8,Current Policies,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,28.000025424
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2020,11.170512416
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2025,10.693263392
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2030,10.295612768
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2035,98.898682624
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2040,160.199772768
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2045,234.973191712
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2050,320.453270704
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2055,351.252863248
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2060,382.97851536
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2070,412.7052385120001
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2080,435.824857776
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2090,464.145421936
+REMIND-MAgPIE 3.3-4.8,Delayed transition,World,Price|Carbon,US$2010/t CO2,2100,495.5161285759999
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,23.32083148872387
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,23.28186044073566
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,23.27705035642764
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,220.3760634676131
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,381.9194887999639
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,545.186113942531
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,709.7487726109845
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,713.9515171658953
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,717.9350340634655
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,726.7584145825682
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,736.4894314340997
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,746.4060115212627
+REMIND-MAgPIE 3.3-4.8,Delayed transition,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,756.5355824373481
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2020,4.836915896623897
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2025,4.800276952842643
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2030,4.94958906979946
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2035,53.37669088985607
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2040,96.83766477221089
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2045,156.8024693858044
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2050,234.262300518439
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2055,287.5710531557336
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2060,345.7013556168529
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2070,401.7831324870501
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2080,434.4604165256669
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2090,468.2443500961214
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Asia (R5),Price|Carbon,US$2010/t CO2,2100,501.5469605415761
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,2.800002576
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,2.898440160000001
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,3.193752911999999
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,96.73246296
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,166.001724336
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,253.950568144
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,361.510174368
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,475.897982896
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,620.5905634880002
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,637.23277632
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,653.874989152
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,670.5172018720001
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,687.159414704
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,11.200010192
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,11.265635248
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,11.462510416
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,57.03123955200001
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,81.09730092800001
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,111.335956144
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,149.37676992
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,172.850262368
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,196.323754816
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,243.2707396
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,290.2177244960001
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,337.16470928
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,384.111694176
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,2.167211401451681
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,2.257954432262562
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,2.5404705993624788
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,45.51018377807331
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,69.84083994221899
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,103.6585539139334
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,149.37676992
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,172.850262368
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,196.323754816
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,243.2707396
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,290.2177244960001
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,337.16470928
+REMIND-MAgPIE 3.3-4.8,Delayed transition,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,384.111694176
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2020,11.170512416
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2025,10.693263392
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2030,10.295612768
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2035,22.131613056
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2040,33.802136928
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2045,45.644305504
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2050,57.094103808
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2055,60.832610944
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2060,65.31035672
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2070,70.11522179200001
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2080,68.26189496
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2090,67.23666678400002
+REMIND-MAgPIE 3.3-4.8,Fragmented World,World,Price|Carbon,US$2010/t CO2,2100,67.58679188800001
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,23.32083148872387
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,23.28186044073566
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,23.27705035642764
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,54.30972549017559
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,84.89290951947575
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,115.2036818543075
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,145.6459115274485
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,141.4424140528114
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,137.495312912849
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,129.9623738160848
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,122.8946226298672
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,115.9822292554266
+REMIND-MAgPIE 3.3-4.8,Fragmented World,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,109.1950624627618
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2020,4.836915896623897
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2025,4.800276952842643
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2030,4.94958906979946
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2035,9.83376589932523
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2040,17.15303560056266
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2045,26.90078413232283
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2050,37.17581119255933
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2055,48.01412265091583
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2060,60.05760536477096
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2070,80.63779952894502
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2080,82.62681466118875
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2090,84.39979521020217
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Asia (R5),Price|Carbon,US$2010/t CO2,2100,85.93159712273413
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,2.800002576
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,2.898440160000001
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,3.193752911999999
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,12.93778248
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,27.50460809600001
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,46.894229648
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,71.106647248
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,100.141860784
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,138.625791248
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,132.917702736
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,127.99711512
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,123.864028064
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,120.518441792
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,11.200010192
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,11.265635248
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,11.462510416
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,29.436889216
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,47.542518016
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,65.77939704
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,84.14752617600001
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,82.64781806400002
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,81.279360176
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,78.93619473599999
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,77.11802985599999
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,75.824865312
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,75.05670132800003
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,2.167211401451681
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,2.257954432262562
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,2.5404705993624788
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,3.02431361760177
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,3.7150715159937313
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,4.608071541529596
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,5.675011544340094
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,6.985402462700459
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,8.484075180795278
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,12.10746630633691
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,16.56293146339425
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,21.86050265285424
+REMIND-MAgPIE 3.3-4.8,Fragmented World,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,28.000025424
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2020,11.170512416
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2025,59.34716032000001
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2030,110.897956064
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2035,171.41941656
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2040,248.315203472
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2045,351.7694524960001
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2050,486.827519808
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2055,492.427524848
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2060,498.0275300000001
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2070,509.2275400800001
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2080,520.4275502720001
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2090,531.6275604640001
+REMIND-MAgPIE 3.3-4.8,Low demand,World,Price|Carbon,US$2010/t CO2,2100,542.8275706560001
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,23.32083148872387
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,92.07137714255497
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,170.4625986779685
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,248.9866737870546
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,327.7892360287366
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,407.0750578114519
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,486.827519808
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,492.4275248480001
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,498.0275300000001
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,509.2275400800001
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,520.4275502720001
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,531.6275604640002
+REMIND-MAgPIE 3.3-4.8,Low demand,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,542.8275706560001
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2020,4.836915896623897
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2025,36.691296155906
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2030,73.45199807699255
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2035,127.2722689123372
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2040,206.6465826857313
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2045,323.0311190067972
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2050,486.827519808
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2055,492.427524848
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2060,498.0275300000001
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2070,509.22754008
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2080,520.4275502720001
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2090,531.6275604640001
+REMIND-MAgPIE 3.3-4.8,Low demand,Asia (R5),Price|Carbon,US$2010/t CO2,2100,542.8275706560001
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,2.800002576
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,74.20563808
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,139.684534528
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,210.5581440480001
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,289.9544934720001
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,381.001609744
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,486.827519808
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,492.427524848
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,498.0275300000001
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,509.2275400800001
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,520.4275502720001
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,531.6275604640001
+REMIND-MAgPIE 3.3-4.8,Low demand,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,542.8275706560001
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,11.200010192
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,60.43551976000001
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,115.884329904
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,180.77388784
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,260.578240832
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,360.771435808
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,486.827519808
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,492.427524848
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,498.0275300000001
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,509.2275400800001
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,520.4275502720001
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,531.6275604640001
+REMIND-MAgPIE 3.3-4.8,Low demand,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,542.8275706560001
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,2.167211401451681
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,44.308359566472
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,84.524796472599
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,141.3994269916085
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,221.0411047925879
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,333.46820082096
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,486.827519808
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,492.427524848
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,498.0275300000001
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,509.2275400800001
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,520.4275502720001
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,531.6275604640001
+REMIND-MAgPIE 3.3-4.8,Low demand,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,542.8275706560001
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2020,11.170512416
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2025,51.330664672
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2030,84.45936833600003
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2035,82.703619376
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2040,82.699013376
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2045,84.05906577599998
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2050,85.54760076800001
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2055,86.87240766400002
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2060,87.72543628800001
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2070,89.31189635200002
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2080,90.371804992
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2090,94.39932499200002
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),World,Price|Carbon,US$2010/t CO2,2100,101.920092624
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,23.32083148872387
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,121.5670480013598
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,216.911391375443
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,215.9468030914937
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,214.9804569215596
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,213.8716366193923
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,211.1302917041736
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,206.8712342559588
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,201.2040280316296
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,185.6679435688113
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,162.0355919436095
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,128.2509179944522
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,101.920092624
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2020,4.836915896623897
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2025,13.81737977053318
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2030,23.76518611269917
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2035,29.51999497655816
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2040,35.27707064418931
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2045,40.9673454536136
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2050,46.34648136306442
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2055,51.26156594511444
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2060,56.08460723097962
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2070,64.60299414684549
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2080,73.14203817685426
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2090,87.52007958400002
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Asia (R5),Price|Carbon,US$2010/t CO2,2100,101.920092624
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,2.800002576
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,1.960001792
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,1.120001008
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,8.320007584
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,15.52001416
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,22.720020624
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,29.9200272
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,37.120033776
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,44.32004023999999
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,58.72005339200001
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,73.120066432
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,87.52007958400002
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,101.920092624
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2020,11.200010192
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2025,64.543210032
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2030,117.88640976
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2035,119.03456544
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2040,119.845770352
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2045,120.272124784
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2050,120.26097328
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2055,119.754492256
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2060,118.68924424
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2070,114.597692832
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2080,107.347219392
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2090,96.173741328
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Latin America (R5),Price|Carbon,US$2010/t CO2,2100,101.920092624
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,2.167211401451681
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,20.03527333628184
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,37.72865122942505
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,39.84350908296337
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,42.12735005359185
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,44.63914496379778
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,47.3683584196189
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,50.23105657551237
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,53.38591762454224
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,62.87930877131368
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,73.120066432
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,87.52007958400003
+REMIND-MAgPIE 3.3-4.8,Nationally Determined Contributions (NDCs),Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,101.920092624
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2020,11.170512416
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2025,98.377705216
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2030,183.301552448
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2035,294.946447488
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2040,433.7659624479999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2045,614.370843632
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2050,748.8032356000002
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2055,779.77212992
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2060,811.0542117440001
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2070,872.4076285120001
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2080,935.090474976
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2090,999.037740736
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,World,Price|Carbon,US$2010/t CO2,2100,1063.775865264
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2020,23.32083148872387
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2025,152.3844736690992
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2030,282.2098852376754
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2035,452.7636315503082
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2040,623.9807303273395
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2045,795.3846925061491
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2050,870.0502582689974
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2055,898.2429363719594
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2060,926.443847877758
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2070,982.337940193647
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2080,1039.330912326943
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2090,1096.778106268863
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,OECD & EU (R5),Price|Carbon,US$2010/t CO2,2100,1153.666895768663
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2020,4.836915896623897
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2025,60.84325988846475
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2030,121.4873517115072
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2035,210.3853272058257
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2040,341.3849868749285
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2045,534.089743153292
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2050,708.7993465279999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2055,742.3993771039998
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2060,775.9994076799999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2070,843.1994687199998
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2080,910.399529872
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2090,977.5995909120002
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Asia (R5),Price|Carbon,US$2010/t CO2,2100,1044.799652064
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2020,2.800002576
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2025,122.81040408
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2030,231.178042032
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2035,353.197773488
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2040,491.684567024
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2045,651.8153101600001
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2050,741.866212976
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2055,789.6377576640002
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2060,842.133140464
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2070,904.6093635040002
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2080,967.085586544
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2090,1029.561809584
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Reforming Economies (R5),Price|Carbon,US$2010/t CO2,2100,1092.038032624
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2020,11.200010192
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2025,100.02084456
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2030,191.788679936
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2035,299.180962304
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2040,431.25724488
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2045,597.0770811040001
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2050,708.7993465279999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2055,742.3993771039999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2060,775.9994076799999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2070,843.1994687199999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2080,910.399529872
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2090,977.599590912
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Latin America (R5),Price|Carbon,US$2010/t CO2,2100,1044.799652064
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2020,2.167211401451681
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2025,73.43623901712321
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2030,143.2832886425562
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2035,238.0729447275568
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2040,368.6280869877977
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2045,553.1972052249855
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2050,708.7993465279999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2055,742.3993771039998
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2060,775.9994076799999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2070,843.1994687199999
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2080,910.3995298719998
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2090,977.599590912
+REMIND-MAgPIE 3.3-4.8,Net Zero 2050,Middle East & Africa (R5),Price|Carbon,US$2010/t CO2,2100,1044.799652064
