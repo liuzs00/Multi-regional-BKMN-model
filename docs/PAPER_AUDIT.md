@@ -74,6 +74,19 @@ from the no-climate baseline at t, so the Taylor rule returns the policy-rate
 deviation at t; integrating those would double-count. Flagged for confirmation
 against the single-region reference code.
 
+### C1b. §3.3 volatility — *we follow the paper's actual method*
+An earlier draft of this audit listed the regime-switching Hull-White SDEs as
+"not implemented". That was wrong: §3.3 is explicitly a sketch (*"We sketch how
+to do so here"*), and the paper's own conclusion states what it did — *"In our
+simplified approach, we **stressed the data by a factor of standard deviation**,
+which depends on the chosen confidence level"*. That is exactly our Phase V.
+Moreover the simplification is **exact**, not merely convenient: under §3.3's own
+single-Brownian-motion assumption the whole chain is monotone in one shock, so
+quantile-of-output = output-of-quantile-input (verified numerically across
+z ∈ [−1.64, 1.64] for all 14 currencies). Simulating the SDEs would add value only
+for distribution *shape* (expected shortfall) or if the single-BM assumption were
+relaxed.
+
 ### C2. RCP transition matrix (Eq 1) — implemented as a **sensitivity**
 See §E. Kept out of the headline because it needs two assumptions the static
 mixture does not (λ, and a distance over narratives).
@@ -167,7 +180,7 @@ paper admits more than one reading · **[deferred]** planned, not yet built.
 | 9 | §2.1, §2.6, §2.8 | Anchoring on **observed market curves** — the paper starts from real yield/inflation curves and reports stressed *levels* | [scope] we report *shifts*, which need no curve data | cannot quote absolute stressed rates/inflation; FX is a shift, not a level |
 | 10 | §2.6 (2nd eq.) | Inflation term-structure overlay `Π(t,T,T+1) = Π_market + ∫ΔΠ·f ds` | follows from 9 | annual deviation only, no forward-inflation curve |
 | 11 | §3.3 | Volatility as **regime-switching Hull–White SDEs** for ΔT and ln XCE | [deferred] we stress inputs by z·σ instead (valid because the chain is monotone) | no simulated paths, no correlation structure |
-| 12 | §2.2 | Scenario **scope** dynamics — ΔΩ_XCE changing over time | [deferred] scope is static at its 2025 value | understates long-horizon inflation under ambitious scenarios |
+| 12 | §2.6 | Carbon-pricing **scope** dynamics — Ω_XCE changing over time | implemented as a **sensitivity** (§G); headline keeps 2025 coverage | see §G |
 
 ### F2. Implemented differently
 
@@ -204,3 +217,36 @@ Moessner's 0.08 %/$10, the Taylor rule with φΠ = φY = 0.5, Prop 2 with a = 0.
 the log-linear GVA→market link (§2.9), Okun with β_Phillips = 0 (§2.11), the
 Dirichlet-categorical conjugacy (§2.2), and the FX-from-yield-curve-differences
 route (§4.3).
+
+
+## G. Carbon-pricing scope: static vs dynamic (sensitivity)
+
+§2.6 drives inflation with Δ**Ω**_XCE — a *change* in the fraction of emissions
+priced — and notes that *"increases in scope of carbon pricing may have similar
+effects and is included here"*. Our headline holds Ω at its observed **2025**
+value for all horizons, which produces a visible artefact: India and Turkey price
+nothing today, so with frozen coverage they contribute **zero** carbon inflation
+even while paying $338/t in the transition channel under Net Zero. Their spot FX
+then becomes purely the negative of EU27's inflation — identical to four decimals
+(−2.2726 % each at 2040), regardless of how different the two economies are.
+
+**Sensitivity** (`macro.scope_at`, `out_sens_fx_*_dynscope.csv`): coverage expands
+with the scenario's own carbon price,
+
+    Ω(t) = Ω₂₀₂₅ + (1 − Ω₂₀₂₅)·min(1, XCE(t)/XCE_full),   XCE_full = $100/t
+
+The carbon price *is* the scenario's policy-stringency signal, so this is the
+least assumption-heavy link available; `XCE_full` is the single asserted
+parameter. Current Policies (~$3/t) leaves coverage essentially unchanged; Net
+Zero (>$300/t by 2030) takes it to full.
+
+**Effect** (spot FX vs EUR, 2040, Net Zero): the artefact resolves — IND and TUR
+separate (−0.274 % vs −0.263 %) — and **all** spot moves collapse toward zero
+(USA −1.95 % → −0.10 %, IND −2.27 % → −0.27 %). That is economically coherent: if
+every region ends up with near-full coverage of the same carbon price, carbon
+inflation is common and the PPP differential vanishes. It also shows the headline
+spot channel is largely driven by **today's coverage disparities persisting for
+two decades** — a strong assumption worth stating.
+
+Note this does not touch the forward/CIP channel's driver (ΔY), which is where
+most of the FX signal lives.
