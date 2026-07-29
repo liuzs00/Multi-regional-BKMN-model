@@ -44,6 +44,19 @@ PRIORS = {name: {s: v / sum(shape.values()) * ALPHA0 for s, v in shape.items()}
           for name, shape in PRIOR_SHAPES.items()}
 
 
+def _key(s):
+    """
+    Normalised scenario key for matching.
+
+    The IIASA API returns "Below 2?C" (an ASCII '?' where the source has a
+    degree sign), so an exact-string lookup against a literal "Below 2°C" in
+    this module silently failed and that scenario was dropped from the mixture.
+    Matching on alphanumerics only makes the join robust to that and to any
+    other punctuation drift ('°', '?', '℃', hyphens, case).
+    """
+    return "".join(ch for ch in str(s).lower() if ch.isalnum())
+
+
 def alphas(prior="uniform", counts=None):
     """
     Dirichlet parameters after the conjugate update (paper §2.2):
@@ -53,16 +66,28 @@ def alphas(prior="uniform", counts=None):
     one net-zero commitment since the prior date.
     """
     a = dict(PRIORS[prior] if isinstance(prior, str) else prior)
+    by_key = {_key(s): s for s in a}
     for s, c in (counts or {}).items():
+        s = by_key.get(_key(s), s)              # tolerate punctuation drift
         a[s] = a.get(s, 0.0) + c
     return a
 
 
 def weights(prior="uniform", counts=None, scenarios=None):
-    """Posterior categorical probabilities p_s = α_s / Σα (Dirichlet mean)."""
+    """
+    Posterior categorical probabilities p_s = α_s / Σα (Dirichlet mean).
+
+    `scenarios` restricts/reorders the output to the caller's own labels; they
+    are matched to the prior on the normalised key (see `_key`), and an
+    unmatched label is an error rather than a silent zero weight.
+    """
     a = alphas(prior, counts)
     if scenarios is not None:
-        a = {s: a.get(s, 0.0) for s in scenarios}
+        by_key = {_key(s): v for s, v in a.items()}
+        missing = [s for s in scenarios if _key(s) not in by_key]
+        if missing:
+            raise KeyError(f"scenarios absent from the prior: {missing}")
+        a = {s: by_key[_key(s)] for s in scenarios}
     tot = float(sum(a.values()))
     return {s: v / tot for s, v in a.items()}
 
