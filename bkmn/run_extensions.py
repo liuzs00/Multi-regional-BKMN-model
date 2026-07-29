@@ -127,6 +127,15 @@ def main():
         mixture.expected(fwd, prior).to_csv(f"{ROOT}/out_ext_fx_expected_{prior}.csv")
     mixture.quantile(fwd, 0.95, "uniform").to_csv(f"{ROOT}/out_ext_fx_q95_scen.csv")
 
+    # --- Sensitivity: scenario drift under the Eq-1 transition matrix --------
+    # NOT part of the headline: it needs two assumptions the static mixture does
+    # not (λ, and a distance metric over narratives). See docs/PAPER_AUDIT.md §E.
+    coords = sc.coords()
+    for lam in (5.0, 2.0, 0.5):
+        for prior in mixture.PRIORS:
+            mixture.expected_drift(fwd, coords, prior, lam=lam, base_year=BASE) \
+                   .to_csv(f"{ROOT}/out_sens_fx_drift_{prior}_lam{lam:g}.csv")
+
     # --- Phase V: volatility band (95th pct of inputs, Net Zero) -------------
     tsig, psig = volatility.temperature_sigma(), volatility.carbon_price_sigma()
     s = "Net Zero 2050"

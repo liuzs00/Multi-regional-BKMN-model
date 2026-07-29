@@ -74,11 +74,9 @@ from the no-climate baseline at t, so the Taylor rule returns the policy-rate
 deviation at t; integrating those would double-count. Flagged for confirmation
 against the single-region reference code.
 
-### C2. RCP transition matrix (Eq 1)
-`q(j,k) = exp(−λ|j−k|)/Σ…` lets the scenario mixture drift year-on-year using the
-numeric distance between RCP levels. NGFS narratives are not numerically ordered,
-so this needs a defined distance (an ambition ordering); the mixture is currently
-static. Documented in `EXT_PLAN.md`.
+### C2. RCP transition matrix (Eq 1) — implemented as a **sensitivity**
+See §E. Kept out of the headline because it needs two assumptions the static
+mixture does not (λ, and a distance over narratives).
 
 ## D. Checked and correct
 
@@ -98,3 +96,50 @@ static. Documented in `EXT_PLAN.md`.
 | §4.3 FX from yield-curve differences | `fx` | triangular consistency 2e-17 |
 
 26 extension gates + 9 FX gates, all passing.
+
+
+## E. Eq-1 transition matrix: the distance metric (sensitivity)
+
+Eq 1 is `q(j,k) = exp(−λ·d(j,k))/Σ_h exp(−λ·d(j,h))`, with the paper's `d = |j−k|`
+on **RCP concentration labels** — a physical number the scenario set supplies.
+NGFS narratives have no such label, so `d` had to be defined.
+
+**What we use:** Euclidean distance in **standardised (T₂₁₀₀, XCE₂₀₅₀) space** —
+end-of-century warming and carbon price, the two characteristics that distinguish
+the scenarios and that drive this model. Z-scoring each axis makes λ dimensionless
+and stops $/t swamping K. Eq 1 explicitly allows this: the distance *"can be
+generalized to include any function of RCP characteristics"*.
+
+**Why not 1-D on warming** (the obvious first choice — it is the direct analogue of
+an RCP level): it fails empirically. Correlation between pairwise distance and how
+differently the model actually behaves (mean |ΔFX| across the 14 currencies, 2040):
+
+| coordinate | correlation |
+|---|--:|
+| \|ΔT₂₁₀₀\| | 0.28 |
+| \|ΔXCE\| | **0.98** |
+
+The decisive case is Net Zero 2050 vs Low demand: **0.01 K apart** in end-warming —
+so a warming metric calls them the same state — yet $306/t apart in carbon price and
+3.2 pp apart in mean FX impact, the largest gap of any near-neighbour pair. They
+reach the same temperature by different means, and the model cares. 2-D is also
+robust if the physical channel is later scaled up (SwissRe / pre-industrial ΔT, §B1),
+where warming *would* matter; a price-only metric would then be wrong.
+
+*Method note:* the metric is defined on scenario **characteristics** (inputs). The
+output correlation above is a diagnostic that it separates scenarios the model
+treats differently — not the definition, which would be circular.
+
+**On the non-uniform stationary distribution.** An exponential kernel on a bounded
+set gives interior states more inflow than edge states. This is a property of Eq 1
+as specified, not of our metric: the paper's own five RCP levels give a stationary
+distribution of `[0.194, 0.222, 0.225, 0.204, 0.155]`. Under our 2-D metric the
+isolated scenarios — Net Zero (0.089) and Current Policies (0.091) — get least
+weight, which is the economically sensible reading.
+
+**Result** (`out_sens_fx_drift_*.csv`, `figures/fig9`): drift erodes the prior
+toward the stationary distribution, so the three priors converge — by 2045 at
+λ = 0.5 they are indistinguishable, while the static mixture keeps them ~6 pp apart.
+λ has no value in the paper (Table 17: *"the narrative users set the value of λ"*),
+so it is swept over 5.0 / 2.0 / 0.5. Gate: λ → ∞ reproduces the static mixture
+exactly.

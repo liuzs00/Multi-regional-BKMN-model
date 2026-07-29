@@ -92,6 +92,58 @@ def weights(prior="uniform", counts=None, scenarios=None):
     return {s: v / tot for s, v in a.items()}
 
 
+def transition_matrix(coords, lam=2.0, axes=("T", "XCE")):
+    """
+    Annual scenario-transition matrix, paper Eq 1:
+
+        q(j,k) = exp(−λ·d(j,k)) / Σ_h exp(−λ·d(j,h))
+
+    The paper's d is |j−k| on RCP concentration labels.  NGFS narratives carry no
+    such label, so d is the Euclidean distance in **standardised (T₂₁₀₀, XCE)
+    space** — the two characteristics that distinguish the scenarios and that
+    drive this model.  Standardising (z-score per axis) makes λ dimensionless and
+    stops the $/t axis swamping the K axis.
+
+    Eq 1 permits exactly this: the distance "can be generalized to include any
+    function of RCP characteristics".  A 1-D coordinate (`axes=("T",)` or
+    `("XCE",)`) reproduces the paper's literal form and is kept as a sensitivity
+    — note |ΔT| alone correlates only 0.28 with how differently the model
+    behaves, against 0.98 for |ΔXCE| (docs/PAPER_AUDIT.md §E).
+
+    `coords` is a DataFrame indexed by scenario (see Scenarios.coords).
+    Returns (scenarios, Q) with Q[j, k] = P(j → k) in one year.
+    """
+    c = coords[list(axes)].to_numpy(float)
+    c = (c - c.mean(0)) / c.std(0, ddof=0)                 # standardise each axis
+    d = np.linalg.norm(c[:, None, :] - c[None, :, :], axis=-1)
+    w = np.exp(-lam * d)
+    return list(coords.index), w / w.sum(axis=1, keepdims=True)
+
+
+def drifted_weights(prior, coords, years, lam=2.0, axes=("T", "XCE"), counts=None):
+    """
+    Mixture weights after `years` annual applications of Q (paper §3.1.5):
+        p_T = p_0 · Q^T
+    λ → ∞ gives Q = I and reproduces the static mixture exactly.
+    """
+    scen, Q = transition_matrix(coords, lam, axes)
+    p0 = np.array([weights(prior, counts, scen)[s] for s in scen])
+    pT = p0 @ np.linalg.matrix_power(Q, int(years))
+    return dict(zip(scen, pT))
+
+
+def expected_drift(table, coords, prior="uniform", lam=2.0, base_year=2022,
+                   axes=("T", "XCE"), counts=None):
+    """Expectation with horizon-dependent weights (scenario drift under Eq 1)."""
+    out = None
+    for col in table.columns:
+        yrs = max(0, int(col) - base_year)
+        p = drifted_weights(prior, coords, yrs, lam, axes, counts)
+        part = sum(table.xs(s, level=0)[col] * p[s] for s in p)
+        out = part.to_frame(col) if out is None else out.join(part.to_frame(col))
+    return out
+
+
 def expected(table, prior="uniform", counts=None):
     """
     Probability-weighted expectation over scenarios.

@@ -14,6 +14,7 @@ result tables (300 dpi PNG, no model re-run needed). Regenerate with
 | `fig6_equity_oprisk.png` | Equity index shift and op-risk loss change | EXT §5 |
 | `fig7_scenario_inputs.png` | NGFS inputs: carbon-price and warming paths | context |
 | `fig8_fx_term_structure.png` | FX impact by horizon, Net Zero vs NDCs | EXT §2 |
+| `fig9_scenario_drift_sensitivity.png` | **Sensitivity**: Eq-1 scenario drift erodes the prior; the three priors converge | AUDIT §E |
 
 Conventions: diverging orange/blue for signed values (CVD-safe pair), teal for
 single-series magnitudes, a printed value on every bar so colour is never the

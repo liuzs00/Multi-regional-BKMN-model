@@ -106,6 +106,22 @@ hi = tbl.groupby(level=1).max().reindex(e.index)[e.columns]
 check("E[X] within scenario range",
       bool(((e >= lo - 1e-9) & (e <= hi + 1e-9)).all().all()))
 
+# --- Sensitivity: Eq-1 transition matrix -------------------------------------
+from bkmn.scenarios import Scenarios as _S                                  # noqa: E402
+_co = _S(m.carbon_map).coords()
+_scen, _Q = mixture.transition_matrix(_co, 2.0)
+check("Q rows are probabilities", np.allclose(_Q.sum(1), 1) and (_Q >= 0).all(),
+      f"{_Q.shape[0]}x{_Q.shape[1]}")
+check("Q diagonal is the mode (staying is likeliest)",
+      all(_Q[i, i] == _Q[i].max() for i in range(len(_scen))))
+_d = mixture.expected_drift(tbl, _co, "ambition", lam=500.0, base_year=2022)
+_s0 = mixture.expected(tbl, "ambition")
+check("lambda -> inf reproduces the static mixture",
+      float((_d - _s0).abs().to_numpy().max()) < 1e-12,
+      "drift collapses to Q = I")
+_p = mixture.drifted_weights("ambition", _co, 18, 2.0)
+check("drifted weights still sum to 1", abs(sum(_p.values()) - 1) < 1e-12)
+
 # --- Phase V: volatility -----------------------------------------------------
 ts, ps = volatility.temperature_sigma(), volatility.carbon_price_sigma()
 check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,
