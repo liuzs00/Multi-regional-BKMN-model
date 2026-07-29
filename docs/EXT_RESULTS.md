@@ -1,5 +1,10 @@
 # Extensions — results and caveats (physical, equity, op-risk, mixture, volatility)
 
+> **Revised 2026-07-30 after the paper audit** ([`docs/PAPER_AUDIT.md`](PAPER_AUDIT.md)):
+> the damage-function coefficient was 100x too large (Eq 11's 1.6768 is in *per cent*).
+> Physical damages below are the corrected, much smaller figures; the earlier claim
+> that physical damage rivals transition cost was an artefact of that bug.
+
 Implements the remaining paper sections except CDS and the tariff stretch goal
 (plan: `docs/EXT_PLAN.md`). Additive to the FX stage: `bkmn/run_fx.py` and its
 transition-only `out_fx_*.csv` are untouched, so the transition-vs-physical
@@ -16,11 +21,19 @@ The central result of adding §2.5. GDP shock at 2040, φ=0.5 (%):
 
 | Region | Net Zero: transition | Net Zero: physical | Current Policies: transition | Current Policies: physical |
 |---|--:|--:|--:|--:|
-| EU27 | −2.66 | −4.01 | **−0.02** | **−5.15** |
-| CHN | −11.40 | −5.49 | −0.13 | −7.06 |
-| IND | −10.37 | −6.63 | −0.12 | −8.51 |
-| AFR | −5.05 | −6.56 | −0.03 | −8.42 |
-| NOR | −0.96 | −3.93 | −0.01 | −5.05 |
+| EU27 | −2.66 | −0.04 | **−0.02** | **−0.05** |
+| CHN | −11.40 | −0.05 | −0.13 | −0.07 |
+| IND | −10.37 | −0.06 | −0.12 | −0.08 |
+| AFR | −5.05 | −0.06 | −0.03 | −0.08 |
+| NOR | −0.96 | −0.04 | −0.01 | −0.05 |
+
+Two readings: the **ranking still flips** — under Current Policies physical damage
+exceeds transition cost (−0.05 % vs −0.02 %), under Net Zero transition dominates by
+~60x. But with Barrage–Nordhaus damages and warming measured *from today*, physical
+risk to 2040 is **economically small in absolute terms**. That is a property of the
+BN damage function (mild by construction) and of the short horizon, not a modelling
+artefact — the SwissRe variant is ~5x larger and the pre-industrial ΔT reading ~17x
+larger (see `PAPER_AUDIT.md` §B1 for the 90x sensitivity grid).
 
 **The scenario ranking flips by channel.** Ambitious policy maximises
 *transition* cost and minimises *physical* damage; Current Policies does the
