@@ -6,6 +6,10 @@ transition-only `out_fx_*.csv` are untouched, so the transition-vs-physical
 comparison is available directly. Run `py -3 -m bkmn.run_extensions`;
 gates `py -3 tests/test_extensions.py` (**21/21 pass**).
 
+**Figures**: see [`figures/`](../figures/) — `fig1` (headline trade-off), `fig2`/`fig8` (FX),
+`fig3` (mixture), `fig4` (FX-at-risk), `fig5` (vulnerability), `fig6` (equity/op-risk),
+`fig7` (scenario inputs). Regenerate with `py -3 tools/make_figures.py`.
+
 ## 1. Headline — the transition/physical trade-off
 
 The central result of adding §2.5. GDP shock at 2040, φ=0.5 (%):
