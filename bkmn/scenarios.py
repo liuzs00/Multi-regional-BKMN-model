@@ -83,6 +83,22 @@ class Scenarios:
             {r: self.px.loc[year, (scenario, self._zone(r))] for r in self.cm.index},
             name=f"XCE {scenario} {year}")
 
+    def coords(self, year_T: int = 2100, year_X: int = 2050,
+               zone: str = "R5.2OECD") -> pd.DataFrame:
+        """
+        Numeric characteristics of each scenario, for the Eq-1 distance metric.
+
+        The paper measures distance between RCP states as |j−k| on their
+        *concentration labels* — a physical number the scenario set supplies.
+        NGFS narratives have no such label, so we use the equivalent numbers the
+        scenarios themselves report: end-of-century warming (physical outcome)
+        and the carbon price (transition-policy stringency).  See
+        docs/PAPER_AUDIT.md and mixture.transition_matrix.
+        """
+        return pd.DataFrame(
+            {"T": {s: float(self.temp.loc[year_T, s]) for s in self.names},
+             "XCE": {s: float(self.px[s][zone].loc[year_X]) for s in self.names}})
+
     def delta_T(self, scenario: str, year: int, base_year: int = 2022) -> float:
         """Incremental warming since `base_year` (what BKMN's damage uses)."""
         return float(self.temp.loc[year, scenario] - self.temp.loc[base_year, scenario])

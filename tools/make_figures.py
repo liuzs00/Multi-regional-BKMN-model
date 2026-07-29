@@ -268,11 +268,45 @@ def fig_term():
     print("  fig8_fx_term_structure.png")
 
 
+# --- 9. sensitivity: scenario drift (Eq 1) ----------------------------------
+def fig_drift():
+    import sys; sys.path.insert(0, ROOT)
+    from bkmn import mixture as mixmod
+    from bkmn.regions import load as loadm
+    from bkmn.scenarios import Scenarios
+    co = Scenarios(loadm().carbon_map).coords()
+    fwd = load("out_ext_fx_forward_5y")
+    hz = [int(c) for c in fwd.columns]
+    priors, cols = ["ambition", "uniform", "policy-sceptic"], [WARM, TEAL, COOL]
+    fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.6), sharey=True)
+    for ax, lam, ttl in zip(axes, (5.0, 0.5), ("slow drift  (lambda = 5)",
+                                               "fast drift  (lambda = 0.5)")):
+        for p, c in zip(priors, cols):
+            st = mixmod.expected(fwd, p).loc["IND"].to_numpy(float)
+            dr = mixmod.expected_drift(fwd, co, p, lam=lam).loc["IND"].to_numpy(float)
+            ax.plot(hz, st, color=c, lw=1.4, ls=":", alpha=.75)
+            ax.plot(hz, dr, color=c, lw=2.0, marker="o", ms=3.5, label=p)
+        ax.set_title(ttl, fontsize=10, fontweight="600", pad=8)
+        ax.set_xlabel("horizon year"); ax.set_xticks(hz)
+        ax.grid(color=GRID, lw=0.8, zorder=0); ax.set_axisbelow(True)
+    axes[0].set_ylabel("expected 5y forward INR/EUR (%)")
+    axes[1].legend(frameon=False, fontsize=8.5, title="prior", title_fontsize=8.5)
+    fig.suptitle("Sensitivity: scenario drift erodes the prior (Eq 1 transition matrix)",
+                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.085)
+    fig.text(0.012, 1.015, "Dotted = static mixture (headline). Solid = with annual drift on "
+             "standardised (T2100, carbon price) distance; the three priors converge.",
+             fontsize=8.5, color=MUTED, ha="left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig9_scenario_drift_sensitivity.png"), dpi=300,
+                bbox_inches="tight")
+    plt.close(fig); print("  fig9_scenario_drift_sensitivity.png")
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
     os.makedirs(FIG, exist_ok=True)
     print("writing figures/")
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
-    fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term()
+    fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift()
     print("done.")
