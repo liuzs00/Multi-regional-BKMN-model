@@ -142,12 +142,12 @@ same discipline as the Phase-1 reduction test.
 
 | Phase | Work | Est. |
 |---|---|---|
-| P | ND-GAIN + Table-6 pattern + `physical.py` + gates | 1–2 sessions |
-| E | equity data + β calibration + `equity.py` | 1 session |
-| O | WB macro data + `oprisk.py` | 0.5 session |
-| M | `mixture.py` + named priors + expected/quantile tables | 1 session |
-| V | cross-model σ pull + `volatility.py` + FX-at-risk tables | 1 session |
-| — | write-up notes (`docs/EXT_RESULTS.md`), artifact panels (physical + ensemble) | 1 session |
+| P | ND-GAIN + Table-6 pattern + `physical.py` + gates | ✅ done |
+| E | equity data + β calibration + `equity.py` | ✅ done (12/13 fitted) |
+| O | WB macro data + `oprisk.py` | ✅ done |
+| M | `mixture.py` + named priors + expected/quantile tables | ✅ done (3 priors) |
+| V | cross-model σ pull + `volatility.py` + FX-at-risk tables | ✅ done |
+| — | write-up notes (`docs/EXT_RESULTS.md`) ✅ done; artifact panels — optional/next |
 
 Deferred (unchanged): CDS calibration (licensed) and §2.10 IFRS 9 (hangs off
 CDS-implied PDs — a paper-beta proxy version is possible later at zero data
