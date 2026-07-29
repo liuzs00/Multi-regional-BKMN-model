@@ -80,6 +80,14 @@ for p in mixture.PRIORS:
 check("event counts shift the posterior toward the counted scenario",
       True, "+3 Current Policies raises its weight under all priors")
 
+# every scenario present in a result table must receive strictly positive
+# weight — this catches a label mismatch silently dropping a scenario
+for prior in mixture.PRIORS:
+    w = mixture.weights(prior, scenarios=scen)
+    assert len(w) == 7 and all(v > 0 for v in w.values()), (prior, w)
+check("all 7 scenarios carry positive weight in the mixture", True,
+      "guards against label drift, e.g. 'Below 2?C' vs 'Below 2°C'")
+
 one = {s: (1 if s == "Net Zero 2050" else 0) for s in scen}
 deg = mixture.expected(tbl, one)
 check("degenerate prior reproduces scenario",
