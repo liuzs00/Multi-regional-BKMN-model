@@ -53,9 +53,20 @@ Expected 5y-forward vs EUR at 2040 (%), by named prior:
 | policy-sceptic | −11.0 | −7.8 | +0.7 | +1.0 |
 | ambition | −16.6 | −13.9 | +0.4 | +2.3 |
 
-The prior is a *narrative* choice, so all three are reported. Note the mixture is
-strictly additive — per-scenario tables are unchanged and a degenerate prior
-reproduces its scenario exactly (gate).
+The prior is a *narrative* choice, so all three are reported and the spread should
+be read as prior uncertainty, not a point estimate. All three are normalised to the
+same Dirichlet concentration **Σα = 14**, so switching prior changes the *direction*
+of belief and never its *strength* — in a Dirichlet, Σα is how many observed events
+it takes to overturn the prior, so unequal Σα would conflate the two. Event-based
+updating is available (`mixture.weights(prior, counts=...)`, paper §2.2): e.g. three
+observed Current-Policies events raise that weight from 14.3% to 27.8% under a
+uniform prior. The mixture is strictly additive — per-scenario tables are unchanged
+and a degenerate prior reproduces its scenario exactly (gates).
+
+⚠️ The prior values themselves are **asserted, not estimated** — as in the paper,
+which simply assigns 90% to SSP2/RCP4.5 (§3.1.4). Grounding options: count policy
+events per §2.2, or anchor on an external assessment (e.g. Climate Action Tracker
+current-policy warming). This is the least data-grounded input in the model.
 
 ## 4. Volatility band (Phase V) — climate FX-at-risk
 
