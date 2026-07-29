@@ -136,13 +136,13 @@ Outputs:
 
 ## 5. Phases & effort
 
-| Phase | Work | Est. |
+| Phase | Work | Status |
 |---|---|---|
-| 0 | NGFS download + scope data + `scenarios.py` loader + zone join | 1 session |
-| 1 | `transition.py` with per-region XCE(t); reduction test green | 1 session |
-| 2 | `macro.py` + `rates.py` (inflation, Taylor accumulation, HW shift) | 1 session |
-| 3 | `fx.py` + `run_fx.py` + output tables | 1 session |
-| 4 | Validation suite, worked-pair narrative, artifact FX panel, write-up notes | 1 session |
+| 0 | NGFS download + scope data + `scenarios.py` loader + zone join | ✅ done |
+| 1 | `transition.py` with per-region XCE(t); reduction test green | ✅ done (reduction 4e-16) |
+| 2 | `macro.py` + `rates.py` (inflation, Taylor, HW shift) | ✅ done |
+| 3 | `fx.py` + `run_fx.py` + output tables | ✅ done (5 out_fx_* tables) |
+| 4 | Validation suite (9 gates), worked-pair narrative, write-up notes | ✅ done — see `docs/FX_RESULTS.md`; artifact FX panel optional/next |
 
 Deferred (explicitly out of scope now): physical channel (needs per-region VL),
 credit/equity/op-risk channels, Dirichlet scenario mixture, tariff/trade-flow
