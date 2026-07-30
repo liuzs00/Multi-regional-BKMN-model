@@ -254,6 +254,9 @@ most of the FX signal lives.
 
 ## H. The scenario prior: provenance
 
+*Full method write-up (priors, transition matrix, worked transition probabilities):*
+[`docs/MIXTURE_METHOD.md`](MIXTURE_METHOD.md).
+
 `uniform` is the conventional uninformative prior. **`policy-sceptic` and
 `ambition` are asserted bookends** — the directions are narrative logic, the
 magnitudes arbitrary. There is no standard to borrow: NGFS deliberately publishes
