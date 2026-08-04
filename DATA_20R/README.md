@@ -45,7 +45,9 @@ carbon-price regime, CBAM role, physical-vulnerability tier, PPP-GDP welfare wei
 
 - `ICIO2025_20R_2022.csv` — aggregated IO table, shape **1003 × 1121**: rows =
   20×50 industries + `TLS`/`VA`/`OUT`; columns = 20×50 industry + 20×6
-  final-demand + `OUT`. Current USD millions; global total $300.5T (preserved).
+  final-demand + `OUT`. Current USD millions. Whole-table checksum $300.5T (preserved by aggregation; it
+  sums Z + final demand + TLS + VA and so double-counts). Economic magnitudes:
+  world gross output $199.7T, world value added $93.8T.
 - `GHG_S1_20R_2022.csv` — Scope-1 GHG (Mt CO2e), 50 industries × 20 regions;
   world total 44.2 Gt.
 - `CARBON_INTENSITY_20R_2022.csv` — `CI = Scope-1 / gross output`, tonnes CO2e
