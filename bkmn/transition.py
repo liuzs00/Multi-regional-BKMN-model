@@ -30,6 +30,13 @@ def gva_operator(m, phi):
     return (I - AT) @ Ltil - I + phi * I
 
 
+def price_operator(m, phi):
+    """Modified Leontief dual L~(phi) = (I - A^T phi_hat)^-1 phi_hat (Eq 8)."""
+    A = technical_matrix(m)
+    n = len(m.x)
+    return np.linalg.inv(np.eye(n) - phi * A.T) * phi
+
+
 def ct_direct(m, xce_by_region):
     """Per-sector carbon charge (fraction of output): CI · XCE(region) · 1e-6."""
     xce = np.array([xce_by_region[r] for r in m.region_of], float)
@@ -41,8 +48,13 @@ def sector_dV(m, M, xce_by_region):
     return m.x * (M @ ct_direct(m, xce_by_region))
 
 
-def region_gdp_shock(m, M, xce_by_region):
-    """GDP-weighted relative GVA shock per region (fraction)."""
-    dV = sector_dV(m, M, xce_by_region)
+def region_shock_from_ct(m, M, ct):
+    """GDP-weighted relative GVA shock per region, from any charge vector."""
+    dV = m.x * (M @ ct)
     return {r: dV[m.region_of == r].sum() / m.gva[m.region_of == r].sum()
             for r in m.regions_order}
+
+
+def region_gdp_shock(m, M, xce_by_region):
+    """GDP-weighted relative GVA shock per region (fraction)."""
+    return region_shock_from_ct(m, M, ct_direct(m, xce_by_region))

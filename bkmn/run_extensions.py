@@ -22,7 +22,8 @@ import os
 import numpy as np
 import pandas as pd
 
-from . import cbam, equity, fx, macro, mixture, oprisk, physical, rates, transition, volatility
+from . import (cbam, equity, fx, macro, mixture, oprisk, physical, rates,
+               tariff, transition, volatility)
 from .regions import load
 from .run_fx import BASE, HORIZONS, PHI, xce_annual
 from .scenarios import Scenarios
@@ -45,7 +46,7 @@ RATE_TENORS = {"1D": 1 / 365, "6M": 0.5, "1Y": 1.0, "5Y": 5.0, "10Y": 10.0, "20Y
 
 
 def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
-          dynamic_scope=False):
+          dynamic_scope=False, tau=None, theta=1.0, Ltilde=None, A=None):
     """
     One scenario -> all channel outputs (optionally with stressed inputs).
 
@@ -54,7 +55,21 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
     the §2.6 ΔΩ_XCE reading). Sensitivity only — the headline uses static scope.
     """
     xce = xce_annual(sc, scenario) if xce_over is None else xce_over
-    out = {k: {} for k in ("trans", "phys", "dY", "dPi", "dr", "cum")}
+    out = {k: {} for k in ("trans", "phys", "dY", "dPi", "dr", "cum", "tariff")}
+
+    # A tariff is the same object as the carbon charge - an ad-valorem cost wedge
+    # in the same units - so it is ADDED TO ct and inherits the whole downstream
+    # chain (Taylor -> HW -> FX, equity, op-risk) rather than being computed on
+    # the side.  Its price effect comes from the dual (tariff.price_effect); the
+    # Moessner relation is carbon-specific and cannot be reused.
+    if tau is not None:
+        ct_tar, _, _ = tariff.charges(m, A, tau, theta)
+        tar_shock = transition.region_shock_from_ct(m, M, ct_tar)
+        tar_price = tariff.price_effect(m, Ltilde, ct_tar, tau)
+    else:
+        ct_tar = None
+        tar_shock = {r: 0.0 for r in m.regions_order}
+        tar_price = {r: 0.0 for r in m.regions_order}
 
     def scope_of(r, year):
         return (macro.scope_at(scope[r], xce.loc[year, r]) if dynamic_scope
@@ -72,11 +87,13 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
         for r in m.regions_order:
             out["trans"].setdefault(r, {})[t] = tr[r]
             out["phys"].setdefault(r, {})[t] = ph[r]
-            out["dY"].setdefault(r, {})[t] = tr[r] + ph[r]
+            out["tariff"].setdefault(r, {})[t] = tar_shock[r]
+            out["dY"].setdefault(r, {})[t] = tr[r] + ph[r] + tar_shock[r]
             dpi = macro.inflation_dev(xce.loc[t, r] - xce.loc[t - 1, r],
                                       scope_of(r, t))
             out["dPi"].setdefault(r, {})[t] = dpi
-            out["dr"].setdefault(r, {})[t] = macro.taylor_rate_shift(dpi, tr[r] + ph[r])
+            out["dr"].setdefault(r, {})[t] = macro.taylor_rate_shift(
+                dpi, tr[r] + ph[r] + tar_shock[r])
             # cumulative price-level effect: with static scope this telescopes to
             # k*scope*(XCE_t - XCE_base); with a moving scope it must be summed.
             if dynamic_scope:
@@ -87,6 +104,7 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
             else:
                 out["cum"].setdefault(r, {})[t] = (macro.INFL_PER_USD * scope[r]
                                                    * (xce.loc[t, r] - xce.loc[BASE, r]))
+            out["cum"][r][t] += tar_price[r]
     return out
 
 
@@ -182,6 +200,42 @@ def main():
                       fxregs, betas, kap, u0) for s_ in sc.names}
     table(dyn, "spot", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv")
     table(dyn, "fwd5", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_forward_dynscope.csv")
+
+    # --- Tariff shocks carried through to FX (project stretch goal) ----------
+    # Same chain as the carbon tax: tariff -> ct -> GVA + prices -> Taylor -> FX.
+    Lt = transition.price_operator(m, PHI)
+    MFG = ["C10T12", "C13T15", "C16", "C17_18", "C19", "C20", "C21", "C22",
+           "C23", "C24A", "C24B", "C25", "C26", "C27", "C28", "C29", "C301",
+           "C302T309", "C31T33"]
+    A_ = transition.technical_matrix(m)
+    applied_ = cm.applied_price_usd.to_dict()
+    SHOCKS = {
+        "CBAM (EU, applied prices)": cbam.schedule(m, applied_),
+        "USA 25% on CHN manufactures":
+            tariff.add_rule(m, tariff.empty(m), 0.25, origin="CHN",
+                            destination="USA", industries=MFG),
+        "Global 10% on all imports": tariff.add_rule(m, tariff.empty(m), 0.10),
+    }
+    # Report the tariff's INCREMENTAL effect: the same scenario with and without
+    # the schedule, differenced, so the underlying carbon baseline cancels.
+    base_c = chain(m, sc, "Current Policies", M, scope, vl)
+    base_d = derive(m, base_c, fxregs, betas, kap, u0)
+    fxrows, gvarows = {}, {}
+    for name, tau_ in SHOCKS.items():
+        c = chain(m, sc, "Current Policies", M, scope, vl, tau=tau_, theta=1.0,
+                  Ltilde=Lt, A=A_)
+        d = derive(m, c, fxregs, betas, kap, u0)
+        for r in fxregs:
+            fxrows[(name, r)] = {
+                "spot_pct": (d["spot"][r][2040] - base_d["spot"][r][2040]) * 100,
+                "fwd5y_pct": (d["fwd5"][r][2040] - base_d["fwd5"][r][2040]) * 100,
+                "rate_bp": (c["dr"][r][2040] - base_c["dr"][r][2040]) * 1e4}
+        for r in allreg:
+            gvarows[(name, r)] = {"gva_pct": c["tariff"][r][2040] * 100}
+    pd.DataFrame(fxrows).T.rename_axis(["shock", "region"]).to_csv(
+        f"{ROOT}/out_sens_tariff_fx.csv")
+    pd.DataFrame(gvarows).T.rename_axis(["shock", "region"]).to_csv(
+        f"{ROOT}/out_sens_tariff_gva.csv")
 
     # --- Sensitivity: CBAM as a carbon tariff (project stretch goal) ---------
     # Needs no new data: MRIO gives bilateral trade, CARBON_INTENSITY gives

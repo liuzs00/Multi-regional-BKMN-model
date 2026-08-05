@@ -389,4 +389,47 @@ on imported inputs, the larger its cost-push loss. It also shows the framework's
 limit — with final demand fixed nobody re-sources, so these are pure cost effects
 and understate what a tariff does in practice.
 
-Outputs: `out_sens_cbam_gva.csv`, `out_sens_cbam_rates.csv`, `figures/fig11`.
+### I.1 Tariffs carried through to FX
+
+A tariff is the same object as the carbon charge — an ad-valorem cost wedge in the
+same units — so it is **added to `ct` inside the main chain** and inherits the
+entire downstream: Taylor, Hull-White, FX, equity and operational risk. (It was
+initially computed as a side calculation that stopped at GVA, which meant the
+tariff work produced no exchange-rate result — the project's actual deliverable.)
+
+The one piece a tariff cannot inherit is the inflation route. §2.6's Moessner
+relation is estimated on *carbon prices* and takes ΔXCE as its input, so it has
+nothing to consume from a tariff. The tariff price effect is instead derived from
+the model's own dual (`tariff.price_effect`): tariffed intermediate imports raise
+producer prices through `L̃(φ)`, weighted to a consumer index by each region's
+final-demand basket, plus the direct charge on tariffed final-demand imports.
+That is arguably the cleaner route and leaves §2.6 untouched for carbon. A
+permanent tariff is a price **level** shift, so it enters the cumulative term
+(and hence spot/PPP FX) but not the inflation *rate* at later horizons — central
+banks look through one-off level jumps.
+
+Results are reported as the **increment** over the same scenario without the
+tariff, so the carbon baseline cancels. At 2040, φ = 0.5, statutory incidence:
+
+| Shock | Revenue | Headline FX effect |
+|---|--:|---|
+| CBAM (EU, applied prices) | \$9.4 bn/yr | all currencies within ±0.02 % |
+| USA 25 % on Chinese manufactures | \$113 bn/yr | **USD +0.33 % vs EUR** (weakens) |
+| Global 10 % on all imports | \$2,252 bn/yr | SGP +3.04 %, NOR +1.12 % … CHN −0.58 % |
+
+Two findings.
+
+**A tariff weakens the currency that levies it.** The US tariff raises US consumer
+prices, and under relative PPP that depreciates the dollar 0.33 % against the
+euro. The intuition that protection strengthens a currency does not survive in a
+price-level channel.
+
+**The cross-section is import dependence.** Under the universal tariff the spot
+response correlates **0.926** with each region's imported share of intermediate
+inputs: Singapore (50.8 % imported) depreciates 3.04 %, while China (7.7 %) and
+the United States (8.2 %) *appreciate* because their price levels rise least. The
+FX effect of a global trade war is, to a first approximation, a ranking of who
+depends on imports.
+
+Outputs: `out_sens_tariff_fx.csv`, `out_sens_tariff_gva.csv`,
+`out_sens_cbam_gva.csv`, `out_sens_cbam_rates.csv`, `figures/fig11`.
