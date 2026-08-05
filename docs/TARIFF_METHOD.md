@@ -41,6 +41,12 @@ domestic sourcing.
 tariff database. WITS or the WTO Tariff Download Facility would be needed only to
 model existing levels or the removal of specific agreements.
 
+What a shock still needs is a *rate*, and a rate chosen for illustration carries
+no evidential weight. §5.1 therefore calibrates one schedule to published
+effective tariff rates so that at least one result describes a policy that exists;
+§§5.2–5.3 report the mechanism findings, which are qualitative and hold for any
+rate.
+
 ## 2. Incidence
 
 Statutorily the importer pays, so the charge raises costs in the destination in
@@ -98,15 +104,62 @@ the tariff, so the underlying carbon baseline cancels.
 
 ## 5. Results
 
-Three shocks, at 2040, φ = 0.5, statutory incidence.
+Four shocks, at 2040, φ = 0.5, statutory incidence. The first is calibrated to
+announced policy; the rest are stylised, and are used for the mechanism results.
 
 | Shock | Revenue (\$bn/yr) | of which intermediate | Consumer-price level effect |
 |---|--:|--:|---|
+| **US applied tariffs, May 2026** | **260.4** | **108.9** | **USA +0.710 %** |
 | CBAM (EU, applied prices) | 9.4 | 8.4 | EU27 +0.019 % |
 | USA 25 % on Chinese manufactures | 112.8 | 39.6 | USA +0.333 % |
 | Global 10 % on all imports | 2,251.9 | 1,350.4 | SGP +4.29 %, EU27 +1.25 %, USA +1.03 % |
 
-### 5.1 A tariff weakens the currency that levies it
+### 5.1 A scenario calibrated to announced policy
+
+The stylised rates above were chosen for illustration. To ground at least one
+case, a schedule is calibrated to published *effective* rates — duties actually
+collected divided by import value, which already nets out exemptions,
+de-minimis treatment and the tariff-line composition of trade, and is therefore
+the right object to compare with an ad-valorem wedge on an aggregated IO table.
+
+The [Penn Wharton Budget Model](https://budgetmodel.wharton.upenn.edu/p/2026-07-13-effective-tariff-rates-and-revenues-updated-july-13-2026/)
+(13 July 2026) puts the **US average effective tariff rate at 7.2 %** as of May
+2026, against 2.3 % in January 2025, with **China the highest major partner at
+23.4 %** ([USAFacts](https://usafacts.org/answers/what-is-the-average-us-tariff-rate-overall/countries/china/)).
+Rates fell back from their 2025 peak after the Supreme Court held the IEEPA
+tariffs unconstitutional in February 2026; the residual reflects the
+statutory authorities that survived (MFN, Section 301, Section 232).
+
+Two published numbers pin the schedule, because China's import share is known
+from the table itself:
+
+| | |
+|---|--:|
+| China's share of US imports (intermediate + final, 2022 table) | 14.7 % |
+| Effective rate on China (published) | 23.4 % |
+| ⇒ implied rate on all other origins | **4.4 %** |
+| check: 0.147 × 23.4 + 0.853 × 4.4 | **7.2 %** ✓ |
+
+So the calibrated schedule is **23.4 % on China, 4.4 % on everyone else**, and it
+reproduces the published aggregate by construction — a gate asserts this to
+within 0.2 pp. Two independent checks support the base it is applied to: the
+table's US import total is \$3.61 tn against BEA's \$3.96 tn for 2022 goods and
+services, and the resulting revenue of **\$260 bn/yr** is the right order for
+recent US customs receipts.
+
+The results are materially larger than the stylised US shock, and for a reason
+worth stating: a 25 % tariff on Chinese manufactures sounds more aggressive than
+"7.2 % on average", but it touches one origin and one part of one origin's
+exports, whereas the real schedule taxes **every** import. Breadth dominates
+depth. The dollar moves **+0.71 % against the euro** — a depreciation, per §5.2 —
+against +0.33 % for the stylised China shock, and US GVA falls 0.056 %. China
+supplies 48 % of the revenue on 14.7 % of the imports.
+
+The stylised 25 % on Chinese manufactures turned out close to the observed 23.4 %
+effective rate on China; the stylised 10 % universal tariff overstates the actual
+US average by a factor of about 1.4.
+
+### 5.2 A tariff weakens the currency that levies it
 
 The 25 % US tariff on Chinese manufactures moves **USD +0.33 % against the euro** —
 the dollar *depreciates*. The mechanism is direct: the tariff raises US consumer
@@ -118,7 +171,7 @@ Note the asymmetry with the incidence assumption. Under θ = 1 the tariff is a t
 on American consumers and the dollar bears it; under θ = 0 the burden moves to
 Chinese exporters' margins and the dollar effect largely disappears.
 
-### 5.2 The cross-section of a trade war is import dependence
+### 5.3 The cross-section of a trade war is import dependence
 
 Under the universal 10 % tariff, the spot FX response correlates **0.926** with
 each region's imported share of intermediate inputs:
@@ -139,7 +192,7 @@ first approximation the FX consequence of a global trade war is a ranking of who
 depends on imports — the same openness ordering that emerges from the
 input–output flow structure, now expressed in currencies.
 
-### 5.3 CBAM: enormous sector rates, negligible macro effect
+### 5.4 CBAM: enormous sector rates, negligible macro effect
 
 The CBAM rate is the price differential applied to embodied carbon,
 
@@ -173,7 +226,7 @@ Incidence flips the burden entirely:
 | 0.5 | −0.0056 % | −0.0110 % | −0.0100 % | −0.0068 % |
 | 0 (exporter absorbs) | −0.0012 % | **−0.0204 %** | **−0.0194 %** | **−0.0133 %** |
 
-### 5.4 CBAM self-extinguishes under policy convergence
+### 5.5 CBAM self-extinguishes under policy convergence
 
 Repricing the same mechanism at NGFS Net-Zero carbon prices — where the scenario
 assumes near-uniform global carbon pricing — cuts revenue from \$9.4 bn to
@@ -214,7 +267,8 @@ construction.
 
 ## 7. Validation
 
-Eleven gates cover the tariff machinery: the schedule shape; that `add_rule`
+Twelve gates cover the tariff machinery: that the calibrated US schedule
+reproduces the published 7.2 % effective rate; the schedule shape; that `add_rule`
 targets only the named origin and destination; that a tariff never applies to
 intra-regional supply; that θ = 1 charges only the importer and θ = 0 only the
 exporter; that revenue is invariant to the incidence split; that final-demand

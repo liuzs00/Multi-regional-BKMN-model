@@ -248,6 +248,17 @@ _c = np.corrcoef([_op[r] for r in _glob.index], _glob.spot_pct)[0, 1]
 check("the FX response tracks import dependence", _c > 0.8,
       f"corr = {_c:.3f}")
 
+# calibrated scenario must reproduce the published US effective tariff rate
+_us26 = _tf.add_rule(m, _tf.empty(m), 0.044, destination="USA")
+_us26 = _tf.add_rule(m, _us26, 0.234 - 0.044, origin="CHN", destination="USA")
+_iu = list(m.regions_order).index("USA")
+_isus = m.region_of == "USA"
+_impv = (_A[:, _isus] * m.x[_isus]).sum(1) + m.fd[:, _iu]
+_eff = float(_us26[~_isus, _iu] @ _impv[~_isus] / _impv[~_isus].sum())
+check("calibrated schedule reproduces the published US effective rate",
+      abs(_eff - 0.072) < 0.002,
+      f"{_eff*100:.2f}% vs Penn Wharton 7.2% (May 2026)")
+
 # --- Phase V: volatility -----------------------------------------------------
 ts, ps = volatility.temperature_sigma(), volatility.carbon_price_sigma()
 check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,
