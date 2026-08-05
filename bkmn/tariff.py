@@ -123,3 +123,28 @@ def final_demand_charge(m, tau):
         base = m.fd[:, d].sum()
         out[dreg] = float(tau[:, d] @ m.fd[:, d] / base) if base else 0.0
     return out
+
+
+def price_effect(m, Ltilde, ct_tariff, tau):
+    """
+    Consumer-price **level** effect of a tariff, per region, as a fraction.
+
+    Two additive routes, neither double-counting the other:
+      * tariffed *intermediate* imports raise producer prices, which the Leontief
+        dual propagates: dp = L~(phi) ct_tariff, weighted to a consumer index by
+        each region's final-demand basket;
+      * tariffed *final-demand* imports raise the price of consumer goods
+        directly, and never enter the production chain.
+
+    This is the tariff analogue of the carbon channel's Moessner relation (2.6),
+    which cannot be reused because it is estimated on carbon prices specifically.
+    Deriving the tariff price effect from the model's own dual is the cleaner
+    route and leaves 2.6 exactly as the paper specifies it for carbon.
+    """
+    dp = Ltilde @ ct_tariff
+    out = {}
+    for d, r in enumerate(m.regions_order):
+        w = m.fd[:, d]
+        base = w.sum()
+        out[r] = float((dp + tau[:, d]) @ w / base) if base else 0.0
+    return out

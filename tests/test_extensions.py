@@ -227,6 +227,27 @@ check("final-demand imports raise revenue",
       f"${_tf.revenue(m,_A,_t1,True)/1e3:,.1f}bn vs "
       f"${_tf.revenue(m,_A,_t1,False)/1e3:,.1f}bn intermediate-only")
 
+# --- tariff reaches the FX chain ---------------------------------------------
+_tfx = pd.read_csv(f"{ROOT}/out_sens_tariff_fx.csv", index_col=[0, 1])
+_glob = _tfx.xs("Global 10% on all imports", level=0)
+check("a tariff now moves rates (it previously stopped at GVA)",
+      float(_glob.rate_bp.abs().max()) > 1.0,
+      f"max |dr| = {_glob.rate_bp.abs().max():.1f} bp")
+check("a tariff now moves FX", float(_glob.spot_pct.abs().max()) > 0.1,
+      f"max |spot| = {_glob.spot_pct.abs().max():.2f}%")
+_us = _tfx.xs("USA 25% on CHN manufactures", level=0)
+check("a tariff weakens the levying currency (PPP: prices rise at home)",
+      _us.loc["USA", "spot_pct"] > 0,
+      f"USD spot {_us.loc['USA','spot_pct']:+.3f}% vs EUR")
+_op = {}
+for r in m.regions_order:
+    _isr = m.region_of == r
+    _col = _A[:, _isr] * m.x[_isr]
+    _op[r] = _col[~_isr].sum() / _col.sum()
+_c = np.corrcoef([_op[r] for r in _glob.index], _glob.spot_pct)[0, 1]
+check("the FX response tracks import dependence", _c > 0.8,
+      f"corr = {_c:.3f}")
+
 # --- Phase V: volatility -----------------------------------------------------
 ts, ps = volatility.temperature_sigma(), volatility.carbon_price_sigma()
 check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,
