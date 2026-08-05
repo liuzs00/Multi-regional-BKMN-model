@@ -9,7 +9,7 @@ Carbon Border Adjustment Mechanism.
 Code: [`bkmn/tariff.py`](../bkmn/tariff.py) (general), [`bkmn/cbam.py`](../bkmn/cbam.py)
 (the CBAM special case). Results: `out_sens_tariff_fx.csv`,
 `out_sens_tariff_gva.csv`, `out_sens_cbam_gva.csv`, `out_sens_cbam_rates.csv`,
-`figures/fig11`. Gates in [`tests/test_extensions.py`](../tests/test_extensions.py).
+`out_sens_china_share.csv`, `figures/fig11`. Gates in [`tests/test_extensions.py`](../tests/test_extensions.py).
 
 ---
 
@@ -162,6 +162,57 @@ supplies 48 % of the revenue on 14.7 % of the imports.
 The stylised 25 % on Chinese manufactures turned out close to the observed 23.4 %
 effective rate on China; the stylised 10 % universal tariff overstates the actual
 US average by a factor of about 1.4.
+
+**Sensitivity to the base year.** The calibration divides by China's import
+share, and the 2022 table is stale in exactly the wrong place: China was 20 % of
+US goods imports in that table, roughly 13 % by 2024 and under 10 % through 2025
+([CaixaBank Research](https://www.caixabankresearch.com/en/economics-markets/activity-growth/new-map-us-goods-imports)) —
+the trade war we are modelling is itself the reason. Rather than leave that
+buried, `tools/sweep_china_share.py` sweeps it from 7 % to 20 %.
+
+Two shares must not be conflated: *s*, what China's share actually is, and
+*s*_table = 14.7 %, what the 2022 table says and therefore what the model levies
+on. Sweeping the first while charging on the second would break the very
+constraint the calibration exists to satisfy, so the sweep matches **charges**
+rather than rates — the charge is what enters `ct`:
+
+$$	au_{\mathrm{CHN}}(s)=23.4\%	imesrac{s}{s_{	ext{table}}},
+\qquad r(s)=rac{7.2\%-s\,	au_{\mathrm{CHN}}}{1-s_{	ext{table}}}$$
+
+The first term makes China's burden in the model equal its real-world burden
+despite the inflated base; the second absorbs the remainder so the total still
+reproduces 7.2 %, which is asserted at every sweep point. At *s* = *s*_table it
+collapses to the committed (23.4 %, 4.4 %).
+
+| assumed China share | 7 % | 14.7 % (table) | 20 % | spread |
+|---|--:|--:|--:|--:|
+| implied rate on other origins | 6.52 % | 4.41 % | 2.96 % | |
+| revenue | \$260 bn | \$260 bn | \$260 bn | **0** |
+| **USD spot vs EUR** | **+0.688 %** | **+0.710 %** | **+0.725 %** | **0.04 pp** |
+| US GVA | −0.062 % | −0.056 % | −0.051 % | 0.011 pp |
+| **China's share of the revenue** | **22.8 %** | **47.8 %** | **65.0 %** | **42 pp** |
+
+The result splits cleanly, and the split is the useful part.
+
+**The headline FX number is robust.** USD spot moves over a 0.04 pp band around
++0.71 %, about ±2.6 % in relative terms, and revenue does not move at all. Both
+follow from the constraint: pinning the total effective rate at 7.2 % fixes the
+aggregate charge, leaving only its composition free. The residual variation is
+composition working through the dual — a China-weighted schedule loads more onto
+long-supply-chain manufactures. US GVA is the most exposed aggregate at ±10 % of
+its own magnitude, and moves *against* the China share, because a higher residual
+rate spreads the charge across origins supplying more US intermediate inputs.
+
+**The attribution is not robust, and no constraint protects it.** China's share
+of the revenue runs from 23 % to 65 %. The earlier claim that "China supplies
+48 % of the revenue on 14.7 % of the imports" is therefore a statement about the
+2022 table, not about 2026, and sits mid-range of a band three times its own
+width. Any statement here about *who bears* a US tariff is base-year-determined
+and should be read as conditional; the aggregate effects are not.
+
+That is the honest resolution short of rebuilding the table. The proper fix is a
+RAS update of **A**'s off-diagonal blocks to current bilateral trade shares
+(Miller & Blair ch. 7), which would also improve the carbon results; see §6.
 
 ### 5.2 EU-side measures
 
@@ -343,7 +394,9 @@ construction.
 
 ## 7. Validation
 
-Fourteen gates cover the tariff machinery: that the CBAM phase-in follows the
+Eighteen gates cover the tariff machinery: that the China-share sweep holds the
+published 7.2%% at every point, that the headline FX number is robust to it while
+the attribution to China is not; that the CBAM phase-in follows the
 statutory schedule and scales revenue linearly; that the calibrated US schedule
 reproduces the published 7.2 % effective rate; the schedule shape; that `add_rule`
 targets only the named origin and destination; that a tariff never applies to

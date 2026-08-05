@@ -276,6 +276,22 @@ check("calibrated schedule reproduces the published US effective rate",
       abs(_eff - 0.072) < 0.002,
       f"{_eff*100:.2f}% vs Penn Wharton 7.2% (May 2026)")
 
+# China-share sweep: the calibration constraint must hold at every point, the
+# headline FX number must be robust to it, and the attribution must not be.
+_cs = pd.read_csv(f"{ROOT}/out_sens_china_share.csv", index_col=0)
+check("sweep reproduces the published 7.2% at every China share",
+      float((_cs.effective_pct - 7.2).abs().max()) < 1e-4)
+check("revenue is invariant to the China share (the total is pinned)",
+      float(_cs.revenue_bn.max() - _cs.revenue_bn.min()) < 1e-6)
+check("headline USD/EUR is robust to the base-year China share",
+      float(_cs.USD_spot_vs_EUR_pct.max() - _cs.USD_spot_vs_EUR_pct.min()) < 0.05,
+      f"{_cs.USD_spot_vs_EUR_pct.min():.3f}..{_cs.USD_spot_vs_EUR_pct.max():.3f}%")
+check("but the attribution to China is NOT robust",
+      float(_cs.CHN_share_of_revenue_pct.max()
+            - _cs.CHN_share_of_revenue_pct.min()) > 20.0,
+      f"{_cs.CHN_share_of_revenue_pct.min():.0f}.."
+      f"{_cs.CHN_share_of_revenue_pct.max():.0f}% of revenue")
+
 # --- Phase V: volatility -----------------------------------------------------
 ts, ps = volatility.temperature_sigma(), volatility.carbon_price_sigma()
 check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,
