@@ -209,8 +209,17 @@ def main():
            "C302T309", "C31T33"]
     A_ = transition.technical_matrix(m)
     applied_ = cm.applied_price_usd.to_dict()
+    # Calibrated to observed policy: Penn Wharton Budget Model (13 Jul 2026)
+    # reports a US average effective tariff rate of 7.2% as of May 2026, with
+    # China the highest major partner at 23.4%.  With China at 14.7% of US
+    # imports in this table, those two pin the residual rate on other origins at
+    # 4.4% (0.147*23.4 + 0.853*4.4 = 7.2).  [DATA]
+    us_2026 = tariff.add_rule(m, tariff.empty(m), 0.044, destination="USA")
+    us_2026 = tariff.add_rule(m, us_2026, 0.234 - 0.044, origin="CHN",
+                              destination="USA")
     SHOCKS = {
         "CBAM (EU, applied prices)": cbam.schedule(m, applied_),
+        "US applied tariffs, May 2026": us_2026,
         "USA 25% on CHN manufactures":
             tariff.add_rule(m, tariff.empty(m), 0.25, origin="CHN",
                             destination="USA", industries=MFG),
