@@ -327,6 +327,8 @@ weight shifts onto Current Policies.
 
 ## I. CBAM as a carbon tariff (project stretch goal)
 
+*Full method and results write-up:* [`docs/TARIFF_METHOD.md`](TARIFF_METHOD.md).
+
 The brief's second objective is *"alternative shocks to CO2 prices, e.g. tariffs,
 or changes in trade flows between regions"*. CBAM is the one carbon tariff that
 exists, and it required **no new data**: the MRIO supplies bilateral trade by
