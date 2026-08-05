@@ -198,6 +198,35 @@ check("incidence flips with theta",
       < _g.loc[("applied-divergence", "theta=1"), "TUR"],
       "theta=1 burdens the EU importer, theta=0 the exporter")
 
+# --- generic tariff machinery -------------------------------------------------
+from bkmn import tariff as _tf                                              # noqa: E402
+_t0 = _tf.empty(m)
+check("empty schedule has shape (sectors, regions)",
+      _t0.shape == (len(m.x), len(m.regions_order)), str(_t0.shape))
+_t1 = _tf.add_rule(m, _tf.empty(m), 0.25, origin="CHN", destination="USA")
+_iusa = list(m.regions_order).index("USA")
+_ichn = list(m.regions_order).index("CHN")
+check("add_rule targets only the named origin and destination",
+      _t1[m.region_of == "CHN", _iusa].min() == 0.25
+      and _t1[m.region_of != "CHN", _iusa].max() == 0.0
+      and _t1[:, _ichn].max() == 0.0)
+_t2 = _tf.add_rule(m, _tf.empty(m), 0.10)          # universal
+check("a tariff never applies to intra-regional supply",
+      all(_t2[m.region_of == r, list(m.regions_order).index(r)].max() == 0.0
+          for r in m.regions_order))
+_tot, _imp, _exp = _tf.charges(m, _A, _t1, theta=1.0)
+check("theta=1 charges the importer only",
+      _imp[m.region_of == "USA"].sum() > 0 and abs(_exp).max() == 0.0)
+_tot0, _imp0, _exp0 = _tf.charges(m, _A, _t1, theta=0.0)
+check("theta=0 charges the exporter only",
+      _exp0[m.region_of == "CHN"].sum() > 0 and abs(_imp0).max() == 0.0)
+check("revenue is invariant to the incidence split",
+      abs(_tf.revenue(m, _A, _t1) - _tf.revenue(m, _A, _t1)) < 1e-9)
+check("final-demand imports raise revenue",
+      _tf.revenue(m, _A, _t1, True) > _tf.revenue(m, _A, _t1, False),
+      f"${_tf.revenue(m,_A,_t1,True)/1e3:,.1f}bn vs "
+      f"${_tf.revenue(m,_A,_t1,False)/1e3:,.1f}bn intermediate-only")
+
 # --- Phase V: volatility -----------------------------------------------------
 ts, ps = volatility.temperature_sigma(), volatility.carbon_price_sigma()
 check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,

@@ -326,10 +326,11 @@ hydrogen [ESTIMATE].
    ad-valorem charge — its embodied carbon is worth more at \$80/t than the
    electricity itself. Indian electricity 73 %, Indonesian 59 %, Indonesian steel
    and aluminium 43 %.
-2. **The macro effect is negligible.** Revenue on covered intermediate imports is
-   ~**\$8.4 bn/yr** and the EU GVA effect is **−0.010 %**. Covered sectors are a
-   small share of EU intermediate imports, so a policy with extreme sectoral
-   rates barely registers in aggregate — the coverage, not the rate, is binding.
+2. **The macro effect is negligible.** Revenue is ~**\$9.4 bn/yr** (of which
+   \$8.4 bn on intermediate imports and \$0.9 bn on imports going straight to final
+   demand) and the EU GVA effect is **−0.010 %**. Covered sectors are a small share
+   of EU imports, so a policy with extreme sectoral rates barely registers in
+   aggregate — the coverage, not the rate, is binding.
 3. **CBAM only exists where prices diverge.** Repricing at NGFS Net-Zero levels,
    where the scenario assumes near-uniform global carbon pricing, cuts revenue to
    **\$1.4 bn** — an 83 % fall. The instrument is a response to policy
@@ -344,5 +345,22 @@ reported.
 **Limitation.** With final demand fixed there is no trade diversion, which is
 often a tariff's principal effect. What is measured is the cost-push incidence of
 the charge, not the reallocation of trade away from carbon-intensive origins.
+
+**Generalisation.** CBAM is now a special case of `bkmn/tariff.py`, which takes an
+arbitrary schedule `TAU[k, d]` — an ad-valorem rate on good *k* entering region
+*d* — and returns per-unit-output charges in the same units as `ct`. Any bilateral
+or universal tariff is therefore a scenario, not a data problem: a shock is fully
+specified by its *increment*, so no baseline tariff database is required. Two
+illustrations at φ = 0.5:
+
+| Scenario | Revenue | Importer pays (θ=1) | Exporter absorbs (θ=0) |
+|---|--:|---|---|
+| USA levies 25 % on Chinese manufactures | \$113 bn/yr | USA −0.017 % | CHN −0.051 % |
+| Every region levies 10 % on all imports | \$2,252 bn/yr | CHN −0.387 %, EU27 −0.343 %, USA −0.124 % | — |
+
+The universal case shows the openness ordering directly: the more a region relies
+on imported inputs, the larger its cost-push loss. It also shows the framework's
+limit — with final demand fixed nobody re-sources, so these are pure cost effects
+and understate what a tariff does in practice.
 
 Outputs: `out_sens_cbam_gva.csv`, `out_sens_cbam_rates.csv`, `figures/fig11`.

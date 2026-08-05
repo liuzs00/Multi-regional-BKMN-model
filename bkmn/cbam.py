@@ -40,6 +40,8 @@ coverage; a coverage fraction is applied to it.
 """
 import numpy as np
 
+from . import tariff
+
 # ICIO industry -> share of that industry within CBAM scope
 COVERED = {
     "C23": 1.0,        # cement (other non-metallic mineral products)
@@ -64,34 +66,27 @@ def tariff_rate(m, xce_by_region, base=BASE_REGION):
     return cov * diff * m.ci * 1e-6
 
 
+def schedule(m, xce_by_region, base=BASE_REGION):
+    """CBAM as a general tariff schedule TAU[k, d] (see bkmn.tariff)."""
+    tau = tariff.empty(m)
+    d = list(m.regions_order).index(base)
+    tau[:, d] = tariff_rate(m, xce_by_region, base)
+    return tau
+
+
 def charges(m, A, xce_by_region, theta=1.0, base=BASE_REGION):
     """
     Per-unit-output CBAM charge vector, ready to add to `ct`.
-
-    Returns (total, importer_part, exporter_part) so the incidence split can be
-    reported separately.
+    Returns (total, importer_part, exporter_part).
     """
-    tau = tariff_rate(m, xce_by_region, base)
-    is_base = m.region_of == base
-
-    # importer side: EU industries' extra cost from covered imports they use
-    imp = np.zeros(len(m.x))
-    imp[is_base] = theta * (tau[~is_base] @ A[np.ix_(~is_base, is_base)])
-
-    # exporter side: absorbed by the origin, scaled by its EU-bound output share
-    #   (intermediate exports to the base region, per unit of own output)
-    eu_share = np.zeros(len(m.x))
-    x_safe = np.where(m.x == 0, 1.0, m.x)
-    eu_share[~is_base] = (A[np.ix_(~is_base, is_base)] * m.x[is_base]).sum(1) \
-        / x_safe[~is_base]
-    exp = (1.0 - theta) * tau * np.clip(eu_share, 0.0, 1.0)
-
-    return imp + exp, imp, exp
+    return tariff.charges(m, A, schedule(m, xce_by_region, base), theta)
 
 
-def revenue(m, A, xce_by_region, base=BASE_REGION):
-    """CBAM revenue (USD m): tau x the value of covered intermediate imports."""
-    tau = tariff_rate(m, xce_by_region, base)
-    is_base = m.region_of == base
-    imports = (A[np.ix_(~is_base, is_base)] * m.x[is_base]).sum(1)
-    return float((tau[~is_base] * imports).sum())
+def revenue(m, A, xce_by_region, base=BASE_REGION, include_final_demand=True):
+    """
+    CBAM revenue (USD m).  Includes imports going straight to final demand: the
+    regulation charges covered goods regardless of use, though only the
+    intermediate part enters the production-cost chain.
+    """
+    return tariff.revenue(m, A, schedule(m, xce_by_region, base),
+                          include_final_demand)
