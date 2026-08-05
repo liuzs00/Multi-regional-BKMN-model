@@ -74,9 +74,11 @@ def fig_tradeoff():
     order = sorted(regs, key=lambda r: tr.loc[(NZ, r), H])
     y = np.arange(len(order))
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 6.4), sharey=True)
+    span = {}
     for ax, s in zip(axes, (NZ, CP)):
         t = [tr.loc[(s, r), H] for r in order]
         p = [ph.loc[(s, r), H] for r in order]
+        span[s] = min(min(t), min(p))
         ax.barh(y - 0.19, t, height=0.36, color=TEAL, label="transition (carbon price)", zorder=3)
         ax.barh(y + 0.19, p, height=0.36, color=WARM, label="physical (warming)", zorder=3)
         ax.axvline(0, color=MUTED, lw=1)
@@ -84,14 +86,24 @@ def fig_tradeoff():
         ax.set_xlabel("GDP shock at 2040 (%)")
         ax.grid(axis="x", color=GRID, lw=0.8, zorder=0)
         ax.set_axisbelow(True)
-        ax.set_xlim(-12.5, 0.6)
+        # independent x-scales: on a shared scale the Current Policies panel is
+        # a blank column, because after the damage-function correction physical
+        # damage is ~100x smaller than the Net Zero transition cost.  The point
+        # of the figure is which channel dominates WITHIN each scenario, so the
+        # scales are per-panel and the difference is stated in the subtitle.
+        lo = min(min(t), min(p)) * 1.35
+        ax.set_xlim(lo, abs(lo) * 0.06)
     axes[0].set_yticks(y, order, fontsize=8.5)
     axes[0].invert_yaxis()
     axes[0].legend(loc="lower left", frameon=False, fontsize=8.5)
     fig.suptitle("The transition/physical trade-off — the scenario ranking flips by channel",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
-    fig.text(0.012, 1.012, "Ambitious policy maximises transition cost and minimises warming damage; "
-             "Current Policies does the reverse.", fontsize=8.5, color=MUTED, ha="left")
+    fig.text(0.012, 1.012,
+             "Ambitious policy maximises transition cost and minimises warming damage; Current "
+             f"Policies does the reverse. NOTE per-panel x-scales — the Net Zero panel spans "
+             f"{abs(span[NZ]):.0f}% and Current Policies {abs(span[CP]):.2f}%, a "
+             f"{abs(span[NZ])/abs(span[CP]):.0f}x difference.",
+             fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig1_transition_vs_physical.png"), dpi=300, bbox_inches="tight")
     plt.close(fig)
@@ -372,8 +384,14 @@ def fig_cbam():
         ax.set_axisbelow(True)
     fig.suptitle("CBAM as a carbon tariff: enormous sector rates, small macro effect",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
-    fig.text(0.012, 1.012, r"EU price \$80/t against the price each origin already pays. "
-             r"Revenue on covered intermediate imports ~\$8.4bn/yr.",
+    # read the price and revenue from the data rather than hardcoding them, so
+    # the caption cannot drift from the bars when the calibration changes
+    eu_px = pd.read_csv(os.path.join(ROOT, "DATA_20R/region_carbon_map.csv"),
+                        index_col="region").loc["EU27", "applied_price_usd"]
+    rev = g.loc[("applied-divergence", "theta=1"), "revenue_bn"]
+    fig.text(0.012, 1.012,
+             rf"EU price \${eu_px:.0f}/t (published CBAM certificate price) against "
+             rf"the price each origin already pays. Revenue \${rev:.1f}bn/yr.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig11_cbam.png"), dpi=300, bbox_inches="tight")
