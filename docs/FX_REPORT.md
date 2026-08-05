@@ -65,7 +65,9 @@ calibration it is a rounding error on rates, and matters only because it is the
 
 ![FX ranking](../figures/fig2_fx_forward_ranking.png)
 
-Under Net Zero 2050 at 2045, the 5-year forward against the euro:
+The figure is drawn at **2040** (−20.6 % CNY, −19.9 % INR, +4.2 % NOK); the table
+below is the same ranking at **2045**, the final horizon, which is what the rest of
+this report quotes:
 
 | strengthens most | | weakens | |
 |---|--:|---|--:|
