@@ -52,6 +52,23 @@ COVERED = {
 }
 BASE_REGION = "EU27"
 
+# CBAM factor: the share of embedded emissions that actually generates a
+# certificate obligation in each year.  In the definitive regime (from 1 Jan
+# 2026) CBAM is phased in exactly as EU ETS free allocation to the covered
+# sectors is phased out, so the charge starts at 2.5% of notional and reaches
+# full rate in 2034.  Schedule from Regulation (EU) 2023/956 Art. 31 as amended.
+# Any year before 2026 is zero (transitional regime: reporting only, no charge);
+# 2034 onward is 1.0.
+PHASE_IN = {2026: 0.025, 2027: 0.05, 2028: 0.10, 2029: 0.225, 2030: 0.485,
+            2031: 0.61, 2032: 0.735, 2033: 0.86, 2034: 1.0}
+
+
+def phase_in(year):
+    """CBAM factor for a calendar year (0 before 2026, 1.0 from 2034)."""
+    if year < 2026:
+        return 0.0
+    return PHASE_IN.get(year, 1.0)
+
 
 def tariff_rate(m, xce_by_region, base=BASE_REGION):
     """
@@ -66,11 +83,19 @@ def tariff_rate(m, xce_by_region, base=BASE_REGION):
     return cov * diff * m.ci * 1e-6
 
 
-def schedule(m, xce_by_region, base=BASE_REGION):
-    """CBAM as a general tariff schedule TAU[k, d] (see bkmn.tariff)."""
+def schedule(m, xce_by_region, base=BASE_REGION, year=None):
+    """
+    CBAM as a general tariff schedule TAU[k, d] (see bkmn.tariff).
+
+    `year` applies the statutory phase-in.  Left as None (the default) the
+    schedule is the fully phased-in charge, which is what applies from 2034 and
+    therefore what our 2040 reporting year sees; pass a year to scale it down.
+    """
     tau = tariff.empty(m)
     d = list(m.regions_order).index(base)
     tau[:, d] = tariff_rate(m, xce_by_region, base)
+    if year is not None:
+        tau *= phase_in(year)
     return tau
 
 
@@ -82,11 +107,12 @@ def charges(m, A, xce_by_region, theta=1.0, base=BASE_REGION):
     return tariff.charges(m, A, schedule(m, xce_by_region, base), theta)
 
 
-def revenue(m, A, xce_by_region, base=BASE_REGION, include_final_demand=True):
+def revenue(m, A, xce_by_region, base=BASE_REGION, include_final_demand=True,
+            year=None):
     """
     CBAM revenue (USD m).  Includes imports going straight to final demand: the
     regulation charges covered goods regardless of use, though only the
     intermediate part enters the production-cost chain.
     """
-    return tariff.revenue(m, A, schedule(m, xce_by_region, base),
+    return tariff.revenue(m, A, schedule(m, xce_by_region, base, year),
                           include_final_demand)

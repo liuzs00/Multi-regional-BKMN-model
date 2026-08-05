@@ -217,9 +217,32 @@ def main():
     us_2026 = tariff.add_rule(m, tariff.empty(m), 0.044, destination="USA")
     us_2026 = tariff.add_rule(m, us_2026, 0.234 - 0.044, origin="CHN",
                               destination="USA")
+    # EU steel safeguard, Regulation (EU) 2026/1384, applying from 1 Jul 2026:
+    # the out-of-quota duty doubles to 50% and the tariff-free quota falls to
+    # 18.3 Mt.  A tariff-rate quota is not an ad-valorem rate, so it is converted
+    # to the average rate paid on the flow: 50% times the share of imports that
+    # exceed quota.  EUROFER puts 2025 EU steel imports near 30 Mt, which leaves
+    # about 39% above the new quota and an average rate of ~19.5%.  Under the
+    # model's fixed demand nothing re-sources, so this is an upper bound: the
+    # measure's purpose is to push imports back toward the quota, which would cut
+    # the out-of-quota share and hence the average rate.  Swept below.  [ESTIMATE]
+    STEEL_ABOVE_QUOTA = 0.39
+    eu_steel = tariff.add_rule(m, tariff.empty(m), 0.50 * STEEL_ABOVE_QUOTA,
+                               destination="EU27", industries=["C24A"])
+    # EU-US framework in force 1 Jul 2026: the US caps most EU goods at an
+    # all-inclusive 15%, and the EU eliminates tariffs on US industrial goods.
+    # Schedules here are increments from a zero-tariff baseline, so the EU-side
+    # liberalisation enters as a NEGATIVE wedge equal to the MFN rate it removes
+    # (World Bank weighted applied mean for the EU, 1.33%).  [DATA/ESTIMATE]
+    eu_us = tariff.add_rule(m, tariff.empty(m), 0.15, origin="EU27",
+                            destination="USA")
+    eu_us = tariff.add_rule(m, eu_us, -0.0133, origin="USA",
+                            destination="EU27", industries=MFG)
     SHOCKS = {
         "CBAM (EU, applied prices)": cbam.schedule(m, applied_),
         "US applied tariffs, May 2026": us_2026,
+        "EU-US framework, Jul 2026": eu_us,
+        "EU steel safeguard 2026/1384": eu_steel,
         "USA 25% on CHN manufactures":
             tariff.add_rule(m, tariff.empty(m), 0.25, origin="CHN",
                             destination="USA", industries=MFG),

@@ -1,5 +1,5 @@
 region,currency,fx_role,scenario_zone,carbon_price_regime,cbam_role,phys_vuln_tier,ppp_gdp_weight,carbon_scope,applied_price_usd
-EU27,EUR,base,R5.2OECD,EU ETS (~EUR80/t),levier,low-med,0.149,0.645,80
+EU27,EUR,base,R5.2OECD,EU ETS / CBAM cert (EUR75.3/t),levier,low-med,0.149,0.645,86
 USA,USD,analytical,R5.2OECD,none (state-level only),exposed-minor,med,0.148,0.091,3
 CHN,CNY,analytical,R5.2ASIA,national ETS (~USD8/t),exposed-major,med-high,0.185,0.467,10
 GBR,GBP,analytical,R5.2OECD,UK ETS (~GBP40/t) + CBAM 2027,levier,low-med,0.023,0.326,50

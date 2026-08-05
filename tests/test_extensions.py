@@ -184,8 +184,25 @@ check("CBAM rate is zero for the levying region itself",
 check("CBAM rate is zero outside covered industries",
       all(_tau[k] == 0 for k in range(len(_tau))
           if m.industry_of[k] not in _cb.COVERED))
-check("no rebate where the origin already pays more (NOR $85 > EU $80)",
-      float(np.abs(_tau[m.region_of == "NOR"]).max()) == 0.0)
+# a region already paying more than the EU gets no charge and no rebate.  Tested
+# on a perturbed price map rather than a live pair: as of the 2026 calibration
+# the EU price ($86, the published CBAM certificate price) is the highest in the
+# map, so no region satisfies this on the real data.
+_ap_hi = dict(_ap); _ap_hi["NOR"] = _ap["EU27"] + 10.0
+check("no rebate where the origin already pays more than the EU",
+      float(np.abs(_cb.tariff_rate(m, _ap_hi)[m.region_of == "NOR"]).max()) == 0.0)
+
+# statutory phase-in: CBAM is 2.5% of notional in 2026, reaching full rate in
+# 2034, so results reported at 2040 see the fully phased-in charge.
+check("CBAM phase-in rises to full rate by 2034 and holds",
+      _cb.phase_in(2025) == 0.0 and _cb.phase_in(2026) == 0.025
+      and _cb.phase_in(2034) == 1.0 and _cb.phase_in(2040) == 1.0
+      and all(_cb.phase_in(y) <= _cb.phase_in(y + 1) for y in range(2026, 2040)),
+      "2026 2.5% -> 2030 48.5% -> 2034 100%")
+check("phase-in scales CBAM revenue linearly",
+      abs(_cb.revenue(m, _A, _ap, year=2030)
+          - 0.485 * _cb.revenue(m, _A, _ap)) < 1e-6)
+
 _g = pd.read_csv(f"{ROOT}/out_sens_cbam_gva.csv", index_col=[0, 1])
 _rev_div = _g.loc[("applied-divergence", "theta=1"), "revenue_bn"]
 _rev_uni = _g.loc[("ngfs-uniform", "theta=1"), "revenue_bn"]
