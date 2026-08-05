@@ -44,8 +44,9 @@ model existing levels or the removal of specific agreements.
 What a shock still needs is a *rate*, and a rate chosen for illustration carries
 no evidential weight. §5.1 therefore calibrates one schedule to published
 effective tariff rates so that at least one result describes a policy that exists;
-§§5.2–5.3 report the mechanism findings, which are qualitative and hold for any
-rate.
+§5.2 does the same for the EU side, which matters most here because the euro is
+the base currency. §§5.3–5.4 report the mechanism findings, which are
+qualitative and hold at any rate.
 
 ## 2. Incidence
 
@@ -71,7 +72,7 @@ this is what enters `ct`.
 used for) but they raise *consumer* prices rather than producer costs, so they
 generate revenue without entering the production chain. They were initially
 omitted; 12.6 % of EU imports of CBAM-covered goods go straight to final demand,
-and including them raises CBAM revenue from \$8.4 bn to **\$9.4 bn**.
+and including them raises CBAM revenue from \$9.1 bn to **\$10.1 bn**.
 
 ## 4. Reaching FX — the project's actual deliverable
 
@@ -104,13 +105,16 @@ the tariff, so the underlying carbon baseline cancels.
 
 ## 5. Results
 
-Four shocks, at 2040, φ = 0.5, statutory incidence. The first is calibrated to
-announced policy; the rest are stylised, and are used for the mechanism results.
+Six shocks, at 2040, φ = 0.5, statutory incidence. The first four are calibrated
+to measures actually in force (§§5.1–5.2); the last two are stylised, and carry
+the mechanism results, which hold at any rate.
 
 | Shock | Revenue (\$bn/yr) | of which intermediate | Consumer-price level effect |
 |---|--:|--:|---|
-| **US applied tariffs, May 2026** | **260.4** | **108.9** | **USA +0.710 %** |
-| CBAM (EU, applied prices) | 9.4 | 8.4 | EU27 +0.019 % |
+| **US applied tariffs, May 2026** | **260.0** | **109.3** | **USA +0.714 %** |
+| **EU–US framework, Jul 2026** | **105.7** | **44.8** | **USA +0.295 %** |
+| **EU steel safeguard 2026/1384** | **10.3** | **10.1** | **EU27 +0.015 %** |
+| CBAM (EU, applied prices) | 10.1 | 9.1 | EU27 +0.020 % |
 | USA 25 % on Chinese manufactures | 112.8 | 39.6 | USA +0.333 % |
 | Global 10 % on all imports | 2,251.9 | 1,350.4 | SGP +4.29 %, EU27 +1.25 %, USA +1.03 % |
 
@@ -159,7 +163,78 @@ The stylised 25 % on Chinese manufactures turned out close to the observed 23.4 
 effective rate on China; the stylised 10 % universal tariff overstates the actual
 US average by a factor of about 1.4.
 
-### 5.2 A tariff weakens the currency that levies it
+### 5.2 EU-side measures
+
+The US calibration above says nothing about the EU, which is this model's base
+currency and therefore the region whose policy matters most for an FX result.
+The EU is a **low-tariff jurisdiction acting through instruments rather than
+rates** — its weighted applied MFN tariff is about 1.3 % ([World Bank](https://tradingeconomics.com/european-union/tariff-rate-applied-weighted-mean-all-products-percent-wb-data.html),
+2022) — so the measures worth modelling are specific ones, not an average.
+
+**The EU carbon price is no longer an estimate.** CBAM entered its definitive
+regime on 1 January 2026, and the Commission now publishes a quarterly
+certificate price defined as the weighted average of EU ETS auction clearing
+prices: **€75.36** for Q1 2026 and **€75.28** for Q2
+([DG TAXUD](https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism/price-cbam-certificates_en)).
+At EUR/USD 1.144 that is **\$86/t**, which replaces the \$80 `[ESTIMATE]`
+previously carried for EU27 in `region_carbon_map.csv` — and it is exactly the
+right series, since the same published price defines both the EU ETS level and
+the CBAM reference. Raising the EU price from \$80 to \$86 lifts CBAM revenue
+from \$9.4 bn to **\$10.1 bn** and the EU GVA cost from −0.0100 % to −0.0108 %.
+Every CBAM figure below is at the published price.
+
+**CBAM is phased in, and our reporting year is past the end of it.** The charge
+does not apply in full from day one: it tracks the phase-out of EU ETS free
+allocation to the covered sectors, so only **2.5 %** of embedded emissions
+generate a certificate obligation in 2026, rising 5 %, 10 %, 22.5 %, 48.5 %,
+61 %, 73.5 %, 86 % and reaching **100 % in 2034**. `cbam.phase_in` carries this
+schedule. It leaves the headline result unchanged — everything here is reported
+at 2040, past full phase-in — but it means a CBAM number quoted for any year
+before 2034 is wrong without it, by up to 40× in 2026 (\$0.25 bn, not \$10.1 bn).
+Presenting the fully phased-in figure as though it were current would have been a
+real error, and the schedule is now gated.
+
+**The EU's steel safeguard costs the EU more than its carbon border does.**
+Regulation (EU) 2026/1384, applying from 1 July 2026, replaces the old safeguard:
+the tariff-free quota falls 47 % to **18.3 Mt** and the out-of-quota duty
+**doubles from 25 % to 50 %** across 30 product categories. A tariff-rate quota
+is not an ad-valorem rate, so it is converted to the average rate paid on the
+flow — 50 % times the above-quota share. With EU steel imports near 30 Mt in
+2025 ([EUROFER](https://gmk.center/en/news/steel-imports-into-the-eu-rose-by-14-y-y-in-2025-eurofer/)),
+roughly 39 % sits above quota, giving an average **19.5 %** on EU steel imports.
+
+That single-sector measure costs EU27 **−0.0127 %** of GVA against CBAM's
+**−0.0108 %**, on comparable revenue (\$10.3 bn vs \$10.1 bn) — despite CBAM
+spanning five industries and steel being one. The EU's protectionist instrument
+is a larger drag on the EU economy than its climate instrument, which is worth
+stating plainly given that CBAM attracts far more attention as a trade barrier.
+
+**The EU–US framework is a tariff the US pays.** In force 1 July 2026, it caps
+most EU goods entering the US at an all-inclusive **15 %** while the EU
+eliminates tariffs on US industrial goods
+([European Commission](https://commission.europa.eu/topics/trade/eu-us-trade-deal_en)).
+Because schedules here are increments from a zero-tariff baseline, the EU-side
+liberalisation enters as a *negative* wedge of 1.33 % — the MFN rate it removes.
+The result is asymmetric in the direction the mechanism predicts: US GVA
+**−0.023 %** and the dollar **+0.30 % weaker against the euro**, against EU27
+GVA of **−0.0003 %**, essentially nil. Under statutory incidence the 15 % is
+paid by American importers, so the deal's measured cost falls on the country that
+levied it, while the EU's own concession is too small to register.
+
+Two caveats on that last result, both from §6. With no trade diversion the model
+cannot capture the lost EU export volumes that are the deal's actual bite for
+European exporters, and under θ = 0 the burden moves to those exporters' margins.
+The finding is about where a tariff's *cost-push* incidence lands, not a welfare
+verdict on the agreement.
+
+Not modelled, for want of a clean mapping to ICIO industries: the EU's definitive
+countervailing duties on Chinese battery electric vehicles (7.8–35.3 % on top of
+the 10 % MFN car tariff, in force since October 2024, with a minimum-import-price
+alternative agreed in principle in January 2026 but not implemented), which sit
+inside ICIO's motor-vehicles industry C29 and cannot be separated from it at this
+aggregation.
+
+### 5.3 A tariff weakens the currency that levies it
 
 The 25 % US tariff on Chinese manufactures moves **USD +0.33 % against the euro** —
 the dollar *depreciates*. The mechanism is direct: the tariff raises US consumer
@@ -171,7 +246,7 @@ Note the asymmetry with the incidence assumption. Under θ = 1 the tariff is a t
 on American consumers and the dollar bears it; under θ = 0 the burden moves to
 Chinese exporters' margins and the dollar effect largely disappears.
 
-### 5.3 The cross-section of a trade war is import dependence
+### 5.4 The cross-section of a trade war is import dependence
 
 Under the universal 10 % tariff, the spot FX response correlates **0.926** with
 each region's imported share of intermediate inputs:
@@ -192,7 +267,7 @@ first approximation the FX consequence of a global trade war is a ranking of who
 depends on imports — the same openness ordering that emerges from the
 input–output flow structure, now expressed in currencies.
 
-### 5.4 CBAM: enormous sector rates, negligible macro effect
+### 5.5 CBAM: enormous sector rates, negligible macro effect
 
 The CBAM rate is the price differential applied to embodied carbon,
 
@@ -207,14 +282,15 @@ Sector rates are extreme:
 
 | Origin – sector | Carbon intensity (t/\$m) | CBAM rate |
 |---|--:|--:|
-| Kazakhstan – electricity | 18,830 | **149 %** |
-| India – electricity | 9,095 | 73 % |
-| Indonesia – electricity | 7,614 | 59 % |
-| Indonesia – steel / aluminium | ~5,520 | 43 % |
+| Kazakhstan – electricity | 18,830 | **160 %** |
+| India – electricity | 9,095 | 78 % |
+| Indonesia – electricity | 7,614 | 64 % |
+| Africa – electricity | 5,865 | 50 % |
+| Middle East – electricity | 5,739 | 49 % |
 
 Kazakh electricity carries a charge larger than the electricity is worth: at
-\$80/t its embodied carbon exceeds the value of the good. Yet the macro effect is
-**−0.010 %** of EU GVA on \$9.4 bn of revenue. Covered sectors are a small share of
+\$86/t its embodied carbon is worth more than the good itself. Yet the macro
+effect is **−0.011 %** of EU GVA on \$10.1 bn of revenue. Covered sectors are a small share of
 EU imports, so a policy with extreme sectoral rates barely registers in aggregate.
 **Coverage, not the rate, is the binding constraint.**
 
@@ -222,15 +298,15 @@ Incidence flips the burden entirely:
 
 | θ | EU27 | TUR | RUS | KAZ |
 |---|--:|--:|--:|--:|
-| 1 (EU importer pays) | **−0.0100 %** | −0.0015 % | −0.0005 % | −0.0002 % |
-| 0.5 | −0.0056 % | −0.0110 % | −0.0100 % | −0.0068 % |
-| 0 (exporter absorbs) | −0.0012 % | **−0.0204 %** | **−0.0194 %** | **−0.0133 %** |
+| 1 (EU importer pays) | **−0.0108 %** | −0.0017 % | −0.0006 % | −0.0002 % |
+| 0.5 | −0.0061 % | −0.0118 % | −0.0107 % | −0.0073 % |
+| 0 (exporter absorbs) | −0.0013 % | **−0.0220 %** | **−0.0208 %** | **−0.0144 %** |
 
-### 5.5 CBAM self-extinguishes under policy convergence
+### 5.6 CBAM self-extinguishes under policy convergence
 
 Repricing the same mechanism at NGFS Net-Zero carbon prices — where the scenario
-assumes near-uniform global carbon pricing — cuts revenue from \$9.4 bn to
-**\$1.6 bn**, a fall of 83 %. CBAM is a response to policy *fragmentation*: if the
+assumes near-uniform global carbon pricing — cuts revenue from \$10.1 bn to
+**\$1.6 bn**, a fall of 84 %. CBAM is a response to policy *fragmentation*: if the
 world converges on a common carbon price there is nothing left to adjust at the
 border. That is a policy-relevant result that follows directly from the scenario
 set rather than from any additional assumption.
@@ -267,13 +343,13 @@ construction.
 
 ## 7. Validation
 
-Twelve gates cover the tariff machinery: that the calibrated US schedule
+Fourteen gates cover the tariff machinery: that the CBAM phase-in follows the
+statutory schedule and scales revenue linearly; that the calibrated US schedule
 reproduces the published 7.2 % effective rate; the schedule shape; that `add_rule`
 targets only the named origin and destination; that a tariff never applies to
 intra-regional supply; that θ = 1 charges only the importer and θ = 0 only the
 exporter; that revenue is invariant to the incidence split; that final-demand
 imports raise revenue; that the CBAM rate is zero for the levying region, zero
-outside covered industries, and zero where the origin already pays more (Norway
-at \$85 against the EU's \$80); that CBAM shrinks when carbon prices converge; and
+outside covered industries, and zero where the origin already pays more than the EU; that CBAM shrinks when carbon prices converge; and
 that a tariff now moves both rates and FX — the check that would have caught the
 original omission.
