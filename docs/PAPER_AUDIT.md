@@ -67,12 +67,38 @@ matching the single-region reference implementation.
 
 ## C. Paper features not implemented (deliberate)
 
-### C1. Cumulative short rate (Eq 15)
+### C1. Cumulative short rate (Eq 15) — **resolved**
 Eq 15 gives `Δr(t) = ∫ Δr^Policy(s) ds`. We use the Taylor output at *t* directly
-as the short-rate shift, because our ΔΠ and ΔY are already **level deviations**
-from the no-climate baseline at t, so the Taylor rule returns the policy-rate
-deviation at t; integrating those would double-count. Flagged for confirmation
-against the single-region reference code.
+as the short-rate shift. This was flagged for confirmation and is now settled on
+three grounds.
+
+**The reference implementation agrees.** The verified single-region reproduction
+(commit `1760a2d`, the one that reproduces Table 4 to 0.04 pp) computes
+
+```
+dr    = markets.policy_rate_shock(infl, gdp_shock)      # phi_Pi*dPi + phi_Y*dY
+rates = markets.rate_term_shift(dr, tau)                # Prop 2 applied to that dr
+```
+
+with no accumulation anywhere: the Taylor output *is* the short-rate shift fed to
+Proposition 2.
+
+**Dimensional analysis rules the literal reading out.** The paper defines
+`Δr^Policy(t) = φΠ(Π(t⁺)−Π(t⁻)) + φY(Y(t⁺)−Y(t⁻))` — a difference of *levels*, so
+already a rate deviation in basis points. Integrating a rate over time yields
+basis-points × years, which is not a rate. The integral in Eq 15 is only
+dimensionally coherent if `Δr^Policy` is read as a *rate of change* of the policy
+rate, which is not what the equation above defines.
+
+**The magnitudes confirm it.** Integrating our annual level deviations from 2022
+would inflate the 2040 short-rate shift by roughly the horizon length — EU27
+−132 bp → −1349 bp, India −522 bp → −5583 bp (≈ 10× in each case, i.e. −56 % on
+the Indian policy rate). Those are not credible policy responses.
+
+Conclusion: Eq 15 is best read as describing accumulation when the policy shock
+arrives as a sequence of *increments*; where ΔΠ and ΔY are level deviations from
+the no-climate baseline, as here and in the reference implementation, the Taylor
+rule already returns the level shift and no integration is applied.
 
 ### C1b. §3.3 volatility — *we follow the paper's actual method*
 An earlier draft of this audit listed the regime-switching Hull-White SDEs as
