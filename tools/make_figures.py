@@ -225,7 +225,7 @@ def fig_inputs():
         axes[0].plot(yrs, [sc.px.loc[y, (s, "R5.2OECD")] for y in yrs], color=c, lw=1.9, label=lab)
         axes[1].plot(yrs, [sc.temp.loc[y, s] for y in yrs], color=c, lw=1.9, label=lab)
     axes[0].set_title("Carbon price, OECD zone", fontsize=10, fontweight="600", pad=8)
-    axes[0].set_ylabel("US$2022 / tCO₂e")
+    axes[0].set_ylabel("US\$2022 / tCO₂e")
     axes[1].set_title("Global mean warming (GSAT)", fontsize=10, fontweight="600", pad=8)
     axes[1].set_ylabel("K vs 1850–1900")
     for ax in axes:
@@ -333,11 +333,58 @@ def fig_term_structure():
     plt.close(fig); print("  fig10_rate_term_structure.png")
 
 
+# --- 11. CBAM ---------------------------------------------------------------
+def fig_cbam():
+    rates = pd.read_csv(os.path.join(ROOT, "out_sens_cbam_rates.csv"))
+    g = load("out_sens_cbam_gva", idx=(0, 1))
+    fig, axes = plt.subplots(1, 2, figsize=(11, 5.2))
+
+    top = rates.nlargest(12, "cbam_rate_pct").iloc[::-1]
+    lab = [f"{r.region} {r.industry}" for r in top.itertuples()]
+    y = np.arange(len(top))
+    axes[0].barh(y, top.cbam_rate_pct, color=WARM, height=0.68, zorder=3)
+    axes[0].set_yticks(y, lab, fontsize=8)
+    for i, v in enumerate(top.cbam_rate_pct):
+        axes[0].text(v + 2, i, f"{v:.0f}%", va="center", fontsize=8, color=INK)
+    axes[0].axvline(100, color=MUTED, lw=1, ls="--")
+    axes[0].text(102, 0.6, "charge exceeds the good's value",
+                 fontsize=7.5, color=MUTED)
+    axes[0].set_xlim(0, 175)
+    axes[0].set_title("Ad-valorem CBAM rate by origin and sector",
+                      fontsize=10, fontweight="600", pad=8)
+    axes[0].set_xlabel("CBAM charge as % of import value")
+
+    regs = ["EU27", "TUR", "RUS", "KAZ", "IND", "CHN", "AFR"]
+    x = np.arange(len(regs))
+    for k, (th, c, lbcl) in enumerate([("theta=1", COOL, "EU importer pays (statutory)"),
+                                       ("theta=0", WARM, "exporter absorbs")]):
+        axes[1].bar(x + (k - 0.5) * 0.36,
+                    [g.loc[("applied-divergence", th), r] for r in regs],
+                    width=0.34, color=c, label=lbcl, zorder=3)
+    axes[1].axhline(0, color=MUTED, lw=1)
+    axes[1].set_xticks(x, regs, fontsize=9)
+    axes[1].set_title("Who bears it: GVA effect by incidence assumption",
+                      fontsize=10, fontweight="600", pad=8)
+    axes[1].set_ylabel("GVA change at applied prices (%)")
+    axes[1].legend(frameon=False, fontsize=8.5, loc="lower right")
+    for ax in axes:
+        ax.grid(axis="x" if ax is axes[0] else "y", color=GRID, lw=0.8, zorder=0)
+        ax.set_axisbelow(True)
+    fig.suptitle("CBAM as a carbon tariff: enormous sector rates, small macro effect",
+                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
+    fig.text(0.012, 1.012, r"EU price \$80/t against the price each origin already pays. "
+             r"Revenue on covered intermediate imports ~\$8.4bn/yr.",
+             fontsize=8.5, color=MUTED, ha="left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig11_cbam.png"), dpi=300, bbox_inches="tight")
+    plt.close(fig); print("  fig11_cbam.png")
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
     os.makedirs(FIG, exist_ok=True)
     print("writing figures/")
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
-    fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure()
+    fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure(); fig_cbam()
     print("done.")

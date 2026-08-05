@@ -297,3 +297,52 @@ and the ambitious scenarios as stress cases rather than central forecasts.
 UNEP and CAT put full NDC implementation at 2.3–2.6 °C. The NGFS NDC narrative is
 therefore *more optimistic* than the external assessments, which is part of why
 weight shifts onto Current Policies.
+
+
+## I. CBAM as a carbon tariff (project stretch goal)
+
+The brief's second objective is *"alternative shocks to CO2 prices, e.g. tariffs,
+or changes in trade flows between regions"*. CBAM is the one carbon tariff that
+exists, and it required **no new data**: the MRIO supplies bilateral trade by
+sector, `CARBON_INTENSITY_20R` the embodied carbon by origin, and
+`region_carbon_map.applied_price_usd` the price each origin already pays.
+
+**Mechanism.** On covered imports the EU levies the price differential applied to
+embodied carbon,
+
+    tau(r,i) = max(0, XCE_EU − XCE_r) · CI(r,i) · 1e-6      [fraction of value]
+
+which is dimensionless — the same units as the model's own `ct` — so it enters
+the identical modified Leontief dual. Statutorily the EU importer pays, raising
+EU costs in proportion to covered imports used; an incidence parameter θ shifts
+the burden to the exporter (θ = 0) to bracket the elastic-demand case the model
+cannot represent. Coverage follows CBAM Annex I mapped to ICIO: C23 cement,
+C24A steel, C24B aluminium, D electricity, and 15 % of C20 for fertilisers and
+hydrogen [ESTIMATE].
+
+**Three findings.**
+
+1. **Sector rates are enormous.** Kazakh electricity carries a **149 %**
+   ad-valorem charge — its embodied carbon is worth more at \$80/t than the
+   electricity itself. Indian electricity 73 %, Indonesian 59 %, Indonesian steel
+   and aluminium 43 %.
+2. **The macro effect is negligible.** Revenue on covered intermediate imports is
+   ~**\$8.4 bn/yr** and the EU GVA effect is **−0.010 %**. Covered sectors are a
+   small share of EU intermediate imports, so a policy with extreme sectoral
+   rates barely registers in aggregate — the coverage, not the rate, is binding.
+3. **CBAM only exists where prices diverge.** Repricing at NGFS Net-Zero levels,
+   where the scenario assumes near-uniform global carbon pricing, cuts revenue to
+   **\$1.4 bn** — an 83 % fall. The instrument is a response to policy
+   fragmentation and largely self-extinguishes under coordination.
+
+**Incidence.** Under statutory incidence the EU bears −0.010 % and exporters
+almost nothing; with full exporter absorption the burden inverts — Turkey
+−0.020 %, Russia −0.019 %, Kazakhstan −0.013 %, EU27 only −0.001 %. Which holds
+depends on elasticities the inelastic-demand assumption excludes, so both are
+reported.
+
+**Limitation.** With final demand fixed there is no trade diversion, which is
+often a tariff's principal effect. What is measured is the cost-push incidence of
+the charge, not the reallocation of trade away from carbon-intensive origins.
+
+Outputs: `out_sens_cbam_gva.csv`, `out_sens_cbam_rates.csv`, `figures/fig11`.

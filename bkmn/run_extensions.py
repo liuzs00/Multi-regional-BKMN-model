@@ -22,7 +22,7 @@ import os
 import numpy as np
 import pandas as pd
 
-from . import equity, fx, macro, mixture, oprisk, physical, rates, transition, volatility
+from . import cbam, equity, fx, macro, mixture, oprisk, physical, rates, transition, volatility
 from .regions import load
 from .run_fx import BASE, HORIZONS, PHI, xce_annual
 from .scenarios import Scenarios
@@ -182,6 +182,32 @@ def main():
                       fxregs, betas, kap, u0) for s_ in sc.names}
     table(dyn, "spot", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv")
     table(dyn, "fwd5", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_forward_dynscope.csv")
+
+    # --- Sensitivity: CBAM as a carbon tariff (project stretch goal) ---------
+    # Needs no new data: MRIO gives bilateral trade, CARBON_INTENSITY gives
+    # embodied carbon by origin, region_carbon_map gives the price already paid.
+    A = transition.technical_matrix(m)
+    applied = cm.applied_price_usd.to_dict()
+    rows, sect = {}, {}
+    for label, prices in [("applied-divergence", applied),
+                          ("ngfs-uniform", sc.xce_by_region("Net Zero 2050", 2040).to_dict())]:
+        for theta in (1.0, 0.5, 0.0):
+            tot, imp, exp = cbam.charges(m, A, prices, theta=theta)
+            dV = m.x * (M @ tot)
+            rows[(label, f"theta={theta:g}")] = {
+                **{r: dV[m.region_of == r].sum() / m.gva[m.region_of == r].sum() * 100
+                   for r in allreg},
+                "revenue_bn": cbam.revenue(m, A, prices) / 1e3}
+    pd.DataFrame(rows).T.rename_axis(["prices", "incidence"]).to_csv(
+        f"{ROOT}/out_sens_cbam_gva.csv")
+    # ad-valorem rates by origin x covered sector
+    tau = cbam.tariff_rate(m, applied)
+    cov = [k for k in range(len(tau)) if m.industry_of[k] in cbam.COVERED
+           and m.region_of[k] != cbam.BASE_REGION]
+    pd.DataFrame({"region": [m.region_of[k] for k in cov],
+                  "industry": [m.industry_of[k] for k in cov],
+                  "carbon_intensity_t_per_musd": [m.ci[k] for k in cov],
+                  "cbam_rate_pct": [tau[k] * 100 for k in cov]})       .sort_values("cbam_rate_pct", ascending=False)       .to_csv(f"{ROOT}/out_sens_cbam_rates.csv", index=False)
 
     # --- Phase V: volatility band (95th pct of inputs, Net Zero) -------------
     tsig, psig = volatility.temperature_sigma(), volatility.carbon_price_sigma()
