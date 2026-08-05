@@ -380,6 +380,75 @@ def fig_cbam():
     plt.close(fig); print("  fig11_cbam.png")
 
 
+# --- 12. the two FX channels disagree ---------------------------------------
+def fig_two_channels():
+    """
+    Spot (relative PPP, inflation-driven) against forward (CIP, rate-driven).
+
+    The paper derives FX from "the difference in the changes of yield curves",
+    which in practice splits into two channels of very different size that rank
+    regions differently.  This figure is the argument for reporting both.
+    """
+    Y = "2045"
+    sp = load("out_fx_spot_ppp").xs(NZ, level=0)[Y]
+    fw = load("out_fx_forward_5y").xs(NZ, level=0)[Y]
+    pi = load("out_inflation_shift").xs(NZ, level=0)[Y]
+    gy = load("out_gdp_shock_fx").xs(NZ, level=0)[Y] * 100
+    regs = list(sp.index)
+
+    fig, (axa, axb) = plt.subplots(1, 2, figsize=(11.6, 5.4),
+                                   gridspec_kw={"width_ratios": [1.25, 1]})
+    o = list(fw.loc[regs].sort_values().index)
+    y = np.arange(len(o))
+    axa.barh(y - 0.2, sp[o], height=0.38, color=COOL, zorder=3,
+             label="spot (relative PPP)")
+    axa.barh(y + 0.2, fw[o], height=0.38, color=WARM, zorder=3,
+             label="5y forward (CIP)")
+    flip = [r for r in o if np.sign(sp[r]) != np.sign(fw[r])]
+    axa.set_yticks(y, [f"{r} *" if r in flip else r for r in o], fontsize=8.5)
+    axa.axvline(0, color=MUTED, lw=1)
+    axa.invert_yaxis()
+    axa.legend(frameon=False, fontsize=8.5, loc="lower left", ncol=2,
+               bbox_to_anchor=(0, 1.0), handlelength=1.4, columnspacing=1.4)
+    axa.set_xlabel("% vs EUR   (negative = strengthens against the euro)", fontsize=9)
+    axa.grid(axis="x", color=GRID, lw=0.8, zorder=0)
+    axa.set_axisbelow(True)
+    axa.set_title("(a) the same shock, two channels, 9x apart",
+                  fontsize=10, fontweight="600", loc="left", pad=24)
+    axa.text(0.015, 0.055, "*  spot and forward disagree in sign",
+             transform=axa.transAxes, fontsize=7.8, color=INK)
+
+    o2 = list(gy.reindex(gy.abs().sort_values().index).index)
+    axb.barh(np.arange(len(o2)), 0.5 * gy[o2], height=0.62, color=TEAL, zorder=3,
+             label="output term  0.5 x GVA")
+    axb.barh(np.arange(len(o2)), 0.5 * pi[o2], height=0.62, color=WARM, zorder=4,
+             label="inflation term  0.5 x dPi")
+    axb.set_yticks(np.arange(len(o2)), o2, fontsize=7.6)
+    axb.axvline(0, color=MUTED, lw=1)
+    axb.set_xlabel("contribution to the policy-rate shift (bp)", fontsize=9)
+    axb.legend(frameon=False, fontsize=8.5, loc="lower left", ncol=2,
+               bbox_to_anchor=(0, 1.0), handlelength=1.4, columnspacing=1.4)
+    axb.grid(axis="x", color=GRID, lw=0.8, zorder=0)
+    axb.set_axisbelow(True)
+    axb.set_title("(b) the inflation channel is invisible next to output",
+                  fontsize=10, fontweight="600", loc="left", pad=24)
+    share = (0.5 * pi.abs() / (0.5 * pi.abs() + 0.5 * gy.abs()) * 100).median()
+    axb.text(0.015, 0.055, f"inflation is a median {share:.1f}% of each rate move",
+             transform=axb.transAxes, fontsize=7.8, color=INK)
+
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.suptitle("Two FX channels, and why they diverge", fontsize=12.5,
+                 fontweight="600", x=0.006, ha="left", y=1.00)
+    fig.text(0.006, 0.945, f"Net Zero 2050 at {Y}, vs EUR. Spot moves with the "
+             "inflation differential; the forward adds the rate differential, "
+             "which the output term dominates.",
+             fontsize=8.5, color=MUTED, ha="left", va="bottom")
+    fig.savefig(os.path.join(FIG, "fig12_two_fx_channels.png"), dpi=300,
+                bbox_inches="tight")
+    plt.close(fig)
+    print("  fig12_two_fx_channels.png")
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
@@ -387,4 +456,5 @@ if __name__ == "__main__":
     print("writing figures/")
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
     fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure(); fig_cbam()
+    fig_two_channels()
     print("done.")

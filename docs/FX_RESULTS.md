@@ -1,5 +1,8 @@
 # FX extension — methodology, results, and caveats
 
+> Method reference. The figure-led results narrative on the current numbers is
+> [FX_REPORT.md](FX_REPORT.md); read that first for findings, this for the chain.
+
 Early-stage FX-only build of the multi-regional BKMN model (project: Kenyon,
 UCL MSc Math Finance). Implements the paper's own route to FX (§4.3: *"the
 difference in the changes of yield curves"*) across 20 regions, EUR as base.
