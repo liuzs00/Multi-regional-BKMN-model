@@ -292,6 +292,25 @@ check("but the attribution to China is NOT robust",
       f"{_cs.CHN_share_of_revenue_pct.min():.0f}.."
       f"{_cs.CHN_share_of_revenue_pct.max():.0f}% of revenue")
 
+# --- the worked illustration in docs/TARIFF_METHOD.md 5 -----------------------
+_ig = pd.read_csv(f"{ROOT}/out_illus_eu_tariff_gva.csv", index_col=0)
+_if = pd.read_csv(f"{ROOT}/out_illus_eu_tariff_fx.csv", index_col=0)
+check("illustration: a tariff weakens the currency that levies it",
+      bool((_if.spot_pct < 0).all()),
+      f"all {len(_if)} currencies strengthen vs EUR "
+      f"({_if.spot_pct.min():.3f}..{_if.spot_pct.max():.3f}%)")
+check("illustration: Taylor sees only the output term (a level shift)",
+      abs(_ig.loc["EU27", "rate_bp"] - 0.5 * _ig.loc["EU27", "theta=1.0"] * 100)
+      < 1e-6,
+      f"{_ig.loc['EU27','rate_bp']:.2f}bp = 0.5 x "
+      f"{_ig.loc['EU27','theta=1.0']:.4f}%")
+check("illustration: incidence moves the burden from levier to exporters",
+      _ig.loc["EU27", "theta=1.0"] < _ig.loc["EU27", "theta=0.0"]
+      and all(_ig.loc[r, "theta=0.0"] < _ig.loc[r, "theta=1.0"]
+              for r in ("TUR", "KOR", "RUS", "NOR")),
+      f"EU27 {_ig.loc['EU27','theta=1.0']:.4f}% -> "
+      f"{_ig.loc['EU27','theta=0.0']:.4f}%, TUR the reverse")
+
 # --- Phase V: volatility -----------------------------------------------------
 ts, ps = volatility.temperature_sigma(), volatility.carbon_price_sigma()
 check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,
