@@ -174,6 +174,30 @@ check("lambda -> inf reproduces the static mixture",
 _p = mixture.drifted_weights("ambition", _co, 18, 2.0)
 check("drifted weights still sum to 1", abs(sum(_p.values()) - 1) < 1e-12)
 
+# --- CBAM sensitivity ---------------------------------------------------------
+from bkmn import cbam as _cb                                                # noqa: E402
+_A = transition.technical_matrix(m)
+_ap = m.carbon_map.set_index("region").applied_price_usd.to_dict()
+_tau = _cb.tariff_rate(m, _ap)
+check("CBAM rate is zero for the levying region itself",
+      float(np.abs(_tau[m.region_of == "EU27"]).max()) == 0.0)
+check("CBAM rate is zero outside covered industries",
+      all(_tau[k] == 0 for k in range(len(_tau))
+          if m.industry_of[k] not in _cb.COVERED))
+check("no rebate where the origin already pays more (NOR $85 > EU $80)",
+      float(np.abs(_tau[m.region_of == "NOR"]).max()) == 0.0)
+_g = pd.read_csv(f"{ROOT}/out_sens_cbam_gva.csv", index_col=[0, 1])
+_rev_div = _g.loc[("applied-divergence", "theta=1"), "revenue_bn"]
+_rev_uni = _g.loc[("ngfs-uniform", "theta=1"), "revenue_bn"]
+check("CBAM shrinks when carbon prices converge", _rev_uni < _rev_div,
+      f"${_rev_uni:.1f}bn uniform vs ${_rev_div:.1f}bn divergent")
+check("incidence flips with theta",
+      _g.loc[("applied-divergence", "theta=1"), "EU27"]
+      < _g.loc[("applied-divergence", "theta=0"), "EU27"]
+      and _g.loc[("applied-divergence", "theta=0"), "TUR"]
+      < _g.loc[("applied-divergence", "theta=1"), "TUR"],
+      "theta=1 burdens the EU importer, theta=0 the exporter")
+
 # --- Phase V: volatility -----------------------------------------------------
 ts, ps = volatility.temperature_sigma(), volatility.carbon_price_sigma()
 check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,

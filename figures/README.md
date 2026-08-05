@@ -15,6 +15,7 @@ result tables (300 dpi PNG, no model re-run needed). Regenerate with
 | `fig7_scenario_inputs.png` | NGFS inputs: carbon-price and warming paths | context |
 | `fig8_fx_term_structure.png` | FX impact by horizon, Net Zero vs NDCs | EXT §2 |
 | `fig10_rate_term_structure.png` | §2.8 long-rate shift by tenor (Prop 2) — decays with maturity | EXT §2 |
+| `fig11_cbam.png` | **Sensitivity**: CBAM ad-valorem rates by origin-sector, and incidence | AUDIT §I |
 | `fig9_scenario_drift_sensitivity.png` | **Sensitivity**: Eq-1 scenario drift erodes the prior; the three priors converge | AUDIT §E |
 
 Conventions: diverging orange/blue for signed values (CVD-safe pair), teal for
