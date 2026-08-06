@@ -66,8 +66,11 @@ generate revenue without entering the production chain.
 ## 4. Reaching FX
 
 Because the tariff charge is in the same units as `ct`, it goes *inside* the main
-chain and inherits the whole downstream: Taylor rule, Hull–White term structure,
-FX, equity, operational risk.
+chain and inherits the downstream: GVA, prices, FX, equity, operational risk.
+
+It does **not** enter the Taylor rule. §2.7's output gap is −Ω(ΔT), and a tariff
+is a tax wedge rather than lost output (§5). So a tariff reaches FX through the
+price level and the spot/PPP leg only, never through the rate differential.
 
 The one route it cannot inherit is **inflation**. §2.6's Moessner relation is
 estimated on carbon prices and takes ΔXCE as input, so a tariff has nothing to
