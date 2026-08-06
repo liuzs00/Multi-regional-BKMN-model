@@ -178,7 +178,56 @@ does not single out a number in that range. Any choice there is a judgement abou
 effort and data availability, not something the algorithm settles. Saying so is
 more honest than manufacturing a threshold.
 
-## 7. Limitations
+## 7. Final decision: 23 regions
+
+Three economies are promoted out of ROW — **Switzerland, Taiwan and Viet Nam** —
+because each outranks named regions we already model, on both linkage measures.
+Nothing is demoted: the FX deliverable needs its currencies, and the small ones
+are kept for that reason, stated openly in the table.
+
+Shares are of the EU's \$32.2 tn final-demand footprint. **ROW now ranks 4th on
+economic and 6th on carbon linkage** — behind China on both — so the constraint
+that the residual must not dominate is satisfied.
+
+| # | Region | Full name | econ % | carbon % | Economic rationale (one line) |
+|--:|---|---|--:|--:|---|
+| 1 | **EU27** | European Union (27 members) | 81.00 | 62.97 | The base region and numéraire: EU demand is met overwhelmingly from inside the single market, so intra-EU supply chains carry most of the footprint. |
+| 2 | **CHN** | China | 4.49 | **11.91** | Largest non-EU supplier on both measures, and the only economy whose carbon linkage (11.9 %) is nearly triple its economic linkage — the EU's single biggest embodied-emissions exposure. |
+| 3 | **USA** | United States | 2.68 | 2.81 | Second-largest external supplier and the counterparty for the EU–US tariff framework; also the reserve-currency leg of every FX pair. |
+| 4 | **ROW** | Rest of World (15 economies) | 2.13 | 2.64 | Residual for economies individually below the promotion threshold; kept small enough that it dominates neither measure. |
+| 5 | **GBR** | United Kingdom | 1.60 | 0.86 | Largest single-country services supplier to the EU and the closest integrated non-member; sterling is a core FX leg. |
+| 6 | **CHE** | Switzerland | 1.00 | 0.18 | **Newly promoted.** 4th-largest non-EU economic linkage — ahead of India, Japan and Korea — with pharmaceuticals and precision goods deeply embedded in EU chains. |
+| 7 | **RUS** | Russian Federation | 0.97 | **4.02** | Second on carbon linkage: modest trade share but 467 t/\$m intensity, so its embodied emissions in EU demand are four times its economic weight. |
+| 8 | **LAM** | Latin America ex-Chile (6) | 0.64 | 1.60 | Argentina, Brazil, Colombia, Costa Rica, Mexico, Peru — agricultural and mineral supply with broadly similar intensity, so aggregation costs little. |
+| 9 | **MEA** | Middle East (4) | 0.64 | 1.36 | UAE, Israel, Jordan, Saudi Arabia — the EU's hydrocarbon import channel and a bloc with essentially no carbon pricing. |
+| 10 | **IND** | India | 0.59 | **3.00** | Third on carbon linkage at 574 t/\$m intensity, with zero carbon-pricing coverage — the largest unpriced embodied-emissions source after China. |
+| 11 | **JPN** | Japan | 0.59 | 0.63 | Advanced-manufacturing supplier with its own carbon-pricing regime and a major traded currency. |
+| 12 | **AFR** | Africa (11) | 0.54 | 2.21 | Angola, Côte d'Ivoire, Cameroon, DR Congo, Egypt, Morocco, Nigeria, Senegal, São Tomé, Tunisia, South Africa — resource supply and the EU's most climate-vulnerable trading partners. |
+| 13 | **NOR** | Norway | 0.52 | 0.32 | The EU's dominant pipeline-gas supplier post-2022, and the only region pricing carbon above the EU. |
+| 14 | **KOR** | Korea | 0.51 | 0.64 | Electronics and shipbuilding supplier operating its own ETS — one of the two currencies whose FX channels point opposite ways. |
+| 15 | **TUR** | Türkiye | 0.50 | 1.18 | Large EU manufacturing satellite under a customs union, carbon-intensive and unpriced, hence a prime CBAM exposure. |
+| 16 | **SGP** | Singapore | 0.31 | 0.28 | Most import-dependent economy in the set (50.8 % of intermediate inputs imported) — the entrepôt through which much Asian trade reaches the EU. |
+| 17 | **CAN** | Canada | 0.26 | 0.31 | Resource supplier with a federal carbon price near EU levels; useful as a high-price, low-intensity contrast. |
+| 18 | **TWN** | Chinese Taipei | 0.26 | 0.56 | **Newly promoted.** Semiconductor chokepoint: small trade share but a supply-chain dependency with no substitute. |
+| 19 | **VNM** | Viet Nam | 0.25 | 0.71 | **Newly promoted.** The principal destination of trade diverted from China, so the economy most likely to alter EU sourcing over the horizon. |
+| 20 | **AUS** | Australia | 0.19 | 0.24 | Coal and iron-ore exporter; retained mainly for AUD coverage, its EU linkage being modest. |
+| 21 | **IDN** | Indonesia | 0.14 | 0.49 | Coal, nickel and palm oil with 7,614 t/\$m electricity intensity — a large CBAM rate on a small trade share. |
+| 22 | **KAZ** | Kazakhstan | 0.13 | **1.00** | The extreme case: 884 t/\$m aggregate intensity gives it a carbon linkage eight times its economic linkage, and a CBAM rate above 100 % on electricity. |
+| 23 | **CHL** | Chile | **0.05** | 0.08 | Weakest on both measures. Retained for **CLP coverage and copper/lithium exposure**, not for EU linkage — a different criterion from the rest, and flagged as such. |
+
+**ROW after promotion (15):** Bangladesh, Belarus, Brunei, Hong Kong, Iceland,
+Cambodia, Laos, Myanmar, Malaysia, New Zealand, Pakistan, Philippines, Thailand,
+Ukraine, plus the OECD table's own unallocated residual.
+
+**Three honest notes on this table.** Chile is kept on a criterion the others are
+not judged by. Thailand, Malaysia and Ukraine sit just below the promotion line
+and are the first candidates if the set grows again. And Brazil (0.30 / 0.83),
+Saudi Arabia (0.27 / 0.77) and South Africa (0.14 / 0.72) each outrank several
+named regions but stay inside LAM, MEA and AFR — being inside a *regional* block
+of 4–11 similar economies is far less costly than being inside a 15-member global
+residual, which is why they were not promoted and Switzerland was.
+
+## 8. Limitations
 
 **Two attributes only.** Carbon intensity and vulnerability. Carbon-*price*
 regime is not in the distance metric because we lack a per-economy price series
