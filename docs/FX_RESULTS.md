@@ -62,9 +62,11 @@ orchestrators cannot diverge.
 2. **Spot = PPP, forward = CIP.** CIP forwards are assumption-free; the spot
    anchor is relative PPP, a modelling choice at climate horizons. We do not
    claim an uncovered-parity spot response to rate differentials.
-3. **Spot carries one piece of information.** 20 regions map onto 5 NGFS R5
-   zones, so the carbon price varies only 495–516 across the 14 currencies
-   (cv 0.013) and spot is a rescaled `carbon_scope` vector — correlation +1.000.
+3. **Spot carries almost one piece of information.** 20 regions map onto 5 NGFS
+   R5 zones, so the carbon price varies only 495–516 across the 14 currencies
+   (cv 0.013) and spot is very nearly a rescaled `carbon_scope` vector —
+   correlation **+0.9997**, the residual being all the regional price
+   information there is.
    That is a data-granularity limit, not a modelling choice. Regions with
    scope = 0 (IND, TUR) are indistinguishable on spot; the dynamic-scope
    sensitivity separates them.
