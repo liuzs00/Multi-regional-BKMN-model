@@ -292,6 +292,43 @@ check("but the attribution to China is NOT robust",
       f"{_cs.CHN_share_of_revenue_pct.min():.0f}.."
       f"{_cs.CHN_share_of_revenue_pct.max():.0f}% of revenue")
 
+# --- scenario-consistent carbon intensities ----------------------------------
+_scn = Scenarios(m.carbon_map)
+check("intensity factor is exactly 1 at the base year",
+      max(abs(_scn.intensity_factor(s_, 2022) - 1.0).max() for s_ in _scn.names) < 1e-12)
+_fnz = _scn.intensity_factor("Net Zero 2050", 2040)
+_fcp = _scn.intensity_factor("Current Policies", 2040)
+check("mitigation scenarios abate; Net Zero abates most",
+      bool((_fnz < _fcp).all()) and bool((_fnz < 1.0).all()),
+      f"NZ {_fnz.min():.2f}-{_fnz.max():.2f} vs CP {_fcp.min():.2f}-{_fcp.max():.2f}")
+check("factor falls monotonically with horizon under Net Zero",
+      all(_scn.intensity_factor("Net Zero 2050", y)["CHN"]
+          > _scn.intensity_factor("Net Zero 2050", y + 5)["CHN"]
+          for y in (2025, 2030, 2035, 2040)))
+
+# consistent intensities must lower the charge, by the factor, exactly
+_Mp = transition.gva_operator(m, 0.5)
+_x40 = _scn.xce_by_region("Net Zero 2050", 2040).to_dict()
+_stat = transition.region_gdp_shock(m, _Mp, _x40)
+_cons = transition.region_gdp_shock(m, _Mp, _x40, _fnz)
+check("scenario-consistent intensities reduce the transition shock",
+      all(_cons[r] > _stat[r] for r in m.regions_order),
+      f"CHN {_stat['CHN']*100:.2f}% -> {_cons['CHN']*100:.2f}%")
+# a region's shock is NOT its own factor times the static shock: the Leontief
+# dual propagates cost-push across regions, so every region's charge enters.
+# The exact property is linearity, checked with a uniform factor.
+_half = _fnz.copy(); _half[:] = 0.5
+_uni = transition.region_gdp_shock(m, _Mp, _x40, _half)
+check("charge is exactly linear in a uniform intensity factor",
+      max(abs(_uni[r] - 0.5 * _stat[r]) for r in m.regions_order) < 1e-15)
+check("per-region reduction reflects trade partners, not just own factor",
+      any(abs(_cons[r] - _stat[r] * _fnz[r]) > 1e-6 for r in m.regions_order),
+      "cross-region cost-push means the scaling is not separable")
+# sanity vs NGFS's own NiGEM Net Zero GDP impacts (roughly -1% to -4% by 2050)
+check("Net Zero GDP shock is now the order of NGFS's own macro estimates",
+      abs(min(_cons.values())) < 0.08,
+      f"worst region {min(_cons.values())*100:.2f}% (was {min(_stat.values())*100:.2f}%)")
+
 # --- the worked illustration in docs/TARIFF_METHOD.md 5 -----------------------
 _ig = pd.read_csv(f"{ROOT}/out_illus_eu_tariff_gva.csv", index_col=0)
 _if = pd.read_csv(f"{ROOT}/out_illus_eu_tariff_fx.csv", index_col=0)

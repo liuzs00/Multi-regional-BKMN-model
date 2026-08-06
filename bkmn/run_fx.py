@@ -30,6 +30,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = 2022
 HORIZONS = [2025, 2030, 2035, 2040, 2045]
 PHI = 0.5
+
+# Scale carbon intensities along each scenario's own emissions path, so the
+# carbon price and the emissions it is levied on come from the same world.
+# False reproduces the paper's static-intensity treatment (see PAPER_AUDIT F2).
+CONSISTENT_INTENSITY = True
+
 HEADLINE = ["Net Zero 2050", "Delayed transition",
             "Nationally Determined Contributions (NDCs)", "Current Policies"]
 
@@ -46,7 +52,9 @@ def run_scenario(m, sc, scenario, M, scope, fxregs):
     xce = xce_annual(sc, scenario)
     dr, dPi, dY, cum = {}, {}, {}, {}
     for t in HORIZONS:
-        gdp = transition.region_gdp_shock(m, M, xce.loc[t].to_dict())
+        fac = (sc.intensity_factor(scenario, t)
+               if CONSISTENT_INTENSITY else None)
+        gdp = transition.region_gdp_shock(m, M, xce.loc[t].to_dict(), fac)
         for r in m.regions_order:
             dY.setdefault(r, {})[t] = gdp[r]
             dpi = macro.inflation_dev(xce.loc[t, r] - xce.loc[t - 1, r], scope[r])

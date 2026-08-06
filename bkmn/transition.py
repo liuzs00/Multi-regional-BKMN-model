@@ -37,15 +37,27 @@ def price_operator(m, phi):
     return np.linalg.inv(np.eye(n) - phi * A.T) * phi
 
 
-def ct_direct(m, xce_by_region):
-    """Per-sector carbon charge (fraction of output): CI · XCE(region) · 1e-6."""
+def ct_direct(m, xce_by_region, intensity_factor=None):
+    """
+    Per-sector carbon charge (fraction of output): CI · XCE(region) · 1e-6.
+
+    `intensity_factor` optionally scales each region's carbon intensity along the
+    scenario's own emissions path (see scenarios.Scenarios.intensity_factor).
+    Without it the charge applies a scenario carbon price to base-year
+    intensities, which overstates: the reason a Net Zero price reaches $400/t is
+    to abate the very emissions it would otherwise be levied on.  Passing None
+    reproduces the paper's static-intensity treatment.
+    """
     xce = np.array([xce_by_region[r] for r in m.region_of], float)
-    return m.ci * xce * 1e-6
+    ci = m.ci
+    if intensity_factor is not None:
+        ci = ci * np.array([intensity_factor[r] for r in m.region_of], float)
+    return ci * xce * 1e-6
 
 
-def sector_dV(m, M, xce_by_region):
+def sector_dV(m, M, xce_by_region, intensity_factor=None):
     """Absolute per-sector value-added change (USD m)."""
-    return m.x * (M @ ct_direct(m, xce_by_region))
+    return m.x * (M @ ct_direct(m, xce_by_region, intensity_factor))
 
 
 def region_shock_from_ct(m, M, ct):
@@ -55,6 +67,7 @@ def region_shock_from_ct(m, M, ct):
             for r in m.regions_order}
 
 
-def region_gdp_shock(m, M, xce_by_region):
+def region_gdp_shock(m, M, xce_by_region, intensity_factor=None):
     """GDP-weighted relative GVA shock per region (fraction)."""
-    return region_shock_from_ct(m, M, ct_direct(m, xce_by_region))
+    return region_shock_from_ct(m, M, ct_direct(m, xce_by_region,
+                                                intensity_factor))
