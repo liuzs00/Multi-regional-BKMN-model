@@ -33,6 +33,23 @@ plt.rcParams.update({
 })
 
 
+def scen(label, available):
+    """
+    Match a scenario label against what the data actually holds.
+
+    The IIASA API returns 'Below 2?C' (ASCII 0x3f) where the published name has
+    a degree sign, so an exact lookup silently drops that series -- which is
+    what fig7 did for several commits, plotting 4 of the 5 curves its code
+    listed.  bkmn.mixture solves this with the same normalisation; raise rather
+    than drop, so the failure can never be silent again.
+    """
+    norm = lambda t: "".join(ch for ch in t.lower() if ch.isalnum())
+    for a in available:
+        if norm(a) == norm(label):
+            return a
+    raise KeyError(f"scenario {label!r} not in {sorted(available)}")
+
+
 def load(name, idx=(0, 1)):
     d = pd.read_csv(os.path.join(ROOT, f"{name}.csv"), index_col=list(idx))
     return d
@@ -73,12 +90,18 @@ def fig_tradeoff():
     regs = list(tr.xs(NZ, level=0).index)
     order = sorted(regs, key=lambda r: tr.loc[(NZ, r), H])
     y = np.arange(len(order))
+    # Two panels, not seven: these are the transition EXTREMES (Net Zero has the
+    # largest mean transition cost at -2.04%, Current Policies the smallest at
+    # -0.06%).  Physical damage is deliberately not the selection criterion --
+    # it varies only 0.08pp across all seven scenarios, which is the point the
+    # figure makes.  All seven inputs are in fig7.
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 6.4), sharey=True)
-    span = {}
+    span, phmean = {}, {}
     for ax, s in zip(axes, (NZ, CP)):
         t = [tr.loc[(s, r), H] for r in order]
         p = [ph.loc[(s, r), H] for r in order]
         span[s] = min(min(t), min(p))
+        phmean[s] = float(np.mean(p))
         ax.barh(y - 0.19, t, height=0.36, color=TEAL, label="transition (carbon price)", zorder=3)
         ax.barh(y + 0.19, p, height=0.36, color=WARM, label="physical (warming)", zorder=3)
         ax.axvline(0, color=MUTED, lw=1)
@@ -96,13 +119,13 @@ def fig_tradeoff():
     axes[0].set_yticks(y, order, fontsize=8.5)
     axes[0].invert_yaxis()
     axes[0].legend(loc="lower left", frameon=False, fontsize=8.5)
-    fig.suptitle("The transition/physical trade-off — the scenario ranking flips by channel",
+    fig.suptitle("Transition cost is a policy choice; physical cost is not",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
     fig.text(0.012, 1.012,
-             "Ambitious policy maximises transition cost and minimises warming damage; Current "
-             f"Policies does the reverse. NOTE per-panel x-scales — the Net Zero panel spans "
-             f"{abs(span[NZ]):.0f}% and Current Policies {abs(span[CP]):.2f}%, a "
-             f"{abs(span[NZ])/abs(span[CP]):.0f}x difference.",
+             "The two transition extremes of the seven NGFS narratives. Transition cost swings "
+             f"{abs(span[NZ])/abs(span[CP]):.0f}x between them, while mean physical damage barely moves "
+             f"({phmean[NZ]:.2f}% vs {phmean[CP]:.2f}%) — warming to 2040 is largely locked in. "
+             "NOTE per-panel x-scales.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig1_transition_vs_physical.png"), dpi=300, bbox_inches="tight")
@@ -226,9 +249,14 @@ def fig_inputs():
     from bkmn.scenarios import Scenarios
     m = loadm()
     sc = Scenarios(m.carbon_map)
-    scens = [NZ, "Below 2°C", "Delayed transition", NDC, CP]
-    labs = ["Net Zero 2050", "Below 2°C", "Delayed transition", "NDCs", "Current Policies"]
-    cols = [TEAL, "#4b9aa4", COOL, "#d08b5c", WARM]
+    # all seven NGFS narratives, not a subset: 'Low demand' in particular
+    # carries the second-largest FX dispersion (FX_REPORT 4) and was omitted.
+    want = [NZ, "Low demand", "Below 2C", "Delayed transition", NDC,
+            "Fragmented World", CP]
+    scens = [scen(w, sc.names) for w in want]
+    labs = ["Net Zero 2050", "Low demand", "Below 2°C", "Delayed transition",
+            "NDCs", "Fragmented World", "Current Policies"]
+    cols = [TEAL, "#2f6f6b", "#4b9aa4", COOL, "#d08b5c", "#a8703f", WARM]
     yrs = np.arange(2022, 2051)
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.6))
     for s, lab, c in zip(scens, labs, cols):

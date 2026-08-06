@@ -23,7 +23,11 @@ the scenario is Net Zero 2050.
 
 ### fig1 — `fig1_transition_vs_physical.png`
 **What.** Transition (carbon-price) versus physical (warming) GDP shock per
-region, Net Zero 2050 against Current Policies, at 2040.
+region, at 2040. **Two of the seven scenarios**, chosen as the transition
+*extremes* — Net Zero has the largest mean transition cost (−2.04 %), Current
+Policies the smallest (−0.06 %). Physical damage is deliberately *not* the
+selection criterion, because it varies only 0.08 pp across all seven, which is
+the point the figure makes. All seven inputs are in fig7.
 
 **Findings.** The channel ranking flips cleanly: under Net Zero transition
 dominates in **17/20** regions (China −4.74 %), under Current Policies physical
@@ -65,14 +69,23 @@ See [FX_REPORT.md](FX_REPORT.md) §2.
 ## Scenario and uncertainty
 
 ### fig7 — `fig7_scenario_inputs.png`
-**What.** The two NGFS Phase 5 driver paths: OECD carbon price and global mean
-warming, 2022–2050, for four scenarios.
+**What.** The two NGFS Phase 5 driver paths — OECD carbon price and global mean
+warming, 2022–2050 — for **all seven** narratives.
 
-**Findings.** The two drivers diverge on completely different scales. Carbon
-prices span **~$3 to ~$625/tCO₂e** by 2050; warming spans only **1.70 K to
-1.93 K**. That asymmetry is why FX responds to the carbon *price* rather than to
-temperature, and it is the evidence behind switching the scenario-transition
-distance metric from 1-D warming to 2-D (ΔT₂₁₀₀, XCE₂₀₅₀).
+**Findings.** The drivers diverge on completely different scales. Carbon prices
+span **~\$3 to ~\$625/tCO₂e** by 2050; warming spans only **1.70 K to 1.93 K**.
+That asymmetry is why FX responds to the carbon *price* rather than temperature,
+and it is the evidence behind the 2-D (ΔT₂₁₀₀, XCE₂₀₅₀) distance metric for the
+scenario transition matrix. The tight warming fan is also the visual form of
+[FX_REPORT.md](FX_REPORT.md) §4's floor: policy moves the price panel, not the
+temperature panel.
+
+**Low demand** is the reason this figure now shows all seven. It carries the
+second-highest carbon price and hence the second-largest FX dispersion, but was
+absent from the figure — and *Below 2 °C* was silently dropped by a label
+mismatch (`Below 2?C` from the IIASA API against a degree sign in the code), so
+the figure plotted four of the five series its code listed. Both fixed; a gate
+now asserts every scenario label resolves.
 
 ### fig8 — `fig8_fx_term_structure.png`
 **What.** 5-year forward FX by horizon year, 2025–2045, Net Zero against NDCs,
