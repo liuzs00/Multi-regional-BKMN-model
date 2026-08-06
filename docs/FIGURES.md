@@ -55,7 +55,7 @@ Taylor-rule decomposition into output and inflation terms.
 
 **Findings.** The two channels are **1.5× apart** and correlate **0.96**, but
 still **disagree in sign for 2 of 14 currencies** (JPY, AUD — starred). They
-price different risks: spot is transition (carbon-pricing scope, corr +1.000),
+price different risks: spot is transition (carbon-pricing scope, corr +0.9997),
 the forward adds physical damage through the rate differential. Japan and
 Australia flip because they price carbon more than the EU but are damaged less.
 See [FX_REPORT.md](FX_REPORT.md) §2.

@@ -296,6 +296,18 @@ check("but the attribution to China is NOT robust",
       f"{_cs.CHN_share_of_revenue_pct.min():.0f}.."
       f"{_cs.CHN_share_of_revenue_pct.max():.0f}% of revenue")
 
+# spot is near-perfectly a rescaled carbon-pricing scope vector, because 20
+# regions map onto only 5 NGFS R5 zones.  Gated so the claim cannot silently
+# become false (or be quoted as an exact 1.000) if the zone mapping changes.
+_spf = pd.read_csv(f"{ROOT}/out_fx_spot_ppp.csv",
+                   index_col=[0, 1]).xs("Net Zero 2050", level=0)["2045"]
+_cmf = m.carbon_map.set_index("region")
+_scf = _cmf.loc[list(_spf.index), "carbon_scope"].astype(float)
+_c = float(_spf.corr(_scf))
+check("spot is near-exactly a rescaled carbon-pricing scope vector",
+      0.999 < _c < 1.0,
+      f"corr = {_c:.4f} (not 1.0000 - the residual is the R5 price variation)")
+
 # --- 2.7 output gap and the damage temperature (the paper's specification) ---
 from bkmn.run_fx import TAYLOR_OUTPUT_GAP, WARMING_BASELINE, warming  # noqa: E402
 _sc2 = Scenarios(m.carbon_map)

@@ -33,12 +33,12 @@ Correlating each against what a region can be — a carbon *taxer* or a
 
 | | vs carbon-pricing **scope** | vs physical **damage** | vs carbon intensity |
 |---|--:|--:|--:|
-| **Spot** | **+1.000** | — | −0.262 |
+| **Spot** | **+0.9997** | — | −0.262 |
 | **5y forward** | +0.605 | **+0.662** | −0.419 |
 
 **Spot prices transition risk.** It runs through the Moessner relation
-(ΔΠ = 8e-5 · ΔXCE · scope), so a region's spot move is an exact function of its
-carbon-pricing coverage. A country that prices carbon imports inflation and its
+(ΔΠ = 8e-5 · ΔXCE · scope), so a region's spot move is very nearly a function of its
+carbon-pricing coverage alone (corr +0.9997). A country that prices carbon imports inflation and its
 currency weakens under PPP.
 
 **The forward adds physical risk.** The rate differential comes from the Taylor
@@ -224,10 +224,12 @@ spot moves. That is an artefact of static scope, not a finding. The dynamic-scop
 sensitivity (`out_sens_fx_spot_dynscope.csv`), which lets coverage expand with the
 carbon price, separates them and is the honest version to quote.
 
-**Spot carries exactly one piece of information.** Its +1.000 correlation with
-scope is *mechanical*: 20 regions map onto only 5 NGFS R5 zones, so the carbon
-price varies just 495–516 across the 14 currencies (cv 0.013) and spot is a
-rescaled scope vector. It carries no regional carbon-price information at all.
+**Spot carries almost exactly one piece of information.** Its **+0.9997**
+correlation with scope is *mechanical*: 20 regions map onto only 5 NGFS R5 zones,
+so the carbon price varies just 495–516 across the 14 currencies (cv 0.013) and
+spot is very nearly a rescaled scope vector. The residual 0.0003 *is* all the
+regional carbon-price information the model carries — visible only in pairs like
+AUS and SGP, which share a scope of 0.64 but differ on spot.
 That is a data-granularity limit, not a modelling choice, and it makes spot the
 less trustworthy channel despite being the more intuitive.
 
