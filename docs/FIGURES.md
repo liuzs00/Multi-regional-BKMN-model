@@ -6,9 +6,9 @@ tables — no model re-run needed. Regenerate with `py -3 tools/make_figures.py`
 
 > **Maintenance.** Add an entry here whenever a figure is added or its message
 > changes, and never hardcode a number in a caption — fig12's panel title said
-> "9x apart" for one commit after the intensity fix made it 3.9x. All entries below are current as of the switch to scenario-consistent
-> carbon intensities ([FX_REPORT.md](FX_REPORT.md) §7), which moved every
-> transition-channel number. A figure whose caption states a number must read that number from the
+> "9x apart" for one commit after the intensity fix made it 3.9x. All entries below are current as of the three specification
+> corrections in [FX_REPORT.md](FX_REPORT.md) §7 (Taylor output gap, warming
+> baseline, scenario-consistent intensities), which moved every number. A figure whose caption states a number must read that number from the
 > data, never hardcode it — fig11 carried a stale `$80/t` caption for several
 > commits after the calibration moved to `$86/t` while its bars were correct.
 
@@ -25,26 +25,26 @@ the scenario is Net Zero 2050.
 **What.** Transition (carbon-price) versus physical (warming) GDP shock per
 region, Net Zero 2050 against Current Policies, at 2040.
 
-**Findings.** The channel ranking flips: under Net Zero transition dominates in
-**20/20** regions (China −4.74 %), under Current Policies physical dominates in
-**12/20**. But the flip is *marginal* — under Current Policies the two channels
-are within a few per cent of each other.
+**Findings.** The channel ranking flips cleanly: under Net Zero transition
+dominates in **17/20** regions (China −4.74 %), under Current Policies physical
+dominates in **20/20**. Physical damage now runs −0.67 % to −1.43 % of GVA and
+barely varies by scenario, because warming to 2040 is largely locked in; the
+transition cost varies enormously (−4.74 % to −0.14 %).
 
-The larger message is the **~34× scale difference between panels**, which is why
-they now carry independent x-axes with the difference stated in the subtitle. On
-a shared scale the Current Policies panel was a blank column. This is a direct
-consequence of the damage-function correction (Ω was 100× too large before
-[PAPER_AUDIT.md](PAPER_AUDIT.md)); the pre-fix version of this figure would have
-shown physical damage rivalling transition cost, which was wrong.
+That is the trade-off in one picture, and it is what [FX_REPORT.md](FX_REPORT.md)
+§4 expresses in currencies: **policy chooses the transition cost, not the
+physical one.** The panels keep independent x-scales (3.3× apart) with the
+difference stated in the subtitle.
 
 ### fig2 — `fig2_fx_forward_ranking.png`
 **What.** 5-year forward FX shift against the euro at 2040, one bar per currency,
 with a tick marking the spot-only component.
 
-**Findings.** INR −10.1 %, CNY −9.3 %, TRY −6.8 % at one end; NOK +1.7 % at the
-other. The ordering is the carbon-intensity ordering. The
-**ticks sit near zero on every bar** — the visual statement that spot is a small
-fraction of the forward, which fig12 quantifies.
+**Findings.** INR −3.60 %, TRY −2.98 %, IDR −2.67 % at one end; NOK +0.40 % and
+KRW +0.32 % at the other. The ordering blends **physical vulnerability** with the
+absence of carbon pricing — India, Turkey and Indonesia score badly on both. The
+ticks are now a substantial share of each bar, since spot and forward are only
+1.5× apart.
 
 Read the sign carefully: a currency "strengthening" here reflects an output
 collapse forcing deep rate cuts, so it is a distress signal, not strength.
@@ -53,14 +53,12 @@ collapse forcing deep rate cuts, so it is a distress signal, not strength.
 **What.** Two panels: (a) spot against 5-year forward per currency; (b) the
 Taylor-rule decomposition into output and inflation terms.
 
-**Findings.** The paper's single FX route splits into two channels **~4× apart**
-that correlate **0.62** and **disagree in sign for 2 of 14 currencies** (JPY, KRW
-— starred). Panel (b) gives the reason: the inflation term is a **median 2.1 %**
-of each region's rate move (max 21 %, Norway), so the forward is dominated by the
-output channel while spot is purely the inflation channel.
-
-Korea is the clean case — it prices carbon (spot: KRW weakens) *and* emits it
-(forward: KRW strengthens). See [FX_REPORT.md](FX_REPORT.md) §2.
+**Findings.** The two channels are **1.5× apart** and correlate **0.96**, but
+still **disagree in sign for 2 of 14 currencies** (JPY, AUD — starred). They
+price different risks: spot is transition (carbon-pricing scope, corr +1.000),
+the forward adds physical damage through the rate differential. Japan and
+Australia flip because they price carbon more than the EU but are damaged less.
+See [FX_REPORT.md](FX_REPORT.md) §2.
 
 ---
 
@@ -80,12 +78,10 @@ distance metric from 1-D warming to 2-D (ΔT₂₁₀₀, XCE₂₀₅₀).
 **What.** 5-year forward FX by horizon year, 2025–2045, Net Zero against NDCs,
 for six currencies.
 
-**Findings.** The path is **hump-shaped**: it peaks around 2030 and then *fades*,
-because with scenario-consistent intensities the emissions being taxed fall faster
-than the carbon price rises. China peaks at −12.5 % in 2030 and recovers to −9.1 %
-by 2045. The binding horizon for stress testing is the **early 2030s**, not the
-end of the projection. Under static intensities these paths rose monotonically,
-because nothing ever abated.
+**Findings.** Paths rise steeply to 2030 and are then broadly flat. Two effects
+nearly cancel: the transition component peaks and fades as decarbonisation
+outruns the carbon price, while the physical component grows with cumulative
+warming.
 
 ### fig3 — `fig3_mixture_expected_fx.png`
 **What.** Expected 5-year forward FX under the Dirichlet scenario mixture, four
@@ -112,8 +108,8 @@ and fig9 as a pair — neither is the whole answer.
 **What.** Central path against 95th-percentile inputs (1.64σ on temperature from
 the MAGICC fan and on carbon price from the cross-model spread), at 2040.
 
-**Findings.** CNY moves −9.3 % → −11.3 % and KZT −4.1 % → −5.9 %. The tail is **not uniformly adverse** — NOK and GBP move
-*further positive* under stress. The stress widens dispersion rather than shifting
+**Findings.** CNY moves −1.39 % → −2.20 % and INR −3.60 % → −4.08 %. The tail is
+**not uniformly adverse** — NOK and KRW move *further positive* under stress. The stress widens dispersion rather than shifting
 a level, which is the correct behaviour for a relative-price channel.
 
 ---
@@ -137,8 +133,8 @@ result.
 frequency).
 
 **Findings.** The two orderings **differ**, and instructively. Equity is led by
-ROW −6.4 %, IND −6.0 %, RUS −5.8 %; op-risk by **KOR +33 %**, SGP and JPN +20 %.
-Korea sits 11th on equity but 1st on op-risk, because op-risk runs
+ROW −8.7 %, IND −7.8 %, TUR −7.5 %; op-risk by **KOR +45 %**, JPN +32 %, SGP
++30 %. Korea is mid-table on equity but 1st on op-risk, because op-risk runs
 through the Okun coefficient and the base unemployment rate rather than through
 an equity beta. A region's financial-market exposure and its
 employment-channel exposure are not the same ranking.
@@ -147,8 +143,8 @@ employment-channel exposure are not the same ranking.
 **What.** Physical GDP damage at 2040 against the ND-GAIN vulnerability scale,
 Current Policies, with a fitted line.
 
-**Findings.** Damage tracks vulnerability closely — AFR and IND worst at about
-−0.085 %, NOR and GBR least at −0.043 %. **Treat this as a consistency check, not
+**Findings.** Damage tracks vulnerability closely — worst about −1.43 %, least
+−0.71 %, under the pre-industrial warming convention (§7b of FX_REPORT). **Treat this as a consistency check, not
 a discovery:** Proposition 1 allocates damage through the VL vector, which is
 built from ND-GAIN, so the relationship is largely mechanical. What the figure
 usefully confirms is that the allocation behaves monotonically and that the

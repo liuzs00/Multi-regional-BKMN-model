@@ -110,12 +110,16 @@ magnitude.
 | of which final-demand imports (consumer prices only) | \$73 bn |
 | EU27 consumer price level | **+0.603 %** |
 | EU27 GVA | **−0.0842 %** |
-| EU27 policy rate | **−4.21 bp** |
+| EU27 policy rate | **0.00 bp** |
 
-**The rate response is a clean check on the plumbing.** A permanent tariff is a
-level shift, so the Taylor rule sees only the output term: 0.5 × (−0.0842 %) =
-−4.21 bp, exactly. The ECB cuts, because in this model a tariff is a negative
-supply shock whose inflation component the central bank looks through.
+**A tariff does not move the policy rate, and that is the correct behaviour.**
+§2.7's output gap is −Ω(ΔT), the damage function. A tariff — like the carbon
+charge — is an ad-valorem *tax wedge*: with final demand and **A** fixed it moves
+value to the customs authority rather than destroying output, so it is not an
+output gap. Its route to FX is the price level (§4), not the rate differential.
+An earlier version of this note reported −4.21 bp here and called it a check on
+the plumbing; it was checking a specification we have since corrected against the
+paper (see [FX_REPORT.md](FX_REPORT.md) §7a).
 
 ### 5.1 The euro weakens — the currency that levies the tariff
 

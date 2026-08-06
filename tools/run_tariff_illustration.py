@@ -91,7 +91,7 @@ def main():
     print(f"  {LEVIER} consumer price   {px*100:+.3f}%")
     print(f"  {LEVIER} GVA              {gva.loc[LEVIER, 'theta=1.0']:+.4f}%")
     print(f"  {LEVIER} policy rate      {dr_eu:+.2f}bp"
-          f"   (= 0.5 x GVA = {0.5*gva.loc[LEVIER,'theta=1.0']*100:.2f}bp)")
+          f"   (a tariff is a tax wedge, not an output gap -- 2.7's gap is -Omega)")
     print(f"\n  {(fx.spot_pct < 0).sum()}/{len(fx)} currencies strengthen vs EUR, "
           f"range {fx.spot_pct.min():+.3f}% .. {fx.spot_pct.max():+.3f}%")
     print("\nincidence (GVA %, at both ends of theta):")
