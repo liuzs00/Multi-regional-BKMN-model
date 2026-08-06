@@ -296,6 +296,23 @@ check("but the attribution to China is NOT robust",
       f"{_cs.CHN_share_of_revenue_pct.min():.0f}.."
       f"{_cs.CHN_share_of_revenue_pct.max():.0f}% of revenue")
 
+# every scenario label the figure code asks for must resolve against the data.
+# fig7 listed five series and silently plotted four for several commits, because
+# the IIASA API returns 'Below 2?C' where the published name has a degree sign.
+import importlib.util as _ilu                                              # noqa: E402
+_mf = _ilu.module_from_spec(_ilu.spec_from_file_location(
+    "mf", f"{ROOT}/tools/make_figures.py"))
+_names = Scenarios(m.carbon_map).names
+_ilu.spec_from_file_location("mf", f"{ROOT}/tools/make_figures.py").loader.exec_module(_mf)
+for _lab in [_mf.NZ, _mf.CP, _mf.NDC, "Low demand", "Below 2C",
+             "Delayed transition", "Fragmented World"]:
+    _mf.scen(_lab, _names)          # raises if it cannot be matched
+check("every figure scenario label resolves against the data",
+      len({_mf.scen(x, _names) for x in
+           [_mf.NZ, _mf.CP, _mf.NDC, "Low demand", "Below 2C",
+            "Delayed transition", "Fragmented World"]}) == 7,
+      "all 7 NGFS narratives matched, incl. the degree-sign case")
+
 # spot is near-perfectly a rescaled carbon-pricing scope vector, because 20
 # regions map onto only 5 NGFS R5 zones.  Gated so the claim cannot silently
 # become false (or be quoted as an exact 1.000) if the zone mapping changes.
