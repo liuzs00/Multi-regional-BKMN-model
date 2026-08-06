@@ -49,6 +49,17 @@ The recommendation below weights the second heavily.
 > the project's **first external sanity check**: the corrected Net Zero GDP shocks
 > sit inside NGFS's own NiGEM range, where the static ones were 3–10× above it.
 > The wider benchmarking item in §4 remains open.
+>
+> **Also done:** two specification corrections found by diffing against the
+> single-region reference — the Taylor output gap is the damage function, not the
+> carbon charge, and damage uses warming vs pre-industrial rather than since 2022
+> (FX_REPORT §7a/§7b). Both follow the paper; both moved every number.
+>
+> **§3.3 gained a second reason.** With the Taylor rule now driven by damage, the
+> implied rate cuts are smaller, but there is still no zero lower bound and no way
+> to see one without a starting curve. The reference's curve module is a working
+> template — BoE OIS forward leg, linear among nodes but **flat from tenor 0 to
+> the first node**, a trap it documents as worth four Table-12 cells.
 
 ### 3.1 Trade diversion (Armington elasticities)
 

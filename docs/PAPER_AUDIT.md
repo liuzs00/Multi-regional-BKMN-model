@@ -28,6 +28,15 @@ regenerated.
 ## B. Paper ambiguities — our choice, now explicit
 
 ### B1. Which ΔT feeds the damage function
+
+> **RESOLVED (against the single-region reference).** The paper means the
+> **level vs pre-industrial**. The reference implementation states it explicitly
+> — *"Every consumer of Omega ... uses Ω(t) = 0.003467·ΔT(t)² computed from the
+> temperature level vs pre-industrial"* — and validates it against the paper's
+> printed rows (op-risk 3.62/3.02 against 3.6/3.0; 1-day rate −25.8 bp against
+> −25). We now use the level; the earlier incremental-from-2022 reading
+> understated Ω by 20.4×. See FX_REPORT §7b.
+
 Prop 1 says *"ΔT(t) is the temperature change, at t, relative to **pre-industrial**"*,
 and Eq 13 telescopes consistently with that. But §2.1 argues the market curves we
 start from already embed pre-damage expectations, so only warming **from today**
@@ -67,7 +76,12 @@ matching the single-region reference implementation.
 
 ## C. Paper features not implemented (deliberate)
 
-### C1. Cumulative short rate (Eq 15) — **resolved**
+### C1. Cumulative short rate (Eq 15) — **resolved, now corroborated**
+
+> Further evidence: the single-region reference *defines* `short_rate_shift`
+> (the Σ policy·dt integral) in `rates.py` but **never calls it** anywhere in
+> `pipeline.py`. Independent confirmation that the integral is not applied.
+
 Eq 15 gives `Δr(t) = ∫ Δr^Policy(s) ds`. We use the Taylor output at *t* directly
 as the short-rate shift. This was flagged for confirmation and is now settled on
 three grounds.
@@ -216,9 +230,10 @@ paper admits more than one reading · **[deferred]** planned, not yet built.
 | 14 | Two independent Dirichlets (SSP ⟂ RCP) | one Dirichlet over the 7 narratives | follows from 13 |
 | 15 | Prior = 90 % on SSP2/RCP4.5 (§3.1.4) | **`consensus`** prior built the same way but anchored on UNEP EGR 2025 / CAT COP30 2025 current-policy warming, plus `uniform` and two asserted bookends | method retained; anchor updated to the NGFS era (§H) |
 | 16 | Eq 1 transition matrix, `d = \|j−k\|` on RCP labels | implemented as a **sensitivity**, `d` = standardised (T₂₁₀₀, XCE) distance | [multi-R] narratives have no numeric label — see §E |
+| 16b | §2.7 output gap | **CORRECTED.** We fed transition + physical + tariff to the Taylor rule; the paper feeds Ω only (A.6 step 6: `dr = market + φΠ·ΔΠ − φY·Ω`; §2.7: output-gap change ≡ −Ω). A tax wedge is not an output gap — with quantities fixed it moves value to the tax authority rather than destroying it. Now physical-only; `TAYLOR_OUTPUT_GAP` in run_fx.py. |
 | 17 | Eq 15 `Δr(t) = ∫Δr^Policy ds` | Taylor output at *t* used directly | [ambiguous] our ΔΠ/ΔY are already level deviations; integrating double-counts |
 | 18 | §2.6 `ΔΠ ∝ ΔXCE · ΔΩ_XCE` (product of two *changes*) | `ΔΠ ∝ ΔXCE · scope` (scope as a level) | [ambiguous] the paper's literal form is second-order and reads as a typo |
-| 19 | Prop 1 ΔT "relative to pre-industrial" | ΔT incremental from 2022 (switchable) | [ambiguous] §2.1 implies incremental; ~17× difference, see §B1 |
+| 19 | Prop 1 ΔT "relative to pre-industrial" | **Now followed exactly** — level vs pre-industrial, per the reference (§B1) | resolved |
 | 20 | Prop 1 direct **and** cascading physical effect | direct only | [ambiguous] applying both double-counts |
 | 21 | Prop 1 applied within one economy | applied across all 1000 region-sectors (world-level Ω) | [multi-R] our generalisation choice |
 | 22 | Table 6 vulnerability, UK sectors | same sector *pattern* × ND-GAIN *region* scale | [multi-R] paper gives no cross-region vulnerability |

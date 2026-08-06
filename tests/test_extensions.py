@@ -247,11 +247,15 @@ check("final-demand imports raise revenue",
 # --- tariff reaches the FX chain ---------------------------------------------
 _tfx = pd.read_csv(f"{ROOT}/out_sens_tariff_fx.csv", index_col=[0, 1])
 _glob = _tfx.xs("Global 10% on all imports", level=0)
-check("a tariff now moves rates (it previously stopped at GVA)",
-      float(_glob.rate_bp.abs().max()) > 1.0,
-      f"max |dr| = {_glob.rate_bp.abs().max():.1f} bp")
-check("a tariff now moves FX", float(_glob.spot_pct.abs().max()) > 0.1,
+check("a tariff moves FX through the price level (it once stopped at GVA)",
+      float(_glob.spot_pct.abs().max()) > 0.1,
       f"max |spot| = {_glob.spot_pct.abs().max():.2f}%")
+# A tariff must NOT move the policy rate: like the carbon charge it is a tax
+# wedge, and 2.7's output gap is -Omega(dT).  Its route to FX is the price
+# level, not the output gap.  This gate is the inverse of the one it replaced.
+check("a tariff does NOT move the policy rate (it is a transfer, not an output gap)",
+      float(_glob.rate_bp.abs().max()) < 1e-9,
+      f"max |dr| = {_glob.rate_bp.abs().max():.2e} bp")
 _us = _tfx.xs("USA 25% on CHN manufactures", level=0)
 check("a tariff weakens the levying currency (PPP: prices rise at home)",
       _us.loc["USA", "spot_pct"] > 0,
@@ -291,6 +295,33 @@ check("but the attribution to China is NOT robust",
             - _cs.CHN_share_of_revenue_pct.min()) > 20.0,
       f"{_cs.CHN_share_of_revenue_pct.min():.0f}.."
       f"{_cs.CHN_share_of_revenue_pct.max():.0f}% of revenue")
+
+# --- 2.7 output gap and the damage temperature (the paper's specification) ---
+from bkmn.run_fx import TAYLOR_OUTPUT_GAP, WARMING_BASELINE, warming  # noqa: E402
+_sc2 = Scenarios(m.carbon_map)
+check("Taylor output gap is the damage function, not the tax wedge",
+      TAYLOR_OUTPUT_GAP == "physical",
+      "A.6 step 6: dr = market + phi_Pi*dPi - phi_Y*Omega; 2.7: output gap == -Omega")
+check("damage uses warming vs pre-industrial, not since the base year",
+      WARMING_BASELINE == "preindustrial"
+      and abs(warming(_sc2, "Net Zero 2050", 2040)
+              - float(_sc2.temp.loc[2040, "Net Zero 2050"])) < 1e-12,
+      f"dT(2040) = {warming(_sc2,'Net Zero 2050',2040):.3f} K vs 1850-1900")
+# the rate shift must reconstruct from dPi and the PHYSICAL shock alone
+_rs = pd.read_csv(f"{ROOT}/out_ext_rate_shift.csv", index_col=[0, 1])
+_pi2 = pd.read_csv(f"{ROOT}/out_inflation_shift.csv", index_col=[0, 1])
+_ph2 = pd.read_csv(f"{ROOT}/out_ext_gdp_physical.csv", index_col=[0, 1])
+_kk = ("Net Zero 2050", "CHN")
+_pred = 0.5 * _pi2.loc[_kk, "2040"] + 0.5 * _ph2.loc[_kk, "2040"] * 100
+check("rate shift reconstructs from inflation + physical damage only",
+      abs(_rs.loc[_kk, "2040"] - _pred) < 0.05,
+      f"{_rs.loc[_kk,'2040']:.2f} bp vs {_pred:.2f} bp predicted")
+# and must NOT reconstruct if the transition shock were included
+_tr2 = pd.read_csv(f"{ROOT}/out_ext_gdp_transition.csv", index_col=[0, 1])
+check("the transition shock is absent from the rate shift",
+      abs(_rs.loc[_kk, "2040"]
+          - (_pred + 0.5 * _tr2.loc[_kk, "2040"] * 100)) > 100.0,
+      f"including it would give {_pred + 0.5*_tr2.loc[_kk,'2040']*100:.0f} bp")
 
 # --- scenario-consistent carbon intensities ----------------------------------
 _scn = Scenarios(m.carbon_map)
@@ -336,11 +367,9 @@ check("illustration: a tariff weakens the currency that levies it",
       bool((_if.spot_pct < 0).all()),
       f"all {len(_if)} currencies strengthen vs EUR "
       f"({_if.spot_pct.min():.3f}..{_if.spot_pct.max():.3f}%)")
-check("illustration: Taylor sees only the output term (a level shift)",
-      abs(_ig.loc["EU27", "rate_bp"] - 0.5 * _ig.loc["EU27", "theta=1.0"] * 100)
-      < 1e-6,
-      f"{_ig.loc['EU27','rate_bp']:.2f}bp = 0.5 x "
-      f"{_ig.loc['EU27','theta=1.0']:.4f}%")
+check("illustration: a tariff leaves the policy rate untouched",
+      abs(_ig.loc["EU27", "rate_bp"]) < 1e-9,
+      "a tariff is a tax wedge; 2.7's output gap is -Omega(dT)")
 check("illustration: incidence moves the burden from levier to exporters",
       _ig.loc["EU27", "theta=1.0"] < _ig.loc["EU27", "theta=0.0"]
       and all(_ig.loc[r, "theta=0.0"] < _ig.loc[r, "theta=1.0"]

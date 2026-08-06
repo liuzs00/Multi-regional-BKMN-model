@@ -25,21 +25,14 @@ import pandas as pd
 from . import (cbam, equity, fx, macro, mixture, oprisk, physical, rates,
                tariff, transition, volatility)
 from .regions import load
-from .run_fx import BASE, CONSISTENT_INTENSITY, HORIZONS, PHI, xce_annual
+from .run_fx import (BASE, CONSISTENT_INTENSITY, HORIZONS, PHI,
+                     TAYLOR_OUTPUT_GAP, warming, xce_annual)
 from .scenarios import Scenarios
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Which ΔT the damage function is fed (the paper is ambiguous, so make it explicit):
-#   "incremental"    ΔT(t) = GSAT(t) − GSAT(2022) — warming *from today*. Consistent
-#                    with §2.1 ("we only need to look at GDP damage from temperature
-#                    increases"; market curves already embed pre-damage expectations),
-#                    so the output is a shock relative to the market baseline.
-#   "preindustrial"  ΔT(t) = GSAT(t) — the literal reading of Prop 1 ("temperature
-#                    change, at t, relative to pre-industrial temperature"), which is
-#                    also what Eq 13 telescopes to. This charges today's 1.29 K of
-#                    warming as if it were a future shock, so damages are ~17x larger.
-WARMING_BASELINE = "incremental"
+# The warming baseline and the Taylor output-gap choice live in run_fx.py,
+# which this module imports, so the two orchestrators cannot diverge.
 
 # Rate tenors reported, mirroring the paper's Table 11 (Deposit 1D/6M, Swap 1Y..20Y).
 RATE_TENORS = {"1D": 1 / 365, "6M": 0.5, "1Y": 1.0, "5Y": 5.0, "10Y": 10.0, "20Y": 20.0}
@@ -79,12 +72,7 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
         fac = (sc.intensity_factor(scenario, t)
                if CONSISTENT_INTENSITY else None)
         tr = transition.region_gdp_shock(m, M, xce.loc[t].to_dict(), fac)
-        if dT_over is not None:
-            dT = dT_over[t]
-        elif WARMING_BASELINE == "preindustrial":
-            dT = float(sc.temp.loc[t, scenario])          # GSAT is already vs 1850-1900
-        else:
-            dT = sc.delta_T(scenario, t, BASE)
+        dT = dT_over[t] if dT_over is not None else warming(sc, scenario, t)
         ph = physical.region_damage(m, dT, vl)
         for r in m.regions_order:
             out["trans"].setdefault(r, {})[t] = tr[r]
@@ -94,8 +82,11 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
             dpi = macro.inflation_dev(xce.loc[t, r] - xce.loc[t - 1, r],
                                       scope_of(r, t))
             out["dPi"].setdefault(r, {})[t] = dpi
-            out["dr"].setdefault(r, {})[t] = macro.taylor_rate_shift(
-                dpi, tr[r] + ph[r] + tar_shock[r])
+            # 2.7's output gap is -Omega: the damage function, not the carbon
+            # or tariff charge, which are tax wedges rather than lost output.
+            gap = (ph[r] if TAYLOR_OUTPUT_GAP == "physical"
+                   else tr[r] + ph[r] + tar_shock[r])
+            out["dr"].setdefault(r, {})[t] = macro.taylor_rate_shift(dpi, gap)
             # cumulative price-level effect: with static scope this telescopes to
             # k*scope*(XCE_t - XCE_base); with a moving scope it must be summed.
             if dynamic_scope:
