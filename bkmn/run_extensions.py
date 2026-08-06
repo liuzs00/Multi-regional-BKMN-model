@@ -25,7 +25,7 @@ import pandas as pd
 from . import (cbam, equity, fx, macro, mixture, oprisk, physical, rates,
                tariff, transition, volatility)
 from .regions import load
-from .run_fx import BASE, HORIZONS, PHI, xce_annual
+from .run_fx import BASE, CONSISTENT_INTENSITY, HORIZONS, PHI, xce_annual
 from .scenarios import Scenarios
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,7 +76,9 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
                 else scope[r])
 
     for t in HORIZONS:
-        tr = transition.region_gdp_shock(m, M, xce.loc[t].to_dict())
+        fac = (sc.intensity_factor(scenario, t)
+               if CONSISTENT_INTENSITY else None)
+        tr = transition.region_gdp_shock(m, M, xce.loc[t].to_dict(), fac)
         if dT_over is not None:
             dT = dT_over[t]
         elif WARMING_BASELINE == "preindustrial":

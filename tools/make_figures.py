@@ -431,7 +431,10 @@ def fig_two_channels():
     axa.set_xlabel("% vs EUR   (negative = strengthens against the euro)", fontsize=9)
     axa.grid(axis="x", color=GRID, lw=0.8, zorder=0)
     axa.set_axisbelow(True)
-    axa.set_title("(a) the same shock, two channels, 9x apart",
+    ratio = fw.abs().max() / sp.abs().max()
+    corr = sp.corr(fw)
+    axa.set_title(f"(a) the same shock, two channels {ratio:.1f}x apart "
+                  f"(corr {corr:.2f})",
                   fontsize=10, fontweight="600", loc="left", pad=24)
     axa.text(0.015, 0.055, "*  spot and forward disagree in sign",
              transform=axa.transAxes, fontsize=7.8, color=INK)
@@ -448,9 +451,9 @@ def fig_two_channels():
                bbox_to_anchor=(0, 1.0), handlelength=1.4, columnspacing=1.4)
     axb.grid(axis="x", color=GRID, lw=0.8, zorder=0)
     axb.set_axisbelow(True)
-    axb.set_title("(b) the inflation channel is invisible next to output",
-                  fontsize=10, fontweight="600", loc="left", pad=24)
     share = (0.5 * pi.abs() / (0.5 * pi.abs() + 0.5 * gy.abs()) * 100).median()
+    axb.set_title("(b) the output term dominates the policy-rate move",
+                  fontsize=10, fontweight="600", loc="left", pad=24)
     axb.text(0.015, 0.055, f"inflation is a median {share:.1f}% of each rate move",
              transform=axb.transAxes, fontsize=7.8, color=INK)
 

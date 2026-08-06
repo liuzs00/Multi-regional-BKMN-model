@@ -8,7 +8,7 @@ Method detail is in [FX_RESULTS.md](FX_RESULTS.md); this note is the results
 narrative. Tariff shocks are separate, in [TARIFF_METHOD.md](TARIFF_METHOD.md).
 Everything below is reproduced by `py -3 -m bkmn.run_fx` and
 `py -3 tools/make_figures.py`; gates in `tests/test_fx.py` (9) and
-`tests/test_extensions.py` (66).
+`tests/test_extensions.py` (73).
 
 ---
 
@@ -18,13 +18,13 @@ Everything below is reproduced by `py -3 -m bkmn.run_fx` and
 
 The paper takes FX from *"the difference in the changes of yield curves"*
 (§4.3). In a multi-regional setting that splits into two channels which turn out
-to be **an order of magnitude apart and only weakly related** — correlation
-**0.40**, and they disagree in *sign* for 3 of 14 currencies.
+to be **~4× apart and only loosely related** — correlation **0.62**, and they
+disagree in *sign* for 2 of 14 currencies.
 
 | | mechanism | size at 2045 (Net Zero) |
 |---|---|--:|
 | **Spot** | relative PPP — cumulative inflation differential | ±2.6 pp |
-| **5y forward** | spot + CIP rate differential | ±24 pp |
+| **5y forward** | spot + CIP rate differential | ±10 pp |
 
 Reporting one without the other would misstate the result, so both are carried
 throughout.
@@ -37,7 +37,7 @@ things a region can be — a carbon *taxer* or a carbon *emitter*:
 | | vs carbon-pricing **scope** | vs carbon **intensity** | vs GVA shock |
 |---|--:|--:|--:|
 | **Spot** | **+1.000** | −0.262 | — |
-| **5y forward** | +0.386 | **−0.710** | **+0.993** |
+| **5y forward** | +0.605 | −0.563 | **+0.951** |
 
 **Spot tracks who *taxes* carbon.** It runs through the Moessner relation
 (ΔΠ = 8e-5 · ΔXCE · scope), so a region's spot move is a near-exact function of
@@ -48,40 +48,40 @@ its currency weakens under PPP.
 differential, which the Taylor rule takes almost entirely from the output term.
 
 The sign flips follow directly. **Korea** prices carbon (spot: KRW weakens
-+0.64 %) *and* is emissions-intensive (forward: KRW strengthens −7.56 %). The UK
-and Japan flip for the mirror reasons. A region's currency can move in opposite
++0.64 %) *and* is emissions-intensive (forward: KRW strengthens −2.42 %). Japan
+flips for the same reason. A region's currency can move in opposite
 directions on the two channels because policy coverage and emissions exposure are
 different attributes.
 
-**The inflation channel is quantitatively negligible.** Panel (b) shows why: the
-Taylor rule's inflation term is a **median 0.6 %** of each region's rate move
-(maximum 6.5 %, Norway). ΔΠ reaches single-digit basis points while ΔY reaches
-hundreds. This is worth stating plainly because the Moessner relation is
-introduced in the paper as a substantive channel — in a multi-regional
-calibration it is a rounding error on rates, and matters only because it is the
-*sole* driver of spot.
+**The inflation channel is small but not negligible.** Panel (b): the Taylor
+rule's inflation term is a **median 2.1 %** of each region's rate move, though it
+reaches **21 %** for Norway, whose output shock is slight while its carbon-pricing
+coverage is high. So the Moessner relation is a minor contributor to rates in
+most regions and matters chiefly as the *sole* driver of spot — but it is not the
+rounding error it appeared to be before intensities were made
+scenario-consistent, which shrank the output term without touching inflation.
 
 ## 3. The cross-section: who moves
 
 ![FX ranking](../figures/fig2_fx_forward_ranking.png)
 
-The figure is drawn at **2040** (−20.6 % CNY, −19.9 % INR, +4.2 % NOK); the table
-below is the same ranking at **2045**, the final horizon, which is what the rest of
-this report quotes:
+The figure is drawn at **2040**; the table below is the same ranking at **2045**,
+the final horizon, which is what the rest of this report quotes:
 
 | strengthens most | | weakens | |
 |---|--:|---|--:|
-| CNY | −24.2 % | NOK | +4.8 % |
-| INR | −23.4 % | GBP | +1.7 % |
-| KZT | −15.3 % | | |
-| TRY | −13.3 % | | |
-| IDR | −12.5 % | | |
+| INR | -10.15 % | NOK | +1.57 % |
+| CNY | -9.11 % | | |
+| TRY | -7.01 % | | |
+| IDR | -5.96 % | | |
+| KZT | -3.42 % | | |
 
-The ordering is the carbon-intensity ordering: China, India, Kazakhstan and
-Indonesia carry the largest GVA shocks (−13.4 %, −12.2 %, −9.6 %, −7.7 %), take
-the deepest rate cuts, and therefore trade at the largest forward premium against
-the euro. Norway and the UK — low-intensity, service-weighted economies — sit at
-the other end.
+The ordering is the carbon-intensity ordering: India, China, Turkey and Indonesia
+carry the largest GVA shocks (-4.31 %, -4.74 %, -2.87 %,
+-2.74 % at 2040), take the deepest rate cuts, and therefore trade at the
+largest forward premium against the euro. Norway sits at the other end, and the
+UK — low-intensity and service-weighted — is now marginally on the strengthening
+side rather than the weakening one.
 
 The direction deserves care. A currency "strengthening" here is not a good-news
 result: it reflects a collapse in domestic output forcing large rate cuts, which
@@ -94,15 +94,15 @@ The 5-year forward range across regions, at 2045:
 
 | scenario | range |
 |---|--:|
-| **Net Zero 2050** | −24.2 % … +4.8 % |
-| Low demand | −13.2 % … +2.5 % |
-| Delayed transition | −5.8 % … +1.1 % |
-| Below 2°C | −5.7 % … +1.2 % |
-| NDCs | −3.7 % … +0.8 % |
-| Fragmented World | −1.6 % … +0.2 % |
+| **Net Zero 2050** | −10.2 % … +1.6 % |
+| Low demand | −5.1 % … +0.8 % |
+| Delayed transition | −3.4 % … +0.6 % |
+| Below 2°C | −3.0 % … +0.6 % |
+| NDCs | −2.4 % … +0.4 % |
+| Fragmented World | −1.5 % … +0.1 % |
 | **Current Policies** | −0.3 % … +0.0 % |
 
-Roughly **96× between the extremes** (29.1 pp against 0.3 pp). No other choice in the model — φ, the
+Roughly **38× between the extremes** (11.7 pp against 0.3 pp). No other choice in the model — φ, the
 incidence parameter, the damage coefficient, the base year — comes close. Any FX
 number quoted from this framework is first and foremost a statement about which
 scenario was assumed.
@@ -113,21 +113,27 @@ scenario, because it carries a high carbon price. This is the finding that drove
 the switch to a 2-D (ΔT₂₁₀₀, XCE₂₀₅₀) distance metric for the scenario transition
 matrix — FX responds to the carbon *price*, not to the temperature.
 
-## 5. Timing: the move is front-loaded
+## 5. Timing: the shock peaks around 2030, then fades
 
 5-year forward under Net Zero 2050:
 
 | | 2025 | 2030 | 2035 | 2040 | 2045 |
 |---|--:|--:|--:|--:|--:|
-| CNY | 0.0 | **−16.5** | −17.3 | −20.5 | −24.2 |
-| INR | 0.0 | −16.5 | −16.8 | −19.9 | −23.4 |
-| USD | 0.0 | −1.0 | −0.5 | −0.5 | −0.6 |
-| NOK | 0.0 | +3.4 | +3.8 | +4.2 | +4.8 |
+| CHN | 0.0 | -12.5 | -10.2 | -9.3 | -9.1 |
+| IND | 0.0 | -13.0 | -10.5 | -10.0 | -10.1 |
+| USA | 0.0 | -1.4 | -1.2 | -1.5 | -1.9 |
+| NOR | 0.0 | 2.3 | 2.0 | 1.7 | 1.6 |
 
-**68 % of China's 2045 move has already happened by 2030.** The carbon price path
-front-loads, and the FX response follows it. For a stress-testing application
-this matters more than the terminal number: the repricing is a near-term event
-under an aggressive scenario, not a 2045 one.
+**The path is hump-shaped, not monotone** — China peaks at −12.5 % in 2030 and
+recovers to −9.1 % by 2045. This is a direct consequence of making intensities
+scenario-consistent (§7): the carbon *price* keeps rising, but the emissions it is
+levied on fall faster, so the burden peaks and then declines as decarbonisation
+outruns the price.
+
+Under static intensities the same paths rose monotonically to 2045, because
+nothing ever abated. The hump is the more defensible shape and it changes the
+stress-testing message: the binding horizon is **the early 2030s**, not the end of
+the projection.
 
 ## 6. Scenario uncertainty: the prior matters as much as the scenario
 
@@ -138,12 +144,12 @@ Mixing the seven scenarios under a Dirichlet prior (§2.2) gives the expected
 
 | prior | CNY | INR | USD | NOK |
 |---|--:|--:|--:|--:|
-| ambition | −8.75 | −8.53 | −0.24 | +1.79 |
-| uniform | −6.34 | −6.20 | −0.17 | +1.31 |
-| policy-sceptic | −3.59 | −3.55 | −0.10 | +0.79 |
-| **consensus** | **−0.52** | **−0.54** | **+0.01** | **+0.09** |
+| ambition | -4.41 | -4.71 | -0.61 | +0.83 |
+| uniform | -3.36 | -3.59 | -0.43 | +0.63 |
+| policy-sceptic | -2.17 | -2.30 | -0.23 | +0.42 |
+| **consensus** | -0.50 | -0.52 | -0.00 | +0.07 |
 
-A **17× range on CNY** purely from the choice of prior. The consensus prior —
+A **9× range on CNY** purely from the choice of prior. The consensus prior —
 anchored on published current-policy warming estimates of ~2.7 °C — puts almost
 all weight on the mild scenarios and nearly extinguishes the result. Whether that
 is the right anchor is a modelling judgement, not a data question, and it should
@@ -152,17 +158,49 @@ be stated as prominently as the scenario choice.
 ![at-risk band](../figures/fig4_fx_at_risk_band.png)
 
 Stressing the inputs by 1.64σ — temperature from the MAGICC fan, carbon price
-from the cross-model spread — widens the tail well beyond the central path. At
-2040 the CNY forward goes −20.5 % → **−22.7 %** and KZT −13.8 % → **−18.6 %**; by
-2045 the CNY tail reaches **−37.5 %** against a central −24.2 %. The gap widens
-with horizon because scenario spread compounds, so the tail risk is a late-horizon
-phenomenon even though the central move is front-loaded (§5).
+from the cross-model spread — widens the tail beyond the central path. At 2040
+the CNY forward goes -9.3 % → **-11.3 %** and KZT -4.1 % → **-5.9 %**;
+by 2045 the CNY tail reaches **-14.8 %** against a central -9.1 %.
 
 Note the tail is not uniformly adverse: NOK and GBP move *further* positive under
 stress. The stress widens dispersion rather than shifting a level, which is the
 correct behaviour for a relative-price channel.
 
-## 7. What this does not say
+## 7. Carbon intensities are scenario-consistent
+
+Every number here scales carbon intensities along **the scenario's own emissions
+path**: `CI_r(t) = CI_r(2022) · E_r(t)/E_r(2022)`, with E from NGFS
+`Emissions|Kyoto Gases` at R5 zone level — the same basis as our GHGFP Scope-1
+intensities, and the same dataset that supplies the carbon prices.
+
+Without it the model applies a *scenario* carbon price to *base-year*
+intensities, which are from different worlds. The entire reason a Net Zero price
+reaches \$421/t by 2040 is to abate the emissions it would otherwise be charged
+on: NGFS Net Zero cuts world emissions to **39.9 %** of 2020 levels by 2040. So
+static intensities charge for emissions the scenario says were abated.
+
+The correction is large and it is the reason these results differ from earlier
+drafts:
+
+| Net Zero, transition GVA at 2040 | static CI | scenario-consistent |
+|---|--:|--:|
+| CHN | −11.40 % | **−4.74 %** |
+| IND | −10.37 % | −4.31 % |
+| EU27 | −2.66 % | −0.95 % |
+| USA | −1.98 % | −0.70 % |
+
+The static figures sat 3–10× above NGFS's own NiGEM Net Zero GDP impacts (about
+−1 % to −4 %); the corrected ones sit inside that range. That is the first
+external sanity check this model has passed, and it was the motivation.
+
+Two limits. The scaling is **proportional within each zone** — NGFS does not
+publish emissions at ICIO industry detail, so it corrects the *level* of
+decarbonisation, not its *composition* across sectors. And it is a departure from
+the paper, which holds the IO table and its intensities fixed; `CONSISTENT_INTENSITY
+= False` in `run_fx.py` reproduces the paper's treatment, and the deviation is
+registered in [PAPER_AUDIT.md](PAPER_AUDIT.md) §F2.
+
+## 8. What this does not say
 
 **Two regions are indistinguishable on spot by construction.** India and Turkey
 both have zero carbon-pricing scope, so both get zero inflation and identical

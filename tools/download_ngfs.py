@@ -3,6 +3,8 @@ Download NGFS Phase 5 scenario data via the IIASA API (anonymous, no login).
 
 Pulls, for model MESSAGEix-GLOBIOM 2.0-M-R12-NGFS, all scenarios:
   * Price|Carbon at the five R5 zones + World      -> data/ngfs/price_carbon_r5.csv
+  * Emissions|Kyoto Gases at the five R5 zones + World
+                                                 -> data/ngfs/emissions_kyoto_r5.csv
   * Global surface temperature (GSAT, MAGICCv7.5.3)
     50th percentile                                -> data/ngfs/temperature_gsat_p50.csv
     10th & 90th percentiles (volatility ext. 3.3)  -> data/ngfs/temperature_gsat_p10.csv / _p90.csv
@@ -42,6 +44,12 @@ def main():
     print(f"pulling from {DB} / {MODEL} (anonymous IIASA API) ...")
     pull("Price|Carbon", R5 + ["World"],
          os.path.join(DEST, "price_carbon_r5.csv"))
+    # Emissions path, used to keep carbon intensities consistent with the
+    # scenario that sets the price: applying a 2040 carbon price to unabated
+    # 2022 intensities charges for emissions the scenario says were abated.
+    # Kyoto Gases (CO2-equiv) matches our GHGFP Scope-1 basis, not Emissions|CO2.
+    pull("Emissions|Kyoto Gases", R5 + ["World"],
+         os.path.join(DEST, "emissions_kyoto_r5.csv"))
     for p in ("50.0", "10.0", "90.0"):
         pull(TVAR.format(p=p), "World",
              os.path.join(DEST, f"temperature_gsat_p{p.split('.')[0]}.csv"))

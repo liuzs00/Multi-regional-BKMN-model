@@ -42,6 +42,14 @@ The recommendation below weights the second heavily.
 
 ## 3. Tier 1 — highest value
 
+> **Done since this note was written:** scenario-consistent carbon intensities.
+> The model applied scenario carbon prices to base-year emissions intensities,
+> overstating the Net Zero transition shock by roughly 2.5×. Now scaled along the
+> NGFS emissions path — see [FX_REPORT.md](FX_REPORT.md) §7. This also delivered
+> the project's **first external sanity check**: the corrected Net Zero GDP shocks
+> sit inside NGFS's own NiGEM range, where the static ones were 3–10× above it.
+> The wider benchmarking item in §4 remains open.
+
 ### 3.1 Trade diversion (Armington elasticities)
 
 **Why it matters most.** It is the binding limitation on everything in the tariff

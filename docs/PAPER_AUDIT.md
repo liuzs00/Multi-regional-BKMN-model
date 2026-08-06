@@ -225,6 +225,7 @@ paper admits more than one reading · **[deferred]** planned, not yet built.
 | 23 | Table 9 equity/CDS β (UK, FTSE) | β re-calibrated per region where free data exists (12/13); paper's β = 2.00 as proxy for JPN, CHL, KAZ | [data] |
 | 24 | Table 10 op-risk β (UK/ORX) | used as-is for all 20 regions | [data] ORX is licensed |
 | 25 | Okun κ = −0.182 (UK, Goto–Burgi) | UK value kept; literature-range defaults elsewhere | [data] κ is published for few countries |
+| 26a | Static carbon intensities — the IO table's intensities apply at every horizon | Intensities scaled along the scenario's own emissions path, `CI_r(t) = CI_r(2022)·E_r(t)/E_r(2022)`, E from NGFS `Emissions|Kyoto Gases` | The paper applies a scenario carbon price to base-year intensities, i.e. charges for emissions the scenario says were abated — NGFS Net Zero cuts world emissions to 39.9% of 2020 by 2040. Static intensities put the Net Zero GDP shock 3–10× above NGFS's own NiGEM estimates; consistent ones land inside that range. Proportional within R5 zone, so it corrects the level not the composition of decarbonisation. `CONSISTENT_INTENSITY=False` restores the paper's treatment. |
 | 26 | Table 15/16 σ by RCP | σ from the MAGICC p10/p90 fan and the NGFS cross-model spread | [multi-R] NGFS-native analogue |
 
 ### F3. Data substitutions (method unchanged)

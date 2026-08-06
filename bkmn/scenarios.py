@@ -23,6 +23,7 @@ NGFS = os.path.join(ROOT, "data", "ngfs")
 # [DATA] US CPI-U annual average: 2010 = 218.056, 2022 = 292.655 (BLS) -> x1.342.
 # Converts the NGFS US$2010/t carbon prices to the ICIO's current-2022-USD world.
 USD2010_TO_USD2022 = 1.342
+BASE_YEAR = 2022          # the ICIO table's year: intensities are observed here
 
 # NGFS R5 label -> region_carbon_map.scenario_zone label
 ZONE_OF_R5 = {
@@ -57,6 +58,16 @@ def load_carbon_prices(to_usd2022: bool = True) -> pd.DataFrame:
     return wide
 
 
+def load_emissions() -> pd.DataFrame:
+    """Annual Kyoto-gas emissions paths (Mt CO2e): index=year, columns=(scenario, zone)."""
+    d = pd.read_csv(os.path.join(NGFS, "emissions_kyoto_r5.csv"))
+    d["column"] = list(zip(d.scenario, d.region.map(ZONE_OF_R5)))
+    wide = _annualise(d)
+    wide.columns = pd.MultiIndex.from_tuples(wide.columns,
+                                             names=["scenario", "zone"])
+    return wide
+
+
 def load_temperature(pct: int = 50) -> pd.DataFrame:
     """Annual GSAT anomaly (K vs 1850-1900): index=year, columns=scenario."""
     d = pd.read_csv(os.path.join(NGFS, f"temperature_gsat_p{pct}.csv"))
@@ -71,6 +82,7 @@ class Scenarios:
         self.cm = carbon_map.set_index("region")
         self.px = load_carbon_prices()
         self.temp = load_temperature()
+        self.em = load_emissions()
         self.names = sorted(self.px.columns.get_level_values("scenario").unique())
 
     def _zone(self, region: str) -> str:
@@ -82,6 +94,28 @@ class Scenarios:
         return pd.Series(
             {r: self.px.loc[year, (scenario, self._zone(r))] for r in self.cm.index},
             name=f"XCE {scenario} {year}")
+
+    def intensity_factor(self, scenario: str, year: int,
+                         base_year: int = BASE_YEAR) -> pd.Series:
+        """
+        Emissions-intensity scaling per region: E_zone(year) / E_zone(base_year).
+
+        Without this the model applies a *scenario* carbon price to *base-year*
+        emissions intensities, which are from different worlds: the whole point
+        of a $400/t price in Net Zero is that it abates the emissions it would
+        otherwise be charged on.  Scaling intensities along the scenario's own
+        emissions path makes price and quantity mutually consistent.
+
+        This is a proportional scaling of each zone's whole intensity vector --
+        it does not re-rank sectors within a region, because NGFS does not
+        publish emissions at ICIO industry detail.  So it corrects the level,
+        not the composition, of decarbonisation.  [ESTIMATE]
+        """
+        em = self.em
+        return pd.Series(
+            {r: float(em.loc[year, (scenario, self._zone(r))]
+                      / em.loc[base_year, (scenario, self._zone(r))])
+             for r in self.cm.index}, name="factor")
 
     def coords(self, year_T: int = 2100, year_X: int = 2050,
                zone: str = "R5.2OECD") -> pd.DataFrame:
