@@ -87,11 +87,12 @@ warming.
 **What.** Expected 5-year forward FX under the Dirichlet scenario mixture, four
 priors, at 2040.
 
-**Findings.** A **17× range on CNY** from the choice of prior alone — ambition
-−8.75 % against consensus −0.52 %. The consensus prior, anchored on published
-~2.7 °C current-policy warming, puts almost all weight on mild scenarios and
-nearly extinguishes the result. Prior choice is a modelling judgement and
-deserves as much prominence as scenario choice.
+**Findings.** A **1.4× range on CNY** from the choice of prior alone — ambition
+-1.03 % against consensus -0.74 %. The consensus prior, anchored on
+published ~2.7 °C current-policy warming, puts most weight on mild scenarios. The
+sensitivity is far smaller than earlier drafts reported, for the reason in
+[FX_REPORT.md](FX_REPORT.md) §4: with physical risk providing a
+scenario-independent floor, reweighting the scenarios moves the answer less.
 
 ### fig9 — `fig9_scenario_drift_sensitivity.png`
 **What.** The same mixture with the Eq-1 transition matrix applied — scenario
@@ -99,7 +100,7 @@ weights drifting annually — at slow (λ=5) and fast (λ=0.5) drift. Dotted = s
 mixture, solid = drifted.
 
 **Findings.** **This is the counterweight to fig3.** Under fast drift the three
-priors converge: by 2045 they are nearly indistinguishable, and the 17× prior
+priors converge: by 2045 they are nearly indistinguishable, and the 1.4× prior
 sensitivity that fig3 reports largely washes out. So the prior matters a great
 deal *if* scenario beliefs are static, and much less if they migrate. Read fig3
 and fig9 as a pair — neither is the whole answer.

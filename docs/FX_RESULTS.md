@@ -1,107 +1,104 @@
-# FX extension — methodology, results, and caveats
+# FX extension — method reference
 
-> Method reference. The figure-led results narrative on the current numbers is
-> [FX_REPORT.md](FX_REPORT.md); read that first for findings, this for the chain.
+The chain, its parameters and its caveats. **Findings live in
+[FX_REPORT.md](FX_REPORT.md)** — deliberately not duplicated here, because this
+note drifted out of date once already when the numbers moved.
 
-Early-stage FX-only build of the multi-regional BKMN model (project: Kenyon,
-UCL MSc Math Finance). Implements the paper's own route to FX (§4.3: *"the
-difference in the changes of yield curves"*) across 20 regions, EUR as base.
-Code: `bkmn/{regions,scenarios,transition,macro,rates,fx,run_fx}.py`;
-validation `tests/test_fx.py`; plan `docs/FX_PLAN.md`.
+Multi-regional BKMN model (project: Kenyon, UCL MSc Math Finance). Implements the
+paper's route to FX (§4.3: *"the difference in the changes of yield curves"*)
+across 20 regions, EUR as base. Code `bkmn/{regions,scenarios,transition,macro,
+rates,fx,physical,run_fx}.py`; gates `tests/test_fx.py`; plan `docs/FX_PLAN.md`.
 
 ## 1. The chain (per scenario, horizon year t, region r)
 
 ```
-NGFS XCE_r(t)  ─► transition core (Eq 8/10, per-region price) ─► GDP shock ΔY_r(t)
-ΔXCE_r(t)      ─► inflation dev ΔΠ_r(t) = 8e-5 · ΔXCE_r · scope_r    (Moessner §2.6)
-Taylor (§2.7): Δr_r(t) = 0.5·ΔΠ_r(t) + 0.5·ΔY_r(t)
-Hull-White (§2.8, Prop 2): ΔR_r(t,τ) = B(τ)/τ · Δr_r(t),  B(τ)=(1−e^{−aτ})/a, a=0.04
+NGFS XCE_r(t)  ─► transition core (Eq 8/10)      ─► GVA shock  ΔY^tr_r(t)
+                  intensities scaled by E_r(t)/E_r(2022)          [§7c of FX_REPORT]
+NGFS GSAT(t)   ─► Ω(ΔT) = 0.003467·ΔT²,  ΔT vs pre-industrial
+                  Prop-1 allocation via VL_r  ─► damage    Ω_r(t)
+ΔXCE_r(t)      ─► inflation dev ΔΠ_r(t) = 8e-5 · ΔXCE_r · scope_r   (Moessner §2.6)
+
+Taylor (§2.7):   Δr_r(t) = 0.5·ΔΠ_r(t) + 0.5·Ω_r(t)      ← output gap ≡ −Ω
+Hull-White (§2.8, Prop 2): ΔR_r(t,τ) = B(τ)/τ · Δr_r(t), B(τ)=(1−e^{−aτ})/a, a=0.04
 
 FX vs EUR (S_r = units of r per EUR; +Δlog = r depreciates):
   spot / rel-PPP :  Δlog S_r(t)   = cumΠ_r(t) − cumΠ_EUR(t)
   fwd pts / CIP  :  Δpts_r(t,τ)   = B(τ)·[Δr_r(t) − Δr_EUR(t)]
   total forward  :  Δlog F_r(t,τ) = Δlog S_r(t) + Δpts_r(t,τ)
 ```
+
+**Note what does *not* enter the Taylor rule.** The transition GVA shock and any
+tariff charge are ad-valorem tax wedges, not output gaps — with final demand and
+**A** fixed they move value to the tax authority rather than destroying it. §2.7's
+output-gap change is ≡ −Ω, the damage function. The transition channel reaches FX
+through **prices** (the Moessner inflation route → spot), and reaches GVA, equity
+and op-risk directly. Full argument and evidence: [FX_REPORT.md](FX_REPORT.md)
+§7a.
+
 φ = 0.5, base year 2022, horizons 2025–2045, forward tenors 1/5/10y. 14
 analytical currencies vs EUR (USD, CNY, GBP, JPY, INR, CAD, NOK, IDR, CLP, AUD,
 SGD, TRY, KRW, KZT); RUS/MEA/AFR/LAM/ROW are structural → no FX.
 
-## 2. Headline result — the forward (rate) channel dominates
+## 2. Switches
 
-Two channels, very different sizes (Net Zero 2050, horizon 2040):
+Both live in `bkmn/run_fx.py`, which `run_extensions.py` imports, so the two
+orchestrators cannot diverge.
 
-| | mechanism | typical size | driver |
-|---|---|---|---|
-| **Spot (PPP)** | cumulative inflation differential | **±0.5 – 2%** | carbon-pricing **scope** relative to EU |
-| **Forward (CIP)** | rate-differential forward points | **up to ±11%** | transition **GDP shock → Taylor rate cut** |
+| switch | default | alternative |
+|---|---|---|
+| `TAYLOR_OUTPUT_GAP` | `"physical"` — the paper's §2.7 | `"total"` — transition + physical + tariff (our earlier reading; overstates) |
+| `WARMING_BASELINE` | `"preindustrial"` — Ω(ΔT) vs 1850–1900 | `"incremental"` — since 2022; ~20× smaller |
+| `CONSISTENT_INTENSITY` | `True` — intensities follow the scenario's emissions path | `False` — the paper's static intensities |
 
-So the model's FX signal is **dominated by the forward/rate channel**: a carbon
-tax is a recessionary supply shock, the central bank cuts (Taylor φY·ΔY), and the
-rate differential drives large CIP forward moves. The spot PPP channel is a
-smaller, scope-driven overlay.
+## 3. Caveats
 
-### Worked pairs (Net Zero 2050, 2040)
-
-- **USD/EUR** — spot **−1.95%**, 5y-forward **−0.52%**. US carbon-pricing scope
-  (0.09) ≪ EU (0.65), so US carbon inflation is far lower → under PPP the **dollar
-  appreciates vs EUR** (−); its GDP shock is modest so its rate cut (−99bp) is
-  close to the EU's (−130bp), leaving small forward points.
-- **KRW/EUR** — spot **+0.49%** (Korea's scope 0.82 > EU 0.65 → *more* carbon
-  inflation → KRW **depreciates** on PPP), but 5y-forward **−6.38%**: Korea's
-  large industrial GDP shock forces a deep rate cut (−282bp vs EU −130bp), and CIP
-  turns that rate gap into a big forward appreciation. **The two channels pull
-  opposite ways** — the pair to explain in the write-up.
-- **TRY/EUR** — the largest: spot −2.27%, 5y-forward **−11.17%** (Turkey's high
-  carbon intensity → −327bp rate cut).
-
-### Scenario monotonicity (|USD spot|, 2040)
-Current Policies 0.007% ≪ NDCs 0.345% ≪ Net Zero 2050 1.952% — climate-FX size
-tracks carbon-price ambition, exactly as expected.
-
-## 3. A structural finding worth stating
-
-Under **Net Zero 2050 the NGFS zone carbon prices are near-uniform** ($332–389/t
-across R5 zones at 2030 — MESSAGE models an almost-global price). So when prices
-are uniform, cross-region FX comes **entirely from economic structure**: the
-**spot** channel is driven by *carbon-pricing scope* differences, the **forward**
-channel by *carbon-intensity / IO-linkage* differences (which set the GDP shock).
-The genuinely price-divergent scenarios (Delayed transition, NDCs, Fragmented
-World) add a zone-price contribution on top.
-
-## 4. Caveats (state these in the dissertation)
-
-1. **Linear IO scaling.** The transition GVA shock is linear in the carbon price
-   (Eq 10), so a Net-Zero $340/t price gives ≈5× the $70 shock. At high prices,
-   real demand response / substitution would dampen this — the large forward moves
-   are an **upper bound / illustrative**, not a point forecast.
+1. **Shifts, not levels.** The paper's Appendix A.6 step 6 also carries a
+   `market` term — the change the observed yield curve already implies. We omit
+   it deliberately: we want the climate-attributable component, and a
+   region-specific market term would inject non-climate FX moves into it. Cost:
+   no absolute stressed level can be quoted, and **there is no zero lower
+   bound** — nothing stops an implied rate going deeply negative, and reporting
+   shifts makes that invisible.
 2. **Spot = PPP, forward = CIP.** CIP forwards are assumption-free; the spot
-   anchor is relative PPP (a modelling choice for climate horizons). We do **not**
+   anchor is relative PPP, a modelling choice at climate horizons. We do not
    claim an uncovered-parity spot response to rate differentials.
-3. **Current scope, static.** `carbon_scope` is 2025 applied-policy coverage; under
-   Net Zero, coverage would widen over time (a Phase-2 refinement). Regions with
-   scope = 0 (IND, TUR, RUS, MEA) get no PPP inflation and cluster on the spot side.
-4. **Transition only.** No physical-damage channel (temperature is loaded but off),
-   no credit/equity/op-risk, no scenario mixture. FX = rates + inflation only.
-5. **Shadow vs applied price.** NGFS `Price|Carbon` is a shadow price; a hybrid
+3. **Spot carries one piece of information.** 20 regions map onto 5 NGFS R5
+   zones, so the carbon price varies only 495–516 across the 14 currencies
+   (cv 0.013) and spot is a rescaled `carbon_scope` vector — correlation +1.000.
+   That is a data-granularity limit, not a modelling choice. Regions with
+   scope = 0 (IND, TUR) are indistinguishable on spot; the dynamic-scope
+   sensitivity separates them.
+4. **Linear in the carbon price.** The transition GVA shock is linear in XCE
+   (Eq 10). Real substitution would dampen it at high prices, so transition
+   magnitudes are an upper bound. Scenario-consistent intensities remove the
+   largest part of that overstatement but not the behavioural part.
+5. **No trade diversion, no retaliation, A fixed at 2022.**
+6. **Shadow vs applied price.** NGFS `Price|Carbon` is a shadow price; a hybrid
    (today's applied price → zone path) would differentiate short horizons more.
+7. **No external validation of the FX numbers.** The *GDP* shocks are benchmarked
+   against NGFS's own NiGEM range (FX_REPORT §7c); the FX moves are not
+   benchmarked against anything.
 
-## 5. Validation — 9 gates, all pass (`tests/test_fx.py`)
+## 4. Validation — 9 gates (`tests/test_fx.py`)
 
-Reduction to the committed model (flat XCE≡70 reproduces
-`out_gva_shock_by_region_phi.csv` to **4e-16 pp**), φ=0 endpoint = −CT/GVA
-exactly, HW limits, EUR-base self-consistency, forward-points triangular
-consistency (2e-17), scenario monotonicity.
+Reduction to the committed model (flat XCE ≡ 70 reproduces
+`out_gva_shock_by_region_phi.csv` to 4e-16 pp), φ=0 endpoint = −CT/GVA exactly,
+Hull-White limits, EUR-base self-consistency, forward-points triangular
+consistency (2e-17), scenario monotonicity. A further 77 gates in
+`tests/test_extensions.py` cover the physical, mixture, volatility, tariff and
+specification layers — including that the transition shock is *absent* from the
+rate shift.
 
-## 6. Outputs & run
+## 5. Outputs & run
 
 Tables (rows = scenario × region, cols = horizon year):
 `out_fx_spot_ppp.csv` (%), `out_fx_forward_5y.csv` (%), `out_rate_shift.csv` (bp),
 `out_inflation_shift.csv` (bp), `out_gdp_shock_fx.csv` (%).
 
-Run: `py -3 -m bkmn.run_fx` (results) · `py -3 tests/test_fx.py` (gates).
+Run: `py -3 -m bkmn.run_fx` · gates `py -3 tests/test_fx.py`.
 
-## 7. Next (deferred, for discussion)
+## 6. Deferred
 
-Physical channel (needs per-region vulnerability VL); scope widening under
-scenarios; scenario-probability mixture (Dirichlet, paper §2.2); absolute stressed
-FX levels (needs spot FX + curves); the tariff / trade-flow stretch goal.
+Market-curve anchoring for absolute levels and a zero lower bound; trade
+diversion and carbon leakage; external benchmarking. Prioritised in
+[FURTHER_WORK.md](FURTHER_WORK.md).
