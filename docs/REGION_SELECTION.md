@@ -1,5 +1,25 @@
 # Region selection: deriving the set instead of asserting it
 
+> **Superseded — read [CHAPTER_REGION_SELECTION.md](CHAPTER_REGION_SELECTION.md)
+> instead.** This note is the working record of the stage-1 exercise. Two things
+> have changed since it was written:
+>
+> 1. **The decision is now 13 regions, not 23** (top ten by economic linkage plus
+>    anything above 1 % on either measure, with the residual split in two). The
+>    §7 table below is no longer the selection.
+> 2. **The carbon column below is wrong.** The ICIO calls its unallocated
+>    residual `ROW` and the GHG footprint calls it `WXD`, so the residual was
+>    joined to no emissions at all and fell back to a median intensity. `WXD` is
+>    4,304 Mt CO₂e — the third largest Scope-1 total in the file. Correcting the
+>    alias moves the residual from **2.64 % carbon linkage (rank 6) to 9.19 %
+>    (rank 2)** and shifts every other carbon share downward through the
+>    denominator (China 11.91 → 11.11 %, EU27 62.97 → 58.73 %). The economic
+>    column is unaffected, as is the stage-1 clustering, which drops the residual
+>    before the attributes are standardised. Fixed in `select_regions.GHG_ALIAS`.
+>
+> §1–§6 below remain valid and are carried into the chapter; §7 is kept as a
+> record of the earlier decision.
+
 The 20 regions used throughout this project were chosen by argument — FX
 coverage, CBAM exposure, physical vulnerability — and defended narratively. This
 note replaces that with an algorithm, reports what it selects, and states plainly
@@ -28,7 +48,7 @@ That reframing has a useful consequence: it makes ROW-robustness the *same*
 objective as the selection criterion, rather than a separate condition to check
 afterwards.
 
-## 2. Method
+## 2. Method (Greedy Based)
 
 **Linkage — how much the EU depends on an economy.** Solve the EU's final-demand
 footprint over the 81-economy 2022 ICIO:
@@ -49,7 +69,7 @@ supply chains, which a bilateral trade share misses.
 ND-GAIN vulnerability: the two things that differ within a block and drive the
 model's channels.
 
-**Merge cost — Ward's criterion, weighted by linkage.**
+<!-- **Merge cost — Ward's criterion, weighted by linkage.**
 
 $$\mathrm{cost}(G,H) = \frac{w_G\,w_H}{w_G+w_H}\,\lVert \bar{X}_G - \bar{X}_H \rVert^2$$
 
@@ -57,7 +77,7 @@ Merging two large, dissimilar, EU-relevant groups is expensive; merging two smal
 similar ones is nearly free. Agglomerative rather than greedy forward selection,
 for one reason that matters: **there is no residual bucket.** ROW is not
 "everything left over" — it is just another cluster, with its heterogeneity cost
-measured on the same scale as every other group's.
+measured on the same scale as every other group's. -->
 
 **Stopping rule.** Your constraint was that ROW must not be the largest region on
 either linkage measure. Under merging that becomes: *every multi-member group
