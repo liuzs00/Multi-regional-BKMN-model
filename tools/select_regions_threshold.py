@@ -43,18 +43,24 @@ TOP_N = 10          # keep the ten largest by economic linkage
 THRESHOLD = 1.0     # ... plus anything above 1 % on EITHER measure
 
 # The rule above leaves a residual that outranks China on BOTH measures, which
-# breaks the requirement that the residual must not dominate.  Splitting it in
-# two repairs that at the cost of one extra region.
+# breaks the requirement that the residual must not dominate.  It has to be
+# split, and the split is derived rather than imposed.
 #
-# The split is geographic, and deliberately NOT the Ward criterion used in stage
-# 1.  Clustering on (log carbon intensity, vulnerability) groups the high-carbon
-# economies together and so concentrates carbon: it yields a 16-member block at
-# 11.68 % carbon linkage, which exceeds China's 11.11 % and fails the constraint
-# outright.  Minimising within-group heterogeneity and keeping each residual
-# non-dominant are different objectives, and here they genuinely conflict.
+# Running stage 1's Ward criterion on the residual unconstrained does NOT work:
+# clustering on (log carbon intensity, vulnerability) groups the high-carbon
+# economies together and so concentrates carbon, yielding a 16-member block at
+# 11.68 % carbon linkage -- above China's 11.11 %, and a violation.
+#
+# The fix is not to abandon Ward but to give it the constraint.  Minimising
+# within-group heterogeneity is the OBJECTIVE; not dominating is a CONSTRAINT.
+# Treating the second as a feasibility condition inside the merge loop -- a
+# merge that would breach the cap is simply unavailable -- reconciles them.
+# Ward still chooses which pair to merge; the cap chooses which pairs exist.
+#
+# The cap is not a tuning parameter: it is the largest single-economy region,
+# which the data says is China on both measures.  Merging stops when no feasible
+# merge remains, so the number of residual groups is an output, not an input.
 SPLIT_RESIDUAL = True
-RAS_MEMBERS = ["JPN", "KOR", "SGP", "TWN", "VNM", "IDN", "MYS", "THA", "PHL",
-               "HKG", "BGD", "BRN", "KHM", "LAO", "MMR", "PAK"]
 
 # Candidate regions: the single economies the stage-1 run promotes, plus the
 # three structural aggregates.  ROW is not a candidate -- it is the residual,
@@ -79,7 +85,8 @@ FULL_NAME = {
     "AUS": "Australia", "IDN": "Indonesia", "KAZ": "Kazakhstan",
     "CHL": "Chile", "MEA": "Middle East", "AFR": "Africa",
     "LAM": "Latin America ex-Chile", "ROW": "Rest of World",
-    "RAS": "Rest of Asia-Pacific",
+    "ROWL": "Rest of World, lower-intensity",
+    "ROWH": "Rest of World, higher-intensity",
 }
 
 
@@ -109,6 +116,73 @@ def group(d, members):
                    "carb_pct": rest.carb_pct.sum(),
                    "members": sorted(rest.index)}
     return pd.DataFrame(rows).T.sort_values("econ_pct", ascending=False)
+
+
+def ward_capped(sub, cap_econ, cap_carb):
+    """
+    Agglomerate `sub` on (log CI, vulnerability) under a dominance cap.
+
+    Identical to `select_regions.ward_merge` except that a pair whose combined
+    linkage would exceed the cap on either measure is not a candidate.  Merging
+    runs until no feasible pair is left, so the group count falls out of the
+    constraint rather than being chosen.
+
+    Returns {group_label: [economies]}.
+    """
+    s = sub.copy()
+    s["log_ci"] = np.log(s.ci.replace(0, np.nan))
+    for c in ("log_ci", "vuln"):
+        s[c] = s[c].fillna(s[c].median())
+        s[c + "_z"] = (s[c] - s[c].mean()) / s[c].std()
+
+    names = list(s.index)
+    X = s[["log_ci_z", "vuln_z"]].to_numpy(float)
+    w = s.econ_pct.to_numpy(float)
+    epct, cpct = s.econ_pct.to_numpy(float), s.carb_pct.to_numpy(float)
+    g = {n: [i] for i, n in enumerate(names)}
+
+    def centroid(idx):
+        ww = w[idx]
+        return (X[idx] * ww[:, None]).sum(0) / ww.sum() if ww.sum() else X[idx].mean(0)
+
+    while True:
+        keys = list(g)
+        best, best_cost = None, np.inf
+        for i in range(len(keys)):
+            for j in range(i + 1, len(keys)):
+                a, b = keys[i], keys[j]
+                idx = g[a] + g[b]
+                if epct[idx].sum() > cap_econ or cpct[idx].sum() > cap_carb:
+                    continue                       # infeasible: would dominate
+                wa, wb = w[g[a]].sum(), w[g[b]].sum()
+                ca, cb = centroid(g[a]), centroid(g[b])
+                cost = (wa * wb / (wa + wb) * float(((ca - cb) ** 2).sum())
+                        if wa + wb else 0.0)
+                if cost < best_cost:
+                    best, best_cost = (a, b), cost
+        if best is None:
+            break
+        a, b = best
+        g[f"{a}+{b}"] = g.pop(a) + g.pop(b)
+    return {k: [names[i] for i in v] for k, v in g.items()}
+
+
+def split_residual(d, members):
+    """Partition whatever the rule did not keep, under the dominance cap."""
+    named = group(d, members).drop(index="ROW", errors="ignore")
+    singles = named[named.n == 1]
+    cap_e, cap_c = singles.econ_pct.max(), singles.carb_pct.max()
+
+    assigned = {m for ms in members.values() for m in ms}
+    pool = [c for c in d.index if c not in assigned]
+    parts = ward_capped(d.loc[pool], cap_e, cap_c)
+
+    # label by carbon intensity so the names describe what separates them
+    ranked = sorted(parts.values(),
+                    key=lambda ms: d.loc[ms].link_carbon.sum() / d.loc[ms].link_econ.sum())
+    labels = ["ROWL", "ROWH"] if len(ranked) == 2 else \
+             [f"ROW{i + 1}" for i in range(len(ranked))]
+    return dict(zip(labels, ranked)), (cap_e, cap_c)
 
 
 def select(cand, top_n=TOP_N, thr=THRESHOLD, count_row_in_top=True):
@@ -156,14 +230,18 @@ def main():
 
     kept, why = select(cand)
     members = {n: CANDIDATES[n] for n in kept}
-    resid = [c for c in d.index
-             if c not in {m for ms in members.values() for m in ms}]
     if SPLIT_RESIDUAL:
-        members["RAS"] = [c for c in resid if c in RAS_MEMBERS]
+        parts, (cap_e, cap_c) = split_residual(d, members)
+        print(f"\nresidual split under the dominance cap "
+              f"({cap_e:.2f} % econ, {cap_c:.2f} % carbon, set by the largest "
+              f"single economy) -> {len(parts)} groups")
+        members.update(parts)
+        residuals = list(parts)
+    else:
+        residuals = ["ROW"]
     final = group(d, members)
+    final = final[final.n > 0]
     final.to_csv(f"{ROOT}/out_region_selection_final.csv")
-
-    residuals = ["ROW", "RAS"] if SPLIT_RESIDUAL else ["ROW"]
     n_named = len(final) - len(residuals) - 1
     print(f"\nFINAL SET -- {len(final)} regions "
           f"(EU27 + {n_named} named + {len(residuals)} residual)")
