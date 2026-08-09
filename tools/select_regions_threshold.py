@@ -76,6 +76,33 @@ for _c in ("USA", "CHN", "GBR", "JPN", "IND", "CAN", "NOR", "IDN", "RUS",
            "CHL", "AUS", "SGP", "TUR", "KOR", "KAZ", "CHE", "TWN", "VNM"):
     CANDIDATES[_c] = [_c]
 
+# NGFS R5 zone per ICIO economy.  Scenario carbon prices are published at this
+# resolution, so a region spanning zones must take a blended price.  Assignment
+# follows the model's own map (bkmn/regions.py `scenario_zone`) where it has one
+# and the IPCC R5 definitions elsewhere.
+R5 = {}
+for _c in ("AUS", "AUT", "BEL", "BGR", "CAN", "CHE", "CYP", "CZE", "DEU", "DNK",
+           "ESP", "EST", "FIN", "FRA", "GBR", "GRC", "HRV", "HUN", "IRL", "ISL",
+           "ITA", "JPN", "LTU", "LUX", "LVA", "MLT", "NLD", "NOR", "NZL", "POL",
+           "PRT", "ROU", "SVK", "SVN", "SWE", "USA"):
+    R5[_c] = "R5.2OECD"
+for _c in ("BGD", "BRN", "CHN", "HKG", "IDN", "IND", "KHM", "KOR", "LAO", "MMR",
+           "MYS", "PAK", "PHL", "SGP", "THA", "TWN", "VNM"):
+    R5[_c] = "R5.2ASIA"
+for _c in ("AGO", "ARE", "CIV", "CMR", "COD", "EGY", "ISR", "JOR", "MAR", "NGA",
+           "SAU", "SEN", "STP", "TUN", "TUR", "ZAF"):
+    R5[_c] = "R5.2MAF"
+for _c in ("ARG", "BRA", "CHL", "COL", "CRI", "MEX", "PER"):
+    R5[_c] = "R5.2LAM"
+for _c in ("BLR", "KAZ", "RUS", "UKR"):
+    R5[_c] = "R5.2REF"
+R5["ROW"] = "World"                     # the ICIO's own residual: blended path
+
+# Weight on the carbon-price attribute in the merge distance, relative to log
+# carbon intensity and vulnerability (each of which enters at weight 1 after
+# standardisation).  0 reproduces the two-attribute criterion.
+ZONE_WEIGHT = 1.0
+
 FULL_NAME = {
     "EU27": "European Union (27 members)", "CHN": "China",
     "USA": "United States", "GBR": "United Kingdom", "CHE": "Switzerland",
@@ -118,14 +145,50 @@ def group(d, members):
     return pd.DataFrame(rows).T.sort_values("econ_pct", ascending=False)
 
 
-def ward_capped(sub, cap_econ, cap_carb):
+def zone_price_score(year=2040):
     """
-    Agglomerate `sub` on (log CI, vulnerability) under a dominance cap.
+    One number per R5 zone: how expensive its carbon is, typically.
 
-    Identical to `select_regions.ward_merge` except that a pair whose combined
-    linkage would exceed the cap on either measure is not a candidate.  Merging
-    runs until no feasible pair is left, so the group count falls out of the
-    constraint rather than being chosen.
+    A categorical zone label would penalise every cross-zone merge equally,
+    which is wrong -- under Net Zero the OECD and Asia paths differ by 4 %,
+    while under Fragmented World one zone prices carbon at $0 and another at
+    $44.  What the model actually cares about is that a group's members face a
+    similar price, so the attribute is the price itself.
+
+    Prices are z-scored WITHIN each scenario before averaging across scenarios,
+    so a scenario with large absolute prices does not dominate one with small
+    ones; the score measures relative expensiveness, which is the part that is
+    stable across narratives.
+    """
+    from bkmn import regions as _regions              # local: heavy import
+    from bkmn import scenarios as _scenarios
+
+    m = _regions.load()
+    sc = _scenarios.Scenarios(m.carbon_map)
+    zones = sorted(set(R5.values()) - {"World"})
+    rows = []
+    for s in sc.names:
+        px = {z: float(sc.px.loc[year, (s, z)]) for z in zones}
+        v = np.array(list(px.values()))
+        sd = v.std()
+        rows.append({z: (px[z] - v.mean()) / sd if sd > 0 else 0.0
+                     for z in zones})
+    score = pd.DataFrame(rows).mean().to_dict()
+    score["World"] = float(np.mean(list(score.values())))   # blended: neutral
+    return score
+
+
+def ward_capped(sub, cap_econ, cap_carb, zone_weight=ZONE_WEIGHT, zscore=None):
+    """
+    Agglomerate `sub` on (log CI, vulnerability, carbon-price zone) under a
+    dominance cap.
+
+    Identical to `select_regions.ward_merge` except that (a) a pair whose
+    combined linkage would exceed the cap on either measure is not a candidate,
+    and (b) the distance carries a third attribute so that merging economies
+    facing different carbon prices costs something.  Merging runs until no
+    feasible pair is left, so the group count falls out of the constraint
+    rather than being chosen.
 
     Returns {group_label: [economies]}.
     """
@@ -135,8 +198,17 @@ def ward_capped(sub, cap_econ, cap_carb):
         s[c] = s[c].fillna(s[c].median())
         s[c + "_z"] = (s[c] - s[c].mean()) / s[c].std()
 
+    attrs = ["log_ci_z", "vuln_z"]
+    if zone_weight > 0:
+        zs = zone_price_score() if zscore is None else zscore
+        s["zone_z"] = [zs.get(R5.get(c, "World"), 0.0) for c in s.index]
+        sd = s.zone_z.std()
+        s["zone_z"] = ((s.zone_z - s.zone_z.mean()) / sd if sd > 0 else 0.0)
+        s["zone_z"] *= zone_weight
+        attrs.append("zone_z")
+
     names = list(s.index)
-    X = s[["log_ci_z", "vuln_z"]].to_numpy(float)
+    X = s[attrs].to_numpy(float)
     w = s.econ_pct.to_numpy(float)
     epct, cpct = s.econ_pct.to_numpy(float), s.carb_pct.to_numpy(float)
     g = {n: [i] for i, n in enumerate(names)}
@@ -167,7 +239,7 @@ def ward_capped(sub, cap_econ, cap_carb):
     return {k: [names[i] for i in v] for k, v in g.items()}
 
 
-def split_residual(d, members):
+def split_residual(d, members, zone_weight=ZONE_WEIGHT):
     """Partition whatever the rule did not keep, under the dominance cap."""
     named = group(d, members).drop(index="ROW", errors="ignore")
     singles = named[named.n == 1]
@@ -175,7 +247,7 @@ def split_residual(d, members):
 
     assigned = {m for ms in members.values() for m in ms}
     pool = [c for c in d.index if c not in assigned]
-    parts = ward_capped(d.loc[pool], cap_e, cap_c)
+    parts = ward_capped(d.loc[pool], cap_e, cap_c, zone_weight=zone_weight)
 
     # label by carbon intensity so the names describe what separates them
     ranked = sorted(parts.values(),
