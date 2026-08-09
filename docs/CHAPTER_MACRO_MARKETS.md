@@ -36,67 +36,137 @@ Implementation: `bkmn/macro.py` (§2.6–2.7), `bkmn/rates.py` (§2.8), `bkmn/eq
 
 ## 2. Inflation (§2.6)
 
-### 2.1 The carbon-price link
+### 2.1 The relationship
 
-The paper takes its inflation response from Moessner (2022), who estimates that a
-$\$10$ per tonne increase in emissions-trading prices raises headline inflation by
-$0.08$ percentage points. Writing $k = 0.08\%/\$10 = 8\times10^{-5}$ per dollar per
-tonne, the annual inflation deviation in region $r$ is
+The paper takes its inflation response from Moessner (2022), who estimates across
+emissions-trading jurisdictions that a $\$10$ per tonne rise in the carbon price
+raises headline inflation by $0.08$ percentage points. As a coefficient,
 
-$$\Delta\Pi_r(t) \;=\; k\,\big[\mathrm{XCE}_r(t)-\mathrm{XCE}_r(t-1)\big]\,\Omega^{\mathrm{XCE}}_r(t),$$
+$$k \;=\; \frac{0.08\,\%}{\$10/\mathrm{t}} \;=\; 8\times 10^{-5}
+\quad\text{(fraction of inflation) per }\$1/\mathrm{t}.$$
 
-where $\Omega^{\mathrm{XCE}}_r$ is the **scope** of carbon pricing — the fraction of
-the region's emissions actually subject to a price. The deviation is a *rate* effect;
-summing over years telescopes to a price-level effect driven by the cumulative carbon
-price change since the base year.
+The annual inflation deviation in region $r$ at year $t$ is that coefficient applied
+to the year's carbon-price increment, scaled by the fraction of the region's
+emissions the price actually reaches:
 
-The scope term is essential rather than decorative. Moessner's estimate is identified
-on marginal ETS prices in jurisdictions with functioning carbon markets. Applying the
-same coefficient unscaled to a region that prices none of its emissions would
-attribute inflation to a policy that is not in force.
+$$\boxed{\;\Delta\Pi_r(t) \;=\; k\,\big[\mathrm{XCE}_r(t)-\mathrm{XCE}_r(t-1)\big]\,
+\Omega^{\mathrm{XCE}}_r\;}\tag{2.6a}$$
 
-### 2.2 The coverage problem
+This is a deviation in the inflation **rate**, carried as a fraction throughout
+(multiply by $10^{4}$ for basis points). Implementation: `macro.inflation_dev`.
 
-Here the paper leaves a gap that the multi-regional setting makes impossible to
-ignore. Section 2.6 writes the driver as $\Delta\Omega_{\mathrm{XCE}}(s)$ — a *change*
-in scope — but supplies neither a value nor a time path for it, in the single-region
-case or otherwise. Some choice must be made.
+The scope factor $\Omega^{\mathrm{XCE}}_r\in[0,1]$ is not decorative. Moessner's
+coefficient is identified on marginal ETS prices in jurisdictions that operate a
+carbon market; applied unscaled to a region pricing none of its emissions it would
+attribute inflation to a policy not in force. §2.6's own text is explicit that
+inflation increases "must be understood with respect to the scope of carbon pricing".
 
-The obvious default is to hold scope at its observed present-day value. Current
-coverage varies enormously across the twenty regions:
+### 2.2 Units
 
-| Region | EU27 | Norway | Japan | China | UK | USA | India |
-|---|--:|--:|--:|--:|--:|--:|--:|
-| $\Omega^{\mathrm{XCE}}_{2025}$ | 0.645 | 0.744 | 0.671 | 0.467 | 0.326 | 0.091 | **0.000** |
+Two conversions sit between the scenario file and $k$, and both change the magnitude.
 
-and holding these fixed produces an immediate inconsistency. Under Net Zero 2050 the
-Asian carbon price exceeds $\$300$ per tonne by 2040, yet with $\Omega_{\text{IND}} =
-0$ the model reports an Indian carbon-inflation deviation of **exactly $0.0$ basis
-points**. The scenario simultaneously asserts that India pays a very high carbon price
-and that no Indian emissions are priced. That is not a conservative assumption; it is
-a contradiction.
+| | |
+|---|---|
+| NGFS `Price\|Carbon` is quoted in **US\$2010/t CO₂** | rescaled by the US CPI-U ratio $292.655/218.056 = 1.342$ to **US\$2022/t**, matching the ICIO's current-2022-USD world (`scenarios.USD2010_TO_USD2022`) |
+| Scenario data arrives on a five-year grid | linearly interpolated to annual (paper Table 17), so within a segment $\mathrm{XCE}(t)-\mathrm{XCE}(t-1)$ is one fifth of the grid step |
 
-### 2.3 Coverage that expands with the carbon price
+Skipping the deflator would understate every inflation figure by a factor of 1.342.
 
-The resolution adopted here ties scope to the scenario's own policy-stringency
-signal. Since the carbon price *is* the variable by which the scenario expresses how
-seriously mitigation is pursued, coverage is made a bounded increasing function of it:
+### 2.3 From rate to level — the quantity that reaches FX
 
-$$\Omega^{\mathrm{XCE}}_r(t) \;=\; \Omega^{\mathrm{XCE}}_{r,2025} \;+\;
-\big(1-\Omega^{\mathrm{XCE}}_{r,2025}\big)\,
+(2.6a) is a rate. Every downstream use in this model — relative PPP for spot FX
+above all — needs the price **level**. Because $\Omega^{\mathrm{XCE}}_r$ is held
+constant in $t$, the annual deviations telescope:
+
+$$\sum_{s=t_0+1}^{t}\Delta\Pi_r(s)
+\;=\; k\,\Omega^{\mathrm{XCE}}_r\sum_{s=t_0+1}^{t}\big[\mathrm{XCE}_r(s)-\mathrm{XCE}_r(s-1)\big]
+\;=\; \boxed{\;k\,\Omega^{\mathrm{XCE}}_r\big[\mathrm{XCE}_r(t)-\mathrm{XCE}_r(t_0)\big]\;}\tag{2.6b}$$
+
+with $t_0 = 2022$. Two consequences follow, and both are load-bearing.
+
+**The telescoping is a property of constant scope.** Let $\Omega$ vary with $t$
+(§2.5) and the product no longer collapses; the cumulative term must then be summed
+year by year. `run_extensions.chain` branches on exactly this, and the two forms
+disagree whenever coverage moves.
+
+**The base-year price is zero.** In NGFS Phase 5 the carbon price is $0$ at both
+2020 and 2025 in every scenario, so $\mathrm{XCE}_r(t_0)=0$ and (2.6b) collapses
+further to
+
+$$\mathrm{cum}\Pi_r(t) \;=\; k\,\Omega^{\mathrm{XCE}}_r\,\mathrm{XCE}_r(t).\tag{2.6c}$$
+
+Twenty regions map onto only six carbon-price paths — the five NGFS R5 zones plus a
+blended World path for the residual — so $\mathrm{XCE}_r(t)$ is compressed across the
+cross-section. At 2040 under Net Zero the fourteen FX regions take five distinct
+values spanning \$417.06 (MAF) to \$445.84 (REF), a **6.9 %** spread, against a scope
+vector running from 0 to 0.821. By (2.6c) the cumulative-inflation vector is therefore
+close to a rescaling of the scope vector: the correlation between them across the
+fourteen FX regions is $0.9990$ at 2040 and $0.9997$ at 2045
+([FX_RESULTS](FX_RESULTS.md) §3). That is a data-granularity limit of the R5 grid,
+not a modelling choice.
+
+The compression is scenario-dependent and should not be over-generalised. Under
+Current Policies the same cross-section at 2040 runs from \$1.53 (OECD) to \$15.88
+(LAM) — an order of magnitude — so there the carbon price does discriminate between
+regions and scope is not the whole story.
+
+### 2.4 Worked example
+
+EU27 under Net Zero 2050, $\Omega^{\mathrm{XCE}}_{\mathrm{EU27}} = 0.645$.
+Interpolating between $\mathrm{XCE}(2025)=0$ and $\mathrm{XCE}(2030)=\$337.80$ gives
+$\mathrm{XCE}(2029)=\$270.24$, an increment of \$67.56. By (2.6a),
+
+$$\Delta\Pi_{\mathrm{EU27}}(2030) \;=\; 8\times10^{-5}\times 67.56\times 0.645
+\;=\; 3.4861\times10^{-3} \;=\; \mathbf{34.86\ bp},$$
+
+against the model's $34.861$ bp. At 2040, $\mathrm{XCE}=\$440.43$, so by (2.6c) the
+level is $8\times10^{-5}\times0.645\times440.43 = \mathbf{2.2726\,\%}$. The United
+States faces the same carbon price on $\Omega = 0.091$ and reaches only
+$0.3206\,\%$; relative PPP turns the $1.9520$ pp differential into a $1.9520\,\%$
+appreciation of the dollar against the euro, reproducing `out_fx_spot_ppp.csv`
+($-1.95199$) to five figures.
+
+### 2.5 The coverage assumption, and the artefact it leaves
+
+Scope is held at its **observed 2025 value** throughout, from OWID coverage data
+(`data/scope/carbon_scope_20R.csv`):
+
+| Region | KOR | NOR | JPN | EU27 | AUS | SGP | CHN | GBR | USA | IND, TUR, RUS |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| $\Omega^{\mathrm{XCE}}_{2025}$ | 0.821 | 0.744 | 0.671 | 0.645 | 0.639 | 0.640 | 0.467 | 0.326 | 0.091 | **0.000** |
+
+The paper does not settle this, and the choice has a visible cost. Under Net Zero
+2050 the model charges India \$420/t in the transition channel at 2040 while
+reporting an Indian carbon-inflation deviation of **exactly 0.0 bp** — the scenario
+asserts a high Indian carbon price and no Indian carbon pricing at the same time.
+**The base-case results carry that inconsistency; it is not repaired**, and by (2.6c)
+it propagates: India and Türkiye have identical spot FX paths, each equal to minus
+the EU's own cumulative inflation.
+
+The alternative is the reading §2.6 gestures at when it notes that "increases in
+scope of carbon pricing may have similar effects" to increases in price. Coverage is
+tied to the scenario's own stringency signal, the carbon price:
+
+$$\Omega^{\mathrm{XCE}}_r(t) \;=\; \Omega_{r,2025} + \big(1-\Omega_{r,2025}\big)
 \min\!\left(1,\ \frac{\mathrm{XCE}_r(t)}{\mathrm{XCE}^{\text{full}}}\right),
-\qquad \mathrm{XCE}^{\text{full}} = \$100/\mathrm{t}.$$
+\qquad \mathrm{XCE}^{\text{full}} = \$100/\mathrm{t},$$
 
-The construction is monotone, bounded in $[\Omega_{2025},1]$, and reduces to the
-static case where the carbon price does not rise. Current Policies, at roughly $\$3$
-per tonne, leaves coverage essentially unchanged; Net Zero, above $\$300$, takes it to
-full. It is also faithful to §2.6's own language, which explicitly anticipates that
-"increases in scope of carbon pricing may have similar effects" to increases in price.
+monotone, bounded in $[\Omega_{2025},1]$, and reducing to the static case where the
+price does not rise. Current Policies (\$1.53–\$15.88/t at 2040) leaves coverage
+largely unchanged; Net Zero (above \$300/t in every zone from 2030) takes it to full.
 
-The threshold $\mathrm{XCE}^{\text{full}} = \$100$ per tonne is **asserted**, and is
-the one free parameter of the construction. It is swept as a sensitivity
-(`out_sens_fx_*_dynscope.csv`) rather than defended, and the static-scope results are
-retained as the base case so that the two are directly comparable.
+It is implemented (`macro.scope_at`) but reported as a **sensitivity only**
+(`out_sens_fx_*_dynscope.csv`), because $\mathrm{XCE}^{\text{full}}$ is asserted
+rather than estimated. Holding the static case as the headline keeps the one free
+parameter out of the main results and makes the two directly comparable.
+
+### 2.6 Departures from the paper
+
+| | Paper §2.6 | Here | Why |
+|---|---|---|---|
+| Driver | $\Delta\Pi \propto \Delta\mathrm{XCE}\cdot\Delta\Omega_{\mathrm{XCE}}$ — a product of two *changes* | $\Delta\mathrm{XCE}\cdot\Omega$, scope as a **level** | the literal form is second-order and reads as a typo; the surrounding text supports a level, as does the single-region reference implementation |
+| Second equation | an inflation **term structure**, $\Pi(t,T,T{+}1)=\Pi^{\text{market}}+\int\Delta\Pi\,f\,ds$, anchored on observed inflation curves | the annual deviation only | we report shifts rather than levels throughout, so no market curve is loaded (deviation register items 9–10) |
+| Index | a single economy | one relationship per region, $r=1,\dots,20$ | the multi-regional extension |
 
 ---
 
