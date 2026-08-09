@@ -76,12 +76,23 @@ def eu_footprint(Z, F, x, econ):
     return np.linalg.solve(np.eye(len(x)) - A, f)  # one solve, no inversion
 
 
+# The two sources name the ICIO's own unallocated residual differently: the
+# input-output table calls it ROW, the GHG footprint calls it WXD.  Without this
+# alias the residual gets no emissions at all and falls back to a median carbon
+# intensity, which understates it -- WXD is 4,304 Mt CO2e in 2022, the third
+# largest Scope-1 total in the file.
+GHG_ALIAS = {"ROW": "WXD"}
+
+
 def economy_attributes(econ, sect, x, x_eu):
     """Per-economy linkage weights and the attributes a block must not blur."""
     ghg = pd.read_csv(GHG)
     ghg = ghg[(ghg.TIME_PERIOD == YEAR) & (ghg.EMISSIONS_SCOPE.astype(str).str.upper()
                                            .str.contains("1"))]
     e = ghg.groupby("EMISSIONS_ORIGIN_AREA").OBS_VALUE.sum()
+    for icio_code, ghg_code in GHG_ALIAS.items():
+        if ghg_code in e.index:
+            e[icio_code] = e[ghg_code]
 
     with zipfile.ZipFile(NDGAIN) as z:
         v = pd.read_csv(z.open("resources/vulnerability/vulnerability.csv"))
