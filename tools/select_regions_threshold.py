@@ -30,7 +30,6 @@ Usage: py -3 tools/select_regions_threshold.py
 import os
 import sys
 
-import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,37 +42,52 @@ TOP_N = 10          # keep the ten largest by economic linkage
 THRESHOLD = 1.0     # ... plus anything above 1 % on EITHER measure
 
 # The rule above leaves a residual that outranks China on BOTH measures, which
-# breaks the requirement that the residual must not dominate.  It has to be
-# split, and the split is derived rather than imposed.
+# breaks the requirement that the residual must not dominate.  Something has to
+# come out of it, and the point of the machinery below is to decide WHAT.
 #
-# Running stage 1's Ward criterion on the residual unconstrained does NOT work:
-# clustering on (log carbon intensity, vulnerability) groups the high-carbon
-# economies together and so concentrates carbon, yielding a 16-member block at
-# 11.68 % carbon linkage -- above China's 11.11 %, and a violation.
-#
-# The fix is not to abandon Ward but to give it the constraint.  Minimising
-# within-group heterogeneity is the OBJECTIVE; not dominating is a CONSTRAINT.
-# Treating the second as a feasibility condition inside the merge loop -- a
-# merge that would breach the cap is simply unavailable -- reconciles them.
-# Ward still chooses which pair to merge; the cap chooses which pairs exist.
+#   1. split the residual by NGFS R5 zone -- not our partition, but the
+#      resolution at which scenario carbon prices are published, so each group
+#      takes exactly one price path with no blending;
+#   2. CLEAN each zone: drop members whose carbon intensity exceeds CLEAN_K
+#      times their own zone's average.  The rule is relative, not absolute,
+#      because a zone that is uniformly carbon-heavy (REF: Belarus, Kazakhstan,
+#      Ukraine at 1.5x spread) is already coherent and should keep everyone,
+#      while one hiding a Korea beside a Cambodia (ASIA, 15x) is the one that
+#      needs it.  An absolute threshold cannot tell those apart.
+#      Dropped economies fall into ROW like any other unselected economy -- they
+#      do NOT form a rival group, because the purpose of cleaning is to make the
+#      geographic groups worth selecting, not to manufacture a competitor;
+#   3. promote the most important cleaned zone, test the rest as a new ROW, and
+#      repeat until ROW no longer dominates.
 #
 # The cap is not a tuning parameter: it is the largest single-economy region,
-# which the data says is China on both measures.  Merging stops when no feasible
-# merge remains, so the number of residual groups is an output, not an input.
+# which the data says is China on both measures.  The number of promotions is
+# therefore an output, not an input.
 SPLIT_RESIDUAL = True
+
+# Drop a zone member whose carbon intensity exceeds this multiple of its own
+# zone's linkage-weighted average.  The selection is stable for every value in
+# [1.5, 3.0] (all give 13 regions and promote ASIA first); below ~1.4 the rule
+# over-cleans ASIA until OECD overtakes it.  Swept in main().
+CLEAN_K = 1.5
 
 # Candidate regions: the single economies the stage-1 run promotes, plus the
 # three structural aggregates.  ROW is not a candidate -- it is the residual,
 # and is formed from whatever this rule does not keep.
+#
+# LAM carries Chile.  An earlier design excluded it ("Latin America ex-Chile")
+# because Chile was modelled separately; it is not selected by this rule (0.05 %
+# economic, 0.07 % carbon -- last on both), so the carve-out has no purpose and
+# would strand a single economy in its own zone group.
 CANDIDATES = {
     "EU27": list(EU27),
     "MEA": ["SAU", "ARE", "ISR", "JOR"],
     "AFR": ["ZAF", "EGY", "MAR", "TUN", "NGA", "SEN", "CIV", "CMR",
             "COD", "AGO", "STP"],
-    "LAM": ["ARG", "BRA", "COL", "CRI", "MEX", "PER"],
+    "LAM": ["ARG", "BRA", "CHL", "COL", "CRI", "MEX", "PER"],
 }
 for _c in ("USA", "CHN", "GBR", "JPN", "IND", "CAN", "NOR", "IDN", "RUS",
-           "CHL", "AUS", "SGP", "TUR", "KOR", "KAZ", "CHE", "TWN", "VNM"):
+           "AUS", "SGP", "TUR", "KOR", "KAZ", "CHE", "TWN", "VNM"):
     CANDIDATES[_c] = [_c]
 
 # NGFS R5 zone per ICIO economy.  Scenario carbon prices are published at this
@@ -98,11 +112,6 @@ for _c in ("BLR", "KAZ", "RUS", "UKR"):
     R5[_c] = "R5.2REF"
 R5["ROW"] = "World"                     # the ICIO's own residual: blended path
 
-# Weight on the carbon-price attribute in the merge distance, relative to log
-# carbon intensity and vulnerability (each of which enters at weight 1 after
-# standardisation).  0 reproduces the two-attribute criterion.
-ZONE_WEIGHT = 1.0
-
 FULL_NAME = {
     "EU27": "European Union (27 members)", "CHN": "China",
     "USA": "United States", "GBR": "United Kingdom", "CHE": "Switzerland",
@@ -111,9 +120,10 @@ FULL_NAME = {
     "CAN": "Canada", "TWN": "Chinese Taipei", "VNM": "Viet Nam",
     "AUS": "Australia", "IDN": "Indonesia", "KAZ": "Kazakhstan",
     "CHL": "Chile", "MEA": "Middle East", "AFR": "Africa",
-    "LAM": "Latin America ex-Chile", "ROW": "Rest of World",
-    "ROWL": "Rest of World, lower-intensity",
-    "ROWH": "Rest of World, higher-intensity",
+    "LAM": "Latin America", "ROW": "Rest of World",
+    "RASIA": "Rest of Asia", "ROECD": "Rest of OECD",
+    "RREF": "Reforming economies", "RLAM": "Rest of Latin America",
+    "RWorld": "Unallocated",
 }
 
 
@@ -145,116 +155,73 @@ def group(d, members):
     return pd.DataFrame(rows).T.sort_values("econ_pct", ascending=False)
 
 
-def zone_price_score(year=2040):
-    """
-    One number per R5 zone: how expensive its carbon is, typically.
-
-    A categorical zone label would penalise every cross-zone merge equally,
-    which is wrong -- under Net Zero the OECD and Asia paths differ by 4 %,
-    while under Fragmented World one zone prices carbon at $0 and another at
-    $44.  What the model actually cares about is that a group's members face a
-    similar price, so the attribute is the price itself.
-
-    Prices are z-scored WITHIN each scenario before averaging across scenarios,
-    so a scenario with large absolute prices does not dominate one with small
-    ones; the score measures relative expensiveness, which is the part that is
-    stable across narratives.
-    """
-    from bkmn import regions as _regions              # local: heavy import
-    from bkmn import scenarios as _scenarios
-
-    m = _regions.load()
-    sc = _scenarios.Scenarios(m.carbon_map)
-    zones = sorted(set(R5.values()) - {"World"})
-    rows = []
-    for s in sc.names:
-        px = {z: float(sc.px.loc[year, (s, z)]) for z in zones}
-        v = np.array(list(px.values()))
-        sd = v.std()
-        rows.append({z: (px[z] - v.mean()) / sd if sd > 0 else 0.0
-                     for z in zones})
-    score = pd.DataFrame(rows).mean().to_dict()
-    score["World"] = float(np.mean(list(score.values())))   # blended: neutral
-    return score
+def agg_ci(d, ms):
+    """Linkage-weighted carbon intensity of a set of economies, t CO2e per $m."""
+    return d.loc[ms].link_carbon.sum() / d.loc[ms].link_econ.sum() * 1e6
 
 
-def ward_capped(sub, cap_econ, cap_carb, zone_weight=ZONE_WEIGHT, zscore=None):
-    """
-    Agglomerate `sub` on (log CI, vulnerability, carbon-price zone) under a
-    dominance cap.
-
-    Identical to `select_regions.ward_merge` except that (a) a pair whose
-    combined linkage would exceed the cap on either measure is not a candidate,
-    and (b) the distance carries a third attribute so that merging economies
-    facing different carbon prices costs something.  Merging runs until no
-    feasible pair is left, so the group count falls out of the constraint
-    rather than being chosen.
-
-    Returns {group_label: [economies]}.
-    """
-    s = sub.copy()
-    s["log_ci"] = np.log(s.ci.replace(0, np.nan))
-    for c in ("log_ci", "vuln"):
-        s[c] = s[c].fillna(s[c].median())
-        s[c + "_z"] = (s[c] - s[c].mean()) / s[c].std()
-
-    attrs = ["log_ci_z", "vuln_z"]
-    if zone_weight > 0:
-        zs = zone_price_score() if zscore is None else zscore
-        s["zone_z"] = [zs.get(R5.get(c, "World"), 0.0) for c in s.index]
-        sd = s.zone_z.std()
-        s["zone_z"] = ((s.zone_z - s.zone_z.mean()) / sd if sd > 0 else 0.0)
-        s["zone_z"] *= zone_weight
-        attrs.append("zone_z")
-
-    names = list(s.index)
-    X = s[attrs].to_numpy(float)
-    w = s.econ_pct.to_numpy(float)
-    epct, cpct = s.econ_pct.to_numpy(float), s.carb_pct.to_numpy(float)
-    g = {n: [i] for i, n in enumerate(names)}
-
-    def centroid(idx):
-        ww = w[idx]
-        return (X[idx] * ww[:, None]).sum(0) / ww.sum() if ww.sum() else X[idx].mean(0)
-
-    while True:
-        keys = list(g)
-        best, best_cost = None, np.inf
-        for i in range(len(keys)):
-            for j in range(i + 1, len(keys)):
-                a, b = keys[i], keys[j]
-                idx = g[a] + g[b]
-                if epct[idx].sum() > cap_econ or cpct[idx].sum() > cap_carb:
-                    continue                       # infeasible: would dominate
-                wa, wb = w[g[a]].sum(), w[g[b]].sum()
-                ca, cb = centroid(g[a]), centroid(g[b])
-                cost = (wa * wb / (wa + wb) * float(((ca - cb) ** 2).sum())
-                        if wa + wb else 0.0)
-                if cost < best_cost:
-                    best, best_cost = (a, b), cost
-        if best is None:
-            break
-        a, b = best
-        g[f"{a}+{b}"] = g.pop(a) + g.pop(b)
-    return {k: [names[i] for i in v] for k, v in g.items()}
-
-
-def split_residual(d, members, zone_weight=ZONE_WEIGHT):
-    """Partition whatever the rule did not keep, under the dominance cap."""
+def dominance_cap(d, members):
+    """The cap a residual must stay under: the largest SINGLE-economy region."""
     named = group(d, members).drop(index="ROW", errors="ignore")
     singles = named[named.n == 1]
-    cap_e, cap_c = singles.econ_pct.max(), singles.carb_pct.max()
+    return singles.econ_pct.max(), singles.carb_pct.max()
 
+
+def clean_zones(d, pool, k=CLEAN_K):
+    """
+    Split `pool` by R5 zone, then drop the members that spoil each zone.
+
+    A member is dropped if its carbon intensity exceeds `k` times its own
+    zone's linkage-weighted average.  Relative rather than absolute: a zone
+    whose members are uniformly carbon-heavy is coherent and keeps everyone.
+
+    Returns (cores, dropped) -- dropped economies belong to ROW.
+    """
+    zones = {}
+    for c in pool:
+        zones.setdefault(R5.get(c, "World").replace("R5.2", ""), []).append(c)
+
+    cores, dropped = {}, []
+    for z, ms in zones.items():
+        if len(ms) == 1:
+            cores[z] = ms
+            continue
+        limit = k * agg_ci(d, ms)
+        core = [c for c in ms if d.loc[c, "ci"] * 1e6 <= limit]
+        dropped += [c for c in ms if d.loc[c, "ci"] * 1e6 > limit]
+        if core:
+            cores[z] = core
+    return cores, dropped
+
+
+def promote_zones(d, cores, dropped, cap_e, cap_c):
+    """
+    Promote cleaned zones out of ROW until ROW no longer dominates.
+
+    Ranked by economic linkage: the aim is to lift out the largest coherent
+    geographic block, not to chase the constraint with whichever group happens
+    to be carbon-heavy.  Returns (promoted labels, groups left inside ROW).
+    """
+    left, promoted = dict(cores), []
+    while True:
+        rest = [c for ms in left.values() for c in ms] + dropped
+        e, c = d.loc[rest].econ_pct.sum(), d.loc[rest].carb_pct.sum()
+        if (e <= cap_e and c <= cap_c) or len(left) <= 1:
+            return promoted, left
+        pick = max(left, key=lambda z: d.loc[left[z]].econ_pct.sum())
+        promoted.append(pick)
+        del left[pick]
+
+
+def split_residual(d, members, k=CLEAN_K):
+    """Everything the threshold rule did not keep: clean, then promote."""
+    cap_e, cap_c = dominance_cap(d, members)
     assigned = {m for ms in members.values() for m in ms}
     pool = [c for c in d.index if c not in assigned]
-    parts = ward_capped(d.loc[pool], cap_e, cap_c, zone_weight=zone_weight)
-
-    # label by carbon intensity so the names describe what separates them
-    ranked = sorted(parts.values(),
-                    key=lambda ms: d.loc[ms].link_carbon.sum() / d.loc[ms].link_econ.sum())
-    labels = ["ROWL", "ROWH"] if len(ranked) == 2 else \
-             [f"ROW{i + 1}" for i in range(len(ranked))]
-    return dict(zip(labels, ranked)), (cap_e, cap_c)
+    cores, dropped = clean_zones(d, pool, k)
+    promoted, _ = promote_zones(d, cores, dropped, cap_e, cap_c)
+    return ({"R" + z: cores[z] for z in promoted}, (cap_e, cap_c),
+            (cores, dropped))
 
 
 def select(cand, top_n=TOP_N, thr=THRESHOLD, count_row_in_top=True):
@@ -302,15 +269,32 @@ def main():
 
     kept, why = select(cand)
     members = {n: CANDIDATES[n] for n in kept}
+
+    print(f"\ncleaning threshold k -- sensitivity")
+    print(f"{'k':>6}{'dropped':>9}{'promoted':>22}{'regions':>9}")
+    for k_ in (1.25, 1.5, 1.75, 2.0, 2.5, 3.0):
+        p_, _, (_, dr_) = split_residual(d, dict(members), k=k_)
+        print(f"{k_:>6.2f}{len(dr_):>9}{', '.join(p_) or '-':>22}"
+              f"{len(kept) + len(p_) + 1:>9}")
+
     if SPLIT_RESIDUAL:
-        parts, (cap_e, cap_c) = split_residual(d, members)
-        print(f"\nresidual split under the dominance cap "
-              f"({cap_e:.2f} % econ, {cap_c:.2f} % carbon, set by the largest "
-              f"single economy) -> {len(parts)} groups")
+        parts, (cap_e, cap_c), (cores, dropped) = split_residual(d, members)
+        print(f"\nresidual: split by NGFS R5 zone, then cleaned at k = {CLEAN_K}"
+              f"  (cap {cap_e:.2f} % econ / {cap_c:.2f} % carbon)")
+        for z, ms in sorted(cores.items(),
+                            key=lambda kv: -d.loc[kv[1]].econ_pct.sum()):
+            e = d.loc[ms].econ_pct.sum()
+            c = d.loc[ms].carb_pct.sum()
+            print(f"   {z:<6} n={len(ms):>2}  {e:5.2f} % econ  {c:5.2f} % carbon"
+                  f"  CI {agg_ci(d, ms):5.0f}"
+                  f"{'   -> PROMOTED' if 'R' + z in parts else ''}")
+        if dropped:
+            print(f"   dropped to ROW ({len(dropped)}): {', '.join(sorted(dropped))}"
+                  f"   {d.loc[dropped].econ_pct.sum():.2f} % econ, "
+                  f"{d.loc[dropped].carb_pct.sum():.2f} % carbon, "
+                  f"CI {agg_ci(d, dropped):.0f}")
         members.update(parts)
-        residuals = list(parts)
-    else:
-        residuals = ["ROW"]
+    residuals = ["ROW"]
     final = group(d, members)
     final = final[final.n > 0]
     final.to_csv(f"{ROOT}/out_region_selection_final.csv")
