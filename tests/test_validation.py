@@ -22,6 +22,7 @@ import os
 import sys
 
 import numpy as np
+import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
@@ -251,5 +252,61 @@ ref = {r: -(real.x * ct)[real.region_of == r].sum()
           / real.gva[real.region_of == r].sum() for r in R}
 err = max(abs(s0[r] - ref[r]) for r in R)
 check("E6 φ=0 reduces to −CT/GVA exactly", err < 1e-12, f"max |Δ| = {err:.1e}")
+
+# ===========================================================================
+print("\nF. sign and composition conventions")
+# ===========================================================================
+# Groups A-E are all symmetry or magnitude arguments, and symmetry is SIGN-BLIND:
+# a global sign flip in the spot channel leaves every zero at zero and every
+# magnitude unchanged.  Mutation testing confirmed it -- flipping the sign of
+# `fx.spot_ppp` passed all 120 gates, as did composing the forward as
+# spot MINUS points.  These gates close both holes by pinning the direction and
+# the composition on cases where the right answer is unambiguous.
+
+K = macro.INFL_PER_USD
+
+# F1/F2: relative PPP direction.  A region pricing MORE carbon than the base
+# imports more carbon inflation, so its price level rises faster and its currency
+# must DEPRECIATE.  With S_r in units of r per base, that means spot > 0.
+hi = fx.spot_ppp(K * 0.80 * XCE, K * 0.30 * XCE)      # r prices more than base
+lo = fx.spot_ppp(K * 0.10 * XCE, K * 0.30 * XCE)      # r prices less than base
+check("F1 higher carbon scope than base => currency depreciates (spot > 0)",
+      hi > 0, f"scope 0.80 vs 0.30 -> spot {hi*100:+.4f} %")
+check("F2 lower carbon scope than base => currency appreciates (spot < 0)",
+      lo < 0, f"scope 0.10 vs 0.30 -> spot {lo*100:+.4f} %")
+check("F3 spot is antisymmetric in the pair",
+      abs(fx.spot_ppp(1e-3, 4e-3) + fx.spot_ppp(4e-3, 1e-3)) < 1e-18)
+
+# F4-F6: the forward is spot PLUS points, not minus, and each leg is recoverable
+c_r, c_b, d_r, d_b, tau = 2.0e-2, 0.5e-2, -40e-4, -10e-4, 5
+tot = fx.forward_total(c_r, c_b, d_r, d_b, tau)
+sp_ = fx.spot_ppp(c_r, c_b)
+pt_ = fx.forward_points(d_r, d_b, tau)
+check("F4 forward = spot + points exactly", abs(tot - (sp_ + pt_)) < 1e-18,
+      f"{tot*100:+.4f} = {sp_*100:+.4f} {pt_*100:+.4f}")
+check("F5 with no rate gap the forward collapses to spot",
+      abs(fx.forward_total(c_r, c_b, d_r, d_r, tau) - sp_) < 1e-18)
+check("F6 with no inflation gap the forward collapses to points",
+      abs(fx.forward_total(c_r, c_r, d_r, d_b, tau) - pt_) < 1e-18)
+
+# F7: the two legs genuinely disagree here, so F4 is not trivially satisfied
+check("F7 control: the two legs have opposite signs in this case",
+      sp_ > 0 > pt_, f"spot {sp_*100:+.3f} %, points {pt_*100:+.3f} %")
+
+# F8: on the real calibration, EU27 holds the HIGHEST carbon-pricing scope, so
+# relative PPP requires every other currency to appreciate against the euro.
+# This is why no spot sign reversal appears in the results -- it is mechanical,
+# not a coincidence, and it would break if a region ever out-priced the EU.
+_cm = real.carbon_map.set_index("region")
+_fx = [r for r in real.regions_order if _cm.loc[r, "fx_role"] == "analytical"]
+_sc = _cm.carbon_scope.astype(float)
+check("F8 EU27 has the highest carbon-pricing scope in the set",
+      all(_sc[r] < _sc["EU27"] for r in _fx),
+      f"EU27 {_sc['EU27']:.3f} vs max other {max(_sc[r] for r in _fx):.3f}")
+_spot = pd.read_csv(f"{ROOT}/out_fx_spot_ppp.csv")
+_nz = _spot[_spot.scenario.str.startswith("Net Zero")].set_index("region")
+check("F8b ... so every analytical currency appreciates on spot",
+      all(float(_nz.loc[r, "2040"]) < 0 for r in _fx),
+      f"max {max(float(_nz.loc[r, '2040']) for r in _fx):+.4f} %")
 
 print(f"\nALL {n_pass} VALIDATION GATES PASSED")

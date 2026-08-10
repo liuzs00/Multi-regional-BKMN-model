@@ -97,13 +97,13 @@ orchestrators cannot diverge.
    against NGFS's own NiGEM range (FX_REPORT §7c); the FX moves are not
    benchmarked against anything.
 
-## 4. Validation — 120 gates
+## 4. Validation — 129 gates
 
 | suite | n | covers |
 |---|--:|---|
 | `tests/test_fx.py` | 9 | reduction to the committed model (flat XCE ≡ 70), φ=0 endpoint = −CT/GVA exactly, Hull-White limits, EUR-base self-consistency, forward-points triangular consistency, scenario monotonicity |
 | `tests/test_extensions.py` | 79 | physical, mixture, volatility, tariff and specification layers — including that the transition shock is *absent* from the rate shift |
-| `tests/test_validation.py` | 32 | **structural** — isolation, symmetry, superposition, reduction to the single-region case. See [CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md) |
+| `tests/test_validation.py` | 41 | **structural** — isolation, symmetry, superposition, reduction to the single-region case, and the sign and composition conventions. See [CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md) |
 
 The third suite is the one that tests whether the multi-regional generalisation
 is *correct* rather than merely reproducible: it runs the production code on
