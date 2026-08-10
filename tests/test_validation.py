@@ -309,4 +309,34 @@ check("F8b ... so every analytical currency appreciates on spot",
       all(float(_nz.loc[r, "2040"]) < 0 for r in _fx),
       f"max {max(float(_nz.loc[r, '2040']) for r in _fx):+.4f} %")
 
+# F9-F11: how a common rescaling of the Moessner coefficient propagates.
+# The paper's printed inflation row is reproduced only by applying k to the
+# STERLING price; we apply it to USD (PAPER_AUDIT 23b).  If that reading is
+# right every spot level here is 1.341x too large.  These gates pin what such a
+# rescaling does, because it is easy to assume a common factor "cancels" in a
+# difference -- it does not, it factors out.
+G = 1.34115
+_c = {r: K * float(_sc[r]) * 400.0 for r in _fx}          # a stylised cum-Pi
+_c["EU27"] = K * float(_sc["EU27"]) * 400.0
+base = {r: fx.spot_ppp(_c[r], _c["EU27"]) for r in _fx}
+scaled = {r: fx.spot_ppp(_c[r] / G, _c["EU27"] / G) for r in _fx}
+check("F9 rescaling k rescales spot; it does NOT cancel",
+      all(abs(scaled[r] - base[r] / G) < 1e-18 for r in _fx)
+      and abs(scaled[_fx[0]] - base[_fx[0]]) > 1e-6,
+      f"every spot x {1/G:.4f}, e.g. {base[_fx[0]]*100:+.3f} -> "
+      f"{scaled[_fx[0]]*100:+.3f} %")
+_ref = [r for r in _fx if abs(base[r]) > 1e-12][0]
+check("F10 ... but ratios between currencies are invariant",
+      max(abs(scaled[r] / scaled[_ref] - base[r] / base[_ref])
+          for r in _fx if abs(base[_ref]) > 1e-12) < 1e-12,
+      "so the cross-section survives the ambiguity, the levels do not")
+# and the rate does NOT rescale proportionally: only the inflation leg moves
+_dpi, _om = 34.86e-4, -0.682e-2
+check("F11 the policy rate moves non-proportionally under the same rescaling",
+      abs(macro.taylor_rate_shift(_dpi / G, _om)
+          - macro.taylor_rate_shift(_dpi, _om) / G) > 1e-5,
+      f"{macro.taylor_rate_shift(_dpi, _om)*1e4:+.2f} bp -> "
+      f"{macro.taylor_rate_shift(_dpi/G, _om)*1e4:+.2f} bp, not "
+      f"{macro.taylor_rate_shift(_dpi, _om)/G*1e4:+.2f}")
+
 print(f"\nALL {n_pass} VALIDATION GATES PASSED")

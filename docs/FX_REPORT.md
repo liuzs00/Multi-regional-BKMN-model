@@ -12,7 +12,7 @@ are separate, in [TARIFF_METHOD.md](TARIFF_METHOD.md).
 
 Everything below is reproduced by `py -3 -m bkmn.run_fx` and
 `py -3 tools/make_figures.py`; gates in `tests/test_fx.py` (9),
-`tests/test_extensions.py` (83) and `tests/test_validation.py` (41, structural —
+`tests/test_extensions.py` (83) and `tests/test_validation.py` (44, structural —
 see [CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md)).
 
 ---
@@ -261,6 +261,24 @@ precision of a scatter plot, and none of §2's numbers should be quoted with a
 standard error. The earlier 20-region build gave 14 currencies; that breadth was
 traded for a defensible selection rule, and the trade is stated in
 [CHAPTER_REGION_SELECTION.md](CHAPTER_REGION_SELECTION.md) §7.1.
+
+**Every spot level may be 34 % too large, and the cross-section is unaffected.**
+The paper writes the Moessner relation with a dollar input, but its own printed
+inflation row is reproduced only if the coefficient is applied to the *sterling*
+carbon price — `8e-5 × £11.45 → 9.2 bp` against a printed 9, where the \$15.36
+price gives 12.3. We apply it to USD, this model's numéraire. If the paper's
+reading is right, every spot move here is overstated by the GBP/USD rate,
+**1.341×**: USD/EUR at 2040 would be −1.46 % rather than −1.95 %.
+
+The factor does **not** cancel, and it is worth being explicit because it looks
+as though it should. Spot is a *difference* of two cumulative inflations, and a
+common factor comes out of a difference rather than vanishing in it. What is
+invariant is the **ratio between currencies and their ranking**, so §2 and §3's
+orderings hold exactly while §3's and §5's levels do not. The policy rate moves
+non-proportionally, since only the inflation term rescales and the damage term
+does not — EU27 at 2030 would deepen from −16.7 to −21.1 bp. Registered as
+[PAPER_AUDIT.md](PAPER_AUDIT.md) §23b; resolving it needs Moessner's own units,
+which we have not verified independently.
 
 **We report shifts, not levels.** The paper's A.6 step 6 also carries a `market`
 term — the change the observed yield curve already implies — which we omit
