@@ -28,6 +28,14 @@ sys.path.insert(0, ROOT)
 DF = os.path.join(ROOT, "DATA_final")
 PHYS = os.path.join(ROOT, "data", "physical")
 MACRO = os.path.join(ROOT, "data", "macro")
+
+# ND-GAIN vintage.  Pinned to the model's base year rather than taking the
+# release's latest column, so the vulnerability scale, the GDP weights used to
+# aggregate it, the IO table and the emissions inventory all describe 2022.
+# The choice is immaterial in magnitude — 2024 moves the regional scales by at
+# most 0.92 % and leaves the cross-section correlated at 0.9998 — but pinning it
+# removes a silent dependence on which release happens to be on disk.
+NDGAIN_YEAR = "2022"
 TAG = "13R"
 
 
@@ -43,7 +51,11 @@ def build_vl():
     """scale(r) = GDP-weighted mean ND-GAIN, normalised to world mean 1."""
     z = zipfile.ZipFile(os.path.join(PHYS, "ndgain_resources.zip"))
     v = pd.read_csv(io.BytesIO(z.read("resources/vulnerability/vulnerability.csv")))
-    year = max(c for c in v.columns if c.isdigit())
+    year = NDGAIN_YEAR
+    if year not in v.columns:
+        raise KeyError(f"ND-GAIN release has no column {year}; "
+                       f"available {min(c for c in v.columns if c.isdigit())}"
+                       f"-{max(c for c in v.columns if c.isdigit())}")
     nd = v.set_index("ISO3")[year].dropna()
 
     gdp = pd.read_csv(os.path.join(MACRO, "wb_gdp_current_usd_2000_2023.csv"))
