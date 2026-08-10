@@ -386,6 +386,61 @@ for _nm, _tbl, _cap in (("Conduct", _opc, 1.306037776 * 0.182 * 100),
     check(f"op-risk {_nm} stays inside the reference's saturating bound",
           _mx < _cap, f"max {_mx:.1f} % vs the reference asymptote {_cap:.1f} %")
 
+# --- 2.9 credit: the CDS half -----------------------------------------------
+from bkmn import credit as _cr                                        # noqa: E402
+from bkmn.paper_tables import (CDS_BETA, CDS_WEIGHTS,                 # noqa: E402
+                               EQUITY_BETA as _EQB)
+
+# Tables 7-8 are index compositions, so each column must be a partition of 1
+_wsum = {j: sum(CDS_WEIGHTS[s][k] for s in CDS_WEIGHTS)
+         for k, j in enumerate(_cr.CDS_SECTORS)}
+check("CDS index weights sum to 1 for every index",
+      all(abs(v - 1.0) < 5e-3 for v in _wsum.values()),
+      f"max |sum-1| = {max(abs(v-1) for v in _wsum.values()):.4f}")
+check("every ICIO industry maps to a SIC section",
+      set(m.industry_of) <= set(_cr.ICIO_TO_SIC),
+      f"{len(set(m.industry_of))} industries covered")
+
+_M5 = transition.gva_operator(m, 0.5)
+_ct5 = transition.ct_direct(m, {r: 100.0 for r in m.regions_order})
+_syn = _cr.synthetic_shock(m, _cr.rel_dgva_sectors(m, _M5, _ct5))
+_cs = _cr.spread_shift(_syn)
+
+# the transfer is exactly beta * synthetic (2.9), no hidden scaling
+check("spread shift is exactly beta x the synthetic index shock",
+      max(abs(_cs[r][j] - CDS_BETA[j] * _syn[r][j])
+          for r in m.regions_order for j in _syn[r]) < 1e-18)
+# a charge lowers GVA, so a NEGATIVE beta must WIDEN the spread
+_neg = [j for j, b in CDS_BETA.items() if b < 0]
+check("negative-beta indices widen when GVA falls",
+      all(_cs[r][j] > 0 for r in m.regions_order for j in _neg),
+      f"{len(_neg)} of {len(CDS_BETA)} indices have beta < 0")
+# and the paper's two positive-beta indices must move the other way
+_pos = [j for j, b in CDS_BETA.items() if b > 0 and j != "FTSE"]
+check("the paper's positive-beta indices move against the rest",
+      all(_cs[r][j] < 0 for r in m.regions_order for j in _pos),
+      f"{_pos} - a property of the UK sample, not of the extension")
+# zero charge, zero spread
+_z = _cr.spread_shift(_cr.synthetic_shock(m, np.zeros(len(m.sectors))))
+check("no charge means no spread move",
+      max(abs(v) for d in _z.values() for v in d.values()) == 0.0)
+# linear in the charge, like every other channel
+_cs2 = _cr.credit_shift(m, _M5, 2 * _ct5)
+check("the credit channel is exactly linear in the charge",
+      max(abs(2 * _cs[r][j] - _cs2[r][j])
+          for r in m.regions_order for j in _syn[r]) < 1e-15)
+# the FTSE column is the equity index, so it must agree with equity.py's beta
+check("the FTSE column carries the same beta as the equity channel",
+      abs(CDS_BETA["FTSE"] - _EQB) < 1e-12,
+      f"{CDS_BETA['FTSE']} = paper Table 9 FTSE 100 slope")
+# output vs GVA weighting changes the answer -- the reference's gap 9b
+_syn_g = _cr.synthetic_shock(m, _cr.rel_dgva_sectors(m, _M5, _ct5), size="gva")
+_dev = max(abs(_syn_g[r][j] / _syn[r][j] - 1)
+           for r in m.regions_order for j in _syn[r] if abs(_syn[r][j]) > 1e-12)
+check("output- vs GVA-weighting materially changes the synthetic index",
+      _dev > 0.05,
+      f"max relative difference {_dev*100:.1f} % (SIZE switch; paper uses output)")
+
 # --- scenario-consistent carbon intensities ----------------------------------
 _scn = Scenarios(m.carbon_map)
 check("intensity factor is exactly 1 at the base year",

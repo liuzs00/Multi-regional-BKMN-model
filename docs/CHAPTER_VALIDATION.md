@@ -198,7 +198,7 @@ but that is equally consistent with the gates being too weak to fail. The check 
 to break the model deliberately and confirm the suite notices.
 
 Seven plausible implementation errors were injected one at a time, each a single
-edit a real implementation could genuinely contain, and all 120 gates were run
+edit a real implementation could genuinely contain, and all 145 gates were run
 against each:
 
 | injected bug | caught by |
@@ -219,7 +219,8 @@ sign. Flipping the sign of the spot channel leaves every zero at zero and every
 magnitude unchanged. The only non-symmetric spot gate in the project — scenario
 monotonicity in `test_fx.py` — compares `|spot|`, so it is sign-blind too. A model
 reporting *"a country that prices carbon sees its currency strengthen"*, the exact
-reverse of the economics, would have passed all 120 gates.
+reverse of the economics, would have passed **every gate in the suite as it then
+stood** — 120 of them.
 
 **Composition was never tested.** `forward_total` is a one-line sum, which is
 precisely why nobody thought to test it; no gate distinguished spot + points from
@@ -245,7 +246,8 @@ about this particular region set — it is forced by the EU being the most
 carbon-priced economy in it, and the gate would fail the day that stopped being
 true.
 
-After adding group F, **all seven mutants are caught**, and the suite is 44 gates.
+After adding group F, **all seven mutants are caught** — re-confirmed against the
+current 145-gate suite — and the structural suite is 44 gates.
 
 The wider lesson outlives this project: symmetry arguments establish that a model
 is *internally consistent*, not that it points the right way. Any suite built on
@@ -370,7 +372,7 @@ sign — but not by the symmetry constructions used here.
 | suite | gates | establishes |
 |---|--:|---|
 | `tests/test_fx.py` | 9 | reproduction — the code computes the specified relations |
-| `tests/test_extensions.py` | 83 | identities, monotonicity and sign across every channel |
+| `tests/test_extensions.py` | 92 | identities, monotonicity and sign across every channel |
 | `tests/test_validation.py` | **44** | **structure — isolation, symmetry, superposition, reduction, and the sign and composition conventions** |
 
 The structural suite is the one that addresses the multi-regional generalisation

@@ -214,6 +214,29 @@ at θ=1 the EU bears it, at θ=0 Türkiye, Russia and India do.
 Priced at the published CBAM certificate price (\$86/t), and the caption now reads
 both price and revenue from the data — see the maintenance note above.
 
+### fig13 — `fig13_credit_spreads.png`
+**What.** The credit channel (§2.9, CDS half) at 2040 under Net Zero: (a) CDS
+spread change by sector, one line per region; (b) each index's paper Table 9
+regression slope β against its median widening.
+
+**Findings.** Widening is mostly a **sector** story — a variance decomposition
+puts **61 %** between sectors and only **19 %** between regions. Health Care is
+widest (median +25.2 %, and +71.3 % for India, the largest cell in the model),
+then Utilities +17.5 % and Basic Materials +14.5 %.
+
+Panel (b) separates what β does from what it does not. It fixes the **sign
+exactly** — all ten negative-β indices widen and both positive-β indices narrow,
+across all 13 regions without exception — but only sets about half the size
+(corr −0.65), the rest coming from which sectors each index is built from.
+
+**Read the two negative bars carefully.** Financials (β = +2.08) and UK Real
+Estate (β = +7.21) narrow because the paper's own Table 9 gives them positive
+slopes, a property of the UK estimation sample inherited wholesale here. It is
+not a finding that climate stress improves bank or property credit. See
+[CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §4.1.
+
+Both panel titles compute their numbers from the data, per the maintenance note.
+
 ---
 
 ## Coverage
@@ -224,6 +247,7 @@ both price and revenue from the data — see the maintenance note above.
 | fig2, fig8, fig12 | [FX_REPORT.md](FX_REPORT.md) | 2040, 2045 |
 | fig3, fig4, fig9 | scenario uncertainty | 2040 |
 | fig6, fig10 | downstream channels | 2040 |
+| fig13 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §4 (credit) | 2040 |
 | fig11 | [TARIFF_CALIBRATION.md](TARIFF_CALIBRATION.md) | 2040 |
 
 **Not yet drawn:** the tariff illustration of [TARIFF_METHOD.md](TARIFF_METHOD.md)
