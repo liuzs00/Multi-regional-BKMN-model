@@ -15,6 +15,7 @@ which is which:
 | **Reproduction** | does the code compute what the paper specifies? | reduce to the paper's own case and compare printed numbers |
 | **Structure** | does the model have the properties it claims? | run it on economies whose answer is known by symmetry |
 | **Plausibility** | are the magnitudes credible? | compare aggregates against independent estimates |
+| **Cross-implementation** | did we read the paper the same way someone else did? | diff the specifications against an independent implementation (§7) |
 
 Only the second is a genuine test of the *multi-regional generalisation*, and it
 is the one this chapter is mostly about. Reproduction cannot see it, because the
@@ -251,7 +252,62 @@ is *internally consistent*, not that it points the right way. Any suite built on
 them needs at least one asymmetric, direction-pinning test per channel — and the
 way to find out whether it has one is to break the model on purpose.
 
-## 7. Reproduction and plausibility, for completeness
+## 7. Cross-implementation reading
+
+A fourth mode sits outside the three of §1, and in practice it found more than
+the others: reading an independent implementation of the same paper line by line
+and diffing the *specifications*, not the numbers.
+
+The single-region reproduction this project extends is such an implementation. A
+full read produced four findings the gates could not have.
+
+**One open question closed.** The deviation register carried Eq 15's integral
+`Δr(t) = ∫Δr^Policy ds` as an ambiguity — we use the Taylor output at *t*
+directly. The reference *defines* `rates.short_rate_shift` for the integral but
+its pipeline never calls it: `policy_shift(...)` goes straight into `zc_shift`.
+Zero occurrences in `pipeline.py`. The item is resolved, in our favour, by
+reading code rather than prose.
+
+**One inconsistency of ours, found and corrected.** We had accepted the argument
+that a tax wedge is not an output gap and removed the transition shock from the
+Taylor rule — then left it in the operational-risk channel, which runs Okun's
+law. Okun maps real *output* to employment; a wedge destroys no output. The
+reference makes this unambiguous: it calls `oprisk.shift(omega, ...)` and never
+passes it the carbon shock. Correcting it moves conduct losses at 2040 under Net
+Zero from 2.0–37.1 % to **2.0–10.2 %**.
+
+The 37.1 % figure is worth dwelling on. The reference's Eq 25 is a *saturating*
+form, `m·(−κ)·Ω/(offset+Ω)`, bounded above by `m·(−κ)` = 23.77 % for conduct.
+Ours is the linearisation of the same Table-10 regression and is unbounded, so it
+had produced a number the reference's functional form **cannot generate at all**,
+at any damage level. That is the kind of error no internal consistency check
+finds: it is dimensionally fine, correctly signed, monotone, and wrong.
+
+**One difference kept, and now quantified.** Proposition 1 admits a direct
+reading (`ΔGVA/GVA = −VL·α`) and a cascading one (`ct += VL·α`, propagated
+through the dual). We use the direct form; the reference uses the cascade for its
+market channel. The direct form reproduces Ω *exactly* by the Prop-1 identity —
+world GVA-weighted −0.7795 % against Ω(1.5 °C) = −0.7795 % — while the cascade
+gives 0.42× that at φ = 0.5. Applying both, as the text can be read to suggest,
+would count the damage **1.42 times**. Our choice is now defended with a number
+rather than an argument.
+
+**One framing difference recorded.** The reference evaluates Ω at the *valuation
+date* for the Taylor rule and op-risk, and at the *horizon* only for the Prop-1
+cascade. Its climate rate shift is therefore constant across tenors, with all
+horizon variation coming from a market baseline we do not model. That is correct
+for its question — repricing today's damage at a series of tenors — and wrong for
+ours, a 2025–2045 projection. It means our rate path is not directly comparable
+to the paper's Table 12, which is worth knowing before anyone tries.
+
+The general point: **an independent implementation is a validation instrument.**
+Two of these four findings are things no self-consistency test could reach, because
+the model was internally consistent about the wrong specification. Where a second
+implementation exists, reading it is cheaper than deriving the same conclusions
+from the prose, and more reliable — code cannot be ambiguous about which of two
+readings it took.
+
+## 8. Reproduction and plausibility, for completeness
 
 The other two validation modes are covered elsewhere and are summarised here only
 so the picture is complete.
@@ -280,7 +336,7 @@ partitioning the residual more finely moves the *named* regions, is in
 into its six most significant members changes analytical-region GVA shocks by at
 most 0.007 pp.
 
-## 8. What this does not establish
+## 9. What this does not establish
 
 **Structural correctness is not empirical correctness.** Every gate in §3–§5 would
 pass for a model with the wrong damage coefficient, the wrong carbon prices, or a
@@ -309,12 +365,12 @@ mixture, volatility and operational-risk layers are covered by
 `tests/test_extensions.py` in the reproduction sense — identities, monotonicity,
 sign — but not by the symmetry constructions used here.
 
-## 9. Summary
+## 10. Summary
 
 | suite | gates | establishes |
 |---|--:|---|
 | `tests/test_fx.py` | 9 | reproduction — the code computes the specified relations |
-| `tests/test_extensions.py` | 79 | identities, monotonicity and sign across every channel |
+| `tests/test_extensions.py` | 83 | identities, monotonicity and sign across every channel |
 | `tests/test_validation.py` | **41** | **structure — isolation, symmetry, superposition, reduction, and the sign and composition conventions** |
 
 The structural suite is the one that addresses the multi-regional generalisation

@@ -63,6 +63,7 @@ orchestrators cannot diverge.
 | switch | default | alternative |
 |---|---|---|
 | `TAYLOR_OUTPUT_GAP` | `"physical"` — the paper's §2.7 | `"total"` — transition + physical + tariff (our earlier reading; overstates) |
+| `OPRISK_INPUT` | `"physical"` — matches the reference, which never passes op-risk the carbon shock | `"total"` — our earlier reading; overstated by 1.5×–7.3× by region |
 | `WARMING_BASELINE` | `"preindustrial"` — Ω(ΔT) vs 1850–1900 | `"incremental"` — since 2022; ~20× smaller |
 | `CONSISTENT_INTENSITY` | `True` — intensities follow the scenario's emissions path | `False` — the paper's static intensities |
 
@@ -97,12 +98,12 @@ orchestrators cannot diverge.
    against NGFS's own NiGEM range (FX_REPORT §7c); the FX moves are not
    benchmarked against anything.
 
-## 4. Validation — 129 gates
+## 4. Validation — 133 gates
 
 | suite | n | covers |
 |---|--:|---|
 | `tests/test_fx.py` | 9 | reduction to the committed model (flat XCE ≡ 70), φ=0 endpoint = −CT/GVA exactly, Hull-White limits, EUR-base self-consistency, forward-points triangular consistency, scenario monotonicity |
-| `tests/test_extensions.py` | 79 | physical, mixture, volatility, tariff and specification layers — including that the transition shock is *absent* from the rate shift |
+| `tests/test_extensions.py` | 83 | physical, mixture, volatility, tariff and specification layers — including that the transition shock is *absent* from both the rate shift and the op-risk channel |
 | `tests/test_validation.py` | 41 | **structural** — isolation, symmetry, superposition, reduction to the single-region case, and the sign and composition conventions. See [CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md) |
 
 The third suite is the one that tests whether the multi-regional generalisation

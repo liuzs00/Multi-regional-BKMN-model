@@ -163,12 +163,21 @@ frequency).
 
 **Findings.** The two orderings **differ**, and instructively. Equity losses are
 led by RASIA −8.0 %, IND −7.8 %, TUR −7.5 %; op-risk conduct losses by
-**RASIA +37 %**, CHN +23 %, IND +23 %. China is mid-table on equity but 2nd on
-op-risk, because op-risk runs through the Okun coefficient and the base
-unemployment rate rather than through an equity beta — China's κ is −0.15 against
-an advanced-economy −0.30, but its base unemployment is low, which amplifies the
-*relative* change. A region's financial-market exposure and its
-employment-channel exposure are not the same ranking.
+RASIA +10.2 %, USA +8.3 %, CHE +7.0 %. **Türkiye is 3rd-worst on equity and last
+on op-risk** (+2.0 %), because the two channels run on different inputs: equity
+on the total GVA shock through a beta, op-risk on physical damage alone through
+Okun's law and the *base unemployment rate*. Türkiye's base rate is 10.46 %, so a
+given rise in unemployment is a small relative change; RASIA's is 2.83 %, so the
+same rise is a large one. A region's financial-market exposure and its
+employment-channel exposure are not the same ranking, and the reason is the
+denominator.
+
+The two channels also take **different shocks by design**: equity the total
+(a tax wedge still reduces the value added accruing to firms), op-risk the
+physical only (a wedge destroys no output, so it drives no unemployment). See
+[PAPER_AUDIT.md](PAPER_AUDIT.md) §20c — the op-risk panel previously used the
+total shock and reached +37 %, above the ceiling the single-region reference's
+saturating form can produce at all.
 
 Note that 7 of 13 regions take the **proxy** equity beta of 2.0 (no index series
 exists for them), so the equity ordering is partly an artefact of which regions
