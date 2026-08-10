@@ -12,14 +12,14 @@ drive the macroeconomic and financial channels downstream.
 
 In the original model that core is a single national table — the UK, twenty
 sectors. This chapter sets out its generalisation to an **inter-country
-input–output (ICIO) system** of twenty regions and fifty industries, and shows
+input–output (ICIO) system** of thirteen regions and fifty industries, and shows
 precisely what the generalisation buys. The short answer is that a single-region
 model must assume a carbon price levied in one economy stays in that economy. It
-does not. Under the twenty-region system a charge levied on China alone
-displaces value added outside China equal to 5 % of the total effect; for
-Norway, an open economy, the figure is 68 %. That leakage is invisible to a
-one-country model and is the quantity this chapter's machinery is built to
-measure.
+does not. Under the thirteen-region system a charge levied on China alone
+displaces value added outside China equal to 5 % of the total effect; for the
+Middle East, an open hydrocarbon-exporting bloc, the figure is 38 %. That leakage
+is invisible to a one-country model and is the quantity this chapter's machinery
+is built to measure.
 
 The exposition follows Miller and Blair (2022) for the input–output foundations
 and the paper's §2.3–2.4 for the carbon-charge application, and is organised so
@@ -154,9 +154,9 @@ any number of intermediate countries. Consequently a shock anywhere is
 transmitted everywhere, with an intensity that no single-region model can
 represent.
 
-This is measurable in the estimated system. In the twenty-region table,
-**22.6 %** of the mass of $\mathbf{A}$ sits off the block diagonal — the direct
-import share. After inversion, **20.0 %** of the mass of $\mathcal{L}$ is
+This is measurable in the estimated system. In the thirteen-region table,
+**20.3 %** of the mass of $\mathbf{A}$ sits off the block diagonal — the direct
+import share. After inversion, **18.6 %** of the mass of $\mathcal{L}$ is
 off-diagonal. The two figures being close is itself informative: indirect
 linkages roughly preserve the cross-border share rather than diluting it, because
 imported inputs are themselves produced using further imports.
@@ -167,16 +167,29 @@ to a single region and measuring where the resulting value-added loss falls:
 | Region charged | Share of total GVA effect falling **outside** that region |
 |---|--:|
 | China | 5.0 % |
-| India | 10.3 % |
-| United States | 10.5 % |
-| EU27 | 14.5 % |
-| Norway | **68.2 %** |
+| India | 10.4 % |
+| United States | 10.6 % |
+| EU27 | 14.6 % |
+| Switzerland | 18.7 % |
+| United Kingdom | 25.3 % |
+| Russia | 25.6 % |
+| Africa | 28.8 % |
+| Middle East | **37.8 %** |
 
 Large, relatively closed economies retain most of the incidence of their own
-carbon policy; small open economies do not. For Norway, more than two-thirds of
-the value-added effect of a Norwegian carbon charge is borne abroad. A
-single-region model assigns all of it domestically, and there is no parameter
-within such a model that can correct the error.
+carbon policy; small open ones do not. China retains 95 % of the effect of a
+Chinese carbon charge, whereas more than a third of the effect of a Middle
+Eastern charge is borne abroad — a range of seven and a half times across the
+region set. A single-region model assigns all of it domestically, and there is no
+parameter within such a model that can correct the error.
+
+The ordering is intelligible in trade terms rather than in size terms alone.
+China, India and the United States are large economies whose production draws
+predominantly on domestic supply chains; the Middle East and Africa are
+resource-exporting blocs whose output is embedded in production elsewhere, so a
+charge levied on them is passed outward through the goods they supply. The United
+Kingdom and Switzerland sit between the two: small and open, but exporting
+services whose supply chains are comparatively shallow.
 
 ### 3.3 The dual in the multi-regional system
 
@@ -194,14 +207,15 @@ carbon leakage and the case for a border adjustment.
 
 ---
 
-## 4. Construction of the twenty-region system
+## 4. Construction of the thirteen-region system
 
 ### 4.1 Source and aggregation
 
 The system is built from the **OECD Inter-Country Input–Output tables, 2025
 edition**, reference year 2022, in current US dollars at basic prices. The source
 distinguishes 81 economies and 50 ISIC Rev. 4 industries. These are aggregated to
-**20 regions × 50 industries = 1000 region–industry pairs**.
+**13 regions × 50 industries = 650 region–industry pairs**, the region set being
+derived rather than asserted (see the region-selection chapter).
 
 Aggregation is by **plain summation** of flows. For a group of economies $G$
 forming region *r*,
@@ -221,7 +235,7 @@ aggregate is the ratio of sums, not the sum of ratios.
 
 ### 4.2 The closure region
 
-The twenty regions comprise nineteen chosen for analysis and one, denoted ROW,
+The thirteen regions comprise twelve chosen for analysis and one, denoted ROW,
 that aggregates all remaining economies together with the source table's own
 rest-of-world residual. ROW is not an analytical object: it exists because the
 global system only balances — every export having a matching import — if all
@@ -229,11 +243,13 @@ economies outside the chosen set are retained. It is assigned no financial
 outputs and no scenario interpretation.
 
 Whether this aggregation biases the analytical regions is testable, and was
-tested. Disaggregating ROW's six largest and most carbon-intensive members and
+tested. Disaggregating ROW's eight largest and most carbon-intensive members and
 re-running the entire chain changes every analytical region's transition shock by
-less than 0.007 percentage points and every output multiplier by less than
-0.15 %. Since those six are precisely the members most capable of biasing the
-result, any finer partition changes less; the aggregation has converged.
+at most 0.036 percentage points and every output multiplier by less than 0.51 %,
+leaving the cross-sectional ordering intact. Since those eight are precisely the
+members most capable of biasing the result, any finer partition changes less; the
+aggregation has converged. The test is set out in full in §8 of the
+region-selection chapter.
 
 ### 4.3 Validation
 
@@ -259,24 +275,26 @@ is asserted to catch genuine construction errors rather than to mask source nois
 
 **Productiveness.** The estimated system has
 
-$$\rho(\mathbf{A}) \;=\; 0.5865 \;<\; 1$$
+$$\rho(\mathbf{A}) \;=\; 0.5864 \;<\; 1$$
 
 so $(\mathbf{I}-\mathbf{A})$ is invertible and the Neumann expansion converges.
 Convergence is rapid: successive rounds of production contribute
 
 | Round *k* | Share of $\mathcal{L}$ | Cumulative |
 |---|--:|--:|
-| 0 (the delivery itself) | 46.9 % | 46.9 % |
-| 1 (direct inputs) | 24.1 % | 71.0 % |
-| 2 | 13.1 % | 84.1 % |
-| 3 | 7.1 % | 91.2 % |
-| 4 | 3.9 % | 95.1 % |
-| 5–7 | 4.0 % | 99.1 % |
+| 0 (the delivery itself) | 46.0 % | 46.0 % |
+| 1 (direct inputs) | 24.0 % | 70.1 % |
+| 2 | 13.3 % | 83.4 % |
+| 3 | 7.3 % | 90.7 % |
+| 4 | 4.1 % | 94.8 % |
+| 5–7 | 4.3 % | 99.1 % |
 
 so that essentially the whole multiplier is accounted for within seven rounds.
-Output multipliers, the column sums of $\mathcal{L}$, average **2.133** across the
-1000 region–industry pairs, ranging from 1.000 for sectors with no purchased
-inputs to 3.744 for the most deeply embedded.
+Output multipliers, the column sums of $\mathcal{L}$, average **2.172** across the
+650 region–industry pairs, ranging from 1.000 for sectors with no purchased
+inputs to 3.764 for the most deeply embedded. A formal statement and proof of the
+convergence result, together with the full round decomposition, are given in the
+appendix.
 
 ---
 
@@ -365,7 +383,7 @@ For fixed $\phi$, the map from charge to value-added change is linear. Defining
 $$\mathbf{M}(\phi) \;=\; \left(\mathbf{I}-\mathbf{A}^{\!\top}\right)\widetilde{\mathcal{L}}(\phi) - \mathbf{I} + \hat{\boldsymbol\phi}$$
 
 the entire chain reduces to $\Delta\mathbf{V} = \mathbf{x}\odot(\mathbf{M}(\phi)\,\mathbf{ct})$.
-The single $1000 \times 1000$ inversion required to form $\mathbf{M}$ is performed
+The single $650 \times 650$ inversion required to form $\mathbf{M}$ is performed
 once; every scenario, horizon and carbon-price path is then a matrix–vector
 product. Since $\mathbf{ct}$ is itself linear in the carbon price, so is the
 value-added shock — a property that is convenient computationally but is also a
@@ -453,7 +471,7 @@ Those two changes are sufficient to represent what a single-region model
 structurally cannot: that carbon policy differs across jurisdictions, that the
 cost of a charge levied in one place is partly borne in another, and that the
 magnitude of that leakage depends on an economy's position in the global
-production network — 5 % for China, 68 % for Norway. Quantifying that
+production network — 5 % for China, 38 % for the Middle East. Quantifying that
 displacement is the purpose of the apparatus developed here, and it is the
 foundation on which the exchange-rate results of the following chapters are
 built.

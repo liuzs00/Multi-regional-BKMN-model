@@ -25,9 +25,9 @@ relationship below can be written in one line and its parameters traced to a cit
 Two things change relative to the single-region original. First, every quantity
 acquires a region index: each region has its own carbon price, its own inflation
 response, its own policy rule and its own equity market, so the chapter produces
-twenty parallel transmission chains rather than one. Second, the equity elasticity is
+thirteen parallel transmission chains rather than one. Second, the equity elasticity is
 **calibrated per region** rather than borrowed from the FTSE 100. The credit channel
-is not implemented, for reasons given in §5.2.
+is implemented at sector-index level; §5.2 sets out what it does and does not deliver.
 
 Implementation: `bkmn/macro.py` (§2.6–2.7), `bkmn/rates.py` (§2.8), `bkmn/equity.py`
 (§2.9).
@@ -129,15 +129,14 @@ further to
 
 $$\mathrm{cum}\Pi_r(t) \;=\; k\,\Omega^{\mathrm{XCE}}_r\,\mathrm{XCE}_r(t).\tag{2.6c}$$
 
-Twenty regions map onto only six carbon-price paths — the five NGFS R5 zones plus a
+Thirteen regions map onto only six carbon-price paths — the five NGFS R5 zones plus a
 blended World path for the residual — so $\mathrm{XCE}_r(t)$ is compressed across the
-cross-section. At 2040 under Net Zero the fourteen FX regions take five distinct
-values spanning \$417.06 (MAF) to \$445.84 (REF), a **6.9 %** spread, against a scope
-vector running from 0 to 0.821. By (2.6c) the cumulative-inflation vector is therefore
-close to a rescaling of the scope vector: the correlation between them across the
-fourteen FX regions is $0.9990$ at 2040 and $0.9997$ at 2045
-([FX_RESULTS](FX_RESULTS.md) §3). That is a data-granularity limit of the R5 grid,
-not a modelling choice.
+cross-section. At 2040 under Net Zero the six FX regions take just three distinct
+values, \$417.06, \$420.70 and \$440.43, a **5.6 %** spread, against a scope vector
+running from 0 to 0.467. By (2.6c) the cumulative-inflation vector is therefore close
+to a rescaling of the scope vector: the correlation between them across the six FX
+regions is $0.9994$ at 2040 ([FX_RESULTS](FX_RESULTS.md) §3). That is a
+data-granularity limit of the R5 grid, not a modelling choice.
 
 The compression is scenario-dependent and should not be over-generalised. Under
 Current Policies the same cross-section at 2040 runs from \$1.53 (OECD) to \$15.88
@@ -307,13 +306,16 @@ Applying this to the computed short-rate shifts, at 2040 under Net Zero (bp):
 
 | Region | 1D | 6M | 1Y | 5Y | 10Y | 20Y |
 |---|--:|--:|--:|--:|--:|--:|
-| EU27 | $-132$ | $-131$ | $-130$ | $-120$ | $-109$ | $-91$ |
-| USA | $-101$ | $-100$ | $-99$ | $-91$ | $-83$ | $-69$ |
-| India | $-522$ | $-517$ | $-511$ | $-473$ | $-430$ | $-359$ |
-| Norway | $-47$ | $-47$ | $-46$ | $-43$ | $-39$ | $-33$ |
+| India | $-68.5$ | $-67.8$ | $-67.2$ | $-62.1$ | $-56.5$ | $-47.2$ |
+| China | $-54.2$ | $-53.6$ | $-53.1$ | $-49.1$ | $-44.7$ | $-37.3$ |
+| EU27 | $-39.0$ | $-38.6$ | $-38.2$ | $-35.3$ | $-32.1$ | $-26.8$ |
+| USA | $-38.1$ | $-37.8$ | $-37.4$ | $-34.6$ | $-31.4$ | $-26.3$ |
+| Switzerland | $-34.9$ | $-34.5$ | $-34.2$ | $-31.6$ | $-28.7$ | $-24.0$ |
+| United Kingdom | $-32.4$ | $-32.1$ | $-31.8$ | $-29.4$ | $-26.7$ | $-22.3$ |
 
 This is the same qualitative shape as the paper's Table 11 — largest at the short end,
-roughly 30 % smaller at twenty years — reproduced across twenty regions.
+roughly 30 % smaller at twenty years — reproduced across thirteen regions. The ratio of
+the twenty-year to the overnight shift is $0.688$ in every row, as §4.2 requires.
 
 ---
 
@@ -332,50 +334,61 @@ the index to output. The intercept is irrelevant to the shock, which is why the
 relationship survives the weak fits discussed below.
 
 The single-region paper estimates one such elasticity, for the FTSE 100 against UK
-GVA, obtaining $\beta_1 = 2.00$ with $R^{2}=74\%$. Applying a UK elasticity to twenty
+GVA, obtaining $\beta_1 = 2.00$ with $R^{2}=74\%$. Applying a UK elasticity to thirteen
 heterogeneous equity markets would be indefensible, so $\beta_1$ is **estimated per
-region**, regressing the log of each region's headline index on the log of its GDP,
-annually over 2000–2023, using freely available sources. The results:
+region** wherever an index series exists, regressing the log of each region's headline
+index on the log of its GDP, annually over 2000–2023, using freely available sources.
+The results:
 
-| Region | $\beta_1$ | $R^2$ | | Region | $\beta_1$ | $R^2$ |
-|---|--:|--:|---|---|--:|--:|
-| Indonesia | 1.36 | 0.98 | | China | 0.26 | 0.51 |
-| India | 1.38 | 0.97 | | UK | 0.55 | 0.36 |
-| Korea | 1.20 | 0.96 | | EU27 | 0.80 | 0.20 |
-| USA | 1.59 | 0.83 | | Norway | 0.66 | 0.12 |
-| Canada | 0.83 | 0.81 | | **Japan** | **2.00** | — (proxy) |
-| Turkey | 1.89 | 0.73 | | | | |
-| Singapore | 0.39 | 0.73 | | | | |
-| Australia | 0.44 | 0.67 | | | | |
+| Region | $\beta_1$ | $R^2$ |
+|---|--:|--:|
+| India | 1.38 | 0.97 |
+| USA | 1.59 | 0.83 |
+| Türkiye | 1.89 | 0.73 |
+| China | 0.26 | 0.51 |
+| United Kingdom | 0.55 | 0.36 |
+| EU27 | 0.80 | 0.20 |
 
-Twelve of thirteen regions with an available index series produce a usable fit.
-**Japan does not**, and instructively so: its fitted slope is *negative*, the
-statistical signature of the "lost decades" — an index that moved sideways for two
-decades while nominal GDP grew. Rather than admit a negative elasticity, which would
-make Japanese equities rise on a GDP contraction, the estimate is rejected by a
-plausibility band $\beta_1\in[0.2,6.0]$ and the paper's FTSE value substituted.
-Regions with no free index series (Chile, Kazakhstan) and the aggregate regions
-likewise take the proxy.
+Six of the thirteen regions are calibrated directly. Switzerland, Russia and the six
+aggregate regions take the paper's FTSE proxy of $2.00$, in the aggregates' case
+because a composite of many markets has no single index to regress.
 
-The fits are weak for several regions, with $R^2$ as low as $0.12$ for Norway. This
+The estimates are accepted only within a plausibility band $\beta_1 \in [0.2, 6.0]$,
+which exists because an unconstrained fit can return an economically impossible value.
+Under the earlier twenty-region set Japan supplied exactly that case: its fitted slope
+was *negative*, the statistical signature of the "lost decades" — an index that moved
+sideways for two decades while nominal GDP grew — which would have made Japanese
+equities rise on a contraction. The band rejected it in favour of the proxy. Japan is
+no longer resolved individually, but the episode is worth recording, since it shows the
+band doing necessary work rather than merely trimming outliers.
+
+The fits are weak for several regions, with $R^2$ as low as $0.20$ for the EU27. This
 is disclosed rather than concealed, and it is not out of line with the source: the
 paper's own Table 9 reports $R^2$ below $30\%$ for most CDS sectors. The elasticity
 should be read as a transmission convention with an empirical anchor, not as a
 precisely estimated structural parameter.
 
-### 5.2 Credit: why the CDS channel is not implemented
+### 5.2 Credit
 
-Section 2.9 applies the same log-linear form to CDS spreads, and §2.10 extends it to
-IFRS 9 expected credit losses. Neither is implemented here, and the reason is data
-access rather than method: the paper's Table 9 CDS regressions are estimated on
-licensed sector CDS histories (Markit and equivalents), which were not available for
-this work and for which no free substitute exists at sector granularity across twenty
-regions.
+Section 2.9 applies the same log-linear form to credit-default-swap spreads, which the
+model implements at the sector-index level in `bkmn/credit.py`, reporting the relative
+spread change per region and CDS sector in `out_ext_credit_spread.csv`. Because the
+transition and physical channels already deliver
+$\Delta\mathrm{GVA}/\mathrm{GVA}$ at region–sector resolution, the credit channel needs
+no new structure: it is the same elasticity applied to the same shock with the sign
+reversed, since a fall in value added widens spreads.
 
-The omission is a real limitation, since credit is the channel most directly relevant
-to a banking book. It is worth recording that the machinery would transfer unchanged —
-the model already produces the sector-level $\Delta\mathrm{GVA}/\mathrm{GVA}$ that the
-CDS regression consumes, so the missing element is exclusively the calibration data.
+Two caveats attach. The elasticities are the paper's own Table 9 estimates, calibrated
+on UK and European sector CDS histories, so they are applied across regions as proxies
+rather than region-specific estimates — licensed sector CDS data at global granularity
+was not available for this work. And the paper's own regressions are weak, with $R^2$
+below $30\%$ for most sectors, which the paper itself is candid about. The credit
+results should therefore be read as an ordering across sectors and regions rather than
+as calibrated spread forecasts.
+
+The IFRS 9 expected-credit-loss extension of §2.10 is not implemented, since it
+requires an assumption on the loan-to-CDS basis — the wedge between the physical and
+risk-neutral measures — that the model has no data to discipline.
 
 ---
 
@@ -383,41 +396,55 @@ CDS regression consumes, so the missing element is exclusively the calibration d
 
 Bringing the chain together at 2040 under Net Zero 2050, with $\phi = 0.5$:
 
-| Region | $\Delta Y$ (%) | $\Delta\Pi$ (bp) | $\Delta r$ (bp) | $\Delta R_{20Y}$ (bp) | $\Delta S/S$ (%) |
-|---|--:|--:|--:|--:|--:|
-| China | $-11.46$ | $+4.9$ | $-570$ | $-393$ | $-3.02$ |
-| India | $-10.43$ | $0.0$ | $-522$ | $-359$ | $-14.40$ |
-| Japan | $-3.55$ | $+5.1$ | $-175$ | $-121$ | $-7.11$ |
-| EU27 | $-2.70$ | $+4.9$ | $-132$ | $-91$ | $-2.16$ |
-| USA | $-2.02$ | $+0.7$ | $-101$ | $-69$ | $-3.21$ |
-| UK | $-1.51$ | $+2.5$ | $-74$ | $-51$ | $-0.83$ |
-| Norway | $-1.00$ | $+5.7$ | $-47$ | $-33$ | $-0.66$ |
+| Region | $\Delta Y$ (%) | $\Delta\Pi$ (bp) | $\Delta r$ (bp) | $\Delta R_{20Y}$ (bp) | $\Delta S/S$ (%) | CDS (%) |
+|---|--:|--:|--:|--:|--:|--:|
+| China | $-5.86$ | $+4.9$ | $-54.2$ | $-37.3$ | $-1.54$ | $+9.67$ |
+| India | $-5.66$ | $0.0$ | $-68.5$ | $-47.2$ | $-7.82$ | $+15.97$ |
+| Rest of Asia | $-4.02$ | $+2.2$ | $-54.4$ | $-37.5$ | $-8.04$ | $+6.83$ |
+| Türkiye | $-3.96$ | $0.0$ | $-54.9$ | $-37.8$ | $-7.50$ | $+7.60$ |
+| Russia | $-3.71$ | $0.0$ | $-42.6$ | $-29.3$ | $-7.42$ | $+8.45$ |
+| Africa | $-3.66$ | $+1.3$ | $-66.9$ | $-46.1$ | $-7.33$ | $+6.59$ |
+| EU27 | $-1.79$ | $+4.9$ | $-39.0$ | $-26.8$ | $-1.43$ | $+3.41$ |
+| USA | $-1.48$ | $+0.7$ | $-38.1$ | $-26.3$ | $-2.36$ | $+2.17$ |
+| United Kingdom | $-1.28$ | $+2.5$ | $-32.4$ | $-22.3$ | $-0.70$ | $+3.92$ |
+| Switzerland | $-1.17$ | $+3.2$ | $-34.9$ | $-24.0$ | $-2.35$ | $+1.59$ |
 
-Three features are worth drawing out.
+CDS is the mean relative spread widening across that region's sector indices.
 
 **Rates fall everywhere.** No region experiences a policy tightening, because the
 output-gap term dominates the inflation term throughout. A carbon price is, in this
 model's transmission, a contractionary shock before it is an inflationary one.
 
-**Equity does not rank with GDP.** India suffers a smaller GDP shock than China
-($-10.4\%$ against $-11.5\%$) yet a far larger equity move ($-14.4\%$ against
-$-3.0\%$), because the estimated elasticities differ by a factor of five ($1.38$
-against $0.26$). Whether the Chinese equity index is genuinely that insensitive to
-domestic output, or whether the low $R^2$ of $0.51$ reflects an index driven by other
-forces, is a calibration question the model cannot settle — and it is a reminder that
-this last link carries the most estimation risk of the chain.
+**Equity does not rank with GDP.** China suffers the largest output shock of any region
+at $-5.86\%$ yet one of the smallest equity moves at $-1.54\%$, while the rest of Asia
+loses less output ($-4.02\%$) and considerably more equity value ($-8.04\%$). The
+divergence is entirely in the elasticities: China's estimated $\beta_1$ of $0.26$ is the
+lowest in the set and a fifth of the proxy value the aggregate regions carry. Whether
+the Chinese index is genuinely that insensitive to domestic output, or whether the
+$R^2$ of $0.51$ reflects an index driven by other forces, is a calibration question the
+model cannot settle. It is a reminder that this last link carries the most estimation
+risk in the chain, and that the regions on the proxy are, in effect, being assigned the
+United Kingdom's equity beta.
 
-**Curve effects are large in absolute terms.** A $-359$ bp shift in the Indian
-twenty-year rate is a repricing of a different order from the fractions of a
-percentage point typical of physical damage. Where climate stress becomes financially
-material in this model, it does so through the rates channel.
+**Credit widens most where output falls most, and the ordering is cleaner than
+equity's.** India's $+15.97\%$ and China's $+9.67\%$ lead, with Switzerland's $+1.59\%$
+and the United States' $+2.17\%$ at the other end. Because the credit elasticities are
+common across regions and vary only by sector, the cross-region ordering here reflects
+the underlying output shocks almost directly — which makes it more interpretable than
+the equity cross-section, but only because it embeds less information.
+
+**Curve effects remain the largest absolute repricing.** A $-47$ bp shift in the Indian
+twenty-year rate is a substantial revaluation for any long-dated book, and larger in
+economic terms than the single-digit percentage moves elsewhere in the table. Where
+climate stress becomes financially material in this model, it does so through the rates
+channel.
 
 ---
 
 ## 7. Assumptions and limitations
 
 **A single inflation coefficient, applied everywhere.** Moessner's $0.08$ pp per
-$\$10$ is estimated on European ETS data and is applied to all twenty regions, scaled
+$\$10$ is estimated on European ETS data and is applied to all thirteen regions, scaled
 only by coverage. Pass-through of carbon costs into consumer prices plausibly differs
 with market structure and monetary regime.
 
@@ -432,7 +459,7 @@ should be read as indicative. The rule also omits the effective lower bound, so 
 computed cuts may be unattainable from a low starting level.
 
 **Mean reversion is fixed and uncalibrated.** $a = 0.04$ is the paper's value, applied
-to all twenty curves. Since $B(\tau)/\tau$ depends only on $a$, this single number sets
+to all thirteen curves. Since $B(\tau)/\tau$ depends only on $a$, this single number sets
 the term-structure shape everywhere; a region-specific calibration to swaption or bond
 data would be a direct improvement.
 
@@ -440,8 +467,10 @@ data would be a direct improvement.
 required a proxy, and the aggregate regions have no market of their own. The ordering
 across regions is more reliable than the magnitudes.
 
-**No credit channel.** CDS and IFRS 9 are absent for want of licensed data, leaving
-the banking-book application incomplete.
+**Credit is proxy-calibrated.** The CDS channel is implemented, but on the paper's
+UK and European sector elasticities applied across all regions, and IFRS 9 expected
+credit losses are absent for want of a disciplined loan-to-CDS basis. The banking-book
+application is therefore partial rather than complete.
 
 **The chain is one-directional and contemporaneous.** Rates do not feed back into
 output, equity does not feed back into investment, and every link is instantaneous.
