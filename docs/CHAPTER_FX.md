@@ -46,15 +46,21 @@ The euro is the base. The choice is not innocuous — every result is a statemen
 a currency *pair* — but §2.5 below shows that the choice of base is immaterial to the
 information content, since any cross rate can be recovered exactly.
 
-Of the twenty regions, fourteen carry an analytical currency: USD, CNY, GBP, JPY, INR,
-CAD, NOK, IDR, CLP, AUD, SGD, TRY, KRW, KZT. The EU27 is the base itself. The
-remaining five — Russia, the Middle East, Africa, Latin America and the
-rest-of-world closure — are retained as *structural* regions: they participate fully in
-the input–output propagation and therefore influence every other region's GDP shock,
-but no exchange rate is reported for them. For the aggregates this is because a
+Of the thirteen regions, six carry an analytical currency: the US dollar, renminbi,
+sterling, Swiss franc, rupee and Turkish lira. The EU27 is the base itself. The
+remaining six — Russia, the Middle East, Africa, Latin America, the rest of Asia and
+the rest-of-world closure — are retained as *structural* regions: they participate
+fully in the input–output propagation and therefore influence every other region's GDP
+shock, but no exchange rate is reported for them. For the aggregates this is because a
 composite of many currencies has no exchange rate; for Russia it is because the
 post-2022 dislocation of its financial markets makes a parity-based calculation
 uninterpretable.
+
+The narrowing from fourteen currencies to six is a direct consequence of the region
+selection, since a currency exists in the model only where its economy is resolved
+individually. It is a substantial reduction in the breadth of the primary deliverable,
+and it is a cost of deriving the region set from linkage rather than choosing it for
+currency coverage. The trade-off is discussed in §7.1 of the region-selection chapter.
 
 ---
 
@@ -177,11 +183,11 @@ Equation (3) depends on region $r$ only through *differences* against the base. 
 consequences follow that are easy to misread.
 
 First, **the absolute size of a region's shock is irrelevant; only its shock relative
-to the euro area matters.** A region that cuts rates by 74 bp when the EU cuts 132 bp
-has *relatively higher* rates and its currency therefore trades at a forward discount —
-it depreciates — despite having been hit by the same shock in the same direction. The
-United Kingdom and Norway both appear on the depreciating side for exactly this reason,
-not because they escape the climate shock.
+to the euro area matters.** A region that cuts rates by 32 bp when the euro area cuts
+39 bp has *relatively higher* rates and its currency therefore carries a forward
+discount — it depreciates on that channel — despite having been hit by the same shock
+in the same direction. The United Kingdom and Switzerland show positive forward points
+for exactly this reason, not because they escape the climate shock.
 
 Second, currencies do not rank by GDP damage. The ordering is set by
 $\Delta r_r - \Delta r_{\mathrm{EUR}}$, which combines each economy's carbon intensity,
@@ -213,41 +219,47 @@ appreciation against the euro.
 
 | Region | $\Delta r$ (bp) | $\Delta r - \Delta r_{\mathrm{EUR}}$ (bp) | Spot (%) | Fwd points (%) | **Total 5y fwd (%)** |
 |---|--:|--:|--:|--:|--:|
-| China | $-570$ | $-438$ | $-0.70$ | $-19.86$ | $\mathbf{-20.56}$ |
-| India | $-522$ | $-389$ | $-2.27$ | $-17.65$ | $\mathbf{-19.92}$ |
-| Turkey | $-329$ | $-197$ | $-2.27$ | $-8.93$ | $\mathbf{-11.20}$ |
-| Korea | $-284$ | $-152$ | $+0.49$ | $-6.88$ | $\mathbf{-6.39}$ |
-| Japan | $-175$ | $-43$ | $+0.09$ | $-1.94$ | $-1.85$ |
-| USA | $-101$ | $+32$ | $-1.95$ | $+1.44$ | $-0.52$ |
-| Australia | $-140$ | $-8$ | $-0.02$ | $-0.37$ | $-0.39$ |
-| Canada | $-112$ | $+20$ | $-0.94$ | $+0.90$ | $-0.04$ |
-| UK | $-74$ | $+58$ | $-1.12$ | $+2.64$ | $\mathbf{+1.51}$ |
-| Norway | $-47$ | $+85$ | $+0.35$ | $+3.85$ | $\mathbf{+4.20}$ |
+| India | $-68.5$ | $-29.5$ | $-2.27$ | $-1.34$ | $\mathbf{-3.61}$ |
+| Türkiye | $-54.9$ | $-15.9$ | $-2.27$ | $-0.72$ | $\mathbf{-3.00}$ |
+| USA | $-38.1$ | $+0.9$ | $-1.95$ | $+0.04$ | $-1.91$ |
+| China | $-54.2$ | $-15.2$ | $-0.70$ | $-0.69$ | $-1.39$ |
+| United Kingdom | $-32.4$ | $+6.6$ | $-1.12$ | $+0.30$ | $-0.83$ |
+| Switzerland | $-34.9$ | $+4.1$ | $-0.78$ | $+0.19$ | $-0.59$ |
 
 Each row satisfies (3) to displayed precision.
 
-**The forward channel dominates.** Spot moves are contained within roughly
-$\pm2.3\%$ while forward points reach $-19.9\%$. The mechanism is the amplification of
-§4.1 acting on rate differentials that are themselves large because, as the previous
-chapter established, the Taylor rule is driven almost entirely by the output gap. A
-carbon price is transmitted to currencies primarily as a *recessionary* shock, not an
-inflationary one.
+**Every currency appreciates against the euro.** The euro area suffers a smaller
+output shock than the emerging economies but a larger one than the low-carbon advanced
+economies, and it prices a larger share of its emissions than any of them. Both
+channels therefore push in the same direction for most of the cross-section: the euro
+imports more carbon inflation than its partners, which depreciates it on relative
+purchasing power parity, and this is not offset by rate differentials except for the
+United States, the United Kingdom and Switzerland, where the euro area's deeper rate
+cut works the other way.
 
-**Korea is the instructive case.** Its two channels pull in opposite directions.
-Korean carbon-pricing coverage exceeds the EU's, so Korea imports *more* carbon
-inflation and relative PPP implies depreciation: spot $+0.49\%$. But Korea's
-industrial structure produces a large GDP shock and hence a rate cut of $284$ bp
-against the EU's $132$ bp, and CIP turns that $152$ bp differential into $-6.88\%$ of
-forward points. The forward channel overwhelms the spot channel by a factor of
-fourteen and the net move is a $6.4\%$ appreciation. A model containing only a PPP
-channel would have produced the opposite sign.
+**The two channels are of comparable size here, which is a change of regime.** Spot
+moves span $-2.27\%$ to $-0.70\%$ and forward points $-1.34\%$ to $+0.30\%$. In earlier
+builds of this model the forward channel dominated by an order of magnitude, and the
+difference is instructive: it is a direct consequence of the Taylor output gap being
+the damage function rather than the carbon charge, which reduces the rate response
+substantially and therefore compresses the forward-point term. The exchange-rate result
+is thus considerably more sensitive to the specification of the rate channel than to
+anything in the parity relations, which are identities.
 
-**Sign reversals identify relative, not absolute, resilience.** Sterling and the
-Norwegian krone depreciate against the euro, despite suffering genuine GDP losses of
-$1.5\%$ and $1.0\%$. Their carbon-intensity and input–output exposure is low enough
-that their central banks cut less than the ECB, and CIP prices the resulting positive
-rate differential as a forward discount. These are the model's *relative winners*, and
-the euro base makes that visible.
+**India and Türkiye lead for different reasons that the decomposition separates.** Both
+show a spot shift of exactly $-2.27\%$, because both price none of their emissions and,
+by equation (1), the entire spot channel for a zero-coverage region reduces to the euro
+term alone. Their totals differ only through the forward channel, where India's larger
+output shock produces a $29.5$ bp rate differential against Türkiye's $15.9$ bp. Without
+the decomposition the two would be indistinguishable in their causes.
+
+**Sign reversals in the forward channel identify relative, not absolute, resilience.**
+Sterling and the Swiss franc carry *positive* forward points despite genuine output
+losses of $1.28\%$ and $1.17\%$. Their carbon intensity and input–output exposure are
+low enough that their central banks cut less than the ECB, and covered interest parity
+prices the resulting positive rate differential as a forward discount. They remain net
+appreciating only because the spot channel outweighs it. These are the model's
+*relative winners*, and the euro base is what makes the distinction visible.
 
 **Structure, not price, drives the cross-section under Net Zero.** Because the NGFS
 zone carbon prices are near-uniform in that scenario, essentially none of the spread
@@ -301,7 +313,7 @@ an upper bound rather than as forecasts.
 
 **A single mean-reversion parameter sets every currency's tenor profile.** Since
 $B(\tau)$ depends only on $a = 0.04$, the term structure of forward points is identical
-across all fourteen currencies. Region-specific calibration would change the relative
+across all six currencies. Region-specific calibration would change the relative
 weighting of short- and long-dated forwards.
 
 **Coverage is the dominant spot driver and is weakly grounded.** Equation (1) shows the

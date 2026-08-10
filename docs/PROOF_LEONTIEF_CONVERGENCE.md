@@ -3,7 +3,7 @@
 *Proof of the result used in §2.2 of the multi-regional input–output chapter.*
 
 Throughout, $\mathbf{A}\in\mathbb{R}^{N\times N}$ is the matrix of technical
-coefficients, $N = R\,n = 1000$. Inequalities between matrices and vectors are
+coefficients, $N = R\,n = 13\times 50 = 650$. Inequalities between matrices and vectors are
 **entrywise**, and $\rho(\mathbf{A}) = \max\{|\lambda| : \lambda\in\sigma(\mathbf{A})\}$
 is the spectral radius.
 
@@ -118,7 +118,7 @@ $\mathbf{w}^{\!\top}\mathbf{x}\ne0$, and being non-negative it is positive; divi
 gives $\rho(\mathbf{A})<1$.
 
 (4) is classical (Nikaido, 1968). It avoids an eigenvalue computation but is the more
-expensive test at $N=1000$. $\blacksquare$
+expensive test at $N=650$. $\blacksquare$
 
 An economy with $\rho(\mathbf{A})\ge1$ consumes at least as much as it produces: the
 regress "inputs to make the inputs to make the inputs…" diverges and no positive final
@@ -128,9 +128,9 @@ estimated table.
 
 ---
 
-## A.5 Verification in the twenty-region system
+## A.5 Verification in the thirteen-region system
 
-The matrix satisfies $\mathbf{A}\ge0$ and $\rho(\mathbf{A})=0.586466<1$, so Theorem A.1
+The matrix satisfies $\mathbf{A}\ge0$ and $\rho(\mathbf{A})=0.586394<1$, so Theorem A.1
 applies. Productiveness holds constructively as in (2)$\Rightarrow$(3): with
 $\mathbf{x}=\mathcal{L}\mathbf{1}$, $\min_i[(\mathbf{I}-\mathbf{A})\mathbf{x}]_i=1.000000$.
 Non-negativity holds with $\min_j\mathcal{L}_{jj}=1.0000$ exactly, attained by sectors
@@ -140,15 +140,15 @@ Contribution of each production round as a share of $\sum_{ij}\mathcal{L}_{ij}$:
 
 | Round $k$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|
-| Share (%) | 46.88 | 24.07 | 13.11 | 7.14 | 3.91 | 2.16 | 1.20 | 0.67 |
-| Cumulative (%) | 46.88 | 70.95 | 84.06 | 91.19 | 95.11 | 97.27 | 98.47 | 99.13 |
-| Ratio to previous | — | 0.513 | 0.545 | 0.544 | 0.548 | 0.552 | 0.555 | 0.558 |
+| Share (%) | 46.04 | 24.04 | 13.31 | 7.35 | 4.07 | 2.27 | 1.27 | 0.71 |
+| Cumulative (%) | 46.04 | 70.08 | 83.39 | 90.74 | 94.81 | 97.08 | 98.35 | 99.07 |
+| Ratio to previous | — | 0.522 | 0.554 | 0.552 | 0.554 | 0.557 | 0.560 | 0.562 |
 
 The last row is an independent estimate of the spectral radius. Since
 $\mathbf{A}^{k}\sim\rho(\mathbf{A})^{k}\mathbf{v}\mathbf{w}^{\!\top}$ asymptotically,
 successive round contributions must have ratio tending to $\rho(\mathbf{A})$; the
-observed ratios rise monotonically, reaching $0.568$ by $k=11$ (cumulative $99.91\%$)
-against the computed $0.5865$. The decay rate of the economic decomposition and the
+observed ratios rise monotonically, reaching $0.570$ by $k=11$ (cumulative $99.90\%$)
+against the computed $0.5864$. The decay rate of the economic decomposition and the
 dominant eigenvalue of the matrix are the same number, obtained two different ways.
 
 Part 3 is confirmed at $m=30$:
@@ -158,12 +158,19 @@ $\lVert\mathcal{L}-\mathbf{S}_{30}\rVert_{\max}=1.0\times10^{-7}$ matches
 $\lVert\mathbf{A}^{31}\rVert_{\max}=7.3\times10^{-8}$ in order of magnitude, as
 $\mathcal{L}-\mathbf{S}_m=\mathbf{A}^{m+1}\mathcal{L}$ requires.
 
-Output multipliers, the column sums of $\mathcal{L}$, average $2.1331$ over the $1000$
-region–industry pairs, ranging from $1.0000$ to $3.7443$. The aggregate scale implied
+Output multipliers, the column sums of $\mathcal{L}$, average $2.1722$ over the $650$
+region–industry pairs, ranging from $1.0000$ to $3.7644$. The aggregate scale implied
 by the spectral radius alone, $1/(1-\rho)=2.418$, is of the same order but is not equal
 to the mean and should not be expected to be: it governs the decay of successive rounds
 in aggregate, whereas a column sum reflects one sector's particular position in the
 production network.
+
+The spectral radius is notably insensitive to the partition: aggregating the same
+81-economy source into thirteen regions rather than twenty changes it from $0.586466$ to
+$0.586394$, a difference of $7\times10^{-5}$. This is the convergence property of §8 of
+the region-selection chapter appearing in a different guise — the depth of the global
+production network is a property of the world economy, not of how finely it is
+resolved.
 
 ---
 
