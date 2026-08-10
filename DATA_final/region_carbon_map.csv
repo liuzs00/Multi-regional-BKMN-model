@@ -1,0 +1,14 @@
+region,currency,fx_role,scenario_zone,carbon_price_regime,cbam_role,phys_vuln_tier,ppp_gdp_weight,carbon_scope,applied_price_usd
+EU27,EUR,base,R5.2OECD,EU ETS / CBAM cert (EUR75.3/t),levier,low-med,0.149,0.645,86
+CHN,CNY,analytical,R5.2ASIA,national ETS (~USD8/t),exposed-major,med-high,0.185,0.467,10
+USA,USD,analytical,R5.2OECD,none (state-level only),exposed-minor,med,0.148,0.091,3
+GBR,GBP,analytical,R5.2OECD,UK ETS (~GBP40/t) + CBAM 2027,levier,low-med,0.023,0.326,50
+CHE,CHF,analytical,R5.2OECD,CH ETS + CO2 levy (CHF120/t),inside-perimeter,low,0.005,0.425,133
+RUS,RUB,structural,R5.2REF,~0,exposed,med,0.034,0.0,0
+IND,INR,analytical,R5.2ASIA,none (PAT scheme),exposed,high,0.072,0.0,0
+TUR,TRY,analytical,R5.2MAF,none (ETS planned),exposed-major,med-high,0.019,0.0,0
+RASIA,mixed,structural,R5.2ASIA,"mixed (K-ETS, SG tax, rest ~0)",exposed,med,0.062,0.209,6
+LAM,mixed,structural,R5.2LAM,mixed (low; CHL/MEX/COL taxes),exposed,high,0.062,0.288,2
+MEA,USD-peg,structural,R5.2MAF,~0,exposed,high,0.021,0.0,0
+AFR,mixed,structural,R5.2MAF,~0 (ZAF tax low),exposed,high,0.035,0.3,1
+ROW,mixed,closure,mixed (OECD+REF+ASIA),mixed,mixed,mixed,0.185,0.202,2
