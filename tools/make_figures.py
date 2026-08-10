@@ -518,6 +518,76 @@ def fig_two_channels():
     print("  fig12_two_fx_channels.png")
 
 
+# --- 13. credit: CDS spread shifts by sector and region ----------------------
+def fig_credit():
+    d = load("out_ext_credit_spread", idx=(0, 1, 2)).xs(NZ, level=0)[H].unstack()
+    # drop FTSE (it is the equity column) and order sectors by median widening
+    d = d.drop(columns=["FTSE"], errors="ignore")
+    order = d.median().sort_values(ascending=False).index.tolist()
+    d = d[order]
+    regs = pick_regions(["IND", "CHN", "RUS", "RASIA", "TUR", "AFR", "EU27",
+                         "USA", "CHE"], d.index, need=5)
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.2),
+                             gridspec_kw={"width_ratios": [1.35, 1]})
+
+    # panel a: heat-map-free grouped bars, sector on x, a line per region
+    x = np.arange(len(order))
+    cols = [WARM, "#c9755a", "#d9a441", TEAL, "#3f8f8f", "#5b8bb5", COOL,
+            "#6f7f96", "#9aa6b5"]
+    for r, c in zip(regs, cols):
+        axes[0].plot(x, d.loc[r, order].to_numpy(float), marker="o", ms=4,
+                     lw=1.7, color=c, label=r, zorder=3)
+    axes[0].axhline(0, color=MUTED, lw=1)
+    axes[0].set_xticks(x, order, fontsize=7.5, rotation=38, ha="right")
+    axes[0].set_ylabel("CDS spread change at 2040 (%)")
+    # how much of the spread is sector vs region?  read it from the data
+    _st = d.stack().rename("v").reset_index()
+    _st.columns = ["region", "index", "v"]
+    _sec = _st.groupby("index").v.mean().var() / _st.v.var() * 100
+    _reg = _st.groupby("region").v.mean().var() / _st.v.var() * 100
+    axes[0].set_title(f"Sector explains {_sec:.0f} % of the spread, region "
+                      f"{_reg:.0f} %",
+                      fontsize=10, fontweight="600", pad=8)
+    axes[0].legend(frameon=False, fontsize=8, ncol=3, loc="upper right")
+    axes[0].grid(axis="y", color=GRID, lw=0.8, zorder=0)
+    axes[0].set_axisbelow(True)
+
+    # panel b: the driver -- each index's beta against its median widening
+    from bkmn.paper_tables import CDS_BETA
+    b = [CDS_BETA[s] for s in order]
+    med = d[order].median().to_numpy(float)
+    axes[1].scatter(b, med, s=46, color=[WARM if v > 0 else COOL for v in med],
+                    zorder=3)
+    for s, bi, mi in zip(order, b, med):
+        axes[1].annotate(s, (bi, mi), fontsize=7, color=INK,
+                         xytext=(4, 3), textcoords="offset points")
+    axes[1].axhline(0, color=MUTED, lw=1)
+    axes[1].axvline(0, color=MUTED, lw=1)
+    axes[1].set_xlabel("paper Table 9 regression slope β")
+    axes[1].set_ylabel("median widening across regions (%)")
+    rho = float(np.corrcoef(b, med)[0, 1])
+    _signs_ok = all((bi < 0) == (mi > 0) for bi, mi in zip(b, med))
+    axes[1].set_title(f"β fixes the sign{' exactly' if _signs_ok else ''}; "
+                      f"size is β and composition together (corr {rho:.2f})",
+                      fontsize=10, fontweight="600", pad=8)
+    axes[1].grid(color=GRID, lw=0.8, zorder=0)
+    axes[1].set_axisbelow(True)
+
+    fig.suptitle("Credit: CDS spread shifts at 2040 under Net Zero 2050",
+                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.06)
+    fig.text(0.012, 1.005,
+             "Positive = spread widens. Financials and UK Real Estate carry "
+             "positive β in the paper's own UK estimates and therefore move "
+             "against the rest — a property of that sample, not of this model.",
+             fontsize=8.5, color=MUTED, ha="left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig13_credit_spreads.png"), dpi=300,
+                bbox_inches="tight")
+    plt.close(fig)
+    print("  fig13_credit_spreads.png")
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
@@ -525,5 +595,5 @@ if __name__ == "__main__":
     print("writing figures/")
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
     fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure(); fig_cbam()
-    fig_two_channels()
+    fig_two_channels(); fig_credit()
     print("done.")

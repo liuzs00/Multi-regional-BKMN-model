@@ -46,6 +46,65 @@ OPRISK_BETA = {
     "Execution": 1.566813512,        # EDPM, R2 = 0.62  (paper Table 10)
 }
 
+# --- Tables 7-8: SIC section -> CDS-sector index weights ---------------------
+# Fraction of each CDS sector index attributable to each UK SIC section.  These
+# are PUBLISHED weights, so the credit channel needs no licensed data to run --
+# only to RE-ESTIMATE the betas below, which we do not attempt (see CDS_BETA).
+# Columns sum over sections to the index; rows do not sum to 1 (a section can
+# feed several indices, and "FTSE" is the equity column, kept for cross-check).
+CDS_WEIGHTS = {
+    #        BasMat  ConsGd  ConsSv    Fin    Govt  Health   Indus   Oil&G    Tech  Telecom  RealEs   Utils    FTSE
+    "A": (0.052, 0.028, 0.000, 0.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "B": (0.060, 0.000, 0.000, 0.0, 0.000, 0.000, 0.000, 0.058, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "C": (0.888, 0.482, 0.208, 0.0, 0.000, 0.553, 0.286, 0.862, 0.0, 0.0, 0.0, 0.000, 0.179),
+    "D": (0.000, 0.000, 0.000, 0.0, 0.000, 0.000, 0.000, 0.080, 0.0, 0.0, 0.0, 0.421, 0.102),
+    "E": (0.000, 0.000, 0.000, 0.0, 0.000, 0.000, 0.036, 0.000, 0.0, 0.0, 0.0, 0.579, 0.038),
+    "F": (0.000, 0.000, 0.000, 0.0, 0.000, 0.000, 0.187, 0.000, 0.0, 0.0, 0.0, 0.000, 0.005),
+    "G": (0.000, 0.490, 0.212, 0.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.050),
+    "H": (0.000, 0.000, 0.000, 0.0, 0.000, 0.000, 0.098, 0.000, 0.0, 0.0, 0.0, 0.000, 0.019),
+    "I": (0.000, 0.000, 0.062, 0.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.064),
+    "J": (0.000, 0.000, 0.159, 0.0, 0.000, 0.000, 0.000, 0.000, 1.0, 1.0, 0.0, 0.000, 0.066),
+    "K": (0.000, 0.000, 0.000, 1.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.245),
+    "L": (0.000, 0.000, 0.000, 0.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 1.0, 0.000, 0.026),
+    "M": (0.000, 0.000, 0.175, 0.0, 0.000, 0.000, 0.240, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "N": (0.000, 0.000, 0.111, 0.0, 0.000, 0.000, 0.153, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "O": (0.000, 0.000, 0.000, 0.0, 0.460, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "P": (0.000, 0.000, 0.000, 0.0, 0.540, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "Q": (0.000, 0.000, 0.000, 0.0, 0.000, 0.447, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.206),
+    "R": (0.000, 0.000, 0.032, 0.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "S": (0.000, 0.000, 0.038, 0.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+    "T": (0.000, 0.000, 0.003, 0.0, 0.000, 0.000, 0.000, 0.000, 0.0, 0.0, 0.0, 0.000, 0.000),
+}
+CDS_SECTORS = ("Basic Materials", "Consumer Goods", "Consumer Services",
+               "Financials", "Government", "Health Care", "Industrials",
+               "Oil & Gas", "Technology", "Telecommunications",
+               "UK Real Estate", "Utilities", "FTSE")
+
+# --- Table 9: CDS spread vs GVA log-regression slopes ------------------------
+# UK/iTraxx-Europe estimates, used unchanged for every region [PROXY] -- the
+# same treatment OPRISK_BETA already gets, and for the same reason: the
+# coefficients are published, the histories needed to re-estimate them per
+# region are licensed.  Sign convention: a NEGATIVE slope means the spread
+# WIDENS as GVA falls, which is the economically expected direction.
+# Financials and UK Real Estate carry positive slopes in the paper's own
+# estimates; that is a property of the UK sample, not of our extension, and it
+# is why those two move against the rest of the cross-section.
+CDS_BETA = {
+    "Health Care": -3.416546,
+    "Telecommunications": -0.713071,
+    "Consumer Goods": -2.328037,
+    "Industrials": -1.750705,
+    "Basic Materials": -1.971414,
+    "Government": -3.111547,
+    "Utilities": -1.509932,
+    "Technology": -0.382102,
+    "Financials": 2.077736,
+    "Oil & Gas": -1.325491,
+    "Consumer Services": -0.590066,
+    "UK Real Estate": 7.206283,
+    "FTSE": 2.00,                    # the equity column, = EQUITY_BETA
+}
+
 
 def _check():
     from .regions import load

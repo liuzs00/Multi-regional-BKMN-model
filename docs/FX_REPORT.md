@@ -12,7 +12,7 @@ are separate, in [TARIFF_METHOD.md](TARIFF_METHOD.md).
 
 Everything below is reproduced by `py -3 -m bkmn.run_fx` and
 `py -3 tools/make_figures.py`; gates in `tests/test_fx.py` (9),
-`tests/test_extensions.py` (83) and `tests/test_validation.py` (44, structural —
+`tests/test_extensions.py` (92) and `tests/test_validation.py` (44, structural —
 see [CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md)).
 
 ---

@@ -209,9 +209,9 @@ paper admits more than one reading · **[deferred]** planned, not yet built.
 
 | # | Paper | What it is | Why not | Consequence |
 |---|---|---|---|---|
-| 1 | §2.9 (CDS half) | CDS-spread shifts from GVA, per sector | [data] needs licensed CDS histories | credit channel absent; equity only |
-| 2 | §2.10 | IFRS 9 expected credit loss, SICR | [data] hangs off CDS-implied PDs | no banking-book loss output |
-| 3 | §3.1.3, Tables 7–8 | Government-sector ↔ CDS-sector mapping | [data] follows from 1 | equity is region-index level, not sector level |
+| 1 | §2.9 (CDS half) | CDS-spread shifts from GVA, per sector | **NOW IMPLEMENTED** (`bkmn/credit.py`, `out_ext_credit_spread.csv`, fig13). The blocker was misdiagnosed: licensed histories are needed only to *re-estimate* β, and Tables 7–9 are **published**. The paper's UK slopes are applied unchanged to every region — the same [PROXY] treatment `OPRISK_BETA` already gets. | 12 CDS indices × 13 regions; β is a UK estimate everywhere, and its positive slopes for Financials and UK Real Estate propagate (§4.1 of CHAPTER_RESULTS) |
+| 2 | §2.10 | IFRS 9 expected credit loss, SICR | [data] hangs off CDS-implied PDs, and converting a *relative* spread shift to a PD needs a spread level we do not carry | no banking-book loss output; the spread shift is where this stops |
+| 3 | §3.1.3, Tables 7–8 | Government-sector ↔ CDS-sector mapping | **NOW USED** — the published weight table drives the synthetic index, mapped onto the 50 ICIO industries through `SIC_TO_ICIO` | equity remains region-index level (see 20b); credit is sector level |
 | 4 | §4.2.1 | CCVA / Green KVA | [scope] | — |
 | 5 | §4.2.2 | Green PD / Green RWA | [scope] | — |
 | 6 | §4.2.3 | Green Return on Tangible Equity | [scope] | — |

@@ -22,8 +22,8 @@ import os
 import numpy as np
 import pandas as pd
 
-from . import (cbam, equity, fx, macro, mixture, oprisk, physical, rates,
-               tariff, transition, volatility)
+from . import (cbam, credit, equity, fx, macro, mixture, oprisk, physical,
+               rates, tariff, transition, volatility)
 from .regions import load
 from .run_fx import (BASE, CONSISTENT_INTENSITY, HORIZONS, OPRISK_INPUT, PHI,
                      TAYLOR_OUTPUT_GAP, warming, xce_annual)
@@ -48,7 +48,8 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
     the §2.6 ΔΩ_XCE reading). Sensitivity only — the headline uses static scope.
     """
     xce = xce_annual(sc, scenario) if xce_over is None else xce_over
-    out = {k: {} for k in ("trans", "phys", "dY", "dPi", "dr", "cum", "tariff")}
+    out = {k: {} for k in ("trans", "phys", "dY", "dPi", "dr", "cum", "tariff",
+                           "credit")}
 
     # A tariff is the same object as the carbon charge - an ad-valorem cost wedge
     # in the same units - so it is ADDED TO ct and inherits the whole downstream
@@ -74,6 +75,17 @@ def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
         tr = transition.region_gdp_shock(m, M, xce.loc[t].to_dict(), fac)
         dT = dT_over[t] if dT_over is not None else warming(sc, scenario, t)
         ph = physical.region_damage(m, dT, vl)
+        # Credit (2.9, CDS half) needs the SECTOR shock, not the regional
+        # aggregate, because a CDS index is a weighted basket of sectors.  Both
+        # the carbon charge and the physical cascade reach it: the charge
+        # through ct, the damage through Prop 1's VL*alpha add-on, which is the
+        # form the reference uses for its market channel.
+        ct_all = transition.ct_direct(m, xce.loc[t].to_dict(), fac)
+        if ct_tar is not None:
+            ct_all = ct_all + ct_tar
+        ct_all = ct_all + physical.tax_addon(m, dT, vl)
+        for r, d in credit.credit_shift(m, M, ct_all).items():
+            out["credit"].setdefault(r, {})[t] = d
         for r in m.regions_order:
             out["trans"].setdefault(r, {})[t] = tr[r]
             out["phys"].setdefault(r, {})[t] = ph[r]
@@ -162,6 +174,17 @@ def main():
     table(dv, "equity", allreg, 100).to_csv(f"{ROOT}/out_ext_equity.csv")
     table(dv, "opConduct", allreg, 100).to_csv(f"{ROOT}/out_ext_oprisk_conduct.csv")
     table(dv, "opExecution", allreg, 100).to_csv(f"{ROOT}/out_ext_oprisk_execution.csv")
+
+    # --- 2.9 credit: CDS spread shift, scenario x region x index -------------
+    crows = {}
+    for s_, c in chains.items():
+        for r in allreg:
+            for idx in credit.CDS_SECTORS:
+                crows[(s_, r, idx)] = {t: c["credit"][r][t][idx] * 100
+                                       for t in HORIZONS}
+    cdf = pd.DataFrame(crows).T
+    cdf.index.names = ["scenario", "region", "index"]
+    cdf.to_csv(f"{ROOT}/out_ext_credit_spread.csv")
 
     # --- §2.8 long-rate term structure (Prop 2), paper Table 11 layout -------
     rows = {}
