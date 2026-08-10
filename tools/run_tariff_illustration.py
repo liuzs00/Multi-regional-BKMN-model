@@ -95,7 +95,10 @@ def main():
     print(f"\n  {(fx.spot_pct < 0).sum()}/{len(fx)} currencies strengthen vs EUR, "
           f"range {fx.spot_pct.min():+.3f}% .. {fx.spot_pct.max():+.3f}%")
     print("\nincidence (GVA %, at both ends of theta):")
-    print(gva.loc[["EU27", "TUR", "KOR", "RUS", "NOR"]].round(4).to_string())
+    # the levier plus the four most export-dependent suppliers in the set
+    show = ["EU27"] + [r for r in ("TUR", "RASIA", "RUS", "CHE", "ROW")
+                       if r in gva.index]
+    print(gva.loc[show].round(4).to_string())
 
 
 if __name__ == "__main__":

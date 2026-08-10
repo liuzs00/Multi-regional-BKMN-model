@@ -14,18 +14,23 @@ import os
 
 import pandas as pd
 
+from . import regions
 from .paper_tables import OPRISK_BETA
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+KAPPA_DEFAULT = -0.30      # advanced-economy Okun default, for regions with no row
 
 
 def kappa():
-    return pd.read_csv(os.path.join(ROOT, "data", "macro", "okun_kappa.csv"),
-                       index_col=0)["kappa"]
+    """Okun slope per region; regions absent from the table take the default."""
+    k = pd.read_csv(os.path.join(ROOT, "data", "macro", "okun_kappa.csv"),
+                    index_col=0)["kappa"]
+    cm = pd.read_csv(os.path.join(regions.D20, "region_carbon_map.csv"))
+    return pd.Series({r: float(k.get(r, KAPPA_DEFAULT)) for r in cm.region})
 
 
 def base_unemployment():
-    return pd.read_csv(os.path.join(ROOT, "data", "macro", "unemployment_20R.csv"),
+    return pd.read_csv(regions.aux("macro", "unemployment"),
                        index_col=0)["unemployment_2022"] / 100.0
 
 

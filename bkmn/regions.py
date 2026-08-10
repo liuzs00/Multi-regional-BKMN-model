@@ -1,10 +1,19 @@
 """
-Region data layer: loads the DATA_20R tables into model-ready arrays.
+Region data layer: loads the active calibration tables into model-ready arrays.
 
 Everything downstream (transition, macro, rates, fx) consumes the `Model20R`
 bundle returned by ``load()`` — the ICIO blocks aligned to a fixed region-sector
 order, plus the carbon/scenario map (currency, fx_role, scenario_zone,
 carbon_scope, ppp weight).
+
+Which dataset is active is decided HERE and nowhere else.  Modules that need
+per-region auxiliary files (physical vulnerability, unemployment, equity) resolve
+them through `aux()` so a single switch moves the whole pipeline:
+
+    DATASET = "DATA_final"   13 regions, derived by the selection algorithm
+    DATASET = "DATA_20R"     20 regions, the earlier hand-chosen set
+
+Override without editing the file:  set BKMN_DATASET in the environment.
 """
 import os
 from dataclasses import dataclass
@@ -13,8 +22,20 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D20 = os.path.join(ROOT, "DATA_20R")
 YEAR = 2022
+
+DATASET = os.environ.get("BKMN_DATASET", "DATA_final")
+TAG = {"DATA_20R": "20R", "DATA_final": "13R"}[DATASET]
+D20 = os.path.join(ROOT, DATASET)          # kept as D20 for call-site stability
+
+
+def aux(*parts) -> str:
+    """Resolve a per-region auxiliary file for the active dataset.
+
+    `aux("physical", "vl_scale")` -> data/physical/vl_scale_13R.csv
+    """
+    *sub, stem = parts
+    return os.path.join(ROOT, "data", *sub, f"{stem}_{TAG}.csv")
 
 
 @dataclass
@@ -37,7 +58,7 @@ class Model20R:
 
 
 def load() -> Model20R:
-    ic = pd.read_csv(os.path.join(D20, f"ICIO2025_20R_{YEAR}.csv"), index_col=0)
+    ic = pd.read_csv(os.path.join(D20, f"ICIO2025_{TAG}_{YEAR}.csv"), index_col=0)
     ri = [r for r in ic.index if r not in ("TLS", "VA", "OUT")]
     Z = ic.loc[ri, ri].to_numpy(float)
     x = ic.loc["OUT", ri].to_numpy(float)
@@ -53,7 +74,7 @@ def load() -> Model20R:
           .to_numpy(float).sum(axis=1)
         for r in cm0.region])
 
-    ci_tbl = pd.read_csv(os.path.join(D20, f"CARBON_INTENSITY_20R_{YEAR}.csv"),
+    ci_tbl = pd.read_csv(os.path.join(D20, f"CARBON_INTENSITY_{TAG}_{YEAR}.csv"),
                          index_col=0)
     ci = np.array([ci_tbl.loc[j, r] for j, r in zip(industry_of, region_of)],
                   float)

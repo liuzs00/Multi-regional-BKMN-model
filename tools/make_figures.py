@@ -1,4 +1,4 @@
-"""
+﻿"""
 Publication figures for the multi-regional BKMN results -> figures/*.png (300 dpi).
 
 Reads the committed result tables (no model re-run) and draws the eight figures
@@ -48,6 +48,23 @@ def scen(label, available):
         if norm(a) == norm(label):
             return a
     raise KeyError(f"scenario {label!r} not in {sorted(available)}")
+
+
+def pick_regions(wanted, available, need=4):
+    """
+    Keep the requested regions that exist in the data, in the order asked.
+
+    The region set is derived (docs/CHAPTER_REGION_SELECTION.md), so it changes
+    when the selection changes: figures must not hard-code a list that silently
+    empties.  Dropping a name is allowed -- it means that region no longer
+    exists -- but ending up with too few series to make the point is not, so
+    that raises.  Same principle as `scen()`: never fail silently.
+    """
+    keep = [r for r in wanted if r in set(available)]
+    if len(keep) < need:
+        raise KeyError(f"only {keep} of {wanted} exist in {sorted(available)}; "
+                       f"need at least {need} series for this figure")
+    return keep
 
 
 def load(name, idx=(0, 1)):
@@ -124,7 +141,7 @@ def fig_tradeoff():
     fig.text(0.012, 1.012,
              "The two transition extremes of the seven NGFS narratives. Transition cost swings "
              f"{abs(span[NZ])/abs(span[CP]):.0f}x between them, while mean physical damage barely moves "
-             f"({phmean[NZ]:.2f}% vs {phmean[CP]:.2f}%) — warming to 2040 is largely locked in. "
+             f"({phmean[NZ]:.2f}% vs {phmean[CP]:.2f}%) 鈥?warming to 2040 is largely locked in. "
              "NOTE per-panel x-scales.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
@@ -188,7 +205,7 @@ def fig_band():
     ax.invert_yaxis()
     ax.legend(loc="lower left", frameon=False, fontsize=8.5)
     finish(fig, ax, "Climate FX-at-risk: central vs 95th-percentile inputs, 2040",
-           "Net Zero 2050. Inputs stressed by 1.64σ — temperature (MAGICC fan) and carbon price (cross-model spread).",
+           "Net Zero 2050. Inputs stressed by 1.64蟽 鈥?temperature (MAGICC fan) and carbon price (cross-model spread).",
            "fig4_fx_at_risk_band.png", "5y forward FX vs EUR (%)")
 
 
@@ -226,7 +243,7 @@ def fig_equity_oprisk():
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 5.8))
     barh_signed(axes[0], order, [eq.loc[r, H] for r in order])
     axes[0].set_title("Equity index shift", fontsize=10, fontweight="600", pad=8)
-    axes[0].set_xlabel("ΔS/S at 2040 (%)")
+    axes[0].set_xlabel("螖S/S at 2040 (%)")
     barh_signed(axes[1], order, [op.loc[r, H] for r in order], fmt="{:+.0f}%")
     axes[1].set_title("Operational-risk losses (Conduct)", fontsize=10, fontweight="600", pad=8)
     axes[1].set_xlabel("relative change at 2040 (%)")
@@ -235,7 +252,7 @@ def fig_equity_oprisk():
         ax.set_axisbelow(True)
     fig.suptitle("Downstream channels under Net Zero 2050",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
-    fig.text(0.012, 1.012, "Equity via β·ΔGVA/GVA (§2.9); op-risk via Okun → unemployment → loss frequency (§2.11).",
+    fig.text(0.012, 1.012, "Equity via 尾路螖GVA/GVA (搂2.9); op-risk via Okun 鈫?unemployment 鈫?loss frequency (搂2.11).",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig6_equity_oprisk.png"), dpi=300, bbox_inches="tight")
@@ -254,7 +271,7 @@ def fig_inputs():
     want = [NZ, "Low demand", "Below 2C", "Delayed transition", NDC,
             "Fragmented World", CP]
     scens = [scen(w, sc.names) for w in want]
-    labs = ["Net Zero 2050", "Low demand", "Below 2°C", "Delayed transition",
+    labs = ["Net Zero 2050", "Low demand", "Below 2掳C", "Delayed transition",
             "NDCs", "Fragmented World", "Current Policies"]
     cols = [TEAL, "#2f6f6b", "#4b9aa4", COOL, "#d08b5c", "#a8703f", WARM]
     yrs = np.arange(2022, 2051)
@@ -265,9 +282,9 @@ def fig_inputs():
         axes[0].plot(yrs, [sc.px.loc[y, (s, "R5.2OECD")] for y in yrs], color=c, lw=1.9, label=lab)
         axes[1].plot(yrs, [sc.temp.loc[y, s] for y in yrs], color=c, lw=1.9, label=lab)
     axes[0].set_title("Carbon price, OECD zone", fontsize=10, fontweight="600", pad=8)
-    axes[0].set_ylabel("US\$2022 / tCO₂e")
+    axes[0].set_ylabel("US\$2022 / tCO鈧俥")
     axes[1].set_title("Global mean warming (GSAT)", fontsize=10, fontweight="600", pad=8)
-    axes[1].set_ylabel("K vs 1850–1900")
+    axes[1].set_ylabel("K vs 1850鈥?900")
     for ax in axes:
         ax.grid(color=GRID, lw=0.8, zorder=0)
         ax.set_axisbelow(True)
@@ -275,7 +292,7 @@ def fig_inputs():
     axes[0].legend(frameon=False, fontsize=8)
     fig.suptitle("Model inputs: NGFS Phase 5 scenario paths",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.085)
-    fig.text(0.012, 1.015, "MESSAGEix-GLOBIOM R12. The two channels are driven by these: carbon price → transition, warming → physical.",
+    fig.text(0.012, 1.015, "MESSAGEix-GLOBIOM R12. The two channels are driven by these: carbon price 鈫?transition, warming 鈫?physical.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig7_scenario_inputs.png"), dpi=300, bbox_inches="tight")
@@ -287,8 +304,9 @@ def fig_inputs():
 def fig_term():
     fwd = load("out_ext_fx_forward_5y")
     hz = [int(c) for c in fwd.columns]
-    show = ["IND", "CHN", "TUR", "KOR", "USA", "NOR"]
-    cols = [WARM, "#d08b5c", "#c9a227", TEAL, COOL, "#3f5f8a"]
+    show = pick_regions(["IND", "TUR", "USA", "CHN", "GBR", "CHE"],
+                        fwd.index.get_level_values(-1))
+    cols = [WARM, "#d08b5c", "#c9a227", TEAL, COOL, "#3f5f8a", "#0e7c86"]
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.6), sharey=True)
     for ax, s, t in zip(axes, (NZ, NDC), ("Net Zero 2050", "NDCs")):
         d = fwd.xs(s, level=0)
@@ -348,7 +366,8 @@ def fig_term_structure():
     d = load("out_ext_rate_term_structure", idx=(0, 1, 2))
     ten = ["1D", "6M", "1Y", "5Y", "10Y", "20Y"]
     tau = [1/365, 0.5, 1, 5, 10, 20]
-    show = ["IND", "CHN", "TUR", "KOR", "USA", "EU27", "NOR"]
+    show = pick_regions(["IND", "CHN", "TUR", "RASIA", "USA", "EU27", "CHE"],
+                        d.index.get_level_values(1))
     cols = [WARM, "#d08b5c", "#c9a227", TEAL, COOL, "#0e7c86", "#3f5f8a"]
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.6), sharey=True)
     for ax, s, ttl in zip(axes, (NZ, NDC), ("Net Zero 2050", "NDCs")):
@@ -394,15 +413,16 @@ def fig_cbam():
                       fontsize=10, fontweight="600", pad=8)
     axes[0].set_xlabel("CBAM charge as % of import value")
 
-    regs = ["EU27", "TUR", "RUS", "KAZ", "IND", "CHN", "AFR"]
-    x = np.arange(len(regs))
+    show2 = pick_regions(["EU27", "TUR", "RUS", "IND", "CHN", "AFR", "RASIA"],
+                         g.columns)
+    x = np.arange(len(show2))
     for k, (th, c, lbcl) in enumerate([("theta=1", COOL, "EU importer pays (statutory)"),
                                        ("theta=0", WARM, "exporter absorbs")]):
         axes[1].bar(x + (k - 0.5) * 0.36,
-                    [g.loc[("applied-divergence", th), r] for r in regs],
+                    [g.loc[("applied-divergence", th), r] for r in show2],
                     width=0.34, color=c, label=lbcl, zorder=3)
     axes[1].axhline(0, color=MUTED, lw=1)
-    axes[1].set_xticks(x, regs, fontsize=9)
+    axes[1].set_xticks(x, show2, fontsize=9)
     axes[1].set_title("Who bears it: GVA effect by incidence assumption",
                       fontsize=10, fontweight="600", pad=8)
     axes[1].set_ylabel("GVA change at applied prices (%)")

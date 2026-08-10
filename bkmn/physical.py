@@ -25,6 +25,7 @@ import os
 import numpy as np
 import pandas as pd
 
+from . import regions
 from .paper_tables import PATTERN_ICIO
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,8 +43,7 @@ def omega(delta_T, coef=DAMAGE_COEF):
 
 def vl_vector(m):
     """VL per region-sector = Table-6 sector pattern × ND-GAIN region scale."""
-    scale = pd.read_csv(os.path.join(ROOT, "data", "physical", "vl_scale_20R.csv"),
-                        index_col=0)["scale"]
+    scale = pd.read_csv(regions.aux("physical", "vl_scale"), index_col=0)["scale"]
     return np.array([PATTERN_ICIO[i] * scale[r]
                      for i, r in zip(m.industry_of, m.region_of)], float)
 

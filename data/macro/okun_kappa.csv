@@ -1,21 +1,23 @@
 region,kappa,provenance
-EU27,-0.30,ESTIMATE advanced-economy default (Okun literature range -0.25..-0.45)
-USA,-0.30,ESTIMATE advanced-economy default
+EU27,-0.3,ESTIMATE advanced-economy default (Okun literature range -0.25..-0.45)
+USA,-0.3,ESTIMATE advanced-economy default
 CHN,-0.15,ESTIMATE emerging-economy default (EM coefficients systematically smaller)
 GBR,-0.182,PAPER BKMN 2025 s2.11 citing Goto & Burgi (2020)
-JPN,-0.30,ESTIMATE advanced-economy default
+JPN,-0.3,ESTIMATE advanced-economy default
 IND,-0.15,ESTIMATE emerging-economy default
-CAN,-0.30,ESTIMATE advanced-economy default
-NOR,-0.30,ESTIMATE advanced-economy default
+CAN,-0.3,ESTIMATE advanced-economy default
+NOR,-0.3,ESTIMATE advanced-economy default
 IDN,-0.15,ESTIMATE emerging-economy default
 RUS,-0.15,ESTIMATE emerging-economy default
 CHL,-0.15,ESTIMATE emerging-economy default
-AUS,-0.30,ESTIMATE advanced-economy default
-SGP,-0.30,ESTIMATE advanced-economy default
+AUS,-0.3,ESTIMATE advanced-economy default
+SGP,-0.3,ESTIMATE advanced-economy default
 TUR,-0.15,ESTIMATE emerging-economy default
-KOR,-0.30,ESTIMATE advanced-economy default
+KOR,-0.3,ESTIMATE advanced-economy default
 KAZ,-0.15,ESTIMATE emerging-economy default
 MEA,-0.15,ESTIMATE emerging-economy default
 AFR,-0.15,ESTIMATE emerging-economy default
 LAM,-0.15,ESTIMATE emerging-economy default
 ROW,-0.15,ESTIMATE emerging-economy default
+CHE,-0.3,ESTIMATE advanced-economy default (Okun literature range -0.25..-0.45)
+RASIA,-0.2,ESTIMATE mixed advanced/emerging Asia; between the advanced (-0.30) and emerging (-0.15) defaults

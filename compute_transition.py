@@ -10,17 +10,26 @@ Computes, from the current data (OECD ICIO 2025 @2022 + Scope-1 carbon intensity
 Carbon price XCE = 70 (paper's Table 4 value; USD/tCO2e here as the data is USD).
 Pass-through phi swept 0 -> 100% as in the paper's Table 4.
 """
+import os
+import sys
+
 import numpy as np
 import pandas as pd
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from bkmn import regions as _regions            # noqa: E402  (dataset switch)
+
 XCE = 70.0                                   # USD/tCO2e  (paper Table 4 uses GBP 70)
 PHIS = np.round(np.arange(0, 1.0001, 0.10), 2)
-REG_ORDER = ["EU27", "USA", "CHN", "GBR", "JPN", "IND", "CAN", "NOR", "IDN",
-             "RUS", "CHL", "AUS", "SGP", "TUR", "KOR", "KAZ",
-             "MEA", "AFR", "LAM", "ROW"]
+
+# region set and data folder follow bkmn.regions.DATASET, so this script and the
+# model can never disagree about which calibration is in force
+D = _regions.D20
+TAG = _regions.TAG
+REG_ORDER = list(pd.read_csv(os.path.join(D, "region_carbon_map.csv")).region)
 
 # --- load ICIO -------------------------------------------------------------
-ic = pd.read_csv("DATA_20R/ICIO2025_20R_2022.csv", index_col=0)
+ic = pd.read_csv(os.path.join(D, f"ICIO2025_{TAG}_2022.csv"), index_col=0)
 ri = [r for r in ic.index if r not in ("TLS", "VA", "OUT")]     # 650 region_industry
 Z   = ic.loc[ri, ri].to_numpy(float)                            # intermediate flows
 x   = ic.loc["OUT", ri].to_numpy(float)                         # gross output
@@ -37,7 +46,7 @@ L = np.linalg.inv(Ide - A)
 AT = A.T
 
 # --- carbon charge per unit output ct_direct = CI*XCE*1e-6 -----------------
-ci = pd.read_csv("DATA_20R/CARBON_INTENSITY_20R_2022.csv", index_col=0)
+ci = pd.read_csv(os.path.join(D, f"CARBON_INTENSITY_{TAG}_2022.csv"), index_col=0)
 ci_vec = np.array([ci.loc[j, r] for j, r in zip(inds, regions)], float)
 ct = ci_vec * XCE * 1e-6
 
