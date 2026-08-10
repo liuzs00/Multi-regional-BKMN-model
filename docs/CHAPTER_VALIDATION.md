@@ -46,7 +46,7 @@ as the same `Model20R` object the real loader returns
 run on them unmodified. A pass is evidence about the code that produces the
 results, not about a reimplementation of it written to agree.
 
-The suite is [`tests/test_validation.py`](../tests/test_validation.py) — 32 gates,
+The suite is [`tests/test_validation.py`](../tests/test_validation.py) — 41 gates,
 run with `py -3 tests/test_validation.py`.
 
 ## 3. The three constructions
@@ -190,7 +190,68 @@ the carbon bill over value added, region by region, with no Leontief propagation
 at all. It holds to bitwise zero, which confirms the operator assembles correctly
 on real data.
 
-## 6. Reproduction and plausibility, for completeness
+## 6. Testing the tests: mutation
+
+A validation suite is worth exactly what it *rejects*. Every gate in §3–§5 passes,
+but that is equally consistent with the gates being too weak to fail. The check is
+to break the model deliberately and confirm the suite notices.
+
+Seven plausible implementation errors were injected one at a time, each a single
+edit a real implementation could genuinely contain, and all 120 gates were run
+against each:
+
+| injected bug | caught by |
+|---|---|
+| Hull–White `B(τ)` uses `+aτ` instead of `−aτ` | all three suites |
+| technical matrix transposed | reproduction |
+| **A** normalised by row instead of column | reproduction |
+| Eq 10 sign error (`+I` for `−I`) | all three suites |
+| forward-points sign flipped | structural |
+| **spot sign flipped** | **nothing — survived** |
+| **forward = spot − points** | **nothing — survived** |
+
+Two mutants survived, and both matter.
+
+**Symmetry testing is sign-blind.** This is the structural reason, and it
+generalises: every gate in §3.2 asserts that a quantity is *zero*, and zero has no
+sign. Flipping the sign of the spot channel leaves every zero at zero and every
+magnitude unchanged. The only non-symmetric spot gate in the project — scenario
+monotonicity in `test_fx.py` — compares `|spot|`, so it is sign-blind too. A model
+reporting *"a country that prices carbon sees its currency strengthen"*, the exact
+reverse of the economics, would have passed all 120 gates.
+
+**Composition was never tested.** `forward_total` is a one-line sum, which is
+precisely why nobody thought to test it; no gate distinguished spot + points from
+spot − points.
+
+Group F closes both, by pinning direction and composition on cases where the right
+answer is unambiguous rather than zero:
+
+* a region with *higher* carbon-pricing scope than the base must **depreciate**
+  (spot > 0), and one with lower scope must appreciate — the relative-PPP
+  direction, asserted on a constructed pair;
+* the forward must equal spot **plus** points exactly, must collapse to spot when
+  the rate gap is zero and to points when the inflation gap is zero — with a
+  control confirming the two legs have opposite signs in the test case, so the
+  identity is not satisfied trivially;
+* on the real calibration, EU27 holds the **highest** carbon-pricing scope in the
+  set (0.645 against 0.467 for the next), so relative PPP *requires* every other
+  currency to appreciate against the euro.
+
+That last gate turns a result into an explanation. The absence of spot sign
+reversals in the results ([FX_REPORT.md](FX_REPORT.md) §3) is not a coincidence
+about this particular region set — it is forced by the EU being the most
+carbon-priced economy in it, and the gate would fail the day that stopped being
+true.
+
+After adding group F, **all seven mutants are caught**, and the suite is 41 gates.
+
+The wider lesson outlives this project: symmetry arguments establish that a model
+is *internally consistent*, not that it points the right way. Any suite built on
+them needs at least one asymmetric, direction-pinning test per channel — and the
+way to find out whether it has one is to break the model on purpose.
+
+## 7. Reproduction and plausibility, for completeness
 
 The other two validation modes are covered elsewhere and are summarised here only
 so the picture is complete.
@@ -219,7 +280,7 @@ partitioning the residual more finely moves the *named* regions, is in
 into its six most significant members changes analytical-region GVA shocks by at
 most 0.007 pp.
 
-## 7. What this does not establish
+## 8. What this does not establish
 
 **Structural correctness is not empirical correctness.** Every gate in §3–§5 would
 pass for a model with the wrong damage coefficient, the wrong carbon prices, or a
@@ -248,13 +309,13 @@ mixture, volatility and operational-risk layers are covered by
 `tests/test_extensions.py` in the reproduction sense — identities, monotonicity,
 sign — but not by the symmetry constructions used here.
 
-## 8. Summary
+## 9. Summary
 
 | suite | gates | establishes |
 |---|--:|---|
 | `tests/test_fx.py` | 9 | reproduction — the code computes the specified relations |
 | `tests/test_extensions.py` | 79 | identities, monotonicity and sign across every channel |
-| `tests/test_validation.py` | **32** | **structure — isolation, symmetry, superposition, reduction** |
+| `tests/test_validation.py` | **41** | **structure — isolation, symmetry, superposition, reduction, and the sign and composition conventions** |
 
 The structural suite is the one that addresses the multi-regional generalisation
 directly. It establishes that regions are coupled only through trade; that the

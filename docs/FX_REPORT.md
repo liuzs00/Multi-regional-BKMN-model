@@ -12,7 +12,7 @@ are separate, in [TARIFF_METHOD.md](TARIFF_METHOD.md).
 
 Everything below is reproduced by `py -3 -m bkmn.run_fx` and
 `py -3 tools/make_figures.py`; gates in `tests/test_fx.py` (9),
-`tests/test_extensions.py` (79) and `tests/test_validation.py` (32, structural —
+`tests/test_extensions.py` (79) and `tests/test_validation.py` (41, structural —
 see [CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md)).
 
 ---
@@ -51,14 +51,22 @@ rule, whose output-gap term is the damage function Ω(ΔT) — see §7. So the f
 blends *who taxes carbon* with *who suffers warming*, and picks up carbon
 intensity (−0.83) far more strongly than spot does.
 
-**No sign reversals in this region set.** All six currencies strengthen against
-the euro on both channels, at every horizon from 2030. An earlier 20-region
-version of this report highlighted Japan, Korea and Norway as cases where the two
-channels disagreed in sign; none of those three is a region under the derived
-selection, and among the six that survive the two channels never disagree. The
-mechanism that produced those flips — high carbon pricing combined with low
-vulnerability — still exists, but no currency in the current set sits far enough
-along both axes to cross zero.
+**No sign reversals in this region set, and the spot half of that is forced.**
+All six currencies strengthen against the euro on both channels, at every horizon
+from 2030. For spot this is not a coincidence about the cross-section: **EU27
+holds the highest carbon-pricing scope in the set** (0.645, against 0.467 for
+China and 0.091 for the United States). Relative PPP then *requires* every other
+currency to appreciate against the euro — every region imports less carbon
+inflation than the base, so every price level rises more slowly than the EU's.
+The result would reverse for any economy that out-priced the EU, and a gate
+asserts the condition so the day that happens is not silent
+([CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md) §6).
+
+An earlier 20-region version of this report highlighted Japan, Korea and Norway
+as cases where the two channels disagreed in sign. All three had *higher* scope
+than the EU, which is exactly the condition above; none is a region under the
+derived selection, which is why the flips disappear. The mechanism is intact, the
+population that exhibited it is not.
 
 ## 3. The cross-section: who moves
 
