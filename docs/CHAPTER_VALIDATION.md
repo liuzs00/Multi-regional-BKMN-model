@@ -47,7 +47,7 @@ as the same `Model20R` object the real loader returns
 run on them unmodified. A pass is evidence about the code that produces the
 results, not about a reimplementation of it written to agree.
 
-The suite is [`tests/test_validation.py`](../tests/test_validation.py) — 41 gates,
+The suite is [`tests/test_validation.py`](../tests/test_validation.py) — 44 gates,
 run with `py -3 tests/test_validation.py`.
 
 ## 3. The three constructions
@@ -245,7 +245,7 @@ about this particular region set — it is forced by the EU being the most
 carbon-priced economy in it, and the gate would fail the day that stopped being
 true.
 
-After adding group F, **all seven mutants are caught**, and the suite is 41 gates.
+After adding group F, **all seven mutants are caught**, and the suite is 44 gates.
 
 The wider lesson outlives this project: symmetry arguments establish that a model
 is *internally consistent*, not that it points the right way. Any suite built on
@@ -371,7 +371,7 @@ sign — but not by the symmetry constructions used here.
 |---|--:|---|
 | `tests/test_fx.py` | 9 | reproduction — the code computes the specified relations |
 | `tests/test_extensions.py` | 83 | identities, monotonicity and sign across every channel |
-| `tests/test_validation.py` | **41** | **structure — isolation, symmetry, superposition, reduction, and the sign and composition conventions** |
+| `tests/test_validation.py` | **44** | **structure — isolation, symmetry, superposition, reduction, and the sign and composition conventions** |
 
 The structural suite is the one that addresses the multi-regional generalisation
 directly. It establishes that regions are coupled only through trade; that the

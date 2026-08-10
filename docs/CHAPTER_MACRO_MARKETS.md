@@ -72,6 +72,40 @@ Two conversions sit between the scenario file and $k$, and both change the magni
 
 Skipping the deflator would understate every inflation figure by a factor of 1.342.
 
+**A third conversion is unresolved, and it is the largest of the three.** The
+paper writes the Moessner relation with a dollar input, but its own printed
+results are only reproduced if $k$ is applied to the **sterling** carbon price:
+$8\times10^{-5}\times \pounds 11.45 \to 9.2$ bp against a printed 9 bp, where the
+dollar price of \$15.36 would give 12.3 bp. The single-region reproduction
+established this against every horizon of the paper's inflation row.
+
+We apply $k$ to a **US-dollar** price, because USD is this model's numéraire. If
+the paper's calibration is the correct reading of Moessner, our inflation channel
+is overstated by the GBP/USD rate, **1.341×**.
+
+The consequence is not confined to the inflation row, and it is worth being
+precise about what it does and does not touch, because a common factor on $k$ is
+easy to wave away:
+
+| quantity | effect of rescaling $k$ by $1/1.341$ |
+|---|---|
+| $\Delta\Pi$, cumulative $\Pi$ | scaled by 0.746 |
+| **spot FX** | **scaled by 0.746** — it does *not* cancel |
+| ratios between currencies, and their ranking | **unchanged** |
+| the policy rate | changes *non*-proportionally: only the $\phi_\Pi\Delta\Pi$ term moves, not $\phi_Y\Omega$ |
+
+Spot FX is a *difference* of two cumulative inflations, and a common factor
+factors out of a difference rather than cancelling in it:
+$c\,a - c\,b = c\,(a-b)$. So every spot move in this model would shrink by a
+quarter — USD/EUR at 2040 under Net Zero from $-1.95\,\%$ to $-1.46\,\%$ — while
+the cross-section, which is what §2 of [FX_REPORT.md](FX_REPORT.md) interprets,
+would be untouched. EU27's 2030 policy rate would deepen from $-16.7$ to
+$-21.1$ bp, because removing an inflation offset leaves the damage term exposed.
+
+This is recorded rather than resolved: settling it needs Moessner's own units,
+which we have not verified independently, and the choice is registered in
+[PAPER_AUDIT.md](PAPER_AUDIT.md) §23.
+
 ### 2.3 From rate to level — the quantity that reaches FX
 
 (2.6a) is a rate. Every downstream use in this model — relative PPP for spot FX
