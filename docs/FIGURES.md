@@ -6,11 +6,21 @@ tables — no model re-run needed. Regenerate with `py -3 tools/make_figures.py`
 
 > **Maintenance.** Add an entry here whenever a figure is added or its message
 > changes, and never hardcode a number in a caption — fig12's panel title said
-> "9x apart" for one commit after the intensity fix made it 3.9x. All entries below are current as of the three specification
+> "9x apart" for one commit after the intensity fix made it 3.9x, and fig11
+> carried a stale `$80/t` caption for several commits after the calibration moved
+> to `$86/t` while its bars were correct. A figure whose caption states a number
+> must read that number from the data.
+>
+> The same applies to *region lists*: the set is derived
+> ([CHAPTER_REGION_SELECTION.md](CHAPTER_REGION_SELECTION.md)) and changes when
+> the selection does, so figures select regions through `pick_regions()`, which
+> raises rather than silently drawing fewer series — the same discipline `scen()`
+> applies to scenario names.
+>
+> **All entries below are current as of the 13-region rebuild** on
+> [`DATA_final/`](../DATA_final/), which followed the three specification
 > corrections in [FX_REPORT.md](FX_REPORT.md) §7 (Taylor output gap, warming
-> baseline, scenario-consistent intensities), which moved every number. A figure whose caption states a number must read that number from the
-> data, never hardcode it — fig11 carried a stale `$80/t` caption for several
-> commits after the calibration moved to `$86/t` while its bars were correct.
+> baseline, scenario-consistent intensities). Both moved every number.
 
 **Conventions.** Diverging orange/blue for signed quantities (CVD-safe pair),
 teal for single-series magnitudes, a printed value on bars wherever it fits so
@@ -24,16 +34,17 @@ the scenario is Net Zero 2050.
 ### fig1 — `fig1_transition_vs_physical.png`
 **What.** Transition (carbon-price) versus physical (warming) GDP shock per
 region, at 2040. **Two of the seven scenarios**, chosen as the transition
-*extremes* — Net Zero has the largest mean transition cost (−2.04 %), Current
+*extremes* — Net Zero has the largest mean transition cost (−2.20 %), Current
 Policies the smallest (−0.06 %). Physical damage is deliberately *not* the
-selection criterion, because it varies only 0.08 pp across all seven, which is
-the point the figure makes. All seven inputs are in fig7.
+selection criterion, because its mean varies only 0.08 pp across all seven, which
+is the point the figure makes. All seven inputs are in fig7.
 
 **Findings.** The channel ranking flips cleanly: under Net Zero transition
-dominates in **17/20** regions (China −4.74 %), under Current Policies physical
-dominates in **20/20**. Physical damage now runs −0.67 % to −1.43 % of GVA and
-barely varies by scenario, because warming to 2040 is largely locked in; the
-transition cost varies enormously (−4.74 % to −0.14 %).
+dominates in **10/13** regions (China −4.72 %), under Current Policies physical
+dominates in **13/13**. Physical damage runs −0.68 % to −1.47 % of GVA across all
+seven scenarios and its *mean* varies by only 0.08 pp between them, because
+warming to 2040 is largely locked in; the transition cost varies enormously
+(−4.72 % to −0.01 %).
 
 That is the trade-off in one picture, and it is what [FX_REPORT.md](FX_REPORT.md)
 §4 expresses in currencies: **policy chooses the transition cost, not the
@@ -44,11 +55,13 @@ difference stated in the subtitle.
 **What.** 5-year forward FX shift against the euro at 2040, one bar per currency,
 with a tick marking the spot-only component.
 
-**Findings.** INR −3.60 %, TRY −2.98 %, IDR −2.67 % at one end; NOK +0.40 % and
-KRW +0.32 % at the other. The ordering blends **physical vulnerability** with the
-absence of carbon pricing — India, Turkey and Indonesia score badly on both. The
-ticks are now a substantial share of each bar, since spot and forward are only
-1.5× apart.
+**Findings.** INR −3.61 %, TRY −2.99 %, USD −1.92 % at one end; CHF −0.60 % and
+GBP −0.85 % at the other. The ordering blends **physical vulnerability** with the
+absence of carbon pricing — India and Türkiye score badly on both, Switzerland
+well on both. Under the 13-region set **every** currency strengthens against the
+euro; the sign reversals an earlier 20-region build showed came from Japan, Korea
+and Norway, none of which is now a region. The ticks are a substantial share of
+each bar, since spot and forward are only 1.6× apart.
 
 Read the sign carefully: a currency "strengthening" here reflects an output
 collapse forcing deep rate cuts, so it is a distress signal, not strength.
@@ -57,12 +70,14 @@ collapse forcing deep rate cuts, so it is a distress signal, not strength.
 **What.** Two panels: (a) spot against 5-year forward per currency; (b) the
 Taylor-rule decomposition into output and inflation terms.
 
-**Findings.** The two channels are **1.5× apart** and correlate **0.96**, but
-still **disagree in sign for 2 of 14 currencies** (JPY, AUD — starred). They
-price different risks: spot is transition (carbon-pricing scope, corr +0.9997),
-the forward adds physical damage through the rate differential. Japan and
-Australia flip because they price carbon more than the EU but are damaged less.
-See [FX_REPORT.md](FX_REPORT.md) §2.
+**Findings.** The two channels are **1.6× apart** and correlate **0.89** at 2040,
+and under this region set they **agree in sign for all 6 currencies**. They still
+price different risks: spot is transition (carbon-pricing scope, corr +0.9994),
+the forward adds physical damage through the rate differential (corr +0.79 at
+2045, against +0.44 for spot). An earlier 20-region build showed two sign flips —
+Japan and Australia, which priced carbon more than the EU but were damaged less —
+and neither is now a region; the mechanism survives, no current currency sits far
+enough along both axes to cross zero. See [FX_REPORT.md](FX_REPORT.md) §2.
 
 ---
 
@@ -146,33 +161,46 @@ result.
 (β·ΔGVA/GVA) and operational-risk conduct losses (Okun → unemployment → loss
 frequency).
 
-**Findings.** The two orderings **differ**, and instructively. Equity is led by
-ROW −8.7 %, IND −7.8 %, TUR −7.5 %; op-risk by **KOR +45 %**, JPN +32 %, SGP
-+30 %. Korea is mid-table on equity but 1st on op-risk, because op-risk runs
-through the Okun coefficient and the base unemployment rate rather than through
-an equity beta. A region's financial-market exposure and its
+**Findings.** The two orderings **differ**, and instructively. Equity losses are
+led by RASIA −8.0 %, IND −7.8 %, TUR −7.5 %; op-risk conduct losses by
+**RASIA +37 %**, CHN +23 %, IND +23 %. China is mid-table on equity but 2nd on
+op-risk, because op-risk runs through the Okun coefficient and the base
+unemployment rate rather than through an equity beta — China's κ is −0.15 against
+an advanced-economy −0.30, but its base unemployment is low, which amplifies the
+*relative* change. A region's financial-market exposure and its
 employment-channel exposure are not the same ranking.
+
+Note that 7 of 13 regions take the **proxy** equity beta of 2.0 (no index series
+exists for them), so the equity ordering is partly an artefact of which regions
+have market data — CHE, RASIA, LAM, MEA, AFR, ROW and RUS all share one beta.
 
 ### fig5 — `fig5_damage_vs_vulnerability.png`
 **What.** Physical GDP damage at 2040 against the ND-GAIN vulnerability scale,
 Current Policies, with a fitted line.
 
-**Findings.** Damage tracks vulnerability closely — worst about −1.43 %, least
-−0.71 %, under the pre-industrial warming convention (§7b of FX_REPORT). **Treat this as a consistency check, not
-a discovery:** Proposition 1 allocates damage through the VL vector, which is
-built from ND-GAIN, so the relationship is largely mechanical. What the figure
-usefully confirms is that the allocation behaves monotonically and that the
-post-correction magnitudes are basis points of GDP, not percent.
+**Findings.** Damage tracks vulnerability almost exactly — correlation **−0.99**,
+worst IND −1.37 % (scale 1.337), least GBR −0.68 % (scale 0.793), under the
+pre-industrial warming convention (§7b of FX_REPORT). **Treat this as a
+consistency check, not a discovery:** Proposition 1 allocates damage through the
+VL vector, which is built from ND-GAIN, so the relationship is mechanical by
+construction. What the figure usefully confirms is that the allocation behaves
+monotonically and that the post-correction magnitudes are whole percent of GDP,
+not basis points.
 
 ### fig11 — `fig11_cbam.png`
 **What.** CBAM as a carbon tariff: ad-valorem rate by origin and sector, and the
 GVA effect under both incidence assumptions.
 
-**Findings.** Sector rates are extreme — **Kazakh electricity at 160 %**, above
-the value of the good itself; Indian electricity 78 %, Indonesian 64 %. Yet the
-macro effect is **−0.011 % of EU GVA on \$10.1 bn of revenue**. Coverage, not the
-rate, is the binding constraint. The right panel shows incidence flipping the
-burden entirely: at θ=1 the EU bears it, at θ=0 Turkey, Russia and Kazakhstan do.
+**Findings.** Sector rates are high but no longer extreme — **Indian electricity
+at 78 %**, African 50 %, Middle Eastern 49 %. Nothing now exceeds 100 %: the
+20-region build's headline case was **Kazakh electricity at 160 %**, and
+Kazakhstan is inside ROW under the derived selection, so its 884 t/\$m intensity
+is averaged away. That is a concrete, quantified cost of aggregating it — the
+single clearest illustration in the project of what a region buys.
+
+The macro effect remains **−0.011 % of EU GVA**: coverage, not the rate, is the
+binding constraint. The right panel shows incidence flipping the burden entirely:
+at θ=1 the EU bears it, at θ=0 Türkiye, Russia and India do.
 
 Priced at the published CBAM certificate price (\$86/t), and the caption now reads
 both price and revenue from the data — see the maintenance note above.

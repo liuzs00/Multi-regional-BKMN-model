@@ -50,8 +50,8 @@ for dT in (0.5, 1.5, 3.0):
 
 d1, d2 = physical.region_damage(m, 1.0, vl), physical.region_damage(m, 2.0, vl)
 check("damage monotone in ΔT", all(d2[r] < d1[r] < 0 for r in m.regions_order))
-check("vulnerable regions hit harder", d1["AFR"] < d1["NOR"],
-      f"AFR {d1['AFR']*100:.2f}% < NOR {d1['NOR']*100:.2f}%")
+check("vulnerable regions hit harder", d1["AFR"] < d1["CHE"],
+      f"AFR {d1['AFR']*100:.2f}% < CHE {d1['CHE']*100:.2f}%")
 
 # --- 2.8 long-rate term structure (Prop 2) -----------------------------------
 from bkmn import rates as _rates                                            # noqa: E402
@@ -73,8 +73,9 @@ check("20Y/1D ratio matches B(20)/20 exactly",
 
 # --- Phase E: equity ---------------------------------------------------------
 b = equity.betas()
-check("betas positive for all 20 regions",
-      len(b) == 20 and all(v > 0 for v in b.values()))
+check("betas positive for every region",
+      len(b) == len(m.regions_order) and all(v > 0 for v in b.values()),
+      f"{len(b)} regions")
 eq = equity.equity_shift({r: -0.05 for r in m.regions_order}, b)
 check("ΔY<0 ⇒ equity falls", all(v < 0 for v in eq.values()))
 
@@ -184,13 +185,15 @@ check("CBAM rate is zero for the levying region itself",
 check("CBAM rate is zero outside covered industries",
       all(_tau[k] == 0 for k in range(len(_tau))
           if m.industry_of[k] not in _cb.COVERED))
-# a region already paying more than the EU gets no charge and no rebate.  Tested
-# on a perturbed price map rather than a live pair: as of the 2026 calibration
-# the EU price ($86, the published CBAM certificate price) is the highest in the
-# map, so no region satisfies this on the real data.
-_ap_hi = dict(_ap); _ap_hi["NOR"] = _ap["EU27"] + 10.0
+# A region already paying more than the EU gets no charge and no rebate.  Under
+# the 13-region calibration this is live rather than hypothetical: Switzerland
+# levies CHF 120/t (~$133) against the EU's $86 CBAM certificate price, so CHE
+# satisfies the condition on the real data.  (The 20-region build had to perturb
+# the price map to test it, because the EU was then the highest payer.)
 check("no rebate where the origin already pays more than the EU",
-      float(np.abs(_cb.tariff_rate(m, _ap_hi)[m.region_of == "NOR"]).max()) == 0.0)
+      _ap["CHE"] > _ap["EU27"]
+      and float(np.abs(_cb.tariff_rate(m, _ap)[m.region_of == "CHE"]).max()) == 0.0,
+      f"CHE ${_ap['CHE']:.0f}/t vs EU ${_ap['EU27']:.0f}/t")
 
 # statutory phase-in: CBAM is 2.5% of notional in 2026, reaching full rate in
 # 2034, so results reported at 2040 see the fully phased-in charge.
@@ -402,7 +405,7 @@ check("illustration: a tariff leaves the policy rate untouched",
 check("illustration: incidence moves the burden from levier to exporters",
       _ig.loc["EU27", "theta=1.0"] < _ig.loc["EU27", "theta=0.0"]
       and all(_ig.loc[r, "theta=0.0"] < _ig.loc[r, "theta=1.0"]
-              for r in ("TUR", "KOR", "RUS", "NOR")),
+              for r in ("TUR", "RASIA", "RUS", "CHE")),
       f"EU27 {_ig.loc['EU27','theta=1.0']:.4f}% -> "
       f"{_ig.loc['EU27','theta=0.0']:.4f}%, TUR the reverse")
 

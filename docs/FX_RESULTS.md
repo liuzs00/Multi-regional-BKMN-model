@@ -6,8 +6,24 @@ note drifted out of date once already when the numbers moved.
 
 Multi-regional BKMN model (project: Kenyon, UCL MSc Math Finance). Implements the
 paper's route to FX (§4.3: *"the difference in the changes of yield curves"*)
-across 20 regions, EUR as base. Code `bkmn/{regions,scenarios,transition,macro,
-rates,fx,physical,run_fx}.py`; gates `tests/test_fx.py`; plan `docs/FX_PLAN.md`.
+across **13 regions**, EUR as base. Code `bkmn/{regions,scenarios,transition,macro,
+rates,fx,physical,run_fx}.py`; gates `tests/test_fx.py` and
+`tests/test_validation.py`; plan `docs/FX_PLAN.md`.
+
+The region set is derived by the selection algorithm
+([CHAPTER_REGION_SELECTION.md](CHAPTER_REGION_SELECTION.md)) and calibrated in
+[`DATA_final/`](../DATA_final/). Which dataset is active is decided in one place,
+`bkmn/regions.py`:
+
+```python
+DATASET = "DATA_final"    # 13 regions, derived        (default)
+DATASET = "DATA_20R"      # 20 regions, hand-chosen    (earlier build)
+```
+
+Modules needing per-region auxiliary series resolve them through `regions.aux()`,
+so the switch moves the whole pipeline — IO core, carbon intensity, vulnerability,
+unemployment and equity together. `BKMN_DATASET` overrides it from the
+environment.
 
 ## 1. The chain (per scenario, horizon year t, region r)
 
@@ -35,9 +51,9 @@ through **prices** (the Moessner inflation route → spot), and reaches GVA, equ
 and op-risk directly. Full argument and evidence: [FX_REPORT.md](FX_REPORT.md)
 §7a.
 
-φ = 0.5, base year 2022, horizons 2025–2045, forward tenors 1/5/10y. 14
-analytical currencies vs EUR (USD, CNY, GBP, JPY, INR, CAD, NOK, IDR, CLP, AUD,
-SGD, TRY, KRW, KZT); RUS/MEA/AFR/LAM/ROW are structural → no FX.
+φ = 0.5, base year 2022, horizons 2025–2045, forward tenors 1/5/10y. **6
+analytical currencies** vs EUR (USD, CNY, GBP, CHF, INR, TRY); RUS, RASIA, LAM,
+MEA, AFR and ROW are structural → no FX, though they carry every other channel.
 
 ## 2. Switches
 
@@ -62,10 +78,10 @@ orchestrators cannot diverge.
 2. **Spot = PPP, forward = CIP.** CIP forwards are assumption-free; the spot
    anchor is relative PPP, a modelling choice at climate horizons. We do not
    claim an uncovered-parity spot response to rate differentials.
-3. **Spot carries almost one piece of information.** 20 regions map onto 5 NGFS
-   R5 zones, so the carbon price varies only 495–516 across the 14 currencies
-   (cv 0.013) and spot is very nearly a rescaled `carbon_scope` vector —
-   correlation **+0.9997**, the residual being all the regional price
+3. **Spot carries almost one piece of information.** The 6 FX regions map onto
+   only 3 NGFS carbon-price paths, so the price varies just \$494.89–\$505.61 at
+   2045 (cv 0.0099) and spot is very nearly a rescaled `carbon_scope` vector —
+   correlation **+0.9999**, the residual being all the regional price
    information there is.
    That is a data-granularity limit, not a modelling choice. Regions with
    scope = 0 (IND, TUR) are indistinguishable on spot; the dynamic-scope
@@ -81,15 +97,18 @@ orchestrators cannot diverge.
    against NGFS's own NiGEM range (FX_REPORT §7c); the FX moves are not
    benchmarked against anything.
 
-## 4. Validation — 9 gates (`tests/test_fx.py`)
+## 4. Validation — 120 gates
 
-Reduction to the committed model (flat XCE ≡ 70 reproduces
-`out_gva_shock_by_region_phi.csv` to 4e-16 pp), φ=0 endpoint = −CT/GVA exactly,
-Hull-White limits, EUR-base self-consistency, forward-points triangular
-consistency (2e-17), scenario monotonicity. A further 77 gates in
-`tests/test_extensions.py` cover the physical, mixture, volatility, tariff and
-specification layers — including that the transition shock is *absent* from the
-rate shift.
+| suite | n | covers |
+|---|--:|---|
+| `tests/test_fx.py` | 9 | reduction to the committed model (flat XCE ≡ 70), φ=0 endpoint = −CT/GVA exactly, Hull-White limits, EUR-base self-consistency, forward-points triangular consistency, scenario monotonicity |
+| `tests/test_extensions.py` | 79 | physical, mixture, volatility, tariff and specification layers — including that the transition shock is *absent* from the rate shift |
+| `tests/test_validation.py` | 32 | **structural** — isolation, symmetry, superposition, reduction to the single-region case. See [CHAPTER_VALIDATION.md](CHAPTER_VALIDATION.md) |
+
+The third suite is the one that tests whether the multi-regional generalisation
+is *correct* rather than merely reproducible: it runs the production code on
+economies whose answer is known in advance by symmetry — identical regions, an
+isolated region, autarky — and checks the model returns it.
 
 ## 5. Outputs & run
 
