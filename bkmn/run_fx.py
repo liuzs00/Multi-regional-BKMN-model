@@ -47,6 +47,22 @@ CONSISTENT_INTENSITY = True
 #               because it counts a fiscal transfer as lost output).
 TAYLOR_OUTPUT_GAP = "physical"
 
+# Which shock feeds Okun's law in the operational-risk channel (2.11).
+#   "physical"  Omega only, matching the reference implementation, which calls
+#               oprisk.shift(omega, ...) and never passes it the carbon shock.
+#               Okun's law maps real OUTPUT to employment, and a tax wedge does
+#               not destroy output -- exactly the argument that removed the
+#               transition shock from the Taylor rule above.  Applying it there
+#               and not here was an inconsistency.
+#   "total"     transition + physical + tariff (our earlier reading; overstates
+#               by 1.5x-7.3x depending on region).
+#
+# NOTE the deliberate asymmetry with EQUITY, which keeps the total shock.  A
+# tax wedge still reduces the value added accruing to firms even though it
+# destroys no output, so an equity claim on that value added does fall; an
+# unemployment rate responding to real output does not.
+OPRISK_INPUT = "physical"
+
 # Which temperature feeds the damage function (Prop 1 / Eq 13).
 #   "preindustrial"  Omega(t) = 0.003467 * GSAT(t)^2, the literal reading, and
 #                    what the reference implementation validates against the

@@ -25,7 +25,7 @@ import pandas as pd
 from . import (cbam, equity, fx, macro, mixture, oprisk, physical, rates,
                tariff, transition, volatility)
 from .regions import load
-from .run_fx import (BASE, CONSISTENT_INTENSITY, HORIZONS, PHI,
+from .run_fx import (BASE, CONSISTENT_INTENSITY, HORIZONS, OPRISK_INPUT, PHI,
                      TAYLOR_OUTPUT_GAP, warming, xce_annual)
 from .scenarios import Scenarios
 
@@ -106,8 +106,14 @@ def derive(m, res, fxregs, betas, kap, u0):
     d = {"spot": {}, "fwd5": {}, "equity": {}, "opConduct": {}, "opExecution": {}}
     for t in HORIZONS:
         gdp_t = {r: res["dY"][r][t] for r in m.regions_order}
+        # Equity takes the TOTAL shock: a tax wedge still reduces the value
+        # added accruing to firms.  Op-risk takes the physical shock only:
+        # Okun's law maps real output to employment, and a wedge destroys no
+        # output.  See OPRISK_INPUT in run_fx.py.
+        op_t = ({r: res["phys"][r][t] for r in m.regions_order}
+                if OPRISK_INPUT == "physical" else gdp_t)
         eq = equity.equity_shift(gdp_t, betas)
-        op = oprisk.oprisk_shift(gdp_t, kap, u0)
+        op = oprisk.oprisk_shift(op_t, kap, u0)
         for r in m.regions_order:
             d["equity"].setdefault(r, {})[t] = eq[r]
             d["opConduct"].setdefault(r, {})[t] = op[r]["Conduct"]

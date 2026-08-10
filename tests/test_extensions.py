@@ -355,6 +355,37 @@ check("the transition shock is absent from the rate shift",
           - (_pred + 0.5 * _tr2.loc[_kk, "2040"] * 100)) > 100.0,
       f"including it would give {_pred + 0.5*_tr2.loc[_kk,'2040']*100:.0f} bp")
 
+# --- 2.11 op-risk takes the same output measure as 2.7 -----------------------
+# Okun's law maps real output to employment, so the tax wedge must be excluded
+# here for exactly the reason it is excluded from the Taylor rule.  Applying the
+# argument to one and not the other was an inconsistency, found by re-reading
+# the single-region reference: it calls oprisk.shift(omega, ...) and never
+# passes it the carbon shock.
+from bkmn.paper_tables import OPRISK_BETA                             # noqa: E402
+from bkmn.run_fx import OPRISK_INPUT                                  # noqa: E402
+check("op-risk takes the same output measure as the Taylor rule",
+      OPRISK_INPUT == TAYLOR_OUTPUT_GAP == "physical",
+      "a tax wedge destroys no output, so it drives no unemployment")
+_opc = pd.read_csv(f"{ROOT}/out_ext_oprisk_conduct.csv", index_col=[0, 1])
+_ope = pd.read_csv(f"{ROOT}/out_ext_oprisk_execution.csv", index_col=[0, 1])
+# it must reconstruct from the PHYSICAL shock alone
+_pred_op = (OPRISK_BETA["Conduct"] * (oprisk.kappa()["CHN"]
+                                      * _ph2.loc[_kk, "2040"] / 100)
+            / float(oprisk.base_unemployment()["CHN"])) * 100
+check("op-risk reconstructs from the physical shock alone",
+      abs(_opc.loc[_kk, "2040"] - _pred_op) < 0.05,
+      f"{_opc.loc[_kk,'2040']:.2f} % vs {_pred_op:.2f} % predicted")
+# The single-region reference uses a SATURATING form, m*(-kappa)*Omega/(off+Omega),
+# bounded by m*(-kappa): 23.77 % Conduct, 28.52 % Execution.  Ours is the
+# linearisation of the same Table-10 regression and is unbounded, so it can in
+# principle exceed that ceiling -- it did, at 37.1 %, before this correction.
+# The gate records the bound as a sanity ceiling rather than a hard identity.
+for _nm, _tbl, _cap in (("Conduct", _opc, 1.306037776 * 0.182 * 100),
+                        ("Execution", _ope, 1.566813512 * 0.182 * 100)):
+    _mx = float(_tbl.abs().to_numpy().max())
+    check(f"op-risk {_nm} stays inside the reference's saturating bound",
+          _mx < _cap, f"max {_mx:.1f} % vs the reference asymptote {_cap:.1f} %")
+
 # --- scenario-consistent carbon intensities ----------------------------------
 _scn = Scenarios(m.carbon_map)
 check("intensity factor is exactly 1 at the base year",
