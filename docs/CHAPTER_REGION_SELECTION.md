@@ -151,12 +151,18 @@ the selection criterion is designed to control.
 | **EU27** | Austria, Belgium, Bulgaria, Croatia, Cyprus, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden | Customs union, single currency for 20 of the 27, one carbon price (EU ETS), one CBAM. The base region. |
 | **MEA** | Saudi Arabia, United Arab Emirates, Israel, Jordan | Hydrocarbon supply; essentially no carbon pricing |
 | **AFR** | South Africa, Egypt, Morocco, Tunisia, Nigeria, Senegal, Côte d'Ivoire, Cameroon, DR Congo, Angola, São Tomé | Resource supply; the most climate-vulnerable partners |
-| **LAM** | Argentina, Brazil, Colombia, Costa Rica, Mexico, Peru | Agricultural and mineral supply, broadly similar intensity |
-| **ROWL** | Australia, Canada, Chile, Hong Kong, Iceland, Japan, Korea, Malaysia, Norway, New Zealand, Singapore, Chinese Taipei | Residual, lower intensity (137 t/\$m) — **derived**, see §6.1 |
-| **ROWH** | Bangladesh, Belarus, Brunei, Indonesia, Kazakhstan, Cambodia, Laos, Myanmar, Pakistan, Philippines, Thailand, Ukraine, Viet Nam, ICIO residual | Residual, higher intensity (539 t/\$m) — **derived**, see §6.1 |
+| **LAM** | Argentina, Brazil, Chile, Colombia, Costa Rica, Mexico, Peru | Agricultural and mineral supply, broadly similar intensity |
+| **RASIA** | Korea, Singapore, Chinese Taipei, Hong Kong, Malaysia, Thailand, Viet Nam, Philippines, Bangladesh, Brunei | The NGFS Asia zone after cleaning — **derived**, see §6.2 |
+| **ROW** | Australia, Belarus, Canada, Iceland, Indonesia, Japan, Kazakhstan, Cambodia, Laos, Myanmar, Norway, New Zealand, Pakistan, Ukraine, ICIO residual | Closure — the cleaned-out and unpromoted remainder |
 
-The first four are imposed on policy and geographic grounds. The two residuals
-are not chosen at all: they are what the capped merge of §6.1 returns.
+The first four are imposed on policy and geographic grounds. RASIA and ROW are
+not chosen at all: they are what §6.2–6.3 return.
+
+Chile sits inside LAM. An earlier design carved it out ("Latin America
+ex-Chile") because Chile was modelled separately for currency coverage; the
+threshold rule does not select it — 0.05 % economic and 0.07 % carbon linkage,
+last on both measures — so the carve-out serves no purpose and would strand a
+single economy in a zone group of its own.
 
 EU27 is treated as a single region because the model's own policy variables are
 defined at that level — the carbon price is the ETS price, and CBAM is an EU
@@ -170,25 +176,24 @@ the highest to the lowest member carbon intensity:
 
 | Block | *n* | median CI (t/\$m) | min | max | max/min |
 |---|--:|--:|--:|--:|--:|
-| LAM | 6 | 280 | 134 | 314 | **2.3×** |
+| LAM | 7 | 279 | 134 | 314 | **2.3×** |
 | AFR | 11 | 461 | 195 | 723 | 3.7× |
+| RASIA | 10 | 242 | 85 | 341 | 4.0× |
 | MEA | 4 | 291 | 81 | 330 | 4.1× |
-| ROWL | 12 | 139 | 69 | 318 | 4.6× |
-| ROWH | 14 | 589 | 227 | 1,268 | 5.6× |
-| EU27 | 27 | 102 | 26 | 307 | **11.8×** |
+| EU27 | 27 | 102 | 26 | 307 | 11.8× |
+| ROW | 15 | 587 | 69 | 1,268 | **18.3×** |
 
-The imposed aggregates are tight — LAM in particular is nearly homogeneous, so
-collapsing it costs little. EU27's 11.8× spread is the widest in the set and is
+Every block that carries interpreted results is tight. LAM is nearly homogeneous,
+so collapsing it costs almost nothing; RASIA reaches 4.0× only because it has
+been cleaned (§6.2), against 15.0× for the raw NGFS Asia zone. EU27's 11.8× is
 tolerated for the policy reason above, not because it is small.
 
-**The two residuals are tighter than the base region.** This is not the usual
-outcome — a residual normally absorbs whatever is left and is correspondingly
-heterogeneous — and it is a direct consequence of deriving the partition under a
-constraint (§6.1) rather than assigning it geographically. An earlier
-two-attribute version of the same procedure produced a block spanning 18.3×, from
-Norway (69 t/\$m) to Cambodia (1,268 t/\$m); adding the carbon-price attribute
-separates the advanced economies from the developing ones and no block now spans
-more than 5.6×.
+**ROW is the exception, deliberately.** At 18.3× it pairs Norway (69 t/\$m) with
+Cambodia (1,268 t/\$m), and that is the price of the design: cleaning improves
+the blocks that get *reported* by pushing their outliers into the block that does
+not. ROW's outputs are never interpreted, so the heterogeneity is placed where it
+does least harm — but it is real, and it means ROW should be read as a closure
+term rather than as a region.
 
 ---
 
@@ -233,27 +238,20 @@ single-objective selection would systematically discard one group or the other.
 The first stage answers *"which economies deserve their own region"* without a
 prior list, by merging the 81 economies bottom-up and recording the order.
 
-**Attributes.** Each economy carries three standardised quantities — the things a
+**Attributes.** Each economy carries two standardised quantities — the things a
 block would blur and that drive the model's channels:
 
 | attribute | what it protects |
 |---|---|
 | log carbon intensity | the transition charge $ct = \mathrm{CI}\times\mathrm{XCE}$ |
 | ND-GAIN vulnerability | the physical damage allocation |
-| carbon-price zone score | the carbon price the members would face |
 
-The third deserves comment, because the obvious encoding is wrong. Scenario
-carbon prices are published at NGFS R5 resolution, so a group spanning zones must
-take a blended price. Treating the zone as a *categorical* label would penalise
-every cross-zone merge equally — but under Net Zero the OECD and Asia paths differ
-by 4 %, while under Fragmented World one zone prices carbon at \$0 and another at
-\$44. What matters is not whether two economies share a label but whether they
-face a similar price, so the attribute is the **price itself**: each zone's
-carbon price is z-scored *within* each scenario (so that scenarios with large
-absolute prices do not dominate) and averaged across the seven narratives.
-
-All three are standardised to unit variance and enter with equal weight, which is
-the neutral choice and not a tuned one; `ZONE_WEIGHT` exposes it for sensitivity.
+Both are standardised to unit variance so neither dominates the distance. The
+third quantity a region must share — the carbon *price* — is deliberately absent
+here and handled structurally instead: §6.2 partitions the residual along NGFS R5
+zones, which is the resolution at which prices are published, so price coherence
+is obtained by construction rather than by putting a proxy into a distance
+metric.
 
 **Merge cost.** Ward's criterion, weighted by economic linkage:
 
@@ -321,117 +319,141 @@ Ranked candidates, with the cut shown:
 | 5 | GBR | 1.60 | 0.80 | | 16 | SGP | 0.31 | 0.26 |
 | 6 | CHE | 1.00 | 0.16 | | 17 | CAN | 0.26 | 0.29 |
 | 7 | RUS | 0.97 | 3.75 | | 18 | TWN | 0.26 | 0.52 |
-| 8 | LAM | 0.64 | 1.49 | | 19 | VNM | 0.25 | 0.66 |
+| 8 | LAM | 0.69 | 1.57 | | 19 | VNM | 0.25 | 0.66 |
 | 9 | MEA | 0.64 | 1.27 | | 20 | AUS | 0.19 | 0.23 |
 | 10 | IND | 0.59 | 2.80 | | 21 | IDN | 0.14 | 0.46 |
-| — | *cut* | | | | 22 | KAZ | 0.13 | 0.93 |
-| 11 | JPN | 0.59 | 0.59 | | 23 | CHL | 0.05 | 0.07 |
+| — | *cut* | | | | 22 | KAZ | 0.13 | **0.93** |
+| 11 | JPN | 0.59 | 0.59 | | | | | |
 
 Kazakhstan at 0.93 % carbon is the closest miss, and is the region most sensitive
 to where the threshold is placed: a 0.9 % rule would admit it.
 
-### 6.1 The residual must be split, and the split is derived
+Note that the residual occupies rank 4 in this ranking, so the top-10 clause
+yields nine named regions and the carbon clause adds two, giving eleven.
+
+### 6.1 The residual dominates, so something must come out of it
 
 Applying the rule alone produces twelve regions but **breaks the requirement that
-the residual must not dominate**. Absorbing eleven demoted economies leaves a
-residual at **5.34 % economic and 14.09 % carbon linkage** — larger than China on
+the residual must not dominate**. Absorbing the demoted economies leaves a
+residual at **5.29 % economic and 14.02 % carbon linkage** — larger than China on
 *both* measures. Results attributed to such a region would not be interpretable.
 
-Restoring economies does not help: promoting them back in descending order of
-economic linkage fails to satisfy the constraint until **nineteen** regions, by
-which point the cut has been undone.
-
-The residual must therefore be partitioned. Doing so with stage 1's Ward
-criterion applied naively **fails**: clustering on (log CI, vulnerability) groups
-the high-carbon economies together and thereby *concentrates* carbon, producing a
-sixteen-member block at 11.68 % carbon linkage — above China's 11.11 %.
-
-The failure is instructive rather than fatal. Two things are being asked of the
-partition, and they are not the same kind of thing:
-
-| | |
-|---|---|
-| minimise within-group heterogeneity | an **objective** — what Ward optimises |
-| no group may dominate | a **constraint** — what Ward knows nothing about |
-
-Unconstrained optimisation of the first will violate the second whenever the two
-point in different directions, which here they do. The remedy is not to abandon
-the criterion but to give it the constraint. A merge that would produce a group
-exceeding the cap on either measure is simply **not available**:
-
-$$\text{merge}(G,H)\ \text{admissible}\iff
-\ell^{\text{econ}}_{G\cup H} \le \bar{\ell}^{\text{econ}}
-\ \ \text{and}\ \
-\ell^{\text{carb}}_{G\cup H} \le \bar{\ell}^{\text{carb}} .$$
-
-Ward continues to choose *which* feasible pair to merge; the cap decides which
-pairs exist. Merging halts when no admissible pair remains, so **the number of
-residual groups is an output, not a choice**.
-
-The cap is not a tuning parameter either. It is the linkage of the largest
-single-economy region — which the data says is China, on both measures
+The cap it must respect is not a tuning parameter: it is the linkage of the
+largest single-economy region, which the data says is China on both measures
 simultaneously ($\bar{\ell}^{\text{econ}} = 4.49\,\%$,
-$\bar{\ell}^{\text{carb}} = 11.11\,\%$). This is the same quantity stage 1's
-stopping rule already used, now enforced during merging instead of tested
-afterwards.
+$\bar{\ell}^{\text{carb}} = 11.11\,\%$).
 
-Applied to the twenty-six demoted economies, the capped run halts at **two
-groups**, separated cleanly by carbon intensity — 137 t/\$m against 539 t/\$m —
-and so labelled ROWL and ROWH. Merges are blocked by the cap along the way, so
-the constraint binds rather than merely being satisfied by luck.
+Promoting individual economies back is a poor way to fix it. Taking them in
+descending order of economic linkage, the constraint is not satisfied until
+**nineteen** regions — Japan, Norway, Korea, Singapore, Canada, Chinese Taipei
+and Viet Nam must all return — by which point the cut has been undone. The reason
+is that carbon binds harder than economics, and the ICIO's own unallocated block
+carries 6.73 % of carbon linkage on its own and can never be promoted, because it
+is not an economy.
 
-The result is better on the objective as well as feasible:
+### 6.2 Splitting by carbon-price zone, then cleaning
 
-| partition | within-group heterogeneity | worst member CI spread |
-|---|--:|--:|
-| Geographic Asia-Pacific / other (imposed) | 7.10 | 15.0× |
-| Capped, two attributes | 4.69 | 18.3× |
-| **Capped, three attributes** | **3.15** | **5.6×** |
+What comes out should be a *block*, not a sequence of individual economies, and
+the natural blocks are already in the data. Scenario carbon prices are published
+at NGFS R5 resolution, so the residual is split by R5 zone:
 
-Constraining the criterion beats imposing a partition by hand by more than half,
-and adding the price attribute more than halves the worst block's internal
-spread. The two-attribute run had paired Norway (69 t/\$m) with Cambodia
-(1,268 t/\$m) inside one group; with the price attribute the advanced economies
-separate from the developing ones and no block spans more than 5.6×.
+| zone | *n* | econ % | carb % | CI (t/\$m) | internal spread |
+|---|--:|--:|--:|--:|--:|
+| ASIA | 15 | 2.03 | 4.16 | 248 | **15.0×** |
+| OECD | 6 | 1.61 | 1.45 | 109 | 2.1× |
+| World *(unallocated)* | 1 | 1.38 | 6.73 | 592 | — |
+| REF | 3 | 0.28 | 1.68 | 726 | 1.5× |
 
-**Why the cap cannot replace the threshold rule.** Running the capped merge over
-all 81 economies from the start produces only **seven** regions: it fuses the
-United States with Canada and Australia, Switzerland with the UK and Norway, and
-buries India in a twenty-three-member block. The cap is a *ceiling* — it prevents
-domination but expresses no view on which economies deserve resolution. The two
-rules do different work and both are needed: §6's threshold decides what is
-named, §6.1's cap disciplines what is left.
+This partition is not ours. It is the resolution at which the scenario data is
+published, which has a practical consequence: each group takes **exactly one
+carbon-price path**, with no blending and no fallback to a world aggregate.
+
+One zone is unfit as it stands. ASIA spans **15×** in carbon intensity, holding
+Korea (85 t/\$m) and Cambodia (1,268 t/\$m) in the same block — precisely the
+misrepresentation §1 defines the exercise against. So each zone is **cleaned**: a
+member is dropped if its carbon intensity exceeds $k$ times its own zone's
+linkage-weighted average,
+
+$$\text{drop } c \in Z \iff \mathrm{CI}_c > k\,\overline{\mathrm{CI}}_Z,
+\qquad k = 1.5 .$$
+
+Two properties of this rule matter.
+
+**It is relative, not absolute.** REF (Belarus, Kazakhstan, Ukraine) is uniformly
+carbon-heavy — 726 t/\$m at a 1.5× spread — and is perfectly coherent, so it
+keeps every member. An absolute intensity threshold cannot distinguish "heavy"
+from "heterogeneous" and would empty REF for no reason while leaving ASIA's
+internal range untouched.
+
+**Dropped economies fall into ROW.** They do not form a group of their own. The
+purpose of cleaning is to make the geographic blocks *worth selecting*, not to
+manufacture a rival that would take the first promotion — an earlier version
+pooled them into a high-intensity group which then competed with ASIA for
+promotion on a 0.04 pp margin, making the outcome turn on noise.
+
+At $k = 1.5$ five economies are dropped — Indonesia, Cambodia, Laos, Myanmar,
+Pakistan, together 0.21 % of economic and 0.95 % of carbon linkage — and ASIA's
+internal spread falls from **15.0× to 4.0×** while its linkage barely moves.
+
+### 6.3 Promotion
+
+The cleaned zones are then promoted out of the residual, largest first by
+economic linkage, until the residual passes:
+
+| | ROW econ % | ROW carb % | |
+|---|--:|--:|---|
+| all zones inside ROW | 5.29 | 14.02 | ✗ carbon > 11.11 |
+| promote **ASIA** (1.82 % econ) | 3.47 | 10.80 | ✓ **passes** |
+
+One promotion suffices, giving **13 regions**. The number of promotions is an
+output of the constraint, not a chosen quantity.
+
+The result is stable in $k$:
+
+| $k$ | dropped | promoted | regions |
+|--:|--:|---|--:|
+| 1.25 | 11 | ROECD, RWorld | 14 |
+| **1.50** | **5** | **RASIA** | **13** |
+| 1.75 | 4 | RASIA | 13 |
+| 2.00 | 4 | RASIA | 13 |
+| 2.50 | 4 | RASIA | 13 |
+| 3.00 | 4 | RASIA | 13 |
+
+Every value from 1.5 upward gives the same answer. Only $k \le 1.4$ breaks it, by
+over-cleaning ASIA until OECD overtakes it. $k$ is therefore a parameter the
+result is insensitive to across its plausible range, which is the most that can
+be asked of a threshold that is asserted rather than estimated.
 
 ---
 
 ## 7. The selected region set
 
-**Thirteen regions**: EU27 as base, ten named regions, two residuals. Shares are
+**Thirteen regions**: EU27 as base, eleven named regions, one closure. Shares are
 of the EU's \$32.16 tn final-demand footprint.
 
 | # | Region | Full name | econ % | carb % | CI (t/\$m) | Basis for inclusion |
 |--:|---|---|--:|--:|--:|---|
 | 1 | **EU27** | European Union (27) | 81.00 | 58.73 | 88 | Base region and numéraire; EU demand is met overwhelmingly from inside the single market |
 | 2 | **CHN** | China | 4.49 | **11.11** | 299 | Largest external supplier on both measures; carbon linkage 2.5× its economic weight. Sets the dominance cap |
-| 3 | **ROWL** | Rest of World, lower-intensity (12) | 2.92 | 3.31 | 137 | Derived residual (§6.1) — advanced Asia-Pacific, Oceania, Canada, Nordics |
+| 3 | **ROW** | Rest of World (15) | 3.47 | 10.80 | 376 | Closure — cleaned-out and unpromoted remainder, incl. the ICIO's unallocated block |
 | 4 | **USA** | United States | 2.68 | 2.62 | 118 | Second-largest external supplier; tariff counterparty; reserve currency |
-| 5 | **ROWH** | Rest of World, higher-intensity (14) | 2.42 | **10.78** | 539 | Derived residual (§6.1) — developing and transition economies; second on carbon linkage after China |
+| 5 | **RASIA** | Rest of Asia (10) | 1.82 | 3.22 | 214 | Derived (§6.2) — the NGFS Asia zone, cleaned; exporting Asia on one carbon-price path |
 | 6 | **GBR** | United Kingdom | 1.60 | 0.80 | 61 | Largest single-country services supplier; closest integrated non-member |
 | 7 | **CHE** | Switzerland | 1.00 | 0.16 | 20 | 4th-largest non-EU economic linkage; pharmaceuticals and precision goods |
 | 8 | **RUS** | Russian Federation | 0.97 | **3.75** | 467 | Carbon linkage nearly 4× economic weight |
-| 9 | **LAM** | Latin America ex-Chile (6) | 0.64 | 1.49 | 282 | Agricultural and mineral supply; the most homogeneous block |
+| 9 | **LAM** | Latin America (7) | 0.69 | 1.57 | 274 | Agricultural and mineral supply; the most homogeneous block |
 | 10 | **MEA** | Middle East (4) | 0.64 | 1.27 | 240 | Hydrocarbon channel; essentially no carbon pricing |
 | 11 | **IND** | India | 0.59 | **2.80** | 574 | Third on carbon linkage with zero carbon-pricing coverage |
 | 12 | **AFR** | Africa (11) | 0.54 | **2.06** | 462 | *Admitted on carbon.* Resource supply; most climate-vulnerable partners |
 | 13 | **TUR** | Türkiye | 0.50 | **1.10** | 264 | *Admitted on carbon.* Manufacturing satellite under customs union; unpriced; prime CBAM exposure |
 
 **Constraint check.** The largest named region is China at 4.49 % economic and
-11.11 % carbon. ROWL reaches 2.92 % / 3.31 % and ROWH 2.42 % / 10.78 %: neither
-residual is largest on either measure. **Satisfied by construction** — the cap is
-enforced during merging (§6.1), so this is a restatement of the feasibility
-condition rather than a test that could have failed.
+11.11 % carbon. ROW reaches 3.47 % / 10.80 %, below both — **satisfied**, and by
+0.30 pp on the binding measure. The margin is thin because 6.73 pp of ROW's
+carbon linkage is the ICIO's unallocated block, which cannot be promoted or
+decomposed by any method.
 
-**Coverage.** Named regions carry 94.7 % of economic and 85.9 % of carbon
+**Coverage.** Named regions carry 96.5 % of economic and 89.2 % of carbon
 linkage.
 
 ### 7.1 Discussion
@@ -441,9 +463,9 @@ linkage alone, Africa and Türkiye would sit 12th and 15th and be discarded.
 Ranked on the ratio of carbon to economic linkage, the ordering is almost
 reversed:
 
-| | IND | ROWH | RUS | AFR | CHN | LAM | TUR | MEA | ROWL | USA | EU27 | GBR | CHE |
+| | IND | RUS | AFR | ROW | CHN | LAM | TUR | MEA | RASIA | USA | EU27 | GBR | CHE |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| carb % ÷ econ % | **4.75** | 4.46 | 3.86 | 3.82 | 2.48 | 2.33 | 2.18 | 1.99 | 1.13 | 0.98 | 0.73 | 0.50 | **0.16** |
+| carb % ÷ econ % | **4.75** | 3.86 | 3.82 | 3.11 | 2.48 | 2.26 | 2.18 | 1.99 | 1.77 | 0.98 | 0.73 | 0.50 | **0.16** |
 
 India's embodied emissions in EU demand are nearly five times its trade weight;
 Switzerland's are a sixth of its. A stress test resolved only on trade weight
@@ -483,35 +505,36 @@ not one the selection algorithm should be allowed to make silently.
 
 ## 8. Limitations
 
-**The price attribute is a zone score, not an applied price.** §5's third
-attribute is the carbon price the *scenario* assigns a region's R5 zone, not the
-price the economy actually levies today, because no per-economy applied-price
-series exists for all 81. The distinction matters: Switzerland was missed by the
-manual selection precisely because it sat in a residual assumed to price carbon
-at \$2/t while it has levied CHF 120/t (≈ \$133) since 2022, a roughly 65-fold
-error. A genuine applied-price attribute would likely promote Switzerland, Canada
-and the UK more strongly than the zone score does.
+**Scenario zones are not applied carbon prices.** §6.2 partitions on the price the
+*scenario* assigns a region's R5 zone, not the price the economy actually levies
+today, because no per-economy applied-price series exists for all 81. The
+distinction matters: Switzerland was missed by the manual selection precisely
+because it sat in a residual assumed to price carbon at \$2/t while it has levied
+CHF 120/t (≈ \$133) since 2022, a roughly 65-fold error. Zone membership would not
+have caught that.
 
-**The zone attribute buys tightness, not zone purity.** Adding it at equal weight
-cuts within-group heterogeneity by a third and halves the worst block's internal
-spread, but leaves the share of group weight sitting outside its own dominant
-zone unchanged at 44 %. Zone purity improves only if the attribute is weighted
-about three times the others (falling to 32 %), which is not defensible a priori
-and costs heterogeneity. The equal-weight choice is reported; the trade-off is
-visible by setting `ZONE_WEIGHT`.
+**The cleaning threshold is asserted.** $k = 1.5$ is a judgement, not an estimate.
+Its defence is insensitivity rather than derivation: every value in [1.5, 3.0]
+returns the same thirteen regions and the same promotion, and only $k \le 1.4$
+changes the answer. That is weaker than deriving it, and is reported as such.
 
-**Ward's weighting favours absorption.** The harmonic term $w_Gw_H/(w_G+w_H)$
-makes attaching a tiny economy to a large one nearly free, which is why Iceland
-lands on the United States and India lands in a block with Cambodia and Myanmar.
-Average or complete linkage would behave differently, and the stability of the
-selection across linkage rules has not been tested.
+**Ward's weighting favours absorption.** In stage 1 the harmonic term
+$w_Gw_H/(w_G+w_H)$ makes attaching a tiny economy to a large one nearly free,
+which is why Iceland lands on the United States and India lands in a block with
+Cambodia and Myanmar. Average or complete linkage would behave differently, and
+the stability of the stage-1 ranking across linkage rules has not been tested.
 
 **The cap is a hard constraint on a noisy quantity.** The dominance cap is set by
-one economy's measured linkage. China's shares are estimated from a single
-input–output table, so a revision that moved them would change which merges are
-admissible and could alter the residual partition discontinuously. A soft
-penalty would degrade more gracefully than a hard feasibility test, at the cost
-of no longer guaranteeing the constraint.
+one economy's measured linkage. China's shares come from a single input–output
+table, so a revision that moved them could change the number of promotions
+discontinuously. The current margin is **0.30 pp** on the binding measure, which
+is thin.
+
+**The residual absorbs the heterogeneity.** Cleaning improves the blocks that
+carry interpreted results by pushing their outliers into the one that does not.
+ROW's 18.3× internal intensity spread is the direct cost of RASIA's 4.0×, and
+anything attributed to ROW is correspondingly unreliable. This is a deliberate
+placement of error, not its elimination.
 
 **Structural attributes only, deliberately.** Selection never uses model outputs
 — no FX moves, no GVA shocks. Choosing regions because they produce large results
@@ -540,14 +563,17 @@ explicit threshold rule — top ten by economic linkage, plus anything above 1 %
 either measure — supplies the cut, admitting Africa and Türkiye on carbon grounds
 that a size ranking would have missed.
 
-The residual this leaves would dominate both measures. It is partitioned by the
-same Ward criterion, now carrying the dominance requirement as a feasibility
-condition rather than a post-hoc test: a merge that would produce a group
-outranking the largest single economy is not admissible, and merging halts when
-none remains. The number of residual groups is therefore an output. Two result,
-separated by carbon intensity at 137 against 539 t/\$m — and both tighter,
-internally, than the base region itself.
+The residual this leaves would dominate both measures, so a block must come out
+of it. The blocks are taken from the data rather than invented: the residual is
+split along NGFS R5 zones, the resolution at which scenario carbon prices are
+published, so each takes exactly one price path. One zone — Asia, spanning 15× in
+carbon intensity — is unfit as it stands, and is cleaned by dropping members more
+than 1.5× its own average intensity, which cuts its spread to 4.0× at a cost of
+0.21 % of economic linkage. Cleaned zones are then promoted until the residual
+passes the cap. One promotion suffices.
 
-The result is thirteen regions covering 94.7 % of the EU's economic and 85.9 % of
-its carbon footprint, with no residual largest on either measure — a property
-that now holds by construction rather than by inspection.
+The result is thirteen regions covering **96.5 %** of the EU's economic and
+**89.2 %** of its carbon footprint, with the residual below the largest single
+economy on both measures. The number of promotions is an output of the
+constraint, and the answer is unchanged for every cleaning threshold in
+[1.5, 3.0].
