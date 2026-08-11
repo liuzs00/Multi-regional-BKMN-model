@@ -34,6 +34,52 @@ ranking of "climate exposure" emerges from the results. India is extreme on two
 of the three; Switzerland is mild on all three; the EU is unusual in being the
 most heavily *priced* economy while being among the least intensive.
 
+### 1.1 The reporting convention, and how it differs from the original study
+
+Reporting at 2040 under Net Zero 2050 is a presentational choice and needs
+defending, because it is not the choice the single-region study makes.
+
+That study reports a **mixture** rather than a single path: a Dirichlet prior
+placing 0.90 on SSP2 and 0.90 on RCP4.5, evaluated at risk horizons running from
+one day to twenty years out of a fixed valuation date. SSP2 with RCP4.5 is the
+middle-of-the-road pairing, corresponding to roughly 2.7 °C of end-century
+warming. Among the NGFS narratives used here, the nearest counterpart is not Net
+Zero but **Current Policies**, at 2.75 °C.
+
+The two conventions give very different headline numbers, and the difference is
+concentrated in exactly one place:
+
+| At 2040 | Net Zero 2050 | Current Policies | ratio |
+|---|--:|--:|--:|
+| Mean transition shock | −2.20 % | −0.06 % | **37×** |
+| Worst regional transition shock | −4.72 % | −0.13 % | 35× |
+| Mean physical damage | −1.01 % | −1.07 % | 0.94× |
+| Worst five-year forward | −3.61 % | −1.31 % | 2.8× |
+| Median credit widening | 3.95 % | 0.82 % | 4.8× |
+
+Net Zero is therefore best understood as an **upper bound on the transition
+channel rather than a central estimate**. It is used as the reporting case for a
+practical reason: under Current Policies the carbon price reaches only \$1.53 per
+tonne in the OECD zone by 2040, so the transition machinery that this model
+exists to study produces almost nothing to look at. Reporting the channel where
+it is visible makes the mechanism legible, at the cost of showing it at its
+largest.
+
+Two things follow, and both are honoured in what comes below. Physical damage is
+essentially unaffected by the choice — 0.94× between the two extremes — so every
+statement made about that channel is robust to it. And the mixture results of
+§7.1 are the closer analogue of the original study's headline, with the
+"consensus" prior in particular playing the same role as its SSP2/RCP4.5 anchor,
+since both are constructed around published estimates of where current policies
+actually lead. The gap between the two framings is large enough to change signs:
+the dollar's five-year forward is −1.91 per cent under Net Zero and +0.10 per
+cent under the consensus mixture.
+
+The horizon is a milder choice. 2040 sits far enough out for the carbon price to
+have risen substantially above its 2025 value of zero, and near enough to avoid
+the endpoint of the 2045 reporting window; results at every horizon from 2025 to
+2045 are reported throughout, so nothing rests on the single year.
+
 ## 2. The real economy: two shocks of comparable size
 
 The carbon charge enters as an ad-valorem cost wedge on each sector's own
