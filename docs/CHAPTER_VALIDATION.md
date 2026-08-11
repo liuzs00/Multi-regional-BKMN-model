@@ -176,7 +176,100 @@ All 44 gates pass.
 
 ---
 
-## 7. What this does not show
+## 7. Testing the tests: mutation
+
+A suite is worth exactly what it *rejects*. Every gate above passes, but that is equally
+consistent with the gates being too weak to fail. The check is to break the model
+deliberately and confirm the suite notices.
+
+Seven plausible implementation errors were injected one at a time, each a single edit a
+real implementation could contain, and every gate was run against each:
+
+| injected bug | caught by |
+|---|---|
+| Hull–White $B(\tau)$ uses $+a\tau$ instead of $-a\tau$ | all three suites |
+| technical matrix transposed | reproduction |
+| $\mathbf{A}$ normalised by row instead of column | reproduction |
+| Eq 10 sign error ($+\mathbf{I}$ for $-\mathbf{I}$) | all three suites |
+| forward-points sign flipped | structural |
+| **spot sign flipped** | **nothing — survived** |
+| **forward $=$ spot $-$ points** | **nothing — survived** |
+
+Two survived, and the reason generalises: **symmetry testing is sign-blind.** Every
+invariance gate in §3 asserts that a quantity is *zero*, and zero has no sign. Flipping
+the sign of the spot channel leaves every zero at zero and every magnitude unchanged. The
+one non-symmetric spot gate elsewhere in the project compares $|\text{spot}|$, so it is
+sign-blind too. A model reporting *"a country that prices carbon sees its currency
+strengthen"* — the exact reverse of the economics — would have passed every gate then in
+the suite, 120 of them.
+
+Composition was simply never tested: `forward_total` is a one-line sum, which is precisely
+why nobody thought to check whether it added or subtracted.
+
+**Group F** closes both, by pinning direction and composition where the answer is
+unambiguous rather than zero:
+
+* a region with *higher* carbon-pricing scope than the base must **depreciate**
+  (spot $> 0$), and one with lower scope must appreciate — the relative-PPP direction;
+* the forward must equal spot **plus** points exactly, collapsing to each leg when the
+  other gap vanishes, with a control confirming the two legs have opposite signs in the
+  test case so the identity is not satisfied trivially;
+* on the real calibration EU27 holds the **highest** carbon-pricing scope (0.645 against
+  0.467 next), so relative PPP *requires* every other currency to appreciate against the
+  euro.
+
+That last gate turns a result into an explanation: the absence of spot sign reversals is
+forced by the EU being the most carbon-priced economy in the set, not a coincidence, and
+the gate fails the day that stops being true. After group F, all seven mutants are caught.
+
+The lesson outlives this project. Symmetry arguments establish that a model is
+*internally consistent*, not that it points the right way, so any suite built on them
+needs at least one asymmetric, direction-pinning test per channel — and the way to find
+out whether it has one is to break the model on purpose.
+
+---
+
+## 8. Cross-implementation reading
+
+A fourth mode sits outside the three above, and in practice it found more than they did:
+reading an independent implementation of the same paper and diffing the *specifications*
+rather than the numbers. The single-region reproduction this project extends is such an
+implementation, and a full read produced four findings no gate could have.
+
+**An inconsistency of ours, corrected.** We had accepted that a tax wedge is not an output
+gap and removed the transition shock from the Taylor rule — then left it in the
+operational-risk channel, which runs Okun's law. Okun maps real *output* to employment; a
+wedge destroys no output. The reference is unambiguous: it calls `oprisk.shift(omega, …)`
+and never passes it the carbon shock. Correcting it moved conduct losses at 2040 under Net
+Zero from 2.0–37.1 % to **2.0–10.2 %**.
+
+The 37.1 % is the instructive part. The reference's Eq 25 is a *saturating* form bounded
+above by 23.77 % for conduct; ours is the linearisation of the same regression and is
+unbounded, so it had produced a number the reference's functional form **cannot generate
+at any damage level**. Dimensionally fine, correctly signed, monotone, and wrong.
+
+**An open question closed.** The deviation register carried Eq 15's integral as an
+ambiguity. The reference *defines* `short_rate_shift` for it and never calls it, passing
+the Taylor output straight into the Hull–White expansion, which is what we do.
+
+**A choice quantified.** Proposition 1 admits a direct reading and a cascading one. The
+direct form reproduces $\Omega$ exactly by the Prop-1 identity; the cascade gives 0.42× of
+it at $\phi = 0.5$, so applying both — as the text can be read to suggest — would count the
+damage 1.42 times.
+
+**A framing difference recorded.** The reference evaluates $\Omega$ at the *valuation
+date* for the Taylor rule and op-risk, so its climate rate shift is constant across
+tenors. Correct for its question, a repricing of today's damage; wrong for a 2025–2045
+projection, and it means our rate path is not comparable to the paper's Table 12.
+
+Two of these four were unreachable by self-consistency testing, because the model was
+internally consistent about the wrong specification. Where a second implementation exists,
+reading it is cheaper than re-deriving the same conclusions from prose, and more reliable:
+code cannot be ambiguous about which of two readings it took.
+
+---
+
+## 9. What this does not show
 
 Structural correctness is not empirical correctness. Every gate above would pass just as
 happily for a model with the wrong damage coefficient, the wrong carbon prices, or a

@@ -41,7 +41,7 @@ is the point the figure makes. All seven inputs are in fig7.
 
 **Findings.** The channel ranking flips cleanly: under Net Zero transition
 dominates in **10/13** regions (China −4.72 %), under Current Policies physical
-dominates in **13/13**. Physical damage runs −0.68 % to −1.47 % of GVA across all
+dominates in **13/13**. Physical damage runs −0.67 % to −1.48 % of GVA across all
 seven scenarios and its *mean* varies by only 0.08 pp between them, because
 warming to 2040 is largely locked in; the transition cost varies enormously
 (−4.72 % to −0.01 %).
@@ -55,8 +55,8 @@ difference stated in the subtitle.
 **What.** 5-year forward FX shift against the euro at 2040, one bar per currency,
 with a tick marking the spot-only component.
 
-**Findings.** INR −3.61 %, TRY −2.99 %, USD −1.92 % at one end; CHF −0.60 % and
-GBP −0.85 % at the other. The ordering blends **physical vulnerability** with the
+**Findings.** INR −3.61 %, TRY −3.00 %, USD −1.91 % at one end; CHF −0.59 % and
+GBP −0.83 % at the other. The ordering blends **physical vulnerability** with the
 absence of carbon pricing — India and Türkiye score badly on both, Switzerland
 well on both. Under the 13-region set **every** currency strengthens against the
 euro; the sign reversals an earlier 20-region build showed came from Japan, Korea
@@ -188,7 +188,7 @@ have market data — CHE, RASIA, LAM, MEA, AFR, ROW and RUS all share one beta.
 Current Policies, with a fitted line.
 
 **Findings.** Damage tracks vulnerability almost exactly — correlation **−0.99**,
-worst IND −1.37 % (scale 1.337), least GBR −0.68 % (scale 0.793), under the
+worst IND −1.37 % (scale 1.340), least GBR −0.67 % (scale 0.785), under the
 pre-industrial warming convention (§7b of FX_REPORT). **Treat this as a
 consistency check, not a discovery:** Proposition 1 allocates damage through the
 VL vector, which is built from ND-GAIN, so the relationship is mechanical by
