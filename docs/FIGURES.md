@@ -237,6 +237,28 @@ not a finding that climate stress improves bank or property credit. See
 
 Both panel titles compute their numbers from the data, per the maintenance note.
 
+### fig14 — `fig14_pass_through.png`
+**What.** The cost pass-through sensitivity at 2040 under Net Zero: (a) each
+region's transition GVA shock as φ runs from 0 to 1, with a marker where it
+changes sign; (b) four channels for India, expressed as a percentage change from
+their value at the reporting φ = 0.5.
+
+**Findings.** The endpoints are exact — at φ = 0 the shock is minus the region's
+carbon bill over value added, at φ = 1 plus the same, holding to machine
+precision. Every region's shock changes sign, and the crossings cluster tightly
+between **0.574** (Africa) and **0.676** (UK), with Switzerland alone at 0.812.
+All of them lie **above** one-half, so at the reported φ = 0.5 every region is
+still a net loser; the dual is not linear in φ and the midpoint is not neutral.
+
+Panel (b) is the structural point. **Pass-through does not touch the policy rate
+or the exchange rate at all** — both sit exactly on zero across the whole range,
+a range of 0e+00 basis points — because the Taylor rule responds to inflation and
+physical damage, neither of which passes through the Leontief dual. What φ does
+reach is value added and, through it, credit: India's transition shock swings
+from −385 % to +590 % of its φ = 0.5 value, and its credit spread from +200 % to
+−410 %. The model's widest single uncertainty is therefore confined to two of the
+four financial channels. See [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3.
+
 ---
 
 ## Coverage
@@ -247,7 +269,8 @@ Both panel titles compute their numbers from the data, per the maintenance note.
 | fig2, fig8, fig12 | [FX_REPORT.md](FX_REPORT.md) | 2040, 2045 |
 | fig3, fig4, fig9 | scenario uncertainty | 2040 |
 | fig6, fig10 | downstream channels | 2040 |
-| fig13 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §4 (credit) | 2040 |
+| fig13 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §6 (credit) | 2040 |
+| fig14 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3 (pass-through) | 2040, φ ∈ [0,1] |
 | fig11 | [TARIFF_CALIBRATION.md](TARIFF_CALIBRATION.md) | 2040 |
 
 **Not yet drawn:** the tariff illustration of [TARIFF_METHOD.md](TARIFF_METHOD.md)
