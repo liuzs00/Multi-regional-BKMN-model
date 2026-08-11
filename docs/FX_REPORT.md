@@ -29,7 +29,7 @@ cross-sectional orderings.
 | | mechanism | driven by | range at 2045 (Net Zero) |
 |---|---|---|--:|
 | **Spot** | relative PPP — cumulative inflation differential | the carbon **price** | 1.85 pp |
-| **5y forward** | spot + CIP rate differential | + physical **damage** | 3.28 pp |
+| **5y forward** | spot + CIP rate differential | + physical **damage** | 3.30 pp |
 
 ## 2. The two channels price different risks
 
@@ -38,8 +38,8 @@ Correlating each against what a region can be — a carbon *taxer*, a
 
 | | vs carbon-pricing **scope** | vs physical **damage** | vs carbon intensity |
 |---|--:|--:|--:|
-| **Spot** | **+0.9999** | +0.444 | −0.525 |
-| **5y forward** | +0.898 | **+0.786** | −0.827 |
+| **Spot** | **+0.9999** | +0.452 | −0.525 |
+| **5y forward** | +0.898 | **+0.791** | −0.826 |
 
 **Spot prices transition risk.** It runs through the Moessner relation
 (ΔΠ = 8e-5 · ΔXCE · scope), so a region's spot move is very nearly a function of
@@ -78,10 +78,10 @@ population that exhibited it is not.
 |---|--:|---|
 | INR | −4.01 % | no carbon pricing, highest vulnerability (ND-GAIN scale 1.34) |
 | TRY | −3.38 % | no carbon pricing, high intensity (264 t/\$m), CBAM-exposed |
-| USD | −2.24 % | low coverage (0.091) on a large carbon price |
-| CNY | −1.50 % | high coverage (0.467) offsets a large GVA shock |
-| GBP | −1.03 % | high coverage (0.326), low intensity (61 t/\$m) |
-| CHF | −0.73 % | lowest intensity in the set (20 t/\$m), low vulnerability |
+| USD | −2.23 % | low coverage (0.091) on a large carbon price |
+| CNY | −1.49 % | high coverage (0.467) offsets a large GVA shock |
+| GBP | −1.01 % | high coverage (0.326), low intensity (61 t/\$m) |
+| CHF | −0.71 % | lowest intensity in the set (20 t/\$m), low vulnerability |
 
 India and Turkey lead on **both** attributes — little carbon pricing (so no
 offsetting inflation) and high exposure (so deep rate cuts). Switzerland sits at
@@ -97,15 +97,15 @@ Range across the six currencies at 2045, split by channel:
 
 | scenario | spot range | forward range | mean physical damage |
 |---|--:|--:|--:|
-| **Net Zero 2050** | 1.85 pp | 3.28 pp | −1.03 % |
-| Low demand | 1.00 pp | 2.41 pp | −1.04 % |
-| Delayed transition | 0.44 pp | 2.10 pp | −1.17 % |
-| Below 2°C | 0.43 pp | 2.05 pp | −1.11 % |
-| NDCs | 0.28 pp | 2.00 pp | −1.15 % |
-| Fragmented World | 0.10 pp | 1.88 pp | −1.21 % |
-| **Current Policies** | 0.02 pp | 1.86 pp | −1.21 % |
+| **Net Zero 2050** | 1.85 pp | 3.30 pp | −1.03 % |
+| Low demand | 1.00 pp | 2.43 pp | −1.04 % |
+| Delayed transition | 0.44 pp | 2.12 pp | −1.17 % |
+| Below 2°C | 0.43 pp | 2.07 pp | −1.11 % |
+| NDCs | 0.28 pp | 2.02 pp | −1.15 % |
+| Fragmented World | 0.10 pp | 1.91 pp | −1.21 % |
+| **Current Policies** | 0.02 pp | 1.88 pp | −1.21 % |
 
-Scenario choice spans only **1.8×** on the forward (3.28 pp against 1.86 pp),
+Scenario choice spans only **1.8×** on the forward (3.30 pp against 1.88 pp),
 because the two channels move in *opposite* directions across scenarios:
 
 * ambitious policy → **high** carbon price (large spot dispersion) but **low**
@@ -128,11 +128,11 @@ risk, at this horizon, is not.** No scenario removes the floor.
 | | 2025 | 2030 | 2035 | 2040 | 2045 |
 |---|--:|--:|--:|--:|--:|
 | IND | −0.85 | −3.54 | −3.30 | −3.61 | −4.01 |
-| TUR | −0.42 | −3.03 | −2.72 | −2.99 | −3.38 |
-| USA | +0.09 | −2.07 | −1.73 | −1.92 | −2.24 |
-| CHN | −0.48 | −1.30 | −1.44 | −1.40 | −1.50 |
-| GBR | +0.23 | −0.98 | −0.75 | −0.85 | −1.03 |
-| CHE | +0.14 | −0.69 | −0.54 | −0.60 | −0.73 |
+| TUR | −0.42 | −3.04 | −2.73 | −3.00 | −3.38 |
+| USA | +0.09 | −2.06 | −1.73 | −1.91 | −2.23 |
+| CHN | −0.48 | −1.30 | −1.43 | −1.39 | −1.49 |
+| GBR | +0.24 | −0.96 | −0.74 | −0.83 | −1.01 |
+| CHE | +0.16 | −0.68 | −0.52 | −0.59 | −0.71 |
 
 The paths jump to 2030 and are then broadly flat, with a shallow dip at 2035. Two
 effects nearly cancel: the transition component peaks and fades as
@@ -150,10 +150,10 @@ Mixing the seven scenarios under a Dirichlet prior (§2.2) gives the expected
 
 | prior | INR | TRY | CNY | USD | GBP | CHF |
 |---|--:|--:|--:|--:|--:|--:|
-| ambition | −2.31 | −1.66 | −1.03 | −0.76 | −0.17 | −0.14 |
-| uniform | −2.04 | −1.39 | −0.96 | −0.52 | −0.03 | −0.04 |
-| policy-sceptic | −1.75 | −1.09 | −0.89 | −0.26 | +0.13 | +0.07 |
-| **consensus** | −1.35 | −0.69 | −0.75 | +0.10 | +0.33 | +0.21 |
+| ambition | −2.31 | −1.67 | −1.03 | −0.75 | −0.15 | −0.12 |
+| uniform | −2.04 | −1.40 | −0.95 | −0.51 | −0.01 | −0.02 |
+| policy-sceptic | −1.75 | −1.10 | −0.88 | −0.25 | +0.15 | +0.08 |
+| **consensus** | −1.35 | −0.69 | −0.74 | +0.10 | +0.35 | +0.22 |
 
 The prior matters most where the move is largest: **1.7× on INR** between
 ambition and consensus. For GBP and CHF it flips the sign, but on moves small
@@ -167,11 +167,11 @@ from the cross-model spread — widens the tail at 2040:
 | | central | q95 |
 |---|--:|--:|
 | INR | −3.61 | **−4.09** |
-| TRY | −2.99 | −4.01 |
-| USD | −1.92 | −3.37 |
-| CHN | −1.40 | −2.20 |
-| GBP | −0.85 | −1.91 |
-| CHF | −0.60 | −1.32 |
+| TRY | −3.00 | −4.01 |
+| USD | −1.91 | −3.37 |
+| CHN | −1.39 | −2.20 |
+| GBP | −0.83 | −1.91 |
+| CHF | −0.59 | −1.32 |
 
 Every currency moves further from the euro under stress, and the *ordering*
 changes: TRY overtakes USD and the gap between INR and TRY nearly closes. The
@@ -205,7 +205,7 @@ GSAT already reports. This closes the ambiguity flagged in
 level convention against the paper's printed rows (op-risk 3.62 / 3.02 against
 3.6 / 3.0; 1-day rate −25.8 bp against −25).
 
-Physical damage is consequently not negligible: it runs −0.68 % to −1.37 % of GVA
+Physical damage is consequently not negligible: it runs −0.67 % to −1.37 % of GVA
 across regions at 2040 under Net Zero, about **46 %** of the transition shock.
 
 ### 7c. Carbon intensities are scenario-consistent
@@ -256,7 +256,7 @@ trustworthy channel despite being the more intuitive.
 
 **Six currencies is a thin cross-section.** The derived region set supports USD,
 CNY, GBP, CHF, INR and TRY. Correlations computed on six points are indicative,
-not estimates — the +0.786 forward-vs-damage figure in §2 has roughly the
+not estimates — the +0.791 forward-vs-damage figure in §2 has roughly the
 precision of a scatter plot, and none of §2's numbers should be quoted with a
 standard error. The earlier 20-region build gave 14 currencies; that breadth was
 traded for a defensible selection rule, and the trade is stated in

@@ -32,9 +32,9 @@ gap ([FX_REPORT.md](FX_REPORT.md) §7a).
 
 Short-rate shift at 2040 (bp):
 
-| IND | AFR | MEA | TUR | RASIA | CHN | LAM | ROW | RUS | USA | EU27 | CHE | GBR |
+| IND | AFR | MEA | TUR | RASIA | CHN | LAM | ROW | RUS | EU27 | USA | CHE | GBR |
 |--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| −68.4 | −67.0 | −61.5 | −54.7 | −54.5 | −54.3 | −50.8 | −46.9 | −42.7 | −38.2 | −38.9 | −35.1 | −32.8 |
+| −68.5 | −66.9 | −61.9 | −54.9 | −54.4 | −54.2 | −50.8 | −47.0 | −42.6 | −39.0 | −38.1 | −34.9 | −32.4 |
 
 **Every region cuts, in every scenario, at every horizon** — 0 of 91
 region-scenario pairs shows a rise. That is not a finding about central banks so
@@ -50,7 +50,8 @@ against \$9.53/yr in the late 2030s. The inflation channel responds to the
 *increment*, so it spikes: at 2030 it contributes **105 %** of the EU's rate move
 (+17.4 bp against −34.1 bp of damage), and only 6 % at 2040. Every rate path in
 the model therefore has a kink at 2030 that belongs to the five-year publication
-grid rather than to any economics.
+grid rather than to any economics. (At 2030 the EU's damage term is −34.2 bp
+against an inflation offset of +17.4 bp.)
 
 ### 2.1 The term structure adds nothing to the cross-section
 
@@ -60,8 +61,8 @@ the short-rate shift and cannot reorder regions:
 
 | | 1D | 6M | 1Y | 5Y | 10Y | 20Y |
 |---|--:|--:|--:|--:|--:|--:|
-| IND | −68.4 | −67.7 | −67.0 | −62.0 | −56.4 | −47.1 |
-| EU27 | −38.9 | −38.5 | −38.1 | −35.3 | −32.1 | −26.8 |
+| IND | −68.5 | −67.8 | −67.2 | −62.1 | −56.5 | −47.2 |
+| EU27 | −39.0 | −38.6 | −38.2 | −35.3 | −32.1 | −26.8 |
 
 The 20Y/1D ratio is **0.6884** for every region, against B(20)/20 = 0.6883 — a
 gated identity. All cross-region variation lives in Δr; none of it in the curve.
@@ -87,7 +88,7 @@ Five-year forward at 2045 (%):
 
 | INR | TRY | USD | CNY | GBP | CHF |
 |--:|--:|--:|--:|--:|--:|
-| −4.01 | −3.38 | −2.24 | −1.50 | −1.03 | −0.73 |
+| −4.01 | −3.38 | −2.23 | −1.49 | −1.01 | −0.71 |
 
 **A strengthening currency here is a distress signal, not strength.** It reflects
 damage forcing deep rate cuts, which under covered interest parity produce a
@@ -171,7 +172,7 @@ credit.
 
 ### 4.2 The regional ordering
 
-Median across sectors (%): **IND 14.2**, CHN 9.3, AFR 8.5, RUS 8.4, TUR 8.2,
+Median across sectors (%): **IND 14.2**, CHN 9.3, AFR 8.5, RUS 8.3, TUR 8.2,
 RASIA 7.1, ROW 6.2, LAM 5.6, MEA 3.9, EU27 3.8, GBR 2.6, USA 2.4, **CHE 1.5**.
 
 A near-tenfold span between India and Switzerland, driven by carbon intensity
@@ -196,7 +197,7 @@ Median credit widening across all region-sector cells at 2040:
 
 | Net Zero | Low demand | Delayed transition | Below 2 °C | NDCs | Fragmented World | Current Policies |
 |--:|--:|--:|--:|--:|--:|--:|
-| 3.95 % | 2.47 % | 2.14 % | 1.90 % | 1.79 % | 1.13 % | 0.82 % |
+| 3.95 % | 2.46 % | 2.14 % | 1.89 % | 1.79 % | 1.12 % | 0.82 % |
 
 Credit spans **4.8×** across scenarios — far more than FX, whose forward
 dispersion spans only 1.8×. The reason is that credit here is driven almost
@@ -283,7 +284,7 @@ looking different in each.
 
 **Rates** fall everywhere, unconditionally, because damage of order 1 % of GDP
 overwhelms carbon inflation of order 5 bp. The spread between regions is 36 bp at
-2040, and the term structure rescales it without reordering.
+2040 (−32.4 to −68.5), and the term structure rescales it without reordering.
 
 **Exchange rates** are a relative price, so they reward being *unlike* the base
 region rather than being unharmed. Every currency in the set appreciates against
