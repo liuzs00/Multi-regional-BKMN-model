@@ -19,7 +19,8 @@ result is attributed back to its parts.
 
 Code: [`bkmn/tariff.py`](../bkmn/tariff.py), [`bkmn/cbam.py`](../bkmn/cbam.py),
 driver [`tools/run_tariff_stack.py`](../tools/run_tariff_stack.py). Results:
-`out_stack_gva.csv`, `out_stack_fx.csv`, `out_stack_decomp.csv`. Everything is
+`out_stack_gva.csv`, `out_stack_fx.csv`, `out_stack_decomp.csv`,
+`out_stack_prices.csv`. Everything is
 reported at 2040, $\phi = 0.5$, statutory incidence ($\theta = 1$), against the
 Current Policies carbon baseline, on the thirteen-region `DATA_final` build.
 
@@ -256,7 +257,64 @@ therefore reach exchange rates only through the spot channel and never through
 forward points — which is a structural difference from the carbon channel, where
 the rate response dominates.
 
-### 4.4 The decomposition is exact
+### 4.4 Consumer prices: carbon against tariffs
+
+Both policies raise consumer prices, but by different routes. The carbon effect
+comes from the Moessner relation of §2.6, cumulating to a price level
+$k\,\Omega_r\,\mathrm{XCE}_r(t)$; the tariff effect is derived from the model's own
+dual, because Moessner is estimated on carbon prices and has nothing to consume
+from a tariff. Both are *level* effects in the same units, and the chain adds them,
+so they decompose exactly.
+
+Consumer price level at 2040 (%), tariffs shown by measure and carbon under two
+scenarios:
+
+| Region | US applied | EU–US | Steel | CBAM | **Tariffs** | Carbon (Curr. Pol.) | Carbon (Net Zero) |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| USA | $+0.7135$ | $+0.2082$ | $+0.0005$ | $+0.0004$ | $\mathbf{+0.9225}$ | $+0.0011$ | $+0.3206$ |
+| EU27 | $+0.0036$ | $-0.0068$ | $+0.0148$ | $+0.0213$ | $\mathbf{+0.0330}$ | $+0.0079$ | $+2.2726$ |
+| China | $+0.0016$ | $+0.0004$ | $+0.0004$ | $+0.0003$ | $+0.0027$ | $+0.0178$ | $+1.5717$ |
+| Switzerland | $+0.0039$ | $+0.0007$ | $+0.0035$ | $+0.0027$ | $+0.0108$ | $+0.0052$ | $+1.4975$ |
+| UK | $+0.0050$ | $+0.0013$ | $+0.0021$ | $+0.0017$ | $+0.0101$ | $+0.0040$ | $+1.1486$ |
+| Latin America | $+0.0138$ | $+0.0033$ | $+0.0010$ | $+0.0007$ | $+0.0189$ | $+0.0366$ | $+1.0016$ |
+| Türkiye | $+0.0029$ | $+0.0005$ | $+0.0040$ | $+0.0026$ | $+0.0101$ | $0.0000$ | $0.0000$ |
+| India | $+0.0023$ | $+0.0006$ | $+0.0005$ | $+0.0004$ | $+0.0037$ | $0.0000$ | $0.0000$ |
+| Russia | $+0.0019$ | $+0.0004$ | $+0.0015$ | $+0.0011$ | $+0.0050$ | $0.0000$ | $0.0000$ |
+
+Which policy dominates depends on the region and the scenario, and the pattern is
+not uniform in either.
+
+**For the United States, tariffs dominate carbon under every scenario.** They raise
+US prices by $0.92\%$ against $0.001\%$ from carbon on the current-policy
+trajectory — a factor of roughly eight hundred — and still by three times as much
+under Net Zero, where the carbon contribution reaches only $0.32\%$. The reason is
+coverage: the US prices about 9 % of its emissions, so even a $\$440$ carbon price
+reaches very little of the economy, whereas a tariff reaches every import.
+
+**For the European Union the ordering reverses with the scenario.** Under Current
+Policies the four trade measures raise EU prices by $0.033\%$ against $0.008\%$
+from carbon, so tariffs dominate fourfold. Under Net Zero, carbon reaches $2.27\%$
+and dominates the tariffs by a factor of sixty-nine. The EU is the mirror image of
+the US: it prices 65 % of its emissions, so an ambitious carbon path passes through
+almost in full.
+
+**For zero-coverage regions the carbon price effect is exactly zero, in every
+scenario.** India, Türkiye, Russia and the Middle East price none of their
+emissions, so by construction $k\,\Omega_r\,\mathrm{XCE}_r = 0$ regardless of how
+high the scenario price goes. Every penny of their consumer-price impact is
+imported through the tariff channel. This is a direct consequence of the coverage
+term in §2.6, and it means the model attributes no domestic inflation to carbon
+pricing in the regions with the highest carbon intensities.
+
+**Two orderings reverse relative to the value-added table.** CBAM contributes more
+to EU consumer prices than the steel safeguard does ($+0.0213\%$ against
+$+0.0148\%$), which is the opposite of their effect on EU value added, where the
+safeguard was the larger. And the EU–US framework is the only *deflationary* entry
+in the table for the EU, at $-0.0068\%$, because the EU's side of the agreement
+removes its MFN tariff on US industrial goods. A liberalising measure shows up
+correctly as a price reduction.
+
+### 4.5 The decomposition is exact
 
 The charge channel is linear in $\mathbf{ct}$ and shocks superpose exactly, so
 attributing the combined result to its four components involves no approximation

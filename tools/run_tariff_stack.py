@@ -184,9 +184,26 @@ def main():
     rev.loc["sum of four"] = rev.loc[parts].sum()
     rev.loc["residual"] = rev.loc["ALL FOUR COMBINED"] - rev.loc["sum of four"]
 
+    # ---- price-level decomposition: carbon vs each tariff -----------------
+    # chain() adds the two into out["cum"]: a cumulative carbon price level
+    # k*scope*(XCE_t - XCE_base), plus the tariff price effect from the dual.
+    # Both are level effects in the same units, so they decompose additively.
+    px = pd.DataFrame({
+        name: tariff.price_effect(m, Lt, tariff.charges(m, A, t_, 1.0)[0], t_)
+        for name, t_ in list(shocks.items()) + [("ALL FOUR COMBINED", stack)]
+    }) * 100
+    px = px.reindex(m.regions_order).rename_axis("region")
+    px["tariffs total"] = px["ALL FOUR COMBINED"]
+    for scen in (SCENARIO, "Net Zero 2050"):
+        c = chain(m, sc, scen, M, scope, vl)
+        px[f"carbon ({scen})"] = [c["cum"][r][YEAR] * 100 for r in px.index]
+    px["carbon+tariff (CP)"] = px[f"carbon ({SCENARIO})"] + px["tariffs total"]
+    px["carbon+tariff (NZ)"] = px["carbon (Net Zero 2050)"] + px["tariffs total"]
+
     gva.to_csv(f"{ROOT}/out_stack_gva.csv", float_format="%.6f")
     spot.to_csv(f"{ROOT}/out_stack_fx.csv", float_format="%.6f")
     rev.to_csv(f"{ROOT}/out_stack_decomp.csv", float_format="%.6f")
+    px.to_csv(f"{ROOT}/out_stack_prices.csv", float_format="%.6f")
 
     pd.set_option("display.width", 200)
     print(f"\n=== revenue and consumer prices ({YEAR}, phi={PHI}, theta=1) ===")
@@ -197,6 +214,8 @@ def main():
     print(spot.round(4).to_string())
     print(f"\n=== policy-rate shift (bp), {YEAR} ===")
     print(rate.round(3).to_string())
+    print(f"\n=== consumer price LEVEL (%), {YEAR}: carbon vs tariffs ===")
+    print(px.round(4).to_string())
     print(f"\nmax |residual|  GVA {gva.residual.abs().max():.2e} pp   "
           f"spot {spot.residual.abs().max():.2e} pp   "
           f"rate {rate.residual.abs().max():.2e} bp")
