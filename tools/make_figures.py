@@ -141,7 +141,7 @@ def fig_tradeoff():
     fig.text(0.012, 1.012,
              "The two transition extremes of the seven NGFS narratives. Transition cost swings "
              f"{abs(span[NZ])/abs(span[CP]):.0f}x between them, while mean physical damage barely moves "
-             f"({phmean[NZ]:.2f}% vs {phmean[CP]:.2f}%) 鈥?warming to 2040 is largely locked in. "
+             f"({phmean[NZ]:.2f}% vs {phmean[CP]:.2f}%) — warming to 2040 is largely locked in. "
              "NOTE per-panel x-scales.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
@@ -152,17 +152,31 @@ def fig_tradeoff():
 
 # --- 2. FX forward ranking ---------------------------------------------------
 def fig_fx_rank():
-    fwd = load("out_ext_fx_forward_5y").xs(NZ, level=0)
-    spot = load("out_ext_fx_spot").xs(NZ, level=0)
-    order = fwd[H].sort_values().index.tolist()
-    v = [fwd.loc[r, H] for r in order]
+    """
+    Headline is the mixture, not one narrative.
+
+    The chapter reports every channel as a probability-weighted expectation over
+    the seven NGFS narratives and shows the single-narrative value as a labelled
+    component; this figure has the same shape, so bars are the uniform-prior
+    expectation and the tick is Net Zero.  Reading only the tick overstates
+    every move, because Net Zero is the most transition-intensive of the seven.
+    """
+    mix = load("out_mix_fx_forward_uniform", idx=(0,))
+    nz = load("out_ext_fx_forward_5y").xs(NZ, level=0)
+    order = mix[H].sort_values().index.tolist()
+    v = [mix.loc[r, H] for r in order]
     fig, ax = plt.subplots(figsize=(8.2, 5.6))
-    barh_signed(ax, order, v)
-    ax.scatter([spot.loc[r, H] for r in order], np.arange(len(order)),
-               marker="|", s=90, color=INK, zorder=4, label="spot only (relative PPP)")
+    barh_signed(ax, order, v, fmt="{:+.2f}%")
+    ticks = [nz.loc[r, H] for r in order]
+    ax.scatter(ticks, np.arange(len(order)), marker="|", s=90, color=INK,
+               zorder=4, label="Net Zero 2050 component")
+    # barh_signed sizes the axis from the bars alone; the Net Zero component is
+    # larger than every mixture value, so widen or the ticks fall off the edge
+    lo, hi = ax.get_xlim()
+    ax.set_xlim(min(lo, min(ticks) * 1.12), max(hi, max(ticks) * 1.12))
     ax.legend(loc="lower left", frameon=False, fontsize=8.5)
-    finish(fig, ax, "Climate FX shifts against the euro, 2040 (Net Zero 2050)",
-           "5-year forward, per-currency; negative = strengthens vs EUR. Tick = spot-only component.",
+    finish(fig, ax, "Climate FX shifts against the euro, 2040 (scenario mixture)",
+           "5-year forward, uniform prior over the seven NGFS narratives; negative = strengthens vs EUR.",
            "fig2_fx_forward_ranking.png", "5y forward FX shift vs EUR (%)")
 
 
@@ -205,7 +219,7 @@ def fig_band():
     ax.invert_yaxis()
     ax.legend(loc="lower left", frameon=False, fontsize=8.5)
     finish(fig, ax, "Climate FX-at-risk: central vs 95th-percentile inputs, 2040",
-           "Net Zero 2050. Inputs stressed by 1.64蟽 鈥?temperature (MAGICC fan) and carbon price (cross-model spread).",
+           "Net Zero 2050. Inputs stressed by 1.64σ — temperature (MAGICC fan) and carbon price (cross-model spread).",
            "fig4_fx_at_risk_band.png", "5y forward FX vs EUR (%)")
 
 
@@ -243,7 +257,7 @@ def fig_equity_oprisk():
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 5.8))
     barh_signed(axes[0], order, [eq.loc[r, H] for r in order])
     axes[0].set_title("Equity index shift", fontsize=10, fontweight="600", pad=8)
-    axes[0].set_xlabel("螖S/S at 2040 (%)")
+    axes[0].set_xlabel("ΔS/S at 2040 (%)")
     barh_signed(axes[1], order, [op.loc[r, H] for r in order], fmt="{:+.0f}%")
     axes[1].set_title("Operational-risk losses (Conduct)", fontsize=10, fontweight="600", pad=8)
     axes[1].set_xlabel("relative change at 2040 (%)")
@@ -252,7 +266,7 @@ def fig_equity_oprisk():
         ax.set_axisbelow(True)
     fig.suptitle("Downstream channels under Net Zero 2050",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
-    fig.text(0.012, 1.012, "Equity via 尾路螖GVA/GVA (搂2.9); op-risk via Okun 鈫?unemployment 鈫?loss frequency (搂2.11).",
+    fig.text(0.012, 1.012, "Equity via β·ΔGVA/GVA (§2.9); op-risk via Okun → unemployment → loss frequency (§2.11).",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig6_equity_oprisk.png"), dpi=300, bbox_inches="tight")
@@ -271,7 +285,7 @@ def fig_inputs():
     want = [NZ, "Low demand", "Below 2C", "Delayed transition", NDC,
             "Fragmented World", CP]
     scens = [scen(w, sc.names) for w in want]
-    labs = ["Net Zero 2050", "Low demand", "Below 2掳C", "Delayed transition",
+    labs = ["Net Zero 2050", "Low demand", "Below 2°C", "Delayed transition",
             "NDCs", "Fragmented World", "Current Policies"]
     cols = [TEAL, "#2f6f6b", "#4b9aa4", COOL, "#d08b5c", "#a8703f", WARM]
     yrs = np.arange(2022, 2051)
@@ -282,9 +296,9 @@ def fig_inputs():
         axes[0].plot(yrs, [sc.px.loc[y, (s, "R5.2OECD")] for y in yrs], color=c, lw=1.9, label=lab)
         axes[1].plot(yrs, [sc.temp.loc[y, s] for y in yrs], color=c, lw=1.9, label=lab)
     axes[0].set_title("Carbon price, OECD zone", fontsize=10, fontweight="600", pad=8)
-    axes[0].set_ylabel("US\$2022 / tCO鈧俥")
+    axes[0].set_ylabel("US\$2022 / tCO₂e")
     axes[1].set_title("Global mean warming (GSAT)", fontsize=10, fontweight="600", pad=8)
-    axes[1].set_ylabel("K vs 1850鈥?900")
+    axes[1].set_ylabel("K vs 1850–1900")
     for ax in axes:
         ax.grid(color=GRID, lw=0.8, zorder=0)
         ax.set_axisbelow(True)
@@ -292,7 +306,7 @@ def fig_inputs():
     axes[0].legend(frameon=False, fontsize=8)
     fig.suptitle("Model inputs: NGFS Phase 5 scenario paths",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.085)
-    fig.text(0.012, 1.015, "MESSAGEix-GLOBIOM R12. The two channels are driven by these: carbon price 鈫?transition, warming 鈫?physical.",
+    fig.text(0.012, 1.015, "MESSAGEix-GLOBIOM R12. The two channels are driven by these: carbon price → transition, warming → physical.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig7_scenario_inputs.png"), dpi=300, bbox_inches="tight")
@@ -665,6 +679,71 @@ def fig_phi():
     print("  fig14_pass_through.png")
 
 
+# --- 15. how much the scenario prior matters, by channel ---------------------
+PRIORS = ["uniform", "policy-sceptic", "ambition", "consensus"]
+
+
+def _mix(channel, prior, idx=(0,)):
+    return load(f"out_mix_{channel}_{prior}", idx=idx)
+
+
+def fig_prior_sensitivity():
+    """
+    The chapter's organising result: which channels survive the prior.
+
+    Every headline is an expectation under an assumed scenario distribution,
+    and NGFS publishes no probabilities, so the honest summary statistic is how
+    far a number travels when that assumption changes.  Channels are split by
+    what they carry: the carbon charge inherits the narratives' disagreement
+    about policy, physical damage does not, because warming to 2040 is already
+    largely determined.
+    """
+    def spread(vals):
+        v = [abs(float(x)) for x in vals]
+        return max(v) / min(v)
+
+    def med_credit(p):
+        c = _mix("credit", p, idx=(0, 1))[H].unstack().drop(columns=["FTSE"])
+        return c.median(axis=1)["IND"]
+
+    rows = [
+        ("Spot FX (rupee)", spread(_mix("fx_spot", p).loc["IND", H] for p in PRIORS), "carbon price"),
+        ("Transition GVA (mean)", spread(_mix("gdp_transition", p)[H].mean() for p in PRIORS), "carbon price"),
+        ("Credit (India median)", spread(med_credit(p) for p in PRIORS), "carbon price"),
+        ("Total GDP (mean)", spread(_mix("gdp_total", p)[H].mean() for p in PRIORS), "both"),
+        ("Equity (mean)", spread(_mix("equity", p)[H].mean() for p in PRIORS), "both"),
+        ("Forward FX (rupee)", spread(_mix("fx_forward", p).loc["IND", H] for p in PRIORS), "both"),
+        ("Policy rate (mean)", spread(_mix("rate", p)[H].mean() for p in PRIORS), "physical damage"),
+        ("Operational risk", spread(_mix("oprisk_conduct", p).loc["RASIA", H] for p in PRIORS), "physical damage"),
+        ("Physical damage (mean)", spread(_mix("gdp_physical", p)[H].mean() for p in PRIORS), "physical damage"),
+    ]
+    rows.sort(key=lambda r: -r[1])
+    labs = [r[0] for r in rows]
+    vals = [r[1] for r in rows]
+    hue = {"carbon price": WARM, "both": "#d9a441", "physical damage": COOL}
+
+    fig, ax = plt.subplots(figsize=(8.6, 5.2))
+    y = np.arange(len(labs))
+    ax.barh(y, vals, color=[hue[r[2]] for r in rows], height=0.66, zorder=3)
+    ax.set_xscale("log")
+    ax.set_xlim(0.9, max(vals) * 2.2)
+    ax.axvline(1, color=MUTED, lw=1)
+    ax.set_yticks(y, labs, fontsize=8.5)
+    ax.invert_yaxis()
+    for i, (v, r) in enumerate(zip(vals, rows)):
+        ax.text(v * 1.07, i, f"{v:.2f}×" if v < 2 else f"{v:.1f}×", va="center",
+                fontsize=8, color=INK)
+    ax.set_xticks([1, 2, 5, 10, 20], ["1×", "2×", "5×", "10×", "20×"])
+    for k, c in hue.items():
+        ax.barh([0], [0], color=c, label=k)
+    ax.legend(title="driven by", loc="lower right", frameon=False, fontsize=8.5,
+              title_fontsize=8.5)
+    finish(fig, ax, "How much does the scenario prior matter? It depends on the channel",
+           "Ratio of largest to smallest headline at 2040 across the four priors. "
+           "Note the log scale: 1× means the prior is irrelevant.",
+           "fig15_prior_sensitivity.png", "range across the four priors (max ÷ min)")
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
@@ -672,5 +751,5 @@ if __name__ == "__main__":
     print("writing figures/")
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
     fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure(); fig_cbam()
-    fig_two_channels(); fig_credit(); fig_phi()
+    fig_two_channels(); fig_credit(); fig_phi(); fig_prior_sensitivity()
     print("done.")
