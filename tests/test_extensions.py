@@ -510,6 +510,37 @@ check("q95 band wider than central",
       bool((q95c[2040].abs() >= cen[2040].abs() - 1e-9).mean() > 0.7),
       f"{int((q95c[2040].abs() >= cen[2040].abs()).sum())}/{len(cen)} currencies")
 
+# The stress must be a stress in EVERY narrative, not just the one the band was
+# originally written for.  A 1.64-sigma upward shock cannot make a currency's
+# move smaller, and it did: the stressed path built its warming off the 2022
+# base while the central path uses the pre-industrial level, so the damage leg
+# ran ~50x too small and the tail inverted wherever the carbon-price leg was
+# quiet (every low-price narrative).  Assert the widening scenario by scenario.
+# The invariant is dispersion, not per-currency magnitude: a currency whose
+# central value sits near zero (GBP, CHF under the low-price narratives) can
+# pass through zero under stress and end up smaller in absolute terms without
+# the stress being any milder.  What must hold everywhere is that the stress
+# spreads the cross-section, which is what the chapter claims of it.
+_q = pd.read_csv(f"{ROOT}/out_ext_fx_forward_q95.csv", index_col=[0, 1])["2040"]
+_c = pd.read_csv(f"{ROOT}/out_ext_fx_forward_5y.csv", index_col=[0, 1])["2040"]
+_tight = [s for s in _c.index.get_level_values(0).unique()
+          if (_q.xs(s, level=0).max() - _q.xs(s, level=0).min())
+          <= (_c.xs(s, level=0).max() - _c.xs(s, level=0).min())]
+check("q95 widens the cross-section in every scenario", not _tight,
+      f"{len(_c.index.get_level_values(0).unique())} scenarios" +
+      (f", tight in {_tight}" if _tight else ""))
+
+# and the stressed warming must exceed the central warming, which is the
+# property the bug actually violated
+_sc = Scenarios(m.carbon_map)
+_ts = volatility.temperature_sigma()
+_z = 1.6448536269514722
+_bad = [(s, t) for s in _sc.names for t in (2030, 2040, 2050)
+        if warming(_sc, s, t) + _z * float(_ts.loc[t, s] - _ts.loc[2022, s])
+        <= warming(_sc, s, t)]
+check("stressed warming exceeds central warming", not _bad,
+      f"{len(_sc.names)*3} scenario-years checked")
+
 # --- non-regression: transition core untouched -------------------------------
 ref = pd.read_csv(f"{ROOT}/out_gva_shock_by_region_phi.csv", index_col=0)
 M = transition.gva_operator(m, 0.5)
