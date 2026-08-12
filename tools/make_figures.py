@@ -251,8 +251,11 @@ def fig_vuln():
 
 # --- 6. equity & op-risk -----------------------------------------------------
 def fig_equity_oprisk():
-    eq = load("out_ext_equity").xs(NZ, level=0)
-    op = load("out_ext_oprisk_conduct").xs(NZ, level=0)
+    # mixture, not one narrative: CHAPTER_RESULTS Table 9 reports these two
+    # channels mixture-weighted, so the figure beside it has to be the same
+    # quantity or the two disagree on the page
+    eq = load("out_mix_equity_uniform", idx=(0,))
+    op = load("out_mix_oprisk_conduct_uniform", idx=(0,))
     order = eq[H].sort_values().index.tolist()
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 5.8))
     barh_signed(axes[0], order, [eq.loc[r, H] for r in order])
@@ -264,9 +267,10 @@ def fig_equity_oprisk():
     for ax in axes:
         ax.grid(axis="x", color=GRID, lw=0.8, zorder=0)
         ax.set_axisbelow(True)
-    fig.suptitle("Downstream channels under Net Zero 2050",
+    fig.suptitle("Downstream channels, expected over the NGFS scenario set",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
-    fig.text(0.012, 1.012, "Equity via β·ΔGVA/GVA (§2.9); op-risk via Okun → unemployment → loss frequency (§2.11).",
+    fig.text(0.012, 1.012, "Uniform prior at 2040. Equity via β·ΔGVA/GVA (§2.9); "
+             "op-risk via Okun → unemployment → loss frequency (§2.11).",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig6_equity_oprisk.png"), dpi=300, bbox_inches="tight")
@@ -534,7 +538,10 @@ def fig_two_channels():
 
 # --- 13. credit: CDS spread shifts by sector and region ----------------------
 def fig_credit():
-    d = load("out_ext_credit_spread", idx=(0, 1, 2)).xs(NZ, level=0)[H].unstack()
+    # mixture, to match CHAPTER_RESULTS Table 8.  Both panel titles read their
+    # numbers off `d`, so the sector/region split and the beta correlation
+    # follow the source automatically
+    d = load("out_mix_credit_uniform", idx=(0, 1))[H].unstack()
     # drop FTSE (it is the equity column) and order sectors by median widening
     d = d.drop(columns=["FTSE"], errors="ignore")
     order = d.median().sort_values(ascending=False).index.tolist()
@@ -588,10 +595,10 @@ def fig_credit():
     axes[1].grid(color=GRID, lw=0.8, zorder=0)
     axes[1].set_axisbelow(True)
 
-    fig.suptitle("Credit: CDS spread shifts at 2040 under Net Zero 2050",
+    fig.suptitle("Credit: expected CDS spread shifts at 2040 over the NGFS scenario set",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.06)
     fig.text(0.012, 1.005,
-             "Positive = spread widens. Financials and UK Real Estate carry "
+             "Uniform prior. Positive = spread widens. Financials and UK Real Estate carry "
              "positive β in the paper's own UK estimates and therefore move "
              "against the rest — a property of that sample, not of this model.",
              fontsize=8.5, color=MUTED, ha="left")

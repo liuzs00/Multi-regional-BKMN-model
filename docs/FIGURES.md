@@ -166,14 +166,15 @@ comes from Δr, none from the curve. This is a validation figure as much as a
 result.
 
 ### fig6 — `fig6_equity_oprisk.png`
-**What.** Two downstream channels at 2040 under Net Zero: equity index shift
-(β·ΔGVA/GVA) and operational-risk conduct losses (Okun → unemployment → loss
-frequency).
+**What.** Two downstream channels at 2040, **mixture-weighted under the uniform
+prior** to match [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) Table 9: equity index
+shift (β·ΔGVA/GVA) and operational-risk conduct losses (Okun → unemployment →
+loss frequency).
 
 **Findings.** The two orderings **differ**, and instructively. Equity losses are
-led by RASIA −8.0 %, IND −7.8 %, TUR −7.5 %; op-risk conduct losses by
-RASIA +10.2 %, USA +8.3 %, CHE +7.0 %. **Türkiye is 3rd-worst on equity and last
-on op-risk** (+2.0 %), because the two channels run on different inputs: equity
+led by AFR −4.86 %, TUR −4.50 %, RASIA −4.45 %; op-risk conduct losses by
+RASIA +10.7 %, USA +8.6 %, CHE +7.3 %. **Türkiye is 2nd-worst on equity and last
+on op-risk** (+2.2 %), because the two channels run on different inputs: equity
 on the total GVA shock through a beta, op-risk on physical damage alone through
 Okun's law and the *base unemployment rate*. Türkiye's base rate is 10.46 %, so a
 given rise in unemployment is a small relative change; RASIA's is 2.83 %, so the
@@ -224,19 +225,22 @@ Priced at the published CBAM certificate price (\$86/t), and the caption now rea
 both price and revenue from the data — see the maintenance note above.
 
 ### fig13 — `fig13_credit_spreads.png`
-**What.** The credit channel (§2.9, CDS half) at 2040 under Net Zero: (a) CDS
-spread change by sector, one line per region; (b) each index's paper Table 9
-regression slope β against its median widening.
+**What.** The credit channel (§2.9, CDS half) at 2040, **mixture-weighted under
+the uniform prior** to match [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) Table 8:
+(a) CDS spread change by sector, one line per region; (b) each index's paper
+Table 9 regression slope β against its median widening.
 
 **Findings.** Widening is mostly a **sector** story — a variance decomposition
-puts **61 %** between sectors and only **19 %** between regions. Health Care is
-widest (median +25.2 %, and +71.3 % for India, the largest cell in the model),
-then Utilities +17.5 % and Basic Materials +14.5 %.
+puts **68 %** between sectors and only **16 %** between regions. Health Care is
+widest (median +11.7 %, and +31.0 % for India, the largest cell in the model),
+then Utilities +7.7 % and Basic Materials +7.1 %. On the Net Zero component
+alone the split is 61/19 and the levels are roughly twice as large, which is the
+usual gap between one narrative and the expectation over seven.
 
 Panel (b) separates what β does from what it does not. It fixes the **sign
 exactly** — all ten negative-β indices widen and both positive-β indices narrow,
 across all 13 regions without exception — but only sets about half the size
-(corr −0.65), the rest coming from which sectors each index is built from.
+(corr −0.67), the rest coming from which sectors each index is built from.
 
 **Read the two negative bars carefully.** Financials (β = +2.08) and UK Real
 Estate (β = +7.21) narrow because the paper's own Table 9 gives them positive
@@ -300,6 +304,28 @@ fig1, which makes the same point one scenario pair at a time. See
 | fig14 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3 (pass-through) | 2040, φ ∈ [0,1] |
 | fig15 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §7.1 (prior sensitivity) | 2040 |
 | fig11 | [TARIFF_CALIBRATION.md](TARIFF_CALIBRATION.md) | 2040 |
+
+## Scenario basis
+
+[CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) reports every headline as an expectation
+over the seven NGFS narratives, so a figure sitting beside one of its tables must
+be the same quantity. Not every figure is a headline, though, and three good
+reasons remain to hold one narrative fixed: to *contrast* narratives, to show the
+*inputs*, or to make a mechanism legible that the expectation averages away.
+This table records which is which, and why.
+
+| basis | figures | why |
+|---|---|---|
+| **mixture** (uniform prior) | fig2, fig6, fig13 | sits beside a mixture-weighted table in the chapter |
+| **mixture**, all four priors | fig3, fig15 | the prior *is* the subject |
+| all seven narratives | fig7 | model inputs, not results |
+| two narratives contrasted | fig1, fig8, fig10 | the spread between them is the point |
+| Net Zero 2050 only | fig4, fig12, fig14 | tail, decomposition and φ sweep — each needs a large charge to be legible, and each is labelled as a component in the text |
+| Current Policies only | fig5 | physical channel, which is near-invariant to the narrative anyway (1.03×) |
+| n/a | fig9, fig11 | drift sensitivity and CBAM, neither a climate-scenario result |
+
+The rule of thumb: **if a figure carries a headline number, it is the mixture; if
+it carries a mechanism, one narrative is allowed, and the caption says so.**
 
 **Not yet drawn:** the tariff illustration of [TARIFF_METHOD.md](TARIFF_METHOD.md)
 §5 has no figure, and neither does the China-share sweep. Both are candidates if

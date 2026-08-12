@@ -219,13 +219,18 @@ for s, v in [("Health Care", 4.86), ("Basic Materials", 2.93),
     chk(f"  consensus sector {s[:14]}", round(float(cons_c[s]), 2), v)
 flag("financials and real estate negative under consensus",
      cons_c["Financials"] < 0 and cons_c["UK Real Estate"] < 0)
-nzc = S("out_ext_credit_spread", (0, 1, 2)).xs(NZ, level=0)["2040"].unstack().drop(columns=["FTSE"])
-stk = nzc.stack().rename("v").reset_index()
+# the variance split and the beta correlation are quoted beside fig13, which
+# plots the mixture, so they are mixture quantities too -- on the Net Zero
+# component alone they read 61/19 and -0.65 instead
+uc = M("credit", "uniform", 1)["2040"].unstack().drop(columns=["FTSE"])
+stk = uc.stack().rename("v").reset_index()
 stk.columns = ["region", "index", "v"]
-chk("  sector variance %", round(stk.groupby("index").v.mean().var() / stk.v.var() * 100), 61, 1)
-chk("  region variance %", round(stk.groupby("region").v.mean().var() / stk.v.var() * 100), 19, 1)
+chk("  sector variance %", round(stk.groupby("index").v.mean().var() / stk.v.var() * 100), 68, 1)
+chk("  region variance %", round(stk.groupby("region").v.mean().var() / stk.v.var() * 100), 16, 1)
 chk("  corr(beta, median)",
-    round(float(np.corrcoef([CDS_BETA[c] for c in nzc.median().index], nzc.median().values)[0, 1]), 2), -0.65)
+    round(float(np.corrcoef([CDS_BETA[c] for c in uc.median().index], uc.median().values)[0, 1]), 2), -0.67)
+flag("beta fixes the sign for every index",
+     all((CDS_BETA[c] < 0) == (uc.median()[c] > 0) for c in uc.columns))
 eq = M("equity", "uniform")["2040"]
 oc = M("oprisk_conduct", "uniform")["2040"]
 b = equity.betas()
@@ -298,6 +303,21 @@ flag("fig14 min crossing is AFR", zs.index[0] == "AFR")
 flag("fig14 max crossing is CHE", zs.index[-1] == "CHE")
 flag("fig14 GBR is second-highest", zs.index[-2] == "GBR")
 flag("fig15 exists", os.path.exists(os.path.join(ROOT, "figures", "fig15_prior_sensitivity.png")))
+eqm, opm = M("equity", "uniform")["2040"], M("oprisk_conduct", "uniform")["2040"]
+flag("fig6 equity worst three", list(eqm.sort_values().index[:3]) == ["AFR", "TUR", "RASIA"])
+flag("fig6 op-risk worst three", list(opm.sort_values(ascending=False).index[:3]) == ["RASIA", "USA", "CHE"])
+flag("fig6 TUR 2nd on equity, last on op-risk",
+     list(eqm.sort_values().index).index("TUR") == 1
+     and list(opm.sort_values(ascending=False).index).index("TUR") == len(opm) - 1)
+chk("  fig6 TUR op-risk", round(float(opm["TUR"]), 1), 2.2, 0.05)
+for s, v in [("Health Care", 11.7), ("Utilities", 7.7), ("Basic Materials", 7.1)]:
+    chk(f"  fig13 median {s[:14]}", round(float(uc.median()[s]), 1), v, 0.05)
+chk("  fig13 India health care", round(float(uc.loc["IND", "Health Care"]), 1), 31.0, 0.05)
+# the caption claims the Net Zero component runs about twice the mixture
+nzr = S("out_ext_credit_spread", (0, 1, 2)).xs(NZ, level=0)["2040"].unstack().drop(columns=["FTSE"])
+flag("fig13 Net Zero roughly twice the mixture",
+     1.8 < float(nzr.median()["Health Care"] / uc.median()["Health Care"]) < 2.4,
+     f"{float(nzr.median()['Health Care'] / uc.median()['Health Care']):.2f}x")
 
 print()
 bad = sum(1 for v in ok if not v)

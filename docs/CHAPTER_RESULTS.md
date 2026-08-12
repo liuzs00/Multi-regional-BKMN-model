@@ -354,15 +354,15 @@ its estimated regression slopes.
 | Switzerland | **1.05** | 0.95 | 1.14 | 0.78 | *1.5* |
 
 Credit is the most sector-specific of the channels: decomposing the variance
-across the thirteen-by-twelve grid attributes 61 per cent of it to the sector and
-only 19 per cent to the region. Under the consensus prior the sector ordering is
+across the thirteen-by-twelve grid attributes 68 per cent of it to the sector and
+only 16 per cent to the region. Under the consensus prior the sector ordering is
 health care +4.9 per cent, basic materials +2.9, consumer goods +2.7 and
 utilities +2.2, with financials and real estate negative.
 
 The regression slope fixes the sign of each index exactly — all ten
 negative-slope indices widen and both positive-slope indices narrow, across all
 thirteen regions without exception — but accounts for only about half the
-variation in size, correlating −0.65 with the median widening. The remainder
+variation in size, correlating −0.67 with the median widening. The remainder
 comes from which sectors each index is built from.
 
 Financials and UK real estate narrow rather than widen, and this deserves care.
