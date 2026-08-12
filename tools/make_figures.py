@@ -705,74 +705,46 @@ def fig_credit():
 
 # --- 14. cost pass-through sensitivity ---------------------------------------
 def fig_phi():
+    """
+    One panel: each region's transition shock as phi runs from 0 to 1.
+
+    The deviation panel that used to sit beside this made the invariance point
+    graphically, but rates and exchange rates lying exactly on zero is better
+    stated as a number than drawn as a flat line, and the chapter states it.
+    """
     tr = load("out_phi_transition", idx=(0,))
-    cr = load("out_phi_credit", idx=(0,))
-    inv = load("out_phi_invariance", idx=(0,))
     phis = tr.index.to_numpy(float)
 
-    fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.0))
-
-    # panel a: every region's GVA shock crosses zero as phi rises
+    fig, ax = plt.subplots(figsize=(8.6, 5.4))
     show = pick_regions(["IND", "CHN", "AFR", "TUR", "RUS", "EU27", "USA",
                          "GBR", "CHE"], tr.columns, need=5)
     cols = [WARM, "#c9755a", "#d9a441", TEAL, "#3f8f8f", COOL, "#5b8bb5",
             "#6f7f96", "#9aa6b5"]
     for r, c in zip(show, cols):
         y = tr[r].to_numpy(float)
-        axes[0].plot(phis, y, lw=1.8, color=c, label=r, zorder=3)
+        ax.plot(phis, y, lw=1.8, color=c, label=r, zorder=3)
         s = np.where(np.diff(np.sign(y)) != 0)[0]
         if len(s):
             i = s[0]
             root = phis[i] + (phis[i + 1] - phis[i]) * (-y[i]) / (y[i + 1] - y[i])
-            axes[0].plot([root], [0], marker="o", ms=4, color=c, zorder=4)
-    axes[0].axhline(0, color=MUTED, lw=1)
-    axes[0].axvline(0.5, color=MUTED, lw=0.9, ls="--")
-    axes[0].text(0.505, axes[0].get_ylim()[0] * 0.92, "reporting value φ = 0.5",
-                 fontsize=7.5, color=MUTED)
-    axes[0].set_xlabel("cost pass-through φ")
-    axes[0].set_ylabel("transition GVA shock at 2040 (%)")
-    axes[0].set_title("The charge changes sign, and near the same φ everywhere",
-                      fontsize=10, fontweight="600", pad=8)
-    axes[0].legend(frameon=False, fontsize=7.5, ncol=3, loc="upper left")
-    axes[0].grid(color=GRID, lw=0.8, zorder=0)
-    axes[0].set_axisbelow(True)
+            ax.plot([root], [0], marker="o", ms=4, color=c, zorder=4)
+    ax.axhline(0, color=MUTED, lw=1)
+    ax.axvline(0.5, color=MUTED, lw=0.9, ls="--")
+    ax.text(0.505, ax.get_ylim()[0] * 0.92, "reporting value φ = 0.5",
+            fontsize=7.5, color=MUTED)
+    ax.set_xlabel("cost pass-through φ")
+    ax.set_ylabel("transition GVA shock at 2040 (%)")
+    ax.legend(frameon=False, fontsize=7.5, ncol=3, loc="upper left")
+    ax.grid(color=GRID, lw=0.8, zorder=0)
+    ax.set_axisbelow(True)
 
-    # panel b: everything as a deviation from the reporting value at phi = 0.5,
-    # so a channel that does not depend on phi sits exactly on zero
-    def dev(v):
-        v = np.asarray(v, float)
-        mid = v[np.argmin(abs(phis - 0.5))]
-        return (v - mid) / abs(mid) * 100
-
-    for lbl, v, c, ls in (
-            ("transition GVA", tr["IND"], WARM, "-"),
-            ("credit spread", cr["IND"], "#d9a441", "-"),
-            ("policy rate", inv["rate_IND_bp"], COOL, "--"),
-            ("5y forward FX", inv["fwd5_IND_pct"], TEAL, ":")):
-        axes[1].plot(phis, dev(v), lw=2.4 if ls != "-" else 2.0, color=c,
-                     ls=ls, label=lbl, zorder=3)
-    axes[1].axhline(0, color=MUTED, lw=1)
-    axes[1].set_xlabel("cost pass-through φ")
-    axes[1].set_ylabel("India: % change from the value at φ = 0.5")
-    rng = float(inv["rate_IND_bp"].max() - inv["rate_IND_bp"].min())
-    axes[1].set_title("φ moves value added and credit; rates and FX sit exactly "
-                      "on zero", fontsize=10, fontweight="600", pad=8)
-    axes[1].annotate("policy rate and FX: identical at every φ\n"
-                     f"(range {rng:.0e} bp)", xy=(0.30, 0), xytext=(0.18, 120),
-                     fontsize=7.5, color=MUTED,
-                     arrowprops=dict(arrowstyle="->", color=MUTED, lw=0.8))
-    axes[1].legend(frameon=False, fontsize=8, loc="upper left")
-    axes[1].grid(color=GRID, lw=0.8, zorder=0)
-    axes[1].set_axisbelow(True)
-
-    fig.suptitle("Cost pass-through is the model's widest single uncertainty — "
-                 "for two channels only",
+    fig.suptitle("Cost pass-through",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.05)
-    fig.text(0.012, 1.0,
-             "Net Zero 2050 at 2040. At φ = 0 a sector absorbs the whole carbon "
-             "charge in its own value added; at φ = 1 it passes all of it "
-             "downstream. Markers show where each region's shock changes sign.",
-             fontsize=8.5, color=MUTED, ha="left")
+    # fig.text(0.012, 1.0,
+    #          "Consensus mixture at 2040. At φ = 0 a sector absorbs the whole carbon "
+    #          "charge in its own value added; at φ = 1 it passes all of it "
+    #          "downstream. Markers show where each region's shock changes sign.",
+    #          fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig14_pass_through.png"), dpi=300,
                 bbox_inches="tight")

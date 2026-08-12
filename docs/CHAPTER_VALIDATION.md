@@ -227,6 +227,26 @@ The lesson outlives this project. Symmetry arguments establish that a model is
 needs at least one asymmetric, direction-pinning test per channel — and the way to find
 out whether it has one is to break the model on purpose.
 
+### 7.1 The harness is itself a hazard
+
+Mutation testing edits the model in place, which means an interrupted run can leave the
+break behind. That happened once here: a run killed mid-mutation left
+`technical_matrix` transposed, and the next gate run failed in two unrelated suites with
+errors that pointed nowhere near the cause. A transposed input-output matrix corrupts
+every number in the project and raises nothing.
+
+`tools/mutation_test.py` is therefore written to be interruptible. Each source is copied
+to a sidecar before it is touched; a sidecar found at startup means the previous run died,
+so it is restored and reported before anything else happens; every file is verified
+byte-identical to its backup on the way out, including line endings, so a clean run leaves
+no trace in `git status`. The restore path runs in a `finally`, but a `finally` does not
+survive a kill signal, which is the whole reason the sidecar exists.
+
+This is worth stating in a validation chapter rather than hiding in a docstring. A tool
+that can silently corrupt the artefact it is checking needs the same scepticism as the
+model, and "the test harness broke the model" is a failure mode a reader should be told
+about rather than left to rediscover.
+
 ---
 
 ## 8. Cross-implementation reading

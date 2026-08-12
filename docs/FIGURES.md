@@ -248,26 +248,35 @@ not a finding that climate stress improves bank or property credit. See
 Both panel titles compute their numbers from the data, per the maintenance note.
 
 ### fig14 — `fig14_pass_through.png`
-**What.** The cost pass-through sensitivity at 2040 under Net Zero: (a) each
+**What.** The cost pass-through sensitivity at 2040, **consensus mixture**: each
 region's transition GVA shock as φ runs from 0 to 1, with a marker where it
-changes sign; (b) four channels for India, expressed as a percentage change from
-their value at the reporting φ = 0.5.
+changes sign. Single panel — the deviation panel that used to sit beside it was
+dropped, because "rates and FX lie exactly on zero" is better stated as a number
+than drawn as a flat line.
 
 **Findings.** The endpoints are exact — at φ = 0 the shock is minus the region's
-carbon bill over value added, at φ = 1 plus the same, holding to machine
-precision. Every region's shock changes sign, and the crossings cluster tightly
-between **0.574** (Africa) and **0.676** (UK), with Switzerland alone at 0.812.
-All of them lie **above** one-half, so at the reported φ = 0.5 every region is
-still a net loser; the dual is not linear in φ and the midpoint is not neutral.
+carbon bill over value added, at φ = 1 plus the same, holding to 7e-15 in all
+seven narratives. Every region's shock changes sign, and under the consensus
+mixture the crossings run from **0.570** (Africa) to **0.854** (Switzerland),
+with the UK at 0.715. Taking all thirteen regions across all seven narratives
+they fall in **[0.568, 0.917]** — **above one-half everywhere**, so at the
+reported φ = 0.5 every region is still a net loser in every scenario; the dual is
+not linear in φ and the midpoint is not neutral.
 
-Panel (b) is the structural point. **Pass-through does not touch the policy rate
-or the exchange rate at all** — both sit exactly on zero across the whole range,
-a range of 0e+00 basis points — because the Taylor rule responds to inflation and
-physical damage, neither of which passes through the Leontief dual. What φ does
-reach is value added and, through it, credit: India's transition shock swings
-from −385 % to +590 % of its φ = 0.5 value, and its credit spread from +200 % to
-−410 %. The model's widest single uncertainty is therefore confined to two of the
-four financial channels. See [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3.
+**Read the levels as scenario-scaled and nothing else.** The curve stretches with
+the carbon price: the φ = 0 charge is 37× larger under Net Zero than under
+Current Policies, and India's φ = 0 shock is −20.90 % on the Net Zero component
+against −1.03 % here. The *shape* is what the figure is for.
+
+The structural point does not appear in the figure because there is nothing to
+draw. **Pass-through does not touch the policy rate or the exchange rate at all**
+— a range of 0e+00 across the whole sweep, in every narrative — because the
+Taylor rule responds to inflation and physical damage, neither of which passes
+through the Leontief dual. What φ does reach is value added and, through it,
+credit: India's transition shock swings from −378 % to +578 % of its φ = 0.5
+value, and its credit spread from +464 % to −664 %. The model's widest single
+uncertainty is therefore confined to two of the four financial channels. See
+[CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3.
 
 ### fig15 — `fig15_prior_sensitivity.png`
 **What.** For each channel, the ratio of its largest to its smallest 2040

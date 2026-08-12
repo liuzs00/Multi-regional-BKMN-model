@@ -187,36 +187,78 @@ consensus because the prior is defensible, not because transition risk is small.
 The single free parameter in the transition channel is φ, the share of the carbon
 charge a sector passes downstream rather than absorbing in its own value added.
 The reported results use φ = 0.5. Because that value is a convention rather than
-an estimate, the whole range is swept here, on the Net Zero component so that the
-charge is large enough for the sweep to be legible.
+an estimate, the whole range is swept here.
+
+The sweep is run inside every narrative and then mixture-weighted, like every
+other channel. It is worth separating three things that behave quite differently
+under that weighting, because the pass-through result is often quoted as though
+it were a single object.
+
+The **levels** are entirely scenario-scaled. The shock at any φ is proportional
+to the carbon charge, so the whole curve stretches with the carbon price: the
+φ = 0 charge is 37 times larger under Net Zero 2050 than under Current Policies,
+and India's φ = 0 shock is −20.90 per cent on the Net Zero component against
+−1.03 per cent under the consensus mixture. Nothing about the shape changes; only
+the scale does.
+
+The **structure** is scenario-free, and exactly so. The endpoint identity, the
+mirror symmetry and the invariance of rates and exchange rates below all hold to
+machine precision in all seven narratives, not merely in the one that happens to
+be reported.
+
+The **crossing** sits between the two. It moves a little with the scenario,
+because a narrative that prices the OECD heavily and the rest of the world barely
+changes which charges a sector imports rather than levies. The movement is small
+— a median of 0.024 across the seven narratives, and 0.139 at most, for the UK.
 
 ![pass-through](../figures/fig14_pass_through.png)
 
-**Table 4.** Transition GVA shock at 2040, Net Zero 2050, by pass-through (%)
+**Table 4.** Transition GVA shock at 2040, consensus mixture, by pass-through (%)
 
-| φ | EU27 | CHN | USA | GBR | CHE | RUS | IND | TUR | MEA |
-|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| 0.0 | −2.93 | −14.36 | −3.27 | −1.85 | −0.71 | −12.45 | −20.90 | −10.92 | −8.62 |
-| 0.5 | −0.96 | −4.72 | −0.71 | −0.61 | −0.44 | −2.86 | −4.29 | −2.86 | −1.61 |
-| 1.0 | +2.93 | +14.36 | +3.27 | +1.85 | +0.71 | +12.45 | +20.90 | +10.92 | +8.62 |
+| Region | 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | **0.5** | 0.6 | 0.7 | 0.8 | 0.9 | 1.0 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| EU27 | −0.100 | −0.090 | −0.079 | −0.067 | −0.054 | **−0.040** | −0.022 | −0.002 | +0.023 | +0.056 | +0.100 |
+| CHN | −0.707 | −0.627 | −0.541 | −0.449 | −0.348 | **−0.235** | −0.108 | +0.040 | +0.216 | +0.432 | +0.707 |
+| USA | −0.112 | −0.097 | −0.081 | −0.065 | −0.047 | **−0.027** | −0.006 | +0.018 | +0.044 | +0.075 | +0.112 |
+| GBR | −0.063 | −0.057 | −0.050 | −0.042 | −0.034 | **−0.025** | −0.015 | −0.002 | +0.013 | +0.034 | +0.063 |
+| CHE | −0.024 | −0.024 | −0.023 | −0.022 | −0.021 | **−0.019** | −0.017 | −0.013 | −0.006 | +0.005 | +0.024 |
+| RUS | −0.752 | −0.649 | −0.540 | −0.425 | −0.303 | **−0.171** | −0.028 | +0.131 | +0.309 | +0.513 | +0.752 |
+| IND | −1.030 | −0.885 | −0.733 | −0.571 | −0.400 | **−0.216** | −0.016 | +0.202 | +0.445 | +0.717 | +1.030 |
+| TUR | −0.835 | −0.726 | −0.610 | −0.485 | −0.349 | **−0.202** | −0.040 | +0.139 | +0.341 | +0.570 | +0.835 |
+| RASIA | −0.465 | −0.410 | −0.352 | −0.290 | −0.221 | **−0.146** | −0.061 | +0.036 | +0.151 | +0.291 | +0.465 |
+| LAM | −0.790 | −0.676 | −0.556 | −0.429 | −0.294 | **−0.151** | +0.004 | +0.172 | +0.355 | +0.559 | +0.790 |
+| MEA | −0.659 | −0.561 | −0.458 | −0.350 | −0.236 | **−0.115** | +0.015 | +0.154 | +0.306 | +0.473 | +0.659 |
+| AFR | −1.216 | −1.024 | −0.824 | −0.616 | −0.398 | **−0.170** | +0.072 | +0.328 | +0.601 | +0.896 | +1.216 |
+| ROW | −0.533 | −0.458 | −0.379 | −0.295 | −0.206 | **−0.111** | −0.007 | +0.106 | +0.231 | +0.372 | +0.533 |
 
-The endpoints are exact and hold to machine precision: at φ = 0 the shock is
-minus the region's carbon bill over its value added, and at φ = 1 it is plus the
-same, because a sector that passes everything downstream ends up collecting the
-charge rather than paying it. Every region's shock therefore changes sign
-somewhere in between, and the crossings cluster tightly — between 0.574 (Africa)
-and 0.676 (UK), with Switzerland alone as far out as 0.812. All of them lie
-*above* one half, so at the reported φ = 0.5 every region is still a net loser.
-The dual is not linear in φ and the midpoint is not the neutral point.
+Columns are φ; the reporting value φ = 0.5 is set in bold. All thirteen regions
+appear, since value added is not a currency quantity.
 
-The structural result is in the second panel. **Pass-through does not touch the
-policy rate or the exchange rate at all.** Both sit at exactly their φ = 0.5
+The endpoints are exact: at φ = 0 the shock is minus the region's carbon bill
+over its value added, and at φ = 1 it is plus the same, because a sector that
+passes everything downstream ends up collecting the charge rather than paying it.
+Both identities hold to 7 × 10⁻¹⁵ in every narrative, as does the mirror symmetry
+they imply. Every region's shock therefore changes sign somewhere in between.
+
+Under the consensus mixture the crossings run from **0.570** (Africa) to
+**0.854** (Switzerland), with the UK at 0.715 and India at 0.607. Taking all
+thirteen regions across all seven narratives, every crossing without exception
+falls in **[0.568, 0.917]** — that is, *above one half everywhere*. At the
+reported φ = 0.5 every region is still a net loser, in every scenario. The dual
+is not linear in φ, and the midpoint is not the neutral point.
+
+The structural result does not appear in the figure at all, because there is
+nothing to see: **pass-through does not touch the policy rate or the exchange
+rate.** Both sit at exactly their φ = 0.5
 values across the whole range — a spread of 0e+00 basis points on India's policy
-rate and 0e+00 percentage points on its five-year forward — because the Taylor
-rule responds to inflation and to physical damage, and neither passes through the
-Leontief dual. What φ does reach is value added and, through it, credit: India's
-transition shock swings from −387 to +587 per cent of its φ = 0.5 value and its
-credit spread from +196 to −396 per cent.
+rate and 0e+00 percentage points on its five-year forward, in every narrative —
+because the Taylor rule responds to inflation and to physical damage, and neither
+passes through the Leontief dual. Swept across φ they hold at −72.7 bp and −1.35
+per cent, which are precisely the consensus figures of Tables 5 and 7.
+
+What φ does reach is value added and, through it, credit: India's transition
+shock swings from −378 to +578 per cent of its φ = 0.5 value and its credit
+spread from +464 to −664 per cent.
 
 The model's widest single uncertainty is therefore confined to two of the four
 financial channels, and the two this chapter treats most carefully — rates and
