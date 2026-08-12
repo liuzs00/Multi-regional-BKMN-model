@@ -252,10 +252,10 @@ def fig_mixture():
     ax.invert_yaxis()
     ax.legend(title="scenario prior", loc="lower left", frameon=False, fontsize=8.5,
               title_fontsize=8.5)
+    # no subtitle: the construction of the four priors is set out in
+    # CHAPTER_RESULTS 1.2 and repeating it here only crowds the plot
     finish(fig, ax, "Expected FX shift under the Bayesian scenario mixture, 2040",
-           "Probability-weighted across the seven NGFS scenarios. 'consensus' is anchored on the "
-           "published current-policy warming estimate (UNEP/CAT, 2.7 C); the others are conventional or asserted.",
-           "fig3_mixture_expected_fx.png", "expected 5y forward FX vs EUR (%)")
+           "", "fig3_mixture_expected_fx.png", "expected 5y forward FX vs EUR (%)")
 
 
 # --- 4. volatility band ------------------------------------------------------
@@ -484,7 +484,7 @@ def fig_term_structure():
     ax.grid(color=GRID, lw=0.8, zorder=0); ax.set_axisbelow(True)
     fig.suptitle("Long-rate term structure: the shift decays with maturity (Prop 2)",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.055)
-    fig.text(0.012, 1.005, "Consensus mixture. Hull-White 1F with a = 0.04: "
+    fig.text(0.012, 1.005, "Consensus mixture. Hull-White  with a = 0.04: "
              "dR(t,T) = B(tau)/tau . dr(t), sigma-independent. "
              "20Y/1D ratio = 0.688 by construction.",
              fontsize=8.5, color=MUTED, ha="left")
