@@ -65,6 +65,13 @@ independently place current policy on. It concentrates 80.7 per cent on Current
 Policies, which is the same role — and almost the same concentration — as the
 single-region study's 90 per cent on SSP2 paired with RCP4.5.
 
+Reporting more than one prior is not a departure from that study. Its Table 12
+is computed at 90/90 and its Table 14 repeats the whole expectation at 20/20 —
+a uniform prior across the five SSPs, with RCP4.5 merely double-weighted — for
+exactly the reason given here, that the concentration is asserted rather than
+estimated. What is done below is that comparison widened from two points to
+four, and made a reported result rather than an appendix.
+
 Two properties of the construction should be stated, because the mixture does
 less work here than in the original.
 
