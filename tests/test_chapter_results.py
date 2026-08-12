@@ -127,40 +127,79 @@ chk("  transition/physical ratio, consensus",
 chk("  Net Zero transition mean", round(float(S("out_ext_gdp_transition").xs(NZ, level=0)["2040"].mean()), 2), -2.20)
 
 print("3. pass-through")
+# the sweep is consensus-weighted like every other channel; the chapter splits
+# its content into scenario-scaled levels, scenario-free structure, and the
+# crossing, which sits between the two.  Each of the three is gated separately.
 pt = S("out_phi_transition", (0,))
-for phi, row in [(0.0, {"EU27": -2.93, "CHN": -14.36, "USA": -3.27, "GBR": -1.85, "CHE": -0.71,
-                        "RUS": -12.45, "IND": -20.90, "TUR": -10.92, "MEA": -8.62}),
-                 (0.5, {"EU27": -0.96, "CHN": -4.72, "USA": -0.71, "GBR": -0.61, "CHE": -0.44,
-                        "RUS": -2.86, "IND": -4.29, "TUR": -2.86, "MEA": -1.61})]:
-    for r, v in row.items():
-        chk(f"  phi={phi} {r}", round(float(pt.loc[phi, r]), 2), v)
-flag("phi=1 mirrors phi=0",
-     bool((pt.loc[1.0] + pt.loc[0.0]).abs().max() < 1e-9),
-     f"max|sum| = {float((pt.loc[1.0] + pt.loc[0.0]).abs().max()):.1e}")
-zc = {}
-p_ = pt.index.to_numpy(float)
-for r in pt.columns:
-    v = pt[r].to_numpy(float)
-    i = np.where(np.diff(np.sign(v)) != 0)[0][0]
-    zc[r] = p_[i] + (p_[i+1]-p_[i]) * (-v[i]) / (v[i+1]-v[i])
-zs = pd.Series(zc).sort_values()
-chk("  crossing min", round(float(zs.iloc[0]), 3), 0.574)
-chk("  crossing max", round(float(zs.iloc[-1]), 3), 0.812)
-chk("  GBR crossing", round(zc["GBR"], 3), 0.676)
-flag("min crossing is AFR", zs.index[0] == "AFR")
-flag("max crossing is CHE", zs.index[-1] == "CHE")
-flag("GBR is second-highest crossing", zs.index[-2] == "GBR")
-flag("all crossings above one half", all(v > 0.5 for v in zc.values()))
+pts = S("out_phi_transition_scen")
+# Table 4 in full: 13 regions x 11 phi, transposed so phi runs across the top
+TABLE4 = {
+    "EU27":  [-0.100, -0.090, -0.079, -0.067, -0.054, -0.040, -0.022, -0.002, 0.023, 0.056, 0.100],
+    "CHN":   [-0.707, -0.627, -0.541, -0.449, -0.348, -0.235, -0.108, 0.040, 0.216, 0.432, 0.707],
+    "USA":   [-0.112, -0.097, -0.081, -0.065, -0.047, -0.027, -0.006, 0.018, 0.044, 0.075, 0.112],
+    "GBR":   [-0.063, -0.057, -0.050, -0.042, -0.034, -0.025, -0.015, -0.002, 0.013, 0.034, 0.063],
+    "CHE":   [-0.024, -0.024, -0.023, -0.022, -0.021, -0.019, -0.017, -0.013, -0.006, 0.005, 0.024],
+    "RUS":   [-0.752, -0.649, -0.540, -0.425, -0.303, -0.171, -0.028, 0.131, 0.309, 0.513, 0.752],
+    "IND":   [-1.030, -0.885, -0.733, -0.571, -0.400, -0.216, -0.016, 0.202, 0.445, 0.717, 1.030],
+    "TUR":   [-0.835, -0.726, -0.610, -0.485, -0.349, -0.202, -0.040, 0.139, 0.341, 0.570, 0.835],
+    "RASIA": [-0.465, -0.410, -0.352, -0.290, -0.221, -0.146, -0.061, 0.036, 0.151, 0.291, 0.465],
+    "LAM":   [-0.790, -0.676, -0.556, -0.429, -0.294, -0.151, 0.004, 0.172, 0.355, 0.559, 0.790],
+    "MEA":   [-0.659, -0.561, -0.458, -0.350, -0.236, -0.115, 0.015, 0.154, 0.306, 0.473, 0.659],
+    "AFR":   [-1.216, -1.024, -0.824, -0.616, -0.398, -0.170, 0.072, 0.328, 0.601, 0.896, 1.216],
+    "ROW":   [-0.533, -0.458, -0.379, -0.295, -0.206, -0.111, -0.007, 0.106, 0.231, 0.372, 0.533],
+}
+_phis = [round(0.1 * i, 1) for i in range(11)]
+flag("Table 4 covers every region", sorted(TABLE4) == sorted(m.regions_order))
+flag("Table 4 covers phi 0 to 1 in steps of 0.1",
+     [round(float(x), 1) for x in pt.index] == _phis)
+for r, row in TABLE4.items():
+    bad = [(p, round(float(pt.loc[p, r]), 3), v) for p, v in zip(_phis, row)
+           if abs(round(float(pt.loc[p, r]), 3) - v) > 5e-4]
+    flag(f"  Table 4 row {r}", not bad, "11 cells" + (f", off: {bad[:2]}" if bad else ""))
+
+# -- structural: exact, in every narrative -----------------------------------
+_mir = max(float((pts.xs(s, level=0)["1.0"] + pts.xs(s, level=0)["0.0"]).abs().max())
+           for s in pts.index.get_level_values(0).unique())
+flag("phi=1 mirrors phi=0 in every narrative", _mir < 1e-12, f"max|sum| = {_mir:.1e}")
 inv = S("out_phi_invariance", (0,))
 chk("  rate invariance", float(inv.rate_IND_bp.max() - inv.rate_IND_bp.min()), 0.0, 0.0)
 chk("  FX invariance", float(inv.fwd5_IND_pct.max() - inv.fwd5_IND_pct.min()), 0.0, 0.0)
+chk("  invariance rate level matches Table 5", round(float(inv.rate_IND_bp.iloc[0]), 1), -72.7, 0.05)
+chk("  invariance FX level matches Table 7", round(float(inv.fwd5_IND_pct.iloc[0]), 2), -1.35)
+
+# -- scenario-scaled: only the level -----------------------------------------
+_nz0 = pts.xs(NZ, level=0)["0.0"].abs().sum()
+_cp0 = pts.xs(CP, level=0)["0.0"].abs().sum()
+chk("  phi=0 charge, NZ vs CP", round(float(_nz0 / _cp0)), 37, 0.5)
+chk("  IND phi=0, Net Zero component", round(float(pts.loc[(NZ, "IND"), "0.0"]), 2), -20.90)
+chk("  IND phi=0, consensus", round(float(pt.loc[0.0, "IND"]), 2), -1.03)
+
+# -- in between: the crossing ------------------------------------------------
+cx = S("out_phi_crossings", (0,))
+zs = cx[HEAD].sort_values()
+chk("  consensus crossing min", round(float(zs.iloc[0]), 3), 0.570)
+chk("  consensus crossing max", round(float(zs.iloc[-1]), 3), 0.854)
+chk("  GBR crossing", round(float(cx.loc["GBR", HEAD]), 3), 0.715)
+chk("  IND crossing", round(float(cx.loc["IND", HEAD]), 3), 0.607)
+flag("min crossing is AFR", zs.index[0] == "AFR")
+flag("max crossing is CHE", zs.index[-1] == "CHE")
+_scen_cols = [c for c in cx.columns if c != HEAD]
+_band = cx[_scen_cols].to_numpy(float)
+chk("  band low, all regions x narratives", round(float(np.nanmin(_band)), 3), 0.568)
+chk("  band high, all regions x narratives", round(float(np.nanmax(_band)), 3), 0.917)
+flag("every crossing above one half, every narrative", float(np.nanmin(_band)) > 0.5)
+_rng = cx[_scen_cols].max(axis=1) - cx[_scen_cols].min(axis=1)
+chk("  crossing spread, median", round(float(_rng.median()), 3), 0.024)
+chk("  crossing spread, max", round(float(_rng.max()), 3), 0.139)
+flag("widest crossing spread is GBR", _rng.idxmax() == "GBR")
+
 mid = float(pt.loc[0.5, "IND"])
-chk("  IND transition swing low", round((float(pt.loc[0.0, "IND"]) - mid) / abs(mid) * 100), -387, 3)
-chk("  IND transition swing high", round((float(pt.loc[1.0, "IND"]) - mid) / abs(mid) * 100), 587, 3)
+chk("  IND transition swing low", round((float(pt.loc[0.0, "IND"]) - mid) / abs(mid) * 100), -378, 3)
+chk("  IND transition swing high", round((float(pt.loc[1.0, "IND"]) - mid) / abs(mid) * 100), 578, 3)
 pc = S("out_phi_credit", (0,))
 cmid = float(pc.loc[0.5, "IND"])
-chk("  IND credit swing low", round((float(pc.loc[0.0, "IND"]) - cmid) / abs(cmid) * 100), 196, 3)
-chk("  IND credit swing high", round((float(pc.loc[1.0, "IND"]) - cmid) / abs(cmid) * 100), -396, 3)
+chk("  IND credit swing low", round((float(pc.loc[0.0, "IND"]) - cmid) / abs(cmid) * 100), 464, 3)
+chk("  IND credit swing high", round((float(pc.loc[1.0, "IND"]) - cmid) / abs(cmid) * 100), -664, 3)
 
 print("4. rates")
 rt = M("rate")
