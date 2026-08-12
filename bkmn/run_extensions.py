@@ -220,6 +220,7 @@ def main():
         "equity": table(dv, "equity", allreg, 100),
         "oprisk_conduct": table(dv, "opConduct", allreg, 100),
         "credit": cdf,
+        "rate_term_structure": rt[HORIZONS],
     }
     for prior, shape in priors.items():
         for name, tbl in channels.items():
@@ -342,18 +343,41 @@ def main():
                   "cbam_rate_pct": [tau[k] * 100 for k in cov]})       .sort_values("cbam_rate_pct", ascending=False)       .to_csv(f"{ROOT}/out_sens_cbam_rates.csv", index=False)
 
     # --- Phase V: volatility band (95th pct of inputs, Net Zero) -------------
+    # Stress every narrative, not just Net Zero: the chapter reports the tail
+    # as a mixture like everything else, and a tail computed on one scenario
+    # cannot be weighted against a central case computed on seven.
     tsig, psig = volatility.temperature_sigma(), volatility.carbon_price_sigma()
-    s = "Net Zero 2050"
     z = 1.6448536269514722                                    # Φ⁻¹(0.95)
-    xce_hi = xce_annual(sc, s).copy()
-    for r in m.regions_order:
-        zone = sc._zone(r)
-        if (s, zone) in psig.columns:
-            xce_hi[r] = volatility.stress(xce_hi[r], psig[(s, zone)], z)
-    dT_hi = {t: sc.delta_T(s, t, BASE) + z * float(tsig.loc[t, s] - tsig.loc[BASE, s])
-             for t in HORIZONS}
-    hi = derive(m, chain(m, sc, s, M, scope, vl, xce_hi, dT_hi), fxregs, betas, kap, u0)
-    table({s: hi}, "fwd5", fxregs, 100).to_csv(f"{ROOT}/out_ext_fx_forward_q95.csv")
+    his = {}
+    for s in sc.names:
+        xce_hi = xce_annual(sc, s).copy()
+        for r in m.regions_order:
+            zone = sc._zone(r)
+            if (s, zone) in psig.columns:
+                xce_hi[r] = volatility.stress(xce_hi[r], psig[(s, zone)], z)
+        # `warming`, NOT sc.delta_T(..., BASE): the damage function is evaluated
+        # on the pre-industrial level (WARMING_BASELINE in run_fx), and the
+        # central path uses that.  Building the stressed path off the 2022 base
+        # instead fed the damage function ~0.2 K where the central run sees
+        # ~1.5 K and, since Omega is quadratic, made the "stressed" run milder
+        # than the central one -- the tail was inverted for the physical leg.
+        dT_hi = {t: warming(sc, s, t)
+                 + z * float(tsig.loc[t, s] - tsig.loc[BASE, s])
+                 for t in HORIZONS}
+        his[s] = derive(m, chain(m, sc, s, M, scope, vl, xce_hi, dT_hi),
+                        fxregs, betas, kap, u0)
+    q95 = table(his, "fwd5", fxregs, 100)
+    q95.to_csv(f"{ROOT}/out_ext_fx_forward_q95.csv")
+    # the spot leg too: the stress perturbs the carbon price and the temperature
+    # at once, and those reach the forward through different terms, so the two
+    # legs are needed to say which one drives the tail under a given narrative
+    q95s = table(his, "spot", fxregs, 100)
+    q95s.to_csv(f"{ROOT}/out_ext_fx_spot_q95.csv")
+    for prior in priors:
+        mixture.expected(q95, priors[prior]).to_csv(
+            f"{ROOT}/out_mix_fx_forward_q95_{prior}.csv")
+        mixture.expected(q95s, priors[prior]).to_csv(
+            f"{ROOT}/out_mix_fx_spot_q95_{prior}.csv")
 
     # --- report --------------------------------------------------------------
     pd.set_option("display.width", 200, "display.float_format", lambda v: f"{v:7.2f}")
