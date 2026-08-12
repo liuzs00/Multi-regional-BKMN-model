@@ -495,6 +495,33 @@ flag("six floating currencies plus one peg",
 chk("  peg wedge, consensus (bp)",
     round(float(rt.loc["MEA", "2040"] - rt.loc["USA", "2040"])), -25, 0.5)
 
+print("12. CHAPTER_INTRODUCTION.md")
+# the introduction previews results carried in full elsewhere; gate the figures
+# it quotes in its own text, since a preview is exactly where a stale number
+# survives longest
+chk("  rupee 5y forward, consensus (%)", round(float(M("fx_forward").loc["IND", "2040"]), 2), -1.35)
+chk("  sterling 5y forward, consensus (%)", round(float(M("fx_forward").loc["GBR", "2040"]), 2), 0.35)
+chk("  spot FX prior range (rupee)",
+    round(max(abs(float(M("fx_spot", p).loc["IND", "2040"])) for p in P)
+          / min(abs(float(M("fx_spot", p).loc["IND", "2040"])) for p in P), 1), 22.7, 0.05)
+chk("  policy-rate prior range (mean)",
+    round(max(abs(float(M("rate", p)["2040"].loc[CCY].mean())) for p in P)
+          / min(abs(float(M("rate", p)["2040"].loc[CCY].mean())) for p in P), 2), 1.04, 5e-3)
+_trn = [float(S("out_ext_gdp_transition").xs(s, level=0)["2040"].mean())
+        for s in S("out_ext_gdp_transition").index.get_level_values(0).unique()]
+chk("  transition varies 37x across narratives",
+    round(max(_trn, key=abs) / min(_trn, key=abs)), 37, 0.5)
+chk("  MEA policy rate at 2040 (bp)", round(float(rt.loc["MEA", "2040"]), 1), -65.7, 0.05)
+chk("  USA policy rate at 2040 (bp)", round(float(rt.loc["USA", "2040"]), 1), -40.9, 0.05)
+chk("  China equity beta", round(float(pd.Series(equity.betas())["CHN"]), 2), 0.26)
+_cr = pd.read_csv(os.path.join(ROOT, "out_phi_crossings.csv"))
+_cv = _cr.select_dtypes("number").values.ravel()
+chk("  phi crossing, lowest", round(float(np.nanmin(_cv)), 3), 0.568)
+chk("  phi crossing, highest", round(float(np.nanmax(_cv)), 3), 0.917)
+chk("  Hull-White B(1) forward point", round(float(hw_B(1.0)), 2), 0.98)
+chk("  Hull-White B(20) forward point", round(float(hw_B(20.0)), 2), 13.77)
+flag("13 regions = 12 analytical + 1 closure", len(m.regions_order) == 13 and "ROW" in m.regions_order)
+
 print()
 bad = sum(1 for v in ok if not v)
 print(f"{'ALL ' + str(len(ok)) + ' CHECKS PASSED' if not bad else str(bad) + ' FAILED of ' + str(len(ok))}")
