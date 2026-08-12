@@ -202,11 +202,35 @@ def main():
     # --- Phase M: mixture over scenarios ------------------------------------
     # `consensus` is the citable prior (UNEP/CAT current-policy warming anchor);
     # the other three are uninformative + asserted bookends.
+    #
+    # The mixture is applied to EVERY channel, not only FX.  A per-scenario table
+    # is a component of the answer; the expectation over the scenario
+    # distribution is the answer, and reporting one narrative as though it were
+    # the result overstates the transition channel by a factor of 37 (Net Zero
+    # against Current Policies).  Expectation is linear, so E[X] over scenarios
+    # commutes with every downstream transform that is itself linear.
     priors = dict(mixture.PRIORS)
     priors["consensus"] = mixture.consensus_shape(sc.coords())
+    channels = {
+        "fx_forward": fwd, "fx_spot": spot,
+        "gdp_transition": table(chains, "trans", allreg, 100),
+        "gdp_physical": table(chains, "phys", allreg, 100),
+        "gdp_total": table(chains, "dY", allreg, 100),
+        "rate": table(chains, "dr", allreg, 1e4),
+        "equity": table(dv, "equity", allreg, 100),
+        "oprisk_conduct": table(dv, "opConduct", allreg, 100),
+        "credit": cdf,
+    }
     for prior, shape in priors.items():
-        mixture.expected(fwd, shape).to_csv(f"{ROOT}/out_ext_fx_expected_{prior}.csv")
+        for name, tbl in channels.items():
+            mixture.expected(tbl, shape).to_csv(
+                f"{ROOT}/out_mix_{name}_{prior}.csv")
+        # keep the legacy FX filename, which the figures and docs already use
+        mixture.expected(fwd, shape).to_csv(
+            f"{ROOT}/out_ext_fx_expected_{prior}.csv")
     mixture.quantile(fwd, 0.95, "uniform").to_csv(f"{ROOT}/out_ext_fx_q95_scen.csv")
+    pd.DataFrame({p: mixture.weights(s, scenarios=list(sc.names))
+                  for p, s in priors.items()}).to_csv(f"{ROOT}/out_mix_weights.csv")
 
     # --- Sensitivity: scenario drift under the Eq-1 transition matrix --------
     # NOT part of the headline: it needs two assumptions the static mixture does

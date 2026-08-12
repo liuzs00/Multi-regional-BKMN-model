@@ -52,16 +52,25 @@ physical one.** The panels keep independent x-scales (3.3× apart) with the
 difference stated in the subtitle.
 
 ### fig2 — `fig2_fx_forward_ranking.png`
-**What.** 5-year forward FX shift against the euro at 2040, one bar per currency,
-with a tick marking the spot-only component.
+**What.** 5-year forward FX shift against the euro at 2040, one bar per currency.
+Bars are the **uniform-prior mixture** over the seven NGFS narratives; the tick
+marks the **Net Zero 2050 component**.
 
-**Findings.** INR −3.61 %, TRY −3.00 %, USD −1.91 % at one end; CHF −0.59 % and
-GBP −0.83 % at the other. The ordering blends **physical vulnerability** with the
-absence of carbon pricing — India and Türkiye score badly on both, Switzerland
-well on both. Under the 13-region set **every** currency strengthens against the
-euro; the sign reversals an earlier 20-region build showed came from Japan, Korea
-and Norway, none of which is now a region. The ticks are a substantial share of
-each bar, since spot and forward are only 1.6× apart.
+**Findings.** Expected: INR −2.04 %, TRY −1.40 %, CNY −0.95 %, USD −0.51 %, then
+CHF −0.02 % and GBP −0.01 %. The ordering blends **physical vulnerability** with
+the absence of carbon pricing — India and Türkiye score badly on both,
+Switzerland well on both. Under the 13-region set **every** currency strengthens
+against the euro in expectation; the sign reversals an earlier 20-region build
+showed came from Japan, Korea and Norway, none of which is now a region.
+
+The tick sits outside every bar, and that gap is the point: Net Zero is the most
+transition-intensive of the seven narratives, so quoting it alone (INR −3.61 %,
+USD −1.91 %) overstates the expected move — by 1.5–3.7× for the four currencies
+that actually move, and by 25× and 120× for the franc and sterling, whose
+expected moves are close to zero. This is why
+[CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) leads every channel with the mixture and
+shows the single narrative as a labelled component. The tick is *not* the spot
+component — that comparison is fig12.
 
 Read the sign carefully: a currency "strengthening" here reflects an output
 collapse forcing deep rate cuts, so it is a distress signal, not strength.
@@ -259,6 +268,24 @@ from −385 % to +590 % of its φ = 0.5 value, and its credit spread from +200 %
 −410 %. The model's widest single uncertainty is therefore confined to two of the
 four financial channels. See [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3.
 
+### fig15 — `fig15_prior_sensitivity.png`
+**What.** For each channel, the ratio of its largest to its smallest 2040
+headline across the four scenario priors, on a log scale, coloured by which
+underlying shock the channel carries. A bar at 1× means the prior is irrelevant.
+
+**Findings.** The spread is three orders of magnitude wide and splits cleanly by
+driver. Carbon-charge channels inherit the narratives' full disagreement about
+policy — spot FX **22.7×**, transition GVA **8.6×**, credit **4.1×**. Physical
+channels barely notice it — policy rate **1.04×**, operational risk **1.03×**,
+physical damage **1.03×** — because warming to 2040 is largely locked in whatever
+policy does. Channels carrying both land between, at about 1.7–1.8×.
+
+This is the honest summary of what the mixture buys. NGFS publishes no scenario
+probabilities, so every expectation here rests on an assumed distribution; this
+figure says which results survive that assumption and which do not. Read with
+fig1, which makes the same point one scenario pair at a time. See
+[CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §7.1.
+
 ---
 
 ## Coverage
@@ -267,10 +294,11 @@ four financial channels. See [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3.
 |---|---|---|
 | fig1, fig5 | physical / transition channels | 2040 |
 | fig2, fig8, fig12 | [FX_REPORT.md](FX_REPORT.md) | 2040, 2045 |
-| fig3, fig4, fig9 | scenario uncertainty | 2040 |
+| fig3, fig4, fig9, fig15 | scenario uncertainty | 2040 |
 | fig6, fig10 | downstream channels | 2040 |
 | fig13 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §6 (credit) | 2040 |
 | fig14 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3 (pass-through) | 2040, φ ∈ [0,1] |
+| fig15 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §7.1 (prior sensitivity) | 2040 |
 | fig11 | [TARIFF_CALIBRATION.md](TARIFF_CALIBRATION.md) | 2040 |
 
 **Not yet drawn:** the tariff illustration of [TARIFF_METHOD.md](TARIFF_METHOD.md)
