@@ -65,6 +65,49 @@ neutral — it introduces bias whose direction depends on how heterogeneous the
 merged units are. That warning is the reason §4.2 derives its region set from a
 stated rule rather than asserting one.
 
+The multi-regional literature is largely a history of one obstacle: the
+inter-regional flows are the object one needs and the object one rarely has.
+Isard's (1951) interregional model is the exact formulation, in which the
+coefficient $a_{ij}^{rs}$ records how much of good $i$ from region $r$ sector
+$j$ in region $s$ requires. It is also the least usable, because it demands a
+full bilateral flow matrix that statistical agencies do not collect. The two
+classical responses take opposite routes around this. The Chenery–Moses
+model (Chenery, 1953; Moses, 1955) keeps the accounting exact but weakens the
+behavioural content: it assumes that every user of a good within a region draws
+on the same mix of origins, so that a single trade coefficient $t_i^{rs}$ —
+region $r$'s share of region $s$'s total supply of good $i$ — can be applied
+across all using sectors, giving $a_{ij}^{rs} = t_i^{rs}\,a_{ij}^{s}$. This
+requires only regional trade totals rather than a full flow matrix, at the cost
+of assuming that a car plant and a hospital in the same region source their steel
+from the same places in the same proportions.
+
+The Leontief–Strout (1963) gravity trade model instead estimates the flows that
+are missing. Regional outputs are treated as entering a national pool from which
+regions draw, and the bilateral flow of good $i$ is postulated to obey a gravity
+relation,
+
+$$z_i^{rs} \;=\; \frac{x_i^{r}\,d_i^{s}}{x_i^{\bullet}}\;Q_i^{rs},$$
+
+in which $x_i^{r}$ is supply in $r$, $d_i^{s}$ is demand in $s$, $x_i^{\bullet}$
+is the national total, and $Q_i^{rs}$ is an interregional friction term,
+decreasing in transport cost or distance. Since the $Q_i^{rs}$ must be chosen so
+that the implied flows reproduce the known row and column totals, the model is
+solved iteratively, by proportional fitting of the kind familiar from the RAS
+balancing procedure. It is an elegant solution to a genuine data problem, and it
+is worth being clear about what it costs: the resulting trade pattern is a
+*model output*, so any subsequent result that depends on how a shock crosses a
+border inherits the gravity specification's error along with the model's own.
+
+This dissertation needs neither device. The OECD inter-country tables supply the
+off-diagonal blocks $\mathbf{Z}^{rs}$ directly, so the trade structure enters as
+data rather than as an estimate, and the propagation of a carbon charge across
+borders — which is precisely the quantity the multi-regional extension exists to
+measure — does not rest on an assumed distance decay or a uniform sourcing
+assumption. That is a substantive advantage of building on an inter-country table
+rather than assembling one from national tables, and it is worth stating because
+it removes an entire layer of estimation error that much of the multi-regional
+literature must carry.
+
 Between the input–output foundations and the stress-testing framework sits the
 question of what, exactly, a carbon tax does to an economy that produces in a
 network. Treating the charge as an ad-valorem wedge on each sector's output, and
@@ -118,16 +161,30 @@ carbon: results from the DICE-2023 model. *PNAS* 121(13).
 Berrahoui, M., C. Kenyon, A. Macrina and G. Nathanael (2025). *Simple climate
 stress testing: an ensemble framework.* Working paper.
 
+Chenery, H. B. (1953). Regional analysis. In *The Structure and Growth of the
+Italian Economy*, ed. H. B. Chenery, P. G. Clark and V. Cao-Pinna. Rome: US
+Mutual Security Agency.
+
 Hull, J. and A. White (1994). Numerical procedures for implementing term
 structure models I: single-factor models. *Journal of Derivatives* 2(1), 7–16.
 
+Isard, W. (1951). Interregional and regional input–output analysis: a model of a
+space-economy. *Review of Economics and Statistics* 33(4), 318–328.
+
 Leontief, W. (1986). *Input–Output Economics*, 2nd edn. Oxford University Press.
+
+Leontief, W. and A. Strout (1963). Multiregional input–output analysis. In
+*Structural Interdependence and Economic Development*, ed. T. Barna, 119–150.
+London: Macmillan.
 
 Miller, R. E. and P. D. Blair (2022). *Input–Output Analysis: Foundations and
 Extensions*, 3rd edn. Cambridge University Press.
 
 Moessner, R. (2022). *Effects of carbon pricing on inflation.* CESifo Working
 Paper.
+
+Moses, L. N. (1955). The stability of interregional trading patterns and
+input–output analysis. *American Economic Review* 45(5), 803–826.
 
 Notre Dame Global Adaptation Initiative (2024). *ND-GAIN Country Index*, 2024
 release.
