@@ -314,6 +314,20 @@ for p, v in zip(P, (-24.6, -24.8, -24.4, -24.8)):
     chk(f"  peg gap {p[:9]}", round(g, 1), v, 0.05)
 
 print("6. credit")
+# the section opener describes the blend, so gate the numbers it quotes
+from bkmn import credit as _cr                            # noqa: E402
+from bkmn.paper_tables import CDS_SECTORS, CDS_WEIGHTS    # noqa: E402
+_idx = [c for c in CDS_SECTORS if c != "FTSE"]
+chk("  indices excluding FTSE", len(_idx), 12, 0)
+_hc = list(CDS_SECTORS).index("Health Care")
+chk("  Health Care weight on SIC C", round(float(CDS_WEIGHTS["C"][_hc]), 3), 0.553, 5e-4)
+chk("  Health Care weight on SIC Q", round(float(CDS_WEIGHTS["Q"][_hc]), 3), 0.447, 5e-4)
+_sic = np.array([_cr.ICIO_TO_SIC[i] for i in m.industry_of])
+_k = m.region_of == "IND"
+chk("  India output ratio C:Q",
+    round(float(m.x[_k & (_sic == "C")].sum() / m.x[_k & (_sic == "Q")].sum())), 32, 0.5)
+flag("exactly two indices carry a positive slope",
+     [c for c in _idx if CDS_BETA[c] > 0] == ["Financials", "UK Real Estate"])
 for r, y25, y30, y40, y45, u in [("CHN", 0.89, 1.38, 1.93, 2.15, 4.37), ("IND", 0.73, 1.24, 1.78, 1.98, 5.90),
                                  ("TUR", 0.74, 1.21, 1.67, 1.87, 4.20), ("RUS", 0.55, 0.89, 1.33, 1.51, 3.59),
                                  ("EU27", 0.58, 0.77, 1.04, 1.15, 2.04), ("MEA", 0.32, 0.64, 0.90, 1.00, 2.06),

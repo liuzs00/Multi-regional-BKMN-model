@@ -445,9 +445,27 @@ already contains, and the number will grow with the horizon, since both legs do.
 
 ## 6. Credit, equity and operational risk
 
-The credit channel blends sector-level value-added shocks into synthetic indices
-using the original study's published index weights, then transmits them through
-its estimated regression slopes.
+All three channels in this section share a shape. Each takes the value-added
+shock of §2 and converts it into a market price through an elasticity estimated
+elsewhere and taken as given here — a regression slope for credit and equity, an
+Okun coefficient for operational risk. None of them is re-estimated on this
+model's data. What the multi-regional extension supplies is the *shock*; what the
+original study supplies is the translation from a shock into a price.
+
+Credit needs one step the other two do not. A CDS index is a basket of sectors
+rather than an economy, so a regional value-added shock cannot be applied to it
+directly. The sector-level shocks are therefore first blended into each of the
+twelve indices using the original study's published weights, its Tables 7–8 —
+Health Care, for instance, is 55 per cent manufacturing, where pharmaceuticals
+sit, and 45 per cent human health and social work. The blend is taken *inside*
+each region and weighted by sector size, so that an index is that region's own
+version of the basket rather than a global one; in India, manufacturing output is
+some thirty times the health-services figure and duly dominates that region's
+Health Care index. Only then is the blended shock converted into a spread change,
+through that index's estimated slope from Table 9. A negative slope means the
+spread widens as value added falls, which is the ordinary case; two of the twelve
+carry positive slopes and therefore move against the rest, for reasons taken up
+below.
 
 ![credit](../figures/fig13_credit_spreads.png)
 
