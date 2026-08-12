@@ -100,14 +100,20 @@ that depends on how a shock crosses a border inherits the gravity specification'
 error along with the model's own.
 
 This dissertation needs neither device. The inter-country tables of the OECD
-(2025) supply the off-diagonal blocks $\mathbf{Z}^{rs}$ directly, so the trade
+(2025a) supply the off-diagonal blocks $\mathbf{Z}^{rs}$ directly, so the trade
 structure enters as data rather than as an estimate, and the propagation of a
 carbon charge across borders — precisely the quantity the multi-regional
 extension exists to measure — does not rest on an assumed distance decay or a
 uniform sourcing assumption. That is a substantive advantage of building on an
 inter-country table rather than assembling one from national tables, and it is
 worth stating because it removes an entire layer of estimation error that much of
-the multi-regional literature must carry.
+the multi-regional literature must carry. The same alignment extends to the two
+quantities the transition channel needs alongside the flows: sectoral emissions
+come from the greenhouse-gas footprint accounts of the OECD (2025b), built on the
+same economy and industry classification as the tables themselves, and the share
+of each economy's emissions actually facing a carbon price is taken from the
+coverage series of Our World in Data (2025), which republishes the World Carbon
+Pricing Database. Section 4.1 sets out the calibration in full.
 
 Between the input–output foundations and the stress-testing framework sits the
 question of what a carbon tax actually does to an economy that produces in a
@@ -202,12 +208,30 @@ Moses, L. N. (1955). The stability of interregional trading patterns and
 input–output analysis. *American Economic Review* 45(5), 803–826.
 
 Network for Greening the Financial System (2024). *NGFS Climate Scenarios for
-Central Banks and Supervisors*, Phase V.
+Central Banks and Supervisors*, Phase V. Data obtained from the NGFS Scenario
+Explorer hosted by IIASA, https://data.ece.iiasa.ac.at/ngfs (accessed July 2026);
+carbon-price and temperature paths are taken from the MESSAGEix-GLOBIOM
+realisation throughout, so that all seven narratives share one model.
 
 Notre Dame Global Adaptation Initiative (2024). *ND-GAIN Country Index*, 2024
-release.
+release. University of Notre Dame. https://gain.nd.edu/our-work/country-index
+(accessed July 2026). The 2022 cross-section of the 1995–2024 panel is used, to
+match the base year of the input–output and emissions data.
 
-OECD (2025). *Inter-Country Input–Output Tables*, 2025 edition.
+OECD (2025b). *OECD Greenhouse Gas Footprints Database*, 2025 edition. Paris:
+OECD. Obtained via the OECD SDMX API (accessed July 2026). Scope-1 production
+emissions in tonnes CO₂e, aligned to the same economy and industry classification
+as the input–output tables.
+
+OECD (2025a). *OECD Inter-Country Input–Output Database*, 2025 edition. Paris:
+OECD. https://oe.cd/icio (accessed July 2026). Small-format (SML) tables,
+1995–2022, 81 economies and 50 ISIC Rev. 4 industries, in current US dollars at
+basic prices; the 2022 table is used throughout.
+
+Our World in Data (2025). *Share of CO₂ emissions covered by a carbon price.*
+https://ourworldindata.org/grapher/carbon-tax-trading-coverage (accessed July
+2026), republishing the World Carbon Pricing Database of Dolphin, Pollitt and
+Newbery, licensed CC BY.
 
 Roncalli, T. and R. Semet (2024). *The Economic Cost of the Carbon Tax.* Amundi
 Investment Institute, March 2024.
