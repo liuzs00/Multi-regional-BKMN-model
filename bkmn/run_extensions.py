@@ -217,6 +217,7 @@ def main():
         "gdp_physical": table(chains, "phys", allreg, 100),
         "gdp_total": table(chains, "dY", allreg, 100),
         "rate": table(chains, "dr", allreg, 1e4),
+        "inflation": table(chains, "dPi", allreg, 1e4),
         "equity": table(dv, "equity", allreg, 100),
         "oprisk_conduct": table(dv, "opConduct", allreg, 100),
         "credit": cdf,

@@ -23,6 +23,37 @@ NZ, CP = "Net Zero 2050", "Current Policies"
 NDC = "Nationally Determined Contributions (NDCs)"
 H = "2040"
 
+# Headline prior for every reported figure.  `consensus` is the only one of the
+# four anchored on a citable external estimate (UNEP/CAT current-policy warming,
+# 2.7 C), and it plays the same role as the single-region study's 90 % on
+# SSP2/RCP4.5.  The other three appear where the prior itself is the subject.
+HEAD = "consensus"
+PRIORS = ["uniform", "policy-sceptic", "ambition", "consensus"]
+
+
+def currency_regions():
+    """
+    Regions with a legal currency, in model order.
+
+    Rate, FX, credit and equity are market quantities: quoting them for RASIA,
+    LAM, AFR or ROW would attach a spread or a policy rate to a basket of
+    unrelated currencies.  The region map already carries the distinction --
+    `currency` is literally "mixed" for exactly those four -- so derive the set
+    from it rather than hard-coding a list that silently rots when the region
+    selection changes.  MEA stays in: its members peg to the dollar, which is a
+    currency arrangement, not the absence of one.
+    """
+    import sys
+    sys.path.insert(0, ROOT)
+    from bkmn import regions
+    cm = regions.load().carbon_map.set_index("region")
+    return [r for r in cm.index if cm.loc[r, "currency"] not in ("mixed", "-", "—")]
+
+
+def mix(channel, prior=HEAD, idx=(0,)):
+    """A mixture-weighted channel table, indexed by region (or region x sector)."""
+    return load(f"out_mix_{channel}_{prior}", idx=idx)
+
 WARM, COOL, TEAL, INK, MUTED, GRID = "#c6522e", "#2a7db0", "#0e7c86", "#16202b", "#8b95a1", "#e4e8ec"
 plt.rcParams.update({
     "font.family": "sans-serif", "font.sans-serif": ["Segoe UI", "DejaVu Sans"],
@@ -153,46 +184,71 @@ def fig_tradeoff():
 # --- 2. FX forward ranking ---------------------------------------------------
 def fig_fx_rank():
     """
-    Headline is the mixture, not one narrative.
+    Headline is the consensus mixture; the whisker is the rest of the priors.
 
-    The chapter reports every channel as a probability-weighted expectation over
-    the seven NGFS narratives and shows the single-narrative value as a labelled
-    component; this figure has the same shape, so bars are the uniform-prior
-    expectation and the tick is Net Zero.  Reading only the tick overstates
-    every move, because Net Zero is the most transition-intensive of the seven.
+    Bars are the expectation under the citable prior. The whisker spans the
+    four priors, so the reader sees at a glance which currencies have a robust
+    move (INR, CNY, TRY -- signed the same way under every prior) and which do
+    not (USD, CHF, GBP, whose whisker crosses zero).
+
+    MEA is shown because its members peg to the dollar: under a peg the
+    bilateral rate against the euro IS the dollar's, so it inherits USD's row
+    exactly rather than getting a computed one.  That is a statement about the
+    currency arrangement, not a modelling shortcut, and it is why MEA carries
+    no independent FX risk despite one of the deepest rate cuts in the model.
     """
-    mix = load("out_mix_fx_forward_uniform", idx=(0,))
-    nz = load("out_ext_fx_forward_5y").xs(NZ, level=0)
-    order = mix[H].sort_values().index.tolist()
-    v = [mix.loc[r, H] for r in order]
-    fig, ax = plt.subplots(figsize=(8.2, 5.6))
-    barh_signed(ax, order, v, fmt="{:+.2f}%")
-    ticks = [nz.loc[r, H] for r in order]
-    ax.scatter(ticks, np.arange(len(order)), marker="|", s=90, color=INK,
-               zorder=4, label="Net Zero 2050 component")
-    # barh_signed sizes the axis from the bars alone; the Net Zero component is
-    # larger than every mixture value, so widen or the ticks fall off the edge
-    lo, hi = ax.get_xlim()
-    ax.set_xlim(min(lo, min(ticks) * 1.12), max(hi, max(ticks) * 1.12))
+    m = {p: load(f"out_mix_fx_forward_{p}", idx=(0,)) for p in PRIORS}
+    cen = m[HEAD][H].copy()
+    lo = pd.concat([m[p][H] for p in PRIORS], axis=1).min(axis=1)
+    hi = pd.concat([m[p][H] for p in PRIORS], axis=1).max(axis=1)
+    for s in (cen, lo, hi):                     # the peg: MEA follows the dollar
+        s["MEA"] = s["USA"]
+    order = cen.sort_values().index.tolist()
+    lab = {"IND": "INR", "CHN": "CNY", "TUR": "TRY", "USA": "USD",
+           "CHE": "CHF", "GBR": "GBP", "MEA": "USD-peg (MEA)"}
+
+    fig, ax = plt.subplots(figsize=(8.4, 5.4))
+    y = np.arange(len(order))
+    ax.barh(y, [cen[r] for r in order], height=0.62,
+            color=[WARM if cen[r] > 0 else COOL for r in order], zorder=3)
+    for i, r in enumerate(order):
+        ax.plot([lo[r], hi[r]], [i, i], color=INK, lw=1.3, zorder=5,
+                solid_capstyle="butt")
+        ax.plot([lo[r], hi[r]], [i, i], marker="|", ms=6, ls="none",
+                color=INK, zorder=5)
+        ax.text(cen[r] + (0.06 if cen[r] > 0 else -0.06), i - 0.34,
+                f"{cen[r]:+.2f}%", va="center",
+                ha="left" if cen[r] > 0 else "right", fontsize=8, color=INK)
+    ax.axvline(0, color=MUTED, lw=1)
+    ax.set_yticks(y, [lab[r] for r in order], fontsize=8.5)
+    ax.invert_yaxis()
+    ax.set_xlim(min(lo) - 0.55, max(hi) + 0.55)
+    ax.plot([], [], color=INK, lw=1.3, marker="|", label="range over the four priors")
     ax.legend(loc="lower left", frameon=False, fontsize=8.5)
-    finish(fig, ax, "Climate FX shifts against the euro, 2040 (scenario mixture)",
-           "5-year forward, uniform prior over the seven NGFS narratives; negative = strengthens vs EUR.",
+    finish(fig, ax, "Climate FX shifts against the euro, 2040 (consensus mixture)",
+           "5-year forward. Negative = strengthens vs EUR, which here signals damage forcing "
+           "deep rate cuts, not resilience.",
            "fig2_fx_forward_ranking.png", "5y forward FX shift vs EUR (%)")
 
 
 # --- 3. mixture: expected FX by prior ----------------------------------------
 def fig_mixture():
+    """Where the prior does and does not decide the sign, currency by currency."""
     priors = ["consensus", "policy-sceptic", "uniform", "ambition"]
     cols = [INK, COOL, TEAL, WARM]
-    data = {p: load(f"out_ext_fx_expected_{p}", idx=(0,)) for p in priors}
-    order = data["uniform"][H].sort_values().index.tolist()
+    data = {p: load(f"out_mix_fx_forward_{p}", idx=(0,)) for p in priors}
+    for p in priors:                            # the peg: MEA follows the dollar
+        data[p].loc["MEA"] = data[p].loc["USA"]
+    order = data[HEAD][H].sort_values().index.tolist()
+    lab = {"IND": "INR", "CHN": "CNY", "TUR": "TRY", "USA": "USD",
+           "CHE": "CHF", "GBR": "GBP", "MEA": "USD-peg (MEA)"}
     y = np.arange(len(order))
-    fig, ax = plt.subplots(figsize=(8.2, 5.6))
+    fig, ax = plt.subplots(figsize=(8.4, 5.6))
     for k, (p, c) in enumerate(zip(priors, cols)):
         ax.barh(y + (k - 1.5) * 0.21, [data[p].loc[r, H] for r in order],
                 height=0.19, color=c, label=p, zorder=3)
     ax.axvline(0, color=MUTED, lw=1)
-    ax.set_yticks(y, order, fontsize=8.5)
+    ax.set_yticks(y, [lab[r] for r in order], fontsize=8.5)
     ax.invert_yaxis()
     ax.legend(title="scenario prior", loc="lower left", frameon=False, fontsize=8.5,
               title_fontsize=8.5)
@@ -204,22 +260,41 @@ def fig_mixture():
 
 # --- 4. volatility band ------------------------------------------------------
 def fig_band():
-    cen = load("out_ext_fx_forward_5y").xs(NZ, level=0)
-    hi = load("out_ext_fx_forward_q95").xs(NZ, level=0)
+    """
+    The tail, on the same footing as the central case.
+
+    Both legs are consensus-weighted: the stress is applied inside each of the
+    seven narratives and the results mixed, rather than stressing one narrative
+    and comparing it against a mixture, which would confound the two.
+    """
+    cen = mix("fx_forward")
+    hi = mix("fx_forward_q95")
+    for d in (cen, hi):                         # the peg: MEA follows the dollar
+        d.loc["MEA"] = d.loc["USA"]
+    lab = {"IND": "INR", "CHN": "CNY", "TUR": "TRY", "USA": "USD",
+           "CHE": "CHF", "GBR": "GBP", "MEA": "USD-peg (MEA)"}
     order = cen[H].sort_values().index.tolist()
     y = np.arange(len(order))
-    fig, ax = plt.subplots(figsize=(8.2, 5.6))
+    fig, ax = plt.subplots(figsize=(8.4, 5.4))
     for i, r in enumerate(order):
         ax.plot([cen.loc[r, H], hi.loc[r, H]], [i, i], color=WARM, lw=3.2,
                 solid_capstyle="round", zorder=3, alpha=.75)
-    ax.scatter(cen[H][order], y, s=26, color=TEAL, zorder=4, label="central path")
-    ax.scatter(hi[H][order], y, s=26, color=WARM, zorder=4, label="95th-percentile inputs")
+    ax.scatter(cen[H][order], y, s=26, color=TEAL, zorder=4, label="central")
+    ax.scatter(hi[H][order], y, s=26, color=WARM, zorder=4,
+               label="95th-percentile inputs")
+    for i, r in enumerate(order):
+        ax.text(min(cen.loc[r, H], hi.loc[r, H]) - 0.06, i,
+                f"{cen.loc[r,H]:+.2f} → {hi.loc[r,H]:+.2f}", va="center",
+                ha="right", fontsize=7.5, color=INK)
     ax.axvline(0, color=MUTED, lw=1)
-    ax.set_yticks(y, order, fontsize=8.5)
+    ax.set_yticks(y, [lab[r] for r in order], fontsize=8.5)
     ax.invert_yaxis()
+    _lo = min(hi[H].min(), cen[H].min())
+    ax.set_xlim(_lo - 0.95, max(hi[H].max(), cen[H].max()) + 0.25)
     ax.legend(loc="lower left", frameon=False, fontsize=8.5)
     finish(fig, ax, "Climate FX-at-risk: central vs 95th-percentile inputs, 2040",
-           "Net Zero 2050. Inputs stressed by 1.64σ — temperature (MAGICC fan) and carbon price (cross-model spread).",
+           "Consensus mixture. Inputs stressed by 1.64σ inside every narrative — temperature "
+           "(MAGICC fan) and carbon price (cross-model spread).",
            "fig4_fx_at_risk_band.png", "5y forward FX vs EUR (%)")
 
 
@@ -251,11 +326,12 @@ def fig_vuln():
 
 # --- 6. equity & op-risk -----------------------------------------------------
 def fig_equity_oprisk():
-    # mixture, not one narrative: CHAPTER_RESULTS Table 9 reports these two
-    # channels mixture-weighted, so the figure beside it has to be the same
-    # quantity or the two disagree on the page
-    eq = load("out_mix_equity_uniform", idx=(0,))
-    op = load("out_mix_oprisk_conduct_uniform", idx=(0,))
+    # consensus mixture and currency regions only, matching CHAPTER_RESULTS
+    # Table 9: an equity index and a bank loss rate are market quantities, and
+    # a basket like RASIA or ROW has no market to attach them to
+    ccy = currency_regions()
+    eq = mix("equity").loc[ccy]
+    op = mix("oprisk_conduct").loc[ccy]
     order = eq[H].sort_values().index.tolist()
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 5.8))
     barh_signed(axes[0], order, [eq.loc[r, H] for r in order])
@@ -269,8 +345,8 @@ def fig_equity_oprisk():
         ax.set_axisbelow(True)
     fig.suptitle("Downstream channels, expected over the NGFS scenario set",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
-    fig.text(0.012, 1.012, "Uniform prior at 2040. Equity via β·ΔGVA/GVA (§2.9); "
-             "op-risk via Okun → unemployment → loss frequency (§2.11).",
+    fig.text(0.012, 1.012, "Consensus prior at 2040, currency regions only. Equity via "
+             "β·ΔGVA/GVA (§2.9); op-risk via Okun → unemployment → loss frequency (§2.11).",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig6_equity_oprisk.png"), dpi=300, bbox_inches="tight")
@@ -381,20 +457,27 @@ def fig_drift():
 
 # --- 10. rate term structure (Prop 2) ---------------------------------------
 def fig_term_structure():
-    d = load("out_ext_rate_term_structure", idx=(0, 1, 2))
+    """
+    Consensus mixture, currency regions, with the consensus-vs-ambition
+    comparison replacing the old Net-Zero-vs-NDCs one: a policy rate is quoted
+    for a currency, and the interesting contrast is now between priors rather
+    than between two arbitrarily chosen narratives.
+    """
     ten = ["1D", "6M", "1Y", "5Y", "10Y", "20Y"]
     tau = [1/365, 0.5, 1, 5, 10, 20]
-    show = pick_regions(["IND", "CHN", "TUR", "RASIA", "USA", "EU27", "CHE"],
-                        d.index.get_level_values(1))
-    cols = [WARM, "#d08b5c", "#c9a227", TEAL, COOL, "#0e7c86", "#3f5f8a"]
+    ccy = currency_regions()
+    cols = [WARM, "#d08b5c", "#c9a227", TEAL, "#3f8f8f", COOL, "#5b8bb5",
+            "#6f7f96", "#9aa6b5"]
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.6), sharey=True)
-    for ax, s, ttl in zip(axes, (NZ, NDC), ("Net Zero 2050", "NDCs")):
+    for ax, prior in zip(axes, (HEAD, "ambition")):
+        d = mix("rate_term_structure", prior, idx=(0, 1))[H].unstack()
+        show = pick_regions(ccy, d.index, need=5)
         for r, c in zip(show, cols):
-            y = [d.loc[(s, r, t), H] for t in ten]
-            ax.plot(tau, y, color=c, lw=1.9, marker="o", ms=3.5, label=r)
+            ax.plot(tau, [d.loc[r, t] for t in ten], color=c, lw=1.9,
+                    marker="o", ms=3.5, label=r)
         ax.axhline(0, color=MUTED, lw=1)
         ax.set_xscale("log"); ax.set_xticks(tau); ax.set_xticklabels(ten)
-        ax.set_title(ttl, fontsize=10, fontweight="600", pad=8)
+        ax.set_title(f"{prior} prior", fontsize=10, fontweight="600", pad=8)
         ax.set_xlabel("tenor")
         ax.grid(color=GRID, lw=0.8, zorder=0); ax.set_axisbelow(True)
     axes[0].set_ylabel("zero-rate shift at 2040 (bp)")
@@ -402,7 +485,8 @@ def fig_term_structure():
     fig.suptitle("Long-rate term structure: the shift decays with maturity (Prop 2)",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.085)
     fig.text(0.012, 1.015, "Hull-White 1F with a = 0.04: dR(t,T) = B(tau)/tau . dr(t), "
-             "sigma-independent. 20Y/1D ratio = 0.688 by construction.",
+             "sigma-independent. 20Y/1D ratio = 0.688 by construction. Note how little "
+             "the prior moves this channel — the panels are nearly identical.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig10_rate_term_structure.png"), dpi=300,
@@ -474,10 +558,17 @@ def fig_two_channels():
     regions differently.  This figure is the argument for reporting both.
     """
     Y = "2045"
-    sp = load("out_fx_spot_ppp").xs(NZ, level=0)[Y]
-    fw = load("out_fx_forward_5y").xs(NZ, level=0)[Y]
-    pi = load("out_inflation_shift").xs(NZ, level=0)[Y]
-    gy = load("out_gdp_shock_fx").xs(NZ, level=0)[Y] * 100
+    sp = mix("fx_spot")[Y]
+    fw = mix("fx_forward")[Y]
+    pi = mix("inflation")[Y]
+    # the Taylor output gap is the physical shock, not the total (run_fx's
+    # TAYLOR_OUTPUT_GAP): a carbon charge is a wedge, and a wedge destroys no
+    # output, so it does not enter the gap term the rate responds to.
+    # x100 puts it in basis points, the units the inflation table already uses --
+    # the two terms are summed by the Taylor rule and must share a scale
+    gy = mix("gdp_physical")[Y] * 100
+    ccy = currency_regions()
+    pi, gy = pi.loc[ccy], gy.loc[ccy]
     regs = list(sp.index)
 
     fig, (axa, axb) = plt.subplots(1, 2, figsize=(11.6, 5.4),
@@ -518,15 +609,17 @@ def fig_two_channels():
     axb.grid(axis="x", color=GRID, lw=0.8, zorder=0)
     axb.set_axisbelow(True)
     share = (0.5 * pi.abs() / (0.5 * pi.abs() + 0.5 * gy.abs()) * 100).median()
-    axb.set_title("(b) the output term dominates the policy-rate move",
+    axb.set_title("(b) under this prior the rate move is the output gap, alone",
                   fontsize=10, fontweight="600", loc="left", pad=24)
-    axb.text(0.015, 0.055, f"inflation is a median {share:.1f}% of each rate move",
+    axb.text(0.015, 0.055,
+             f"inflation is a median {share:.2f}% of each rate move — the "
+             "consensus prior prices almost no carbon",
              transform=axb.transAxes, fontsize=7.8, color=INK)
 
     fig.tight_layout(rect=(0, 0, 1, 0.93))
     fig.suptitle("Two FX channels, and why they diverge", fontsize=12.5,
                  fontweight="600", x=0.006, ha="left", y=1.00)
-    fig.text(0.006, 0.945, f"Net Zero 2050 at {Y}, vs EUR. Spot moves with the "
+    fig.text(0.006, 0.945, f"Consensus mixture at {Y}, vs EUR. Spot moves with the "
              "inflation differential; the forward adds the rate differential, "
              "which the output term dominates.",
              fontsize=8.5, color=MUTED, ha="left", va="bottom")
@@ -538,15 +631,15 @@ def fig_two_channels():
 
 # --- 13. credit: CDS spread shifts by sector and region ----------------------
 def fig_credit():
-    # mixture, to match CHAPTER_RESULTS Table 8.  Both panel titles read their
-    # numbers off `d`, so the sector/region split and the beta correlation
-    # follow the source automatically
-    d = load("out_mix_credit_uniform", idx=(0, 1))[H].unstack()
+    # consensus mixture, currency regions only, to match CHAPTER_RESULTS Table
+    # 8.  Both panel titles read their numbers off `d`, so the sector/region
+    # split and the beta correlation follow the source automatically
+    d = mix("credit", idx=(0, 1))[H].unstack().loc[currency_regions()]
     # drop FTSE (it is the equity column) and order sectors by median widening
     d = d.drop(columns=["FTSE"], errors="ignore")
     order = d.median().sort_values(ascending=False).index.tolist()
     d = d[order]
-    regs = pick_regions(["IND", "CHN", "RUS", "RASIA", "TUR", "AFR", "EU27",
+    regs = pick_regions(["IND", "CHN", "RUS", "TUR", "MEA", "EU27", "GBR",
                          "USA", "CHE"], d.index, need=5)
 
     fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.2),
@@ -598,7 +691,8 @@ def fig_credit():
     fig.suptitle("Credit: expected CDS spread shifts at 2040 over the NGFS scenario set",
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.06)
     fig.text(0.012, 1.005,
-             "Uniform prior. Positive = spread widens. Financials and UK Real Estate carry "
+             "Consensus prior, currency regions only. Positive = spread widens. "
+             "Financials and UK Real Estate carry "
              "positive β in the paper's own UK estimates and therefore move "
              "against the rest — a property of that sample, not of this model.",
              fontsize=8.5, color=MUTED, ha="left")
@@ -751,6 +845,71 @@ def fig_prior_sensitivity():
            "fig15_prior_sensitivity.png", "range across the four priors (max ÷ min)")
 
 
+# --- 16. what a currency peg costs ------------------------------------------
+def fig_peg():
+    """
+    The one result that only appears once MEA is in the currency set.
+
+    MEA's members peg to the dollar, so its bilateral rate against the euro is
+    the dollar's by construction and it carries no independent FX exposure.
+    Its Taylor rule, however, is computed on its own damage, and MEA is among
+    the most physically exposed regions in the model.  The gap between the cut
+    its own conditions call for and the cut the anchor delivers is the climate
+    component of the peg's cost, and it is the same under every prior because
+    both legs are physical.
+    """
+    own = {p: mix("rate", p) for p in PRIORS}
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.7),
+                             gridspec_kw={"width_ratios": [1.25, 1]})
+
+    # panel a: every currency region's own implied cut, MEA and USA marked
+    d = own[HEAD][H]
+    ccy = [r for r in currency_regions() if r != "EU27"]
+    order = d.loc[ccy].sort_values().index.tolist()
+    y = np.arange(len(order))
+    cols = [WARM if r == "MEA" else (TEAL if r == "USA" else MUTED) for r in order]
+    axes[0].barh(y, [d[r] for r in order], color=cols, height=0.64, zorder=3)
+    for i, r in enumerate(order):
+        axes[0].text(d[r] - 1.2, i, f"{d[r]:.1f}", va="center", ha="right",
+                     fontsize=8, color=INK)
+    axes[0].set_yticks(y, order, fontsize=8.5)
+    axes[0].invert_yaxis()
+    axes[0].axvline(0, color=MUTED, lw=1)
+    axes[0].set_xlim(min(d.loc[ccy]) * 1.25, 2)
+    axes[0].set_xlabel("own Taylor-implied policy shift at 2040 (bp)")
+    axes[0].set_title("MEA's own conditions call for one of the deepest cuts",
+                      fontsize=10, fontweight="600", pad=8)
+    axes[0].grid(axis="x", color=GRID, lw=0.8, zorder=0)
+    axes[0].set_axisbelow(True)
+
+    # panel b: the gap it cannot deliver, prior by prior
+    gaps = [float(own[p].loc["MEA", H] - own[p].loc["USA", H]) for p in PRIORS]
+    x = np.arange(len(PRIORS))
+    axes[1].bar(x, gaps, color=WARM, width=0.56, zorder=3)
+    for i, g in enumerate(gaps):
+        axes[1].text(i, g - 1.4, f"{g:.1f}", ha="center", fontsize=8.5, color=INK)
+    axes[1].set_xticks(x, PRIORS, fontsize=8, rotation=18, ha="right")
+    axes[1].axhline(0, color=MUTED, lw=1)
+    axes[1].set_ylim(min(gaps) * 1.35, 2)
+    axes[1].set_ylabel("MEA own shift − imported USD shift (bp)")
+    axes[1].set_title("and the prior barely moves it", fontsize=10,
+                      fontweight="600", pad=8)
+    axes[1].grid(axis="y", color=GRID, lw=0.8, zorder=0)
+    axes[1].set_axisbelow(True)
+
+    fig.suptitle("A dollar peg transmits the anchor's climate policy, not your own",
+                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.045)
+    fig.text(0.012, 0.995,
+             "Under the peg MEA's exchange rate against the euro is the dollar's, "
+             "so it has no independent FX channel; its rate channel still responds to "
+             "its own damage, and the difference is the shortfall it must absorb elsewhere.",
+             fontsize=8.5, color=MUTED, ha="left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig16_peg.png"), dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    print("  fig16_peg.png")
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
@@ -758,5 +917,5 @@ if __name__ == "__main__":
     print("writing figures/")
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
     fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure(); fig_cbam()
-    fig_two_channels(); fig_credit(); fig_phi(); fig_prior_sensitivity()
+    fig_two_channels(); fig_credit(); fig_phi(); fig_prior_sensitivity(); fig_peg()
     print("done.")

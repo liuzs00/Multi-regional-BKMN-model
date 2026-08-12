@@ -53,24 +53,19 @@ difference stated in the subtitle.
 
 ### fig2 — `fig2_fx_forward_ranking.png`
 **What.** 5-year forward FX shift against the euro at 2040, one bar per currency.
-Bars are the **uniform-prior mixture** over the seven NGFS narratives; the tick
-marks the **Net Zero 2050 component**.
+Bars are the **consensus mixture**; the whisker spans all four priors. MEA appears
+as a **USD peg**, inheriting the dollar's row exactly.
 
-**Findings.** Expected: INR −2.04 %, TRY −1.40 %, CNY −0.95 %, USD −0.51 %, then
-CHF −0.02 % and GBP −0.01 %. The ordering blends **physical vulnerability** with
-the absence of carbon pricing — India and Türkiye score badly on both,
-Switzerland well on both. Under the 13-region set **every** currency strengthens
-against the euro in expectation; the sign reversals an earlier 20-region build
-showed came from Japan, Korea and Norway, none of which is now a region.
+**Findings.** INR −1.35 %, CNY −0.74 %, TRY −0.69 %, then USD +0.10 %, CHF
++0.22 % and GBP +0.35 %. The ordering blends **physical vulnerability** with the
+absence of carbon pricing — India scores badly on both, Switzerland well on both.
 
-The tick sits outside every bar, and that gap is the point: Net Zero is the most
-transition-intensive of the seven narratives, so quoting it alone (INR −3.61 %,
-USD −1.91 %) overstates the expected move — by 1.5–3.7× for the four currencies
-that actually move, and by 25× and 120× for the franc and sterling, whose
-expected moves are close to zero. This is why
-[CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) leads every channel with the mixture and
-shows the single narrative as a labelled component. The tick is *not* the spot
-component — that comparison is fig12.
+The whiskers are the point. INR, CNY and TRY sit entirely below zero, so their
+*sign* survives every prior; USD, CHF and GBP straddle it, flipping between the
+ambition prior (−0.75, −0.12, −0.15) and consensus (+0.10, +0.22, +0.35). Read
+the figure as: three currencies where the model has a view, and three where it
+has only a magnitude. The whisker is *not* the spot component — that comparison
+is fig12.
 
 Read the sign carefully: a currency "strengthening" here reflects an output
 collapse forcing deep rate cuts, so it is a distress signal, not strength.
@@ -166,14 +161,14 @@ comes from Δr, none from the curve. This is a validation figure as much as a
 result.
 
 ### fig6 — `fig6_equity_oprisk.png`
-**What.** Two downstream channels at 2040, **mixture-weighted under the uniform
-prior** to match [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) Table 9: equity index
+**What.** Two downstream channels at 2040, **consensus mixture, currency regions
+only**, to match [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) Table 11: equity index
 shift (β·ΔGVA/GVA) and operational-risk conduct losses (Okun → unemployment →
 loss frequency).
 
 **Findings.** The two orderings **differ**, and instructively. Equity losses are
-led by AFR −4.86 %, TUR −4.50 %, RASIA −4.45 %; op-risk conduct losses by
-RASIA +10.7 %, USA +8.6 %, CHE +7.3 %. **Türkiye is 2nd-worst on equity and last
+led by MEA −2.86 %, TUR −2.59 %, IND −2.31 %; op-risk conduct losses by
+USA +8.77 %, CHE +7.37 %, IND +5.91 %. **Türkiye is 2nd-worst on equity and last
 on op-risk** (+2.2 %), because the two channels run on different inputs: equity
 on the total GVA shock through a beta, op-risk on physical damage alone through
 Okun's law and the *base unemployment rate*. Türkiye's base rate is 10.46 %, so a
@@ -189,9 +184,12 @@ physical only (a wedge destroys no output, so it drives no unemployment). See
 total shock and reached +37 %, above the ceiling the single-region reference's
 saturating form can produce at all.
 
-Note that 7 of 13 regions take the **proxy** equity beta of 2.0 (no index series
-exists for them), so the equity ordering is partly an artefact of which regions
-have market data — CHE, RASIA, LAM, MEA, AFR, ROW and RUS all share one beta.
+Note that 3 of the 9 currency regions take the **proxy** equity beta of 2.0 (CHE,
+RUS, MEA — no index series exists for them), so the equity ordering is partly an
+artefact of which regions have market data. Restricting to currency regions
+improves this from 7-of-13 but does not remove it. China is the opposite case: an
+*estimated* beta of 0.26, the lowest in the set, which is why it is last here and
+first on credit (fig13).
 
 ### fig5 — `fig5_damage_vs_vulnerability.png`
 **What.** Physical GDP damage at 2040 against the ND-GAIN vulnerability scale,
@@ -225,22 +223,21 @@ Priced at the published CBAM certificate price (\$86/t), and the caption now rea
 both price and revenue from the data — see the maintenance note above.
 
 ### fig13 — `fig13_credit_spreads.png`
-**What.** The credit channel (§2.9, CDS half) at 2040, **mixture-weighted under
-the uniform prior** to match [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) Table 8:
-(a) CDS spread change by sector, one line per region; (b) each index's paper
-Table 9 regression slope β against its median widening.
+**What.** The credit channel (§2.9, CDS half) at 2040, **consensus mixture,
+currency regions only**, to match [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md)
+Table 9: (a) CDS spread change by sector, one line per region; (b) each index's
+paper Table 9 regression slope β against its median widening.
 
 **Findings.** Widening is mostly a **sector** story — a variance decomposition
-puts **68 %** between sectors and only **16 %** between regions. Health Care is
-widest (median +11.7 %, and +31.0 % for India, the largest cell in the model),
-then Utilities +7.7 % and Basic Materials +7.1 %. On the Net Zero component
-alone the split is 61/19 and the levels are roughly twice as large, which is the
-usual gap between one narrative and the expectation over seven.
+puts **72 %** between sectors and only **14 %** between regions, so which
+industries a book holds matters five times more than which country it sits in.
+Health Care is widest (median +3.87 %, and +11.0 % for India, the largest cell in
+the model), then Utilities +2.97 % and Basic Materials +2.52 %.
 
 Panel (b) separates what β does from what it does not. It fixes the **sign
 exactly** — all ten negative-β indices widen and both positive-β indices narrow,
 across all 13 regions without exception — but only sets about half the size
-(corr −0.67), the rest coming from which sectors each index is built from.
+(corr −0.70), the rest coming from which sectors each index is built from.
 
 **Read the two negative bars carefully.** Financials (β = +2.08) and UK Real
 Estate (β = +7.21) narrow because the paper's own Table 9 gives them positive
@@ -290,6 +287,26 @@ figure says which results survive that assumption and which do not. Read with
 fig1, which makes the same point one scenario pair at a time. See
 [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §7.1.
 
+### fig16 — `fig16_peg.png`
+**What.** Two panels on the Middle East's dollar peg: (a) every currency region's
+own Taylor-implied policy shift at 2040 under the consensus mixture, with MEA and
+the USA highlighted; (b) the gap between MEA's own shift and the dollar shift it
+must import, under each of the four priors.
+
+**Findings.** MEA's own conditions call for **−65.7 bp**, the second-deepest cut
+of any currency region, because it is among the most physically exposed in the
+model. The dollar delivers **−40.9 bp**. The **~25 bp** shortfall is the climate
+component of the peg's cost, and it is almost invariant to the prior — −24.6,
+−24.8, −24.4, −24.8 — because *both* legs are driven by physical damage, the part
+of the problem the narratives agree about.
+
+This figure exists only because MEA is in the currency set. A pegged region has
+no exchange-rate channel of its own (its row in fig2 *is* the dollar's, by
+construction), but it still has a rate channel that responds to its own damage,
+and the wedge between the two is invisible if the region is dropped as "not a
+currency". See [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §5.3. The result assumes
+the peg holds, which a large enough wedge would eventually call into question.
+
 ---
 
 ## Coverage
@@ -303,6 +320,7 @@ fig1, which makes the same point one scenario pair at a time. See
 | fig13 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §6 (credit) | 2040 |
 | fig14 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §3 (pass-through) | 2040, φ ∈ [0,1] |
 | fig15 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §7.1 (prior sensitivity) | 2040 |
+| fig16 | [CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §5.3 (the peg) | 2040 |
 | fig11 | [TARIFF_CALIBRATION.md](TARIFF_CALIBRATION.md) | 2040 |
 
 ## Scenario basis
@@ -316,13 +334,18 @@ This table records which is which, and why.
 
 | basis | figures | why |
 |---|---|---|
-| **mixture** (uniform prior) | fig2, fig6, fig13 | sits beside a mixture-weighted table in the chapter |
-| **mixture**, all four priors | fig3, fig15 | the prior *is* the subject |
+| **consensus mixture** | fig2, fig4, fig6, fig12, fig13, fig16 | the chapter's headline prior; sits beside a consensus-weighted table |
+| **mixture**, priors compared | fig3, fig10, fig15 | the prior *is* the subject |
 | all seven narratives | fig7 | model inputs, not results |
-| two narratives contrasted | fig1, fig8, fig10 | the spread between them is the point |
-| Net Zero 2050 only | fig4, fig12, fig14 | tail, decomposition and φ sweep — each needs a large charge to be legible, and each is labelled as a component in the text |
+| two narratives contrasted | fig1, fig8 | the spread between them is the point |
+| Net Zero 2050 only | fig14 | the φ sweep needs a large carbon charge to be legible, and the text labels it a component |
 | Current Policies only | fig5 | physical channel, which is near-invariant to the narrative anyway (1.03×) |
 | n/a | fig9, fig11 | drift sensitivity and CBAM, neither a climate-scenario result |
+
+**Region coverage.** fig2, fig3, fig4 and fig16 show currencies; fig6, fig10 and
+fig13 show the nine **currency regions** (`currency != "mixed"` in the region
+map), matching §§4–6 of the chapter. fig1, fig5, fig7 and fig14 keep all thirteen,
+because value added and the scenario inputs are not currency quantities.
 
 The rule of thumb: **if a figure carries a headline number, it is the mixture; if
 it carries a mechanism, one narrative is allowed, and the caption says so.**
