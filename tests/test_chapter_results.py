@@ -471,6 +471,30 @@ chk("  fig12 inflation share of the rate move",
     round(float((0.5 * _pi45.abs() / (0.5 * _pi45.abs() + 0.5 * _gy45.abs()) * 100).median()), 2),
     0.02, 5e-3)
 
+print("11. CHAPTER_DISCUSSION.md")
+# the discussion chapter re-states results from elsewhere; gate only the claims
+# it makes in its own words, plus the constants it prints
+from bkmn import macro as _mac                             # noqa: E402
+from bkmn import physical as _phy                          # noqa: E402
+from bkmn.rates import A_MEANREV                           # noqa: E402
+from bkmn.run_fx import PHI, TAYLOR_OUTPUT_GAP             # noqa: E402
+chk("  Moessner coefficient", _mac.INFL_PER_USD, 8e-5, 1e-9)
+chk("  Hull-White mean reversion", A_MEANREV, 0.04, 1e-12)
+chk("  reporting pass-through", PHI, 0.5, 1e-12)
+chk("  damage coefficient", round(float(_phy.omega(1.0)), 5), 0.00346, 5e-6)
+chk("  ... is 1.6768e-2 / 2.2^2", round(float(_phy.omega(1.0)), 8),
+    round(1.6768e-2 / 2.2 ** 2, 8), 1e-9)
+chk("  Omega at 2.2 C is the DICE loss (%)", round(float(_phy.omega(2.2)) * 100, 4), 1.6768, 5e-5)
+flag("Taylor output gap is the physical shock", TAYLOR_OUTPUT_GAP == "physical")
+_phn = [float(S("out_ext_gdp_physical").xs(s, level=0)["2040"].mean())
+        for s in S("out_ext_gdp_physical").index.get_level_values(0).unique()]
+chk("  physical mean varies across narratives (%)",
+    round((max(_phn, key=abs) / min(_phn, key=abs) - 1) * 100), 8, 0.5)
+flag("six floating currencies plus one peg",
+     len(FX) == 6 and cm.loc["MEA", "currency"] == "USD-peg")
+chk("  peg wedge, consensus (bp)",
+    round(float(rt.loc["MEA", "2040"] - rt.loc["USA", "2040"])), -25, 0.5)
+
 print()
 bad = sum(1 for v in ok if not v)
 print(f"{'ALL ' + str(len(ok)) + ' CHECKS PASSED' if not bad else str(bad) + ' FAILED of ' + str(len(ok))}")
