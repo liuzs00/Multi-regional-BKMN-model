@@ -458,35 +458,35 @@ def fig_drift():
 # --- 10. rate term structure (Prop 2) ---------------------------------------
 def fig_term_structure():
     """
-    Consensus mixture, currency regions, with the consensus-vs-ambition
-    comparison replacing the old Net-Zero-vs-NDCs one: a policy rate is quoted
-    for a currency, and the interesting contrast is now between priors rather
-    than between two arbitrarily chosen narratives.
+    One panel: the consensus term structure across the currency regions.
+
+    The ambition panel that used to sit beside this showed the rate channel's
+    prior-insensitivity by being almost identical to it, which is a poor use of
+    half a figure.  The chapter gives the same fact as a number (1.04x across
+    the four priors), and it is gated.
     """
     ten = ["1D", "6M", "1Y", "5Y", "10Y", "20Y"]
     tau = [1/365, 0.5, 1, 5, 10, 20]
-    ccy = currency_regions()
     cols = [WARM, "#d08b5c", "#c9a227", TEAL, "#3f8f8f", COOL, "#5b8bb5",
             "#6f7f96", "#9aa6b5"]
-    fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.6), sharey=True)
-    for ax, prior in zip(axes, (HEAD, "ambition")):
-        d = mix("rate_term_structure", prior, idx=(0, 1))[H].unstack()
-        show = pick_regions(ccy, d.index, need=5)
-        for r, c in zip(show, cols):
-            ax.plot(tau, [d.loc[r, t] for t in ten], color=c, lw=1.9,
-                    marker="o", ms=3.5, label=r)
-        ax.axhline(0, color=MUTED, lw=1)
-        ax.set_xscale("log"); ax.set_xticks(tau); ax.set_xticklabels(ten)
-        ax.set_title(f"{prior} prior", fontsize=10, fontweight="600", pad=8)
-        ax.set_xlabel("tenor")
-        ax.grid(color=GRID, lw=0.8, zorder=0); ax.set_axisbelow(True)
-    axes[0].set_ylabel("zero-rate shift at 2040 (bp)")
-    axes[1].legend(frameon=False, fontsize=8, ncol=2)
+    d = mix("rate_term_structure", HEAD, idx=(0, 1))[H].unstack()
+    show = pick_regions(currency_regions(), d.index, need=5)
+
+    fig, ax = plt.subplots(figsize=(8.2, 5.0))
+    for r, c in zip(show, cols):
+        ax.plot(tau, [d.loc[r, t] for t in ten], color=c, lw=1.9,
+                marker="o", ms=3.5, label=r)
+    ax.axhline(0, color=MUTED, lw=1)
+    ax.set_xscale("log"); ax.set_xticks(tau); ax.set_xticklabels(ten)
+    ax.set_xlabel("tenor")
+    ax.set_ylabel("zero-rate shift at 2040 (bp)")
+    ax.legend(frameon=False, fontsize=8, ncol=3)
+    ax.grid(color=GRID, lw=0.8, zorder=0); ax.set_axisbelow(True)
     fig.suptitle("Long-rate term structure: the shift decays with maturity (Prop 2)",
-                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.085)
-    fig.text(0.012, 1.015, "Hull-White 1F with a = 0.04: dR(t,T) = B(tau)/tau . dr(t), "
-             "sigma-independent. 20Y/1D ratio = 0.688 by construction. Note how little "
-             "the prior moves this channel — the panels are nearly identical.",
+                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.055)
+    fig.text(0.012, 1.005, "Consensus mixture. Hull-White 1F with a = 0.04: "
+             "dR(t,T) = B(tau)/tau . dr(t), sigma-independent. "
+             "20Y/1D ratio = 0.688 by construction.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig10_rate_term_structure.png"), dpi=300,

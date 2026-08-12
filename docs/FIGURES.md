@@ -71,17 +71,20 @@ Read the sign carefully: a currency "strengthening" here reflects an output
 collapse forcing deep rate cuts, so it is a distress signal, not strength.
 
 ### fig12 — `fig12_two_fx_channels.png`
-**What.** Two panels: (a) spot against 5-year forward per currency; (b) the
-Taylor-rule decomposition into output and inflation terms.
+**What.** Two panels at 2045, **consensus mixture**: (a) spot against 5-year
+forward per currency; (b) the Taylor-rule decomposition into output and inflation
+terms, for the nine currency regions.
 
-**Findings.** The two channels are **1.6× apart** and correlate **0.89** at 2040,
-and under this region set they **agree in sign for all 6 currencies**. They still
-price different risks: spot is transition (carbon-pricing scope, corr +0.9994),
-the forward adds physical damage through the rate differential (corr +0.79 at
-2045, against +0.44 for spot). An earlier 20-region build showed two sign flips —
-Japan and Australia, which priced carbon more than the EU but were damaged less —
-and neither is now a region; the mechanism survives, no current currency sits far
-enough along both axes to cross zero. See [FX_REPORT.md](FX_REPORT.md) §2.
+**Findings.** Under the consensus prior the two channels are **30.4× apart** and
+correlate only **0.37**, and they **disagree in sign for 3 of 6 currencies** —
+USD, CHF and GBP, which are marked with an asterisk. That is not a defect: spot
+is pure transition risk, and a prior concentrated on Current Policies prices
+almost no carbon, so the spot leg nearly vanishes while the forward keeps the
+whole rate differential. Under the ambition prior the same two legs are 2.4×
+apart. Panel (b) makes the same point from the other side: the inflation term is
+a median **0.02 %** of each policy-rate move, so the rate is the output gap
+essentially alone. See [FX_REPORT.md](FX_REPORT.md) §2 and
+[CHAPTER_RESULTS.md](CHAPTER_RESULTS.md) §5.2.
 
 ---
 
@@ -139,9 +142,15 @@ and fig9 as a pair — neither is the whole answer.
 
 ### fig4 — `fig4_fx_at_risk_band.png`
 **What.** Central path against 95th-percentile inputs (1.64σ on temperature from
-the MAGICC fan and on carbon price from the cross-model spread), at 2040.
+the MAGICC fan and on carbon price from the cross-model spread), at 2040,
+**consensus mixture**. The stress is applied *inside each of the seven
+narratives* and the results mixed, so tail and central case sit on the same
+footing. MEA is shown as a USD peg.
 
-**Findings.** CNY moves −1.39 % → −2.20 % and INR −3.60 % → −4.08 %. The tail is
+**Findings.** INR moves −1.35 % → −1.75 %, CNY −0.74 % → −0.98 %, TRY −0.69 % →
+−0.96 %; the three currencies near zero barely move. The cross-sectional range
+widens from **1.70 to 2.12 pp**, which is the right way to read this channel: the
+stress spreads the cross-section rather than shifting a level. The tail is
 **not uniformly adverse** — NOK and KRW move *further positive* under stress. The stress widens dispersion rather than shifting
 a level, which is the correct behaviour for a relative-price channel.
 
@@ -150,8 +159,10 @@ a level, which is the correct behaviour for a relative-price channel.
 ## Channels and mechanism
 
 ### fig10 — `fig10_rate_term_structure.png`
-**What.** The §2.8 zero-rate shift by tenor (1D to 20Y) under Prop 2, Net Zero
-against NDCs.
+**What.** The §2.8 zero-rate shift by tenor (1D to 20Y) under Prop 2,
+**consensus mixture, currency regions only**. Single panel — the ambition panel
+that used to sit beside it made the prior-insensitivity point by being almost
+identical to the consensus one, which is a poor use of half a figure.
 
 **Findings.** The shift decays with maturity at a rate fixed entirely by the
 Hull-White mean reversion: **20Y/1D = 0.688 = B(20)/20** exactly, verified as a
@@ -159,6 +170,11 @@ gate. Because the shape is σ-independent and every region shares one *a*, the
 term structure only *rescales* the short-rate shift — all cross-region variation
 comes from Δr, none from the curve. This is a validation figure as much as a
 result.
+
+The prior barely disturbs it: redrawing the whole table under ambition instead of
+consensus moves no cell by more than **2.75 bp**, which at this scale is
+invisible. That is the rate channel's 1.04× prior range (fig15) seen at the level
+of individual cells, and it is gated rather than drawn.
 
 ### fig6 — `fig6_equity_oprisk.png`
 **What.** Two downstream channels at 2040, **consensus mixture, currency regions
@@ -343,11 +359,10 @@ This table records which is which, and why.
 
 | basis | figures | why |
 |---|---|---|
-| **consensus mixture** | fig2, fig4, fig6, fig12, fig13, fig16 | the chapter's headline prior; sits beside a consensus-weighted table |
-| **mixture**, priors compared | fig3, fig10, fig15 | the prior *is* the subject |
+| **consensus mixture** | fig2, fig4, fig6, fig10, fig12, fig13, fig14, fig16 | the chapter's headline prior; sits beside a consensus-weighted table |
+| **mixture**, priors compared | fig3, fig15 | the prior *is* the subject |
 | all seven narratives | fig7 | model inputs, not results |
 | two narratives contrasted | fig1, fig8 | the spread between them is the point |
-| Net Zero 2050 only | fig14 | the φ sweep needs a large carbon charge to be legible, and the text labels it a component |
 | Current Policies only | fig5 | physical channel, which is near-invariant to the narrative anyway (1.03×) |
 | n/a | fig9, fig11 | drift sensitivity and CBAM, neither a climate-scenario result |
 

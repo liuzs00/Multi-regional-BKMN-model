@@ -244,6 +244,12 @@ chk("  ratio", round(float(ratio.iloc[0]), 4), 0.6884, 5e-5)
 an = (hw_B(20.0) / 20.0) / (hw_B(1 / 365) * 365)
 chk("  ratio is analytic", round(float(an), 4), 0.6884, 5e-5)
 chk("  B(20)/20 alone", round(float(hw_B(20.0) / 20.0), 4), 0.6883, 5e-5)
+# fig10 lost its ambition panel, so the prior-insensitivity it used to show has
+# to be carried by this number instead
+_amb = M("rate_term_structure", "ambition", idx=1)["2040"].unstack()
+_gap = max(abs(float(_amb.loc[r, t] - ts.loc[r, t]))
+           for r in CCY for t in ["1D", "6M", "1Y", "5Y", "10Y", "20Y"])
+chk("  max |ambition - consensus| over the table", round(_gap, 2), 2.75, 5e-3)
 
 print("5. FX")
 fw = M("fx_forward")
@@ -438,6 +444,18 @@ for f_ in ("fig2_fx_forward_ranking", "fig3_mixture_expected_fx", "fig4_fx_at_ri
     flag(f"  {f_} exists", os.path.exists(os.path.join(ROOT, "figures", f_ + ".png")))
 for r, v in [("Health Care", 3.87), ("Utilities", 2.97), ("Basic Materials", 2.52)]:
     chk(f"  fig13 median {r[:14]}", round(float(med[r]), 2), v)
+# fig12's caption quotes 2045 values, not 2040 like the rest of the chapter
+_sp45, _fw45 = M("fx_spot")["2045"], M("fx_forward")["2045"]
+chk("  fig12 legs apart at 2045",
+    round(float(_fw45.abs().max() / _sp45.abs().max()), 1), 30.4, 0.05)
+chk("  fig12 corr at 2045", round(float(np.corrcoef(_sp45, _fw45)[0, 1]), 2), 0.37)
+chk("  fig12 sign disagreements",
+    int((np.sign(_sp45) != np.sign(_fw45)).sum()), 3, 0)
+_pi45 = M("inflation")["2045"].loc[CCY]
+_gy45 = M("gdp_physical")["2045"].loc[CCY] * 100
+chk("  fig12 inflation share of the rate move",
+    round(float((0.5 * _pi45.abs() / (0.5 * _pi45.abs() + 0.5 * _gy45.abs()) * 100).median()), 2),
+    0.02, 5e-3)
 
 print()
 bad = sum(1 for v in ok if not v)
