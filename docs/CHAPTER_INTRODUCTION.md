@@ -31,9 +31,9 @@ mixture; carbon pricing.
 
 # 1 Introduction
 
-Supervisors have spent the better part of a decade asking banks and insurers a
-question the industry is not well equipped to answer: what does climate change do
-to the value of what you hold? The exercises that have addressed it at scale —
+Bank regulators have spent the better part of a decade asking a question the
+financial industry is not well equipped to answer: what does climate change do to
+the value of what you hold? The exercises that have addressed it at scale —
 the European Central Bank's climate risk stress test (ECB, 2022) and the Bank of
 England's Climate Biennial Exploratory Scenario (Bank of England, 2022) — reach
 their answers through large macro-financial models whose internal workings are
@@ -54,7 +54,7 @@ sectors by vulnerability; the resulting change in value added drives inflation,
 and inflation drives the policy rate, the yield curve, equity indices and credit
 spreads in turn. Two of the links are stated as propositions with proofs. Every
 relation is visible and can therefore be disagreed with individually, which is
-the property a supervised institution needs and a black box cannot offer.
+the property a regulated institution needs and a black box cannot offer.
 
 The framework is developed for one economy and calibrated on the United Kingdom.
 That is a coherent choice for a first exposition, but it forces an assumption
