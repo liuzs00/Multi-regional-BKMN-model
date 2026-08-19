@@ -496,8 +496,20 @@ chk("  peg wedge, consensus (bp)",
     round(float(rt.loc["MEA", "2040"] - rt.loc["USA", "2040"])), -25, 0.5)
 
 print("12. CHAPTER_INTRODUCTION.md")
-# the introduction quotes one figure in its own text; the rest of its claims are
-# structural and belong to the chapters that carry them
+# the abstract previews results carried in full elsewhere -- a preview is exactly
+# where a stale number survives longest, so every figure it prints is gated here
+chk("  rupee 5y forward, consensus (%)",
+    round(float(M("fx_forward").loc["IND", "2040"]), 2), -1.35)
+chk("  sterling 5y forward, consensus (%)",
+    round(float(M("fx_forward").loc["GBR", "2040"]), 2), 0.35)
+chk("  spot FX prior range (rupee)",
+    round(max(abs(float(M("fx_spot", q).loc["IND", "2040"])) for q in P)
+          / min(abs(float(M("fx_spot", q).loc["IND", "2040"])) for q in P), 1),
+    22.7, 0.05)
+chk("  policy-rate prior range (mean)",
+    round(max(abs(float(M("rate", q)["2040"].loc[CCY].mean())) for q in P)
+          / min(abs(float(M("rate", q)["2040"].loc[CCY].mean())) for q in P), 2),
+    1.04, 5e-3)
 _trn = [float(S("out_ext_gdp_transition").xs(s, level=0)["2040"].mean())
         for s in S("out_ext_gdp_transition").index.get_level_values(0).unique()]
 chk("  transition varies 37x across narratives",

@@ -2,26 +2,36 @@
 
 A climate stress test has to join a scenario measured in decades to market prices
 quoted daily. The framework of Berrahoui, Kenyon, Macrina and Nathanael (2025)
-makes that join through a short chain of individually auditable relations running
-from a carbon price and a temperature path to inflation, interest rates, equity
-and credit. It does so for a single economy, and a single economy has no exchange
-rate.
+makes that join through a short chain of auditable relations running from a
+carbon price and a temperature path to inflation, interest rates, equity and
+credit — but does so for a single economy, and a single economy has no exchange
+rate. This dissertation asks how far a carbon price levied in one region reaches
+the output, rates and currency of another, and whether the exchange-rate response
+can be derived from machinery the framework already contains rather than
+estimated beside it.
 
-This dissertation extends the framework to a system of thirteen regions built
-from the 2022 OECD inter-country input–output tables. A carbon charge levied in
-one region then propagates to every other through the Leontief price dual, so
-cross-border leakage is measured rather than assumed, and the exchange rate
-becomes derivable as the difference between two economies' yield-curve changes —
-separating into a spot leg governed by relative purchasing-power parity and a
-forward leg governed by covered interest parity. The seven NGFS narratives are
-treated not as competing forecasts but as components of a Dirichlet-categorical
-mixture, over which four priors are carried.
+The framework is extended to thirteen regions built from the 2022 OECD
+inter-country input–output tables. A carbon charge levied in one region
+propagates to every other through the Leontief price dual, so leakage is measured
+rather than assumed, and the exchange rate follows as the difference between two
+economies' yield-curve changes — a spot leg under relative purchasing-power
+parity and a forward leg under covered interest parity. The seven NGFS narratives
+are treated not as competing forecasts but as components of a
+Dirichlet-categorical mixture, over which four priors are carried.
 
-The organising empirical finding is that transition risk is a policy choice while
-physical risk, at this horizon, is not: the mean transition cost varies by a
-factor of thirty-seven across the narratives against eight per cent for physical
-damage. That asymmetry separates the financial channels which cannot be reported
-without a view on climate policy from those which can.
+The organising finding is that transition risk is a policy choice while physical
+risk, at this horizon, is not: the mean transition cost varies by a factor of
+thirty-seven across the narratives against eight per cent for physical damage.
+That asymmetry sorts the financial channels into those which cannot be reported
+without a view on climate policy and those which can — spot exchange rates range
+over a factor of 22.7 across the four priors, policy rates over 1.04. Three
+results then emerge that a single-region model cannot produce. Appreciation
+proves a symptom of harm rather than of resilience, the rupee's five-year forward
+moving −1.35 per cent against the euro at 2040 while sterling moves +0.35.
+Ranking regions by exchange rate, policy rate, credit spread and equity gives
+four different answers from the same two underlying shocks. And a dollar-pegged
+economy carries a wedge of some twenty-five basis points between the policy rate
+its own damage calls for and the one its anchor delivers.
 
 **Keywords:** climate stress testing; multi-regional input–output analysis;
 foreign exchange; covered interest parity; NGFS scenarios; Dirichlet-categorical
