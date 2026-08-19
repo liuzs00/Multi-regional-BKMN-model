@@ -17,6 +17,25 @@ being tested. Their outputs are credible but their mechanisms are opaque, and an
 institution asked to hold capital against a number it cannot reconstruct is in an
 uncomfortable position.
 
+The academic literature those exercises draw on is younger than the exercises
+themselves, and its framing statement is Carney's (2015), which named the
+obstacle precisely. He called it a *tragedy of the horizon*: the costs of climate
+change fall beyond the planning horizons — the business cycle, the political
+cycle, the mandate of a central bank — of the actors whose decisions determine
+them, so that by the time the costs are unmistakable the moment to act on them
+has passed. The methodological response begins with Battiston et al. (2017), who
+conduct the first climate stress test of a financial system by mapping
+institutions' equity holdings onto climate-policy-relevant sectors and
+propagating a policy shock through the network of interbank exposures. Two
+features of that paper bear directly on this one. It establishes the template
+every subsequent exercise follows — a scenario, a mapping onto exposures, a
+propagation mechanism, a revaluation — and it makes the propagation network the
+object of study rather than an implementation detail, because the indirect
+exposure is not recoverable from the direct one and has to be computed. The
+network here is different in kind: not interbank claims but production linkages
+between economies, with the shock travelling along the supply chain rather than
+the balance sheet. The reason for building it is the one Battiston et al. give.
+
 The framework this dissertation extends takes the opposite approach. Berrahoui,
 Kenyon, Macrina and Nathanael (2025) propose what they call an *ensemble*: a
 short chain of individually simple, individually auditable relations running from
@@ -100,20 +119,36 @@ that depends on how a shock crosses a border inherits the gravity specification'
 error along with the model's own.
 
 This dissertation needs neither device. The inter-country tables of the OECD
-(2025a) supply the off-diagonal blocks $\mathbf{Z}^{rs}$ directly, so the trade
+(2025) supply the off-diagonal blocks $\mathbf{Z}^{rs}$ directly, so the trade
 structure enters as data rather than as an estimate, and the propagation of a
 carbon charge across borders — precisely the quantity the multi-regional
 extension exists to measure — does not rest on an assumed distance decay or a
 uniform sourcing assumption. That is a substantive advantage of building on an
 inter-country table rather than assembling one from national tables, and it is
 worth stating because it removes an entire layer of estimation error that much of
-the multi-regional literature must carry. The same alignment extends to the two
-quantities the transition channel needs alongside the flows: sectoral emissions
-come from the greenhouse-gas footprint accounts of the OECD (2025b), built on the
-same economy and industry classification as the tables themselves, and the share
-of each economy's emissions actually facing a carbon price is taken from the
-coverage series of Our World in Data (2025), which republishes the World Carbon
-Pricing Database. Section 4.1 sets out the calibration in full.
+the multi-regional literature must carry.
+
+The choice among inter-country tables is itself a decision rather than a default.
+The World Input–Output Database of Timmer et al. (2015) is the other standard
+option and the more heavily used in the academic literature, but its published
+releases end in 2014 and span 43 economies against the OECD's 81 — a difference
+that matters here, since several of the economies the selection rule of §4.2
+admits on carbon grounds fall outside the WIOD set entirely. Larger compilations
+resolve more economies still, at the cost of leaning more heavily on estimated
+rather than reported flows.
+
+What an inter-country table makes possible, beyond propagation, is
+consumption-based accounting: attributing emissions to the final demand that
+occasions them rather than to the territory where they are released. Davis and
+Caldeira (2010) established how wide the gap between the two accounts is, finding
+that a substantial share of the emissions consumed in developed economies is
+produced elsewhere, and that for several such economies the imported share
+exceeds a third of the domestic total. The carbon-linkage measure this
+dissertation uses to select its regions is exactly a consumption-based footprint
+of European final demand, and the gap Davis and Caldeira document is why the
+resulting region set differs so sharply from one chosen on trade weight — India's
+emissions embodied in European demand run to nearly five times its share of
+European trade.
 
 Between the input–output foundations and the stress-testing framework sits the
 question of what a carbon tax actually does to an economy that produces in a
@@ -132,6 +167,22 @@ input–output table records. That is why the pass-through share $\varphi$ enter
 this model as a free parameter to be swept rather than a quantity to be
 calibrated, and why §4.5 reports the whole range of it.
 
+A carbon price levied unilaterally raises a question a single-region model cannot
+pose: how much of the abated emission simply reappears elsewhere. The leakage
+literature is necessarily a multi-model one, since the answer turns on trade and
+energy-market elasticities that no single framework pins down, and the Energy
+Modeling Forum study synthesised by Böhringer, Balistreri and Rutherford (2012)
+is its reference point — a comparison of twelve global models run on common
+unilateral-policy and border-adjustment experiments, finding leakage rates
+clustered in the range of five to twenty per cent and border carbon adjustment
+reducing them without eliminating them. Two things carry over. A border
+adjustment is analytically the same object as a tariff differentiated by embodied
+carbon, which is exactly how §3.7 represents it, so no separate machinery is
+needed. And there is a caution: those models let trade re-source in response to
+the policy, whereas the fixed-coefficient system used here cannot, so what is
+measured below is the cost-push incidence of a border adjustment rather than the
+reallocation of trade it exists to cause.
+
 The remaining links are each borrowed from a specific empirical literature, and
 it is worth being explicit about which, since the credibility of the chain is the
 credibility of its weakest link. The inflation response comes from Moessner
@@ -146,7 +197,15 @@ $B(\tau)/\tau$ of the short-rate shift, independent of volatility — which is w
 this model can report a curve without calibrating one. The damage function is the
 DICE-2023 central calibration of Barrage and Nordhaus (2024), and the allocation
 of that global damage across regions uses the vulnerability index of the Notre
-Dame Global Adaptation Initiative (2024). The exchange-rate relations are the two
+Dame Global Adaptation Initiative (2024). This is the least secure link in the
+chain, and Pindyck's (2013) judgement on it is worth borrowing rather than
+softening: the damage functions embedded in integrated assessment models have
+almost no theoretical or empirical foundation for their curvature at high
+temperatures, so their outputs are better read as illustrative than as estimates.
+That criticism is the reason the physical channel is carried at two calibrations
+here rather than one — the Swiss Re Institute (2024) coefficient is roughly five
+times the DICE central value, and the pair brackets a range that either number
+alone would conceal. The exchange-rate relations are the two
 textbook parities, relative purchasing power on the spot leg and covered interest
 parity on the forward leg, for which Sarno and Taylor (2002) remains the standard
 reference and is candid that the first performs poorly at horizons shorter than
@@ -174,15 +233,30 @@ Cambridge University Press.
 Bank of England (2022). *Results of the 2021 Climate Biennial Exploratory
 Scenario (CBES).* May 2022.
 
+Battiston, S., A. Mandel, I. Monasterolo, F. Schütze and G. Visentin (2017). A
+climate stress-test of the financial system. *Nature Climate Change* 7(4),
+283–288.
+
 Barrage, L. and W. Nordhaus (2024). Policies, projections, and the social cost of
 carbon: results from the DICE-2023 model. *PNAS* 121(13).
 
 Berrahoui, M., C. Kenyon, A. Macrina and G. Nathanael (2025). *Simple climate
 stress testing: an ensemble framework.* Working paper.
 
+Böhringer, C., E. J. Balistreri and T. F. Rutherford (2012). The role of border
+carbon adjustment in unilateral climate policy: overview of an Energy Modeling
+Forum study (EMF 29). *Energy Economics* 34, S97–S110.
+
+Carney, M. (2015). *Breaking the tragedy of the horizon — climate change and
+financial stability.* Speech at Lloyd's of London, 29 September 2015. London:
+Bank of England.
+
 Chenery, H. B. (1953). Regional analysis. In *The Structure and Growth of the
 Italian Economy*, ed. H. B. Chenery, P. G. Clark and V. Cao-Pinna. Rome: US
 Mutual Security Agency.
+
+Davis, S. J. and K. Caldeira (2010). Consumption-based accounting of CO₂
+emissions. *Proceedings of the National Academy of Sciences* 107(12), 5687–5692.
 
 European Central Bank (2022). *2022 Climate Risk Stress Test.* July 2022.
 
@@ -208,30 +282,16 @@ Moses, L. N. (1955). The stability of interregional trading patterns and
 input–output analysis. *American Economic Review* 45(5), 803–826.
 
 Network for Greening the Financial System (2024). *NGFS Climate Scenarios for
-Central Banks and Supervisors*, Phase V. Data obtained from the NGFS Scenario
-Explorer hosted by IIASA, https://data.ece.iiasa.ac.at/ngfs (accessed July 2026);
-carbon-price and temperature paths are taken from the MESSAGEix-GLOBIOM
-realisation throughout, so that all seven narratives share one model.
+Central Banks and Supervisors*, Phase V.
 
 Notre Dame Global Adaptation Initiative (2024). *ND-GAIN Country Index*, 2024
-release. University of Notre Dame. https://gain.nd.edu/our-work/country-index
-(accessed July 2026). The 2022 cross-section of the 1995–2024 panel is used, to
-match the base year of the input–output and emissions data.
+release.
 
-OECD (2025b). *OECD Greenhouse Gas Footprints Database*, 2025 edition. Paris:
-OECD. Obtained via the OECD SDMX API (accessed July 2026). Scope-1 production
-emissions in tonnes CO₂e, aligned to the same economy and industry classification
-as the input–output tables.
+OECD (2025). *OECD Inter-Country Input–Output Database*, 2025 edition. Paris:
+OECD. https://oe.cd/icio (accessed July 2026). 
 
-OECD (2025a). *OECD Inter-Country Input–Output Database*, 2025 edition. Paris:
-OECD. https://oe.cd/icio (accessed July 2026). Small-format (SML) tables,
-1995–2022, 81 economies and 50 ISIC Rev. 4 industries, in current US dollars at
-basic prices; the 2022 table is used throughout.
-
-Our World in Data (2025). *Share of CO₂ emissions covered by a carbon price.*
-https://ourworldindata.org/grapher/carbon-tax-trading-coverage (accessed July
-2026), republishing the World Carbon Pricing Database of Dolphin, Pollitt and
-Newbery, licensed CC BY.
+Pindyck, R. S. (2013). Climate change policy: what do the models tell us?
+*Journal of Economic Literature* 51(3), 860–872.
 
 Roncalli, T. and R. Semet (2024). *The Economic Cost of the Carbon Tax.* Amundi
 Investment Institute, March 2024.
@@ -241,7 +301,14 @@ University Press.
 
 Stone, R. (1961). *Input–Output and National Accounts.* Paris: OECD.
 
+Swiss Re Institute (2024). *Changing climates: the heat is (still) on.* Zurich:
+Swiss Re.
+
 Taylor, J. B. (2007). *Monetary Policy Rules.* University of Chicago Press.
 
 Taylor, J. B. and J. C. Williams (2010). Simple and robust rules for monetary
 policy. In *Handbook of Monetary Economics*, vol. 3, 829–859. Elsevier.
+
+Timmer, M. P., E. Dietzenbacher, B. Los, R. Stehrer and G. J. de Vries (2015). An
+illustrated user guide to the World Input–Output Database: the case of global
+automotive production. *Review of International Economics* 23(3), 575–605.

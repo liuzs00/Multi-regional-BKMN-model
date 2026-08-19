@@ -137,3 +137,62 @@ World Bank (2026). *World Development Indicators.* Washington, DC: World Bank.
 Series `SL.UEM.TOTL.ZS` (unemployment, 2022), `NY.GDP.MKTP.CD` (GDP) and the
 PPP-GDP series used to weight regional aggregates, obtained via the World Bank
 API (accessed July 2026).
+
+---
+
+## Added while drafting
+
+Appended in order of addition, not alphabetical, so that new entries are easy to
+find. Merge into the list above and re-alphabetise before submission.
+
+Gelman, A., J. B. Carlin, H. S. Stern, D. B. Dunson, A. Vehtari and D. B. Rubin
+(2013). *Bayesian Data Analysis*, 3rd edn. Boca Raton: Chapman & Hall/CRC.
+— §3.1, Dirichlet–categorical conjugacy.
+
+Hawkins, D. and H. A. Simon (1949). Note: some conditions of macroeconomic
+stability. *Econometrica* 17(3/4), 245–248.
+— §3.2, the productivity condition for existence of the Leontief inverse.
+
+Leontief, W. (1936). Quantitative input and output relations in the economic
+system of the United States. *Review of Economics and Statistics* 18(3), 105–125.
+— §3.2, the original statement of the input–output system. (Leontief 1986 is
+already listed above; cite whichever you prefer, but not both for the same claim.)
+
+Ward, J. H. (1963). Hierarchical grouping to optimize an objective function.
+*Journal of the American Statistical Association* 58(301), 236–244.
+— §4.2, the merge criterion for the agglomerative region selection.
+
+⚠️ **Kay (2023) — MISSING.** Cited as `\citet{Kay2023}` in §3.2 but not held in
+this list and not present anywhere in the project. Full entry needed.
+
+Carney, M. (2015). *Breaking the tragedy of the horizon — climate change and
+financial stability.* Speech at Lloyd's of London, 29 September 2015. London:
+Bank of England.
+— §2, the framing statement for climate as a financial-stability problem.
+
+Battiston, S., A. Mandel, I. Monasterolo, F. Schütze and G. Visentin (2017). A
+climate stress-test of the financial system. *Nature Climate Change* 7(4),
+283–288.
+— §2, the first climate stress test and the template every later one follows.
+
+Timmer, M. P., E. Dietzenbacher, B. Los, R. Stehrer and G. J. de Vries (2015). An
+illustrated user guide to the World Input–Output Database: the case of global
+automotive production. *Review of International Economics* 23(3), 575–605.
+— §2, the alternative inter-country table, against which the OECD choice is argued.
+
+Davis, S. J. and K. Caldeira (2010). Consumption-based accounting of CO₂
+emissions. *Proceedings of the National Academy of Sciences* 107(12), 5687–5692.
+— §2, consumption-based accounting; the basis of the carbon-linkage measure in §4.2.
+
+Böhringer, C., E. J. Balistreri and T. F. Rutherford (2012). The role of border
+carbon adjustment in unilateral climate policy: overview of an Energy Modeling
+Forum study (EMF 29). *Energy Economics* 34, S97–S110.
+— §2, carbon leakage and border adjustment; the multi-model benchmark for §3.7.
+
+Pindyck, R. S. (2013). Climate change policy: what do the models tell us?
+*Journal of Economic Literature* 51(3), 860–872.
+— §2, the damage-function critique motivating the two-calibration physical channel.
+
+Note: IPCC (2023), UNEP (2025) and Climate Action Tracker (2025) are already in
+the main list above but were uncited until §4.3; they now carry `\citet` keys
+`IPCC2023`, `UNEP2025`, `CAT2025`.
