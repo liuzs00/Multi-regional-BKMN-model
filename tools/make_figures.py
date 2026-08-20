@@ -472,10 +472,21 @@ def fig_term_structure():
     d = mix("rate_term_structure", HEAD, idx=(0, 1))[H].unstack()
     show = pick_regions(currency_regions(), d.index, need=5)
 
+    # Proposition 2 is exact at every tenor, so the curve between the reported
+    # points is drawn analytically rather than interpolated: recover dr from the
+    # 1D column and evaluate B(tau)/tau on a dense grid.  Without this the log
+    # x-axis leaves 1D stranded 2.3 decades from 6M with nothing in between.
+    from bkmn.rates import hw_B
+    unit = hw_B(1 / 365) * 365
+    grid = np.geomspace(1 / 365, 20, 400)
+    shape = np.array([hw_B(s) / s for s in grid])
+
     fig, ax = plt.subplots(figsize=(8.2, 5.0))
     for r, c in zip(show, cols):
-        ax.plot(tau, [d.loc[r, t] for t in ten], color=c, lw=1.9,
-                marker="o", ms=3.5, label=r)
+        dr = float(d.loc[r, "1D"]) / unit
+        ax.plot(grid, shape * dr, color=c, lw=1.9, label=r, zorder=3)
+        ax.plot(tau, [d.loc[r, t] for t in ten], color=c, ls="none",
+                marker="o", ms=4.0, zorder=4)
     ax.axhline(0, color=MUTED, lw=1)
     ax.set_xscale("log"); ax.set_xticks(tau); ax.set_xticklabels(ten)
     ax.set_xlabel("tenor")
@@ -486,7 +497,8 @@ def fig_term_structure():
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.055)
     fig.text(0.012, 1.005, "Consensus mixture. Hull-White  with a = 0.04: "
              "dR(t,T) = B(tau)/tau . dr(t), sigma-independent. "
-             "20Y/1D ratio = 0.688 by construction.",
+             "Curve drawn analytically -- Prop 2 is exact at any tenor; "
+             "markers are the six reported tenors. 20Y/1D = 0.688 by construction.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig10_rate_term_structure.png"), dpi=300,
