@@ -882,6 +882,65 @@ def fig_peg():
     print("  fig16_peg.png")
 
 
+# --- 17. how the damage allocation is scoped --------------------------------
+def fig_damage_scope():
+    """
+    The one modelling decision Proposition 1 leaves open: over which set is the
+    aggregate loss distributed?
+
+    Applying it within each region forces every region to lose the same fraction
+    of its own output, so regional vulnerability can only reshuffle the sectoral
+    composition of a fixed loss and can never change its size -- which answers by
+    assumption the question a multi-regional physical-risk model exists to ask.
+    Distributing over the whole grid instead lets per-region damage emerge from
+    the vulnerability weights.  Both panels conserve the same world total.
+    """
+    from bkmn import physical, regions
+    m = regions.load()
+    DT = 1.5
+    vl = physical.vl_vector(m)
+    gva = np.asarray(m.gva, float)
+    om = physical.omega(DT)
+    al = physical.alpha(m, DT, vl)
+
+    vlr = {}
+    for r in m.regions_order:
+        k = (m.region_of == r)
+        vlr[r] = float((vl[k] * gva[k]).sum() / gva[k].sum())
+    world = pd.Series({r: -v * al * 100 for r, v in vlr.items()}).sort_values()
+    within = pd.Series({r: -om * 100 for r in vlr})[world.index]
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.2, 5.4), sharey=True, sharex=True)
+    titles = ("Applied within each region -- every region identical by construction",
+              "Applied over the whole grid -- vulnerability sets the size")
+    for ax, vals, ttl in ((axes[0], within, titles[0]),
+                          (axes[1], world, titles[1])):
+        barh_signed(ax, list(vals.index), list(vals.values), fmt="{:+.2f}%")
+        ax.set_title(ttl, fontsize=9.5, fontweight="600", loc="left", pad=8)
+        ax.grid(axis="x", color=GRID, lw=0.8, zorder=0)
+        ax.set_axisbelow(True)
+        ax.set_xlabel("change in regional value added (%)", fontsize=9)
+    # a comparison figure must share its scale: barh_signed fits each panel to its
+    # own data, which would make the flat panel look nearly as deep as the spread one
+    lo = min(axes[0].get_xlim()[0], axes[1].get_xlim()[0])
+    hi = max(axes[0].get_xlim()[1], axes[1].get_xlim()[1])
+    axes[0].set_xlim(lo, hi)
+
+    fig.suptitle("Regional vulnerability changes the size of the loss only if "
+                 "the allocation is global",
+                 fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.045)
+    fig.text(0.012, 0.995,
+             "Proposition 1 at dT = %.1f C, Omega = %.3f%% of world output.  Both "
+             "readings conserve that total exactly; only the right-hand one lets a "
+             "region's own vulnerability determine how much of it that region bears."
+             % (DT, om * 100),
+             fontsize=8.5, color=MUTED, ha="left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig17_damage_scope.png"), dpi=300,
+                bbox_inches="tight")
+    plt.close(fig)
+    print("  fig17_damage_scope.png")
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, ROOT)
@@ -890,4 +949,5 @@ if __name__ == "__main__":
     fig_tradeoff(); fig_fx_rank(); fig_mixture(); fig_band()
     fig_vuln(); fig_equity_oprisk(); fig_inputs(); fig_term(); fig_drift(); fig_term_structure(); fig_cbam()
     fig_two_channels(); fig_credit(); fig_phi(); fig_prior_sensitivity(); fig_peg()
+    fig_damage_scope()
     print("done.")

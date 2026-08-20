@@ -377,3 +377,21 @@ it carries a mechanism, one narrative is allowed, and the caption says so.**
 **Not yet drawn:** the tariff illustration of [TARIFF_METHOD.md](TARIFF_METHOD.md)
 §5 has no figure, and neither does the China-share sweep. Both are candidates if
 the tariff work is presented.
+
+### fig17_damage_scope.png — scoping the damage allocation
+
+**Regional vulnerability changes the size of the loss only if the allocation is
+global.** Proposition 1 at ΔT = 1.5 °C, Ω = 0.780 % of world output, on the
+shipped thirteen-region calibration.
+
+Two readings of the same proposition, on a shared scale. Applied *within* each
+region, the conservation identity forces every region to −0.78 %: regional
+vulnerability can then reshuffle the sectoral composition of a fixed loss but can
+never change its size, which settles by assumption the question a multi-regional
+physical-risk model exists to ask. Applied over the whole grid, per-region damage
+emerges from the vulnerability weights and spreads from −0.55 % (GBR) to −1.13 %
+(IND), straddling the flat line. Both panels conserve the same world total to
+machine precision.
+
+Source: `tools/make_figures.py::fig_damage_scope`, computed from
+`bkmn.physical` on `DATA_final`.
