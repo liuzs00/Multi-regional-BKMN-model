@@ -488,7 +488,13 @@ def fig_term_structure():
         ax.plot(tau, [d.loc[r, t] for t in ten], color=c, ls="none",
                 marker="o", ms=4.0, zorder=4)
     ax.axhline(0, color=MUTED, lw=1)
-    ax.set_xscale("log"); ax.set_xticks(tau); ax.set_xticklabels(ten)
+    # 1M and 3M are tick marks only, not markers: the curve is exact there but
+    # those tenors are not tabulated, and they break up a stretch of the log
+    # axis that is otherwise 2.3 decades wide with no reference point in it.
+    ax.set_xscale("log")
+    ax.set_xticks([1 / 365, 1 / 12, 0.25, 0.5, 1, 5, 10, 20])
+    ax.set_xticklabels(["1D", "1M", "3M", "6M", "1Y", "5Y", "10Y", "20Y"])
+    ax.tick_params(axis="x", labelsize=8.5)
     ax.set_xlabel("tenor")
     ax.set_ylabel("zero-rate shift at 2040 (bp)")
     ax.legend(frameon=False, fontsize=8, ncol=3)
