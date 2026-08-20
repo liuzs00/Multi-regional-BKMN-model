@@ -162,8 +162,10 @@ Ward, J. H. (1963). Hierarchical grouping to optimize an objective function.
 *Journal of the American Statistical Association* 58(301), 236–244.
 — §4.2, the merge criterion for the agglomerative region selection.
 
-⚠️ **Kay (2023) — MISSING.** Cited as `\citet{Kay2023}` in §3.2 but not held in
-this list and not present anywhere in the project. Full entry needed.
+Kay, D. and G. J. Jolley (2023). Using input–output models to estimate sectoral
+effects of carbon tax policy: applications of the NGFS scenarios. *American
+Journal of Economics and Sociology* 82, 187–222. DOI 10.1111/ajes.12503.
+— §3.2, the single-country input–output antecedent driven by NGFS scenarios.
 
 Carney, M. (2015). *Breaking the tragedy of the horizon — climate change and
 financial stability.* Speech at Lloyd's of London, 29 September 2015. London:
