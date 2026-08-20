@@ -465,8 +465,8 @@ def fig_term_structure():
     half a figure.  The chapter gives the same fact as a number (1.04x across
     the four priors), and it is gated.
     """
-    ten = ["1D", "6M", "1Y", "5Y", "10Y", "20Y"]
-    tau = [1/365, 0.5, 1, 5, 10, 20]
+    ten = ["1D", "1M", "3M", "6M", "1Y", "5Y", "10Y", "20Y"]
+    tau = [1 / 365, 1 / 12, 0.25, 0.5, 1, 5, 10, 20]
     cols = [WARM, "#d08b5c", "#c9a227", TEAL, "#3f8f8f", COOL, "#5b8bb5",
             "#6f7f96", "#9aa6b5"]
     d = mix("rate_term_structure", HEAD, idx=(0, 1))[H].unstack()
@@ -488,12 +488,9 @@ def fig_term_structure():
         ax.plot(tau, [d.loc[r, t] for t in ten], color=c, ls="none",
                 marker="o", ms=4.0, zorder=4)
     ax.axhline(0, color=MUTED, lw=1)
-    # 1M and 3M are tick marks only, not markers: the curve is exact there but
-    # those tenors are not tabulated, and they break up a stretch of the log
-    # axis that is otherwise 2.3 decades wide with no reference point in it.
     ax.set_xscale("log")
-    ax.set_xticks([1 / 365, 1 / 12, 0.25, 0.5, 1, 5, 10, 20])
-    ax.set_xticklabels(["1D", "1M", "3M", "6M", "1Y", "5Y", "10Y", "20Y"])
+    ax.set_xticks(tau)
+    ax.set_xticklabels(ten)
     ax.tick_params(axis="x", labelsize=8.5)
     ax.set_xlabel("tenor")
     ax.set_ylabel("zero-rate shift at 2040 (bp)")
@@ -504,7 +501,7 @@ def fig_term_structure():
     fig.text(0.012, 1.005, "Consensus mixture. Hull-White  with a = 0.04: "
              "dR(t,T) = B(tau)/tau . dr(t), sigma-independent. "
              "Curve drawn analytically -- Prop 2 is exact at any tenor; "
-             "markers are the six reported tenors. 20Y/1D = 0.688 by construction.",
+             "markers are the eight reported tenors. 20Y/1D = 0.688 by construction.",
              fontsize=8.5, color=MUTED, ha="left")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig10_rate_term_structure.png"), dpi=300,
