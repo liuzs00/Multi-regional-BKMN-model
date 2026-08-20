@@ -35,7 +35,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # which this module imports, so the two orchestrators cannot diverge.
 
 # Rate tenors reported, mirroring the paper's Table 11 (Deposit 1D/6M, Swap 1Y..20Y).
-RATE_TENORS = {"1D": 1 / 365, "6M": 0.5, "1Y": 1.0, "5Y": 5.0, "10Y": 10.0, "20Y": 20.0}
+RATE_TENORS = {"1D": 1 / 365, "1M": 1 / 12, "3M": 0.25, "6M": 0.5,
+               "1Y": 1.0, "5Y": 5.0, "10Y": 10.0, "20Y": 20.0}
 
 
 def chain(m, sc, scenario, M, scope, vl, xce_over=None, dT_over=None,
