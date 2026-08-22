@@ -19,19 +19,16 @@ parity and a forward leg under covered interest parity. The seven NGFS narrative
 are treated not as competing forecasts but as components of a
 Dirichlet-categorical mixture, over which four priors are carried.
 
-The organising finding is that transition risk is a policy choice while physical
-risk, at this horizon, is not: the mean transition cost varies by a factor of
-thirty-seven across the narratives against eight per cent for physical damage.
-That asymmetry sorts the financial channels into those which cannot be reported
-without a view on climate policy and those which can — spot exchange rates range
-over a factor of 22.7 across the four priors, policy rates over 1.04. Three
-results then emerge that a single-region model cannot produce. Appreciation
-proves a symptom of harm rather than of resilience, the rupee's five-year forward
-moving −1.35 per cent against the euro at 2040 while sterling moves +0.35.
-Ranking regions by exchange rate, policy rate, credit spread and equity gives
-four different answers from the same two underlying shocks. And a dollar-pegged
-economy carries a wedge of some twenty-five basis points between the policy rate
-its own damage calls for and the one its anchor delivers.
+The main finding is that transition risk is a policy choice while physical risk,
+at this horizon, is not. The mean transition cost varies by a factor of
+thirty-seven across the seven narratives; physical damage varies by eight per
+cent. That asymmetry divides the financial channels into those which cannot be
+reported without a view on climate policy and those which can. Three further
+results follow that a single-region model cannot produce. Currency appreciation
+is a symptom of harm rather than of resilience. Ranking regions by exchange rate,
+policy rate, credit spread and equity gives four different answers from the same
+two shocks. And a pegged economy carries a wedge of some twenty-five basis points
+between the policy rate its own damage calls for and the one its anchor delivers.
 
 **Keywords:** climate stress testing; multi-regional input–output analysis;
 foreign exchange; covered interest parity; NGFS scenarios; Dirichlet-categorical
