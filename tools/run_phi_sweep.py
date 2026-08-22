@@ -41,6 +41,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 sys.path.insert(0, ROOT)
 
 from bkmn import (credit, equity, fx, macro, mixture,       # noqa: E402
@@ -118,8 +120,8 @@ def main():
         return f
 
     tr_s, eq_s, cr_s = panel(tr_all), panel(eq_all), panel(cr_all)
-    tr_s.to_csv(f"{ROOT}/out_phi_transition_scen.csv", float_format="%.6f")
-    cr_s.to_csv(f"{ROOT}/out_phi_credit_scen.csv", float_format="%.6f")
+    tr_s.to_csv(f"{RESULTS}/out_phi_transition_scen.csv", float_format="%.6f")
+    cr_s.to_csv(f"{RESULTS}/out_phi_credit_scen.csv", float_format="%.6f")
 
     # mixture-weight to the headline prior, then transpose back to phi x region
     # so the committed filenames keep the shape the figures and gates expect
@@ -137,22 +139,22 @@ def main():
         return out.sort_index()
 
     tr_df = mixed(tr_s)
-    tr_df.to_csv(f"{ROOT}/out_phi_transition.csv", float_format="%.4f")
-    mixed(eq_s).to_csv(f"{ROOT}/out_phi_equity.csv", float_format="%.4f")
+    tr_df.to_csv(f"{RESULTS}/out_phi_transition.csv", float_format="%.4f")
+    mixed(eq_s).to_csv(f"{RESULTS}/out_phi_equity.csv", float_format="%.4f")
     cr_df = mixed(cr_s)
-    cr_df.to_csv(f"{ROOT}/out_phi_credit.csv", float_format="%.4f")
+    cr_df.to_csv(f"{RESULTS}/out_phi_credit.csv", float_format="%.4f")
 
     # the dimensionless shape: divide out the level, which is the only part the
     # carbon price sets.  phi = 0 is minus the region's whole carbon bill, so
     # this runs from -1 to +1 by construction.
     norm = tr_df.divide(tr_df.loc[0.0].abs(), axis=1)
-    norm.to_csv(f"{ROOT}/out_phi_transition_norm.csv", float_format="%.6f")
+    norm.to_csv(f"{RESULTS}/out_phi_transition_norm.csv", float_format="%.6f")
 
     # crossings, region x scenario, plus the mixture column
     cx = pd.DataFrame({s: {r: crossing(PHIS, tr_s.loc[(s, r)].to_numpy(float))
                            for r in R} for s in sc.names})
     cx[HEAD] = {r: crossing(PHIS, tr_df[r].to_numpy(float)) for r in R}
-    cx.to_csv(f"{ROOT}/out_phi_crossings.csv", float_format="%.4f")
+    cx.to_csv(f"{RESULTS}/out_phi_crossings.csv", float_format="%.4f")
 
     inv = pd.DataFrame(inv_all).T
     inv.index = pd.MultiIndex.from_tuples(inv.index, names=["scenario", "phi"])
@@ -162,7 +164,7 @@ def main():
     wt = mixture.weights(shapes[HEAD], scenarios=list(sc.names))
     inv_h = sum(inv.xs(s, level=0) * wt[s] for s in sc.names)
     inv_h.index.name = "phi"
-    inv_h.to_csv(f"{ROOT}/out_phi_invariance.csv", float_format="%.6f")
+    inv_h.to_csv(f"{RESULTS}/out_phi_invariance.csv", float_format="%.6f")
 
     print(f"pass-through sweep at {YEAR}: {len(sc.names)} scenarios x "
           f"{len(PHIS)} phi, headline prior = {HEAD}\n")

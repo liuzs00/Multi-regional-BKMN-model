@@ -21,6 +21,8 @@ import sys
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 sys.path.insert(0, ROOT)
 
 from bkmn import equity, oprisk, physical, tariff, transition          # noqa: E402
@@ -70,7 +72,7 @@ def main():
     # absent from the FX table because spot is quoted against it
     gva["rate_bp"] = [(runs[1.0]["dr"][r][YEAR] - base_c["dr"][r][YEAR]) * 1e4
                       for r in gva.index]
-    gva.to_csv(f"{ROOT}/out_illus_eu_tariff_gva.csv")
+    gva.to_csv(f"{RESULTS}/out_illus_eu_tariff_gva.csv")
 
     fx = pd.DataFrame({
         "spot_pct": {r: (d1["spot"][r][YEAR] - base_d["spot"][r][YEAR]) * 100
@@ -80,7 +82,7 @@ def main():
         "rate_bp": {r: (runs[1.0]["dr"][r][YEAR] - base_c["dr"][r][YEAR]) * 1e4
                     for r in fxregs},
     }).rename_axis("region")
-    fx.to_csv(f"{ROOT}/out_illus_eu_tariff_fx.csv")
+    fx.to_csv(f"{RESULTS}/out_illus_eu_tariff_fx.csv")
 
     dr_eu = (runs[1.0]["dr"][LEVIER][YEAR] - base_c["dr"][LEVIER][YEAR]) * 1e4
     print(f"{LEVIER} levies {RATE*100:.0f}% on imported goods "

@@ -16,7 +16,8 @@ import sys
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 from bkmn import regions as _regions            # noqa: E402  (dataset switch)
 
 XCE = 70.0                                   # USD/tCO2e  (paper Table 4 uses GBP 70)
@@ -24,7 +25,9 @@ PHIS = np.round(np.arange(0, 1.0001, 0.10), 2)
 
 # region set and data folder follow bkmn.regions.DATASET, so this script and the
 # model can never disagree about which calibration is in force
-D = _regions.D20
+D = _regions.DATA
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 TAG = _regions.TAG
 REG_ORDER = list(pd.read_csv(os.path.join(D, "region_carbon_map.csv")).region)
 
@@ -109,9 +112,9 @@ print(f"\n[sanity] UK region shock at phi=0   = {gva_tbl.loc['GBR','0%']:.3f}%  
 print(f"[sanity] UK region shock at phi=100 = {gva_tbl.loc['GBR','100%']:.3f}%   (should equal +CT/GVA = {-ct_over_gva:.3f}%)")
 
 # --- save ------------------------------------------------------------------
-gva_tbl.to_csv("out_gva_shock_by_region_phi.csv")
-price_tbl.to_csv("out_price_change_by_region_phi.csv")
-sector_shock.to_csv("out_gva_shock_by_sector_phi.csv")     # full 650 region-sectors x phi
-price_shock.to_csv("out_price_change_by_sector_phi.csv")   # full 650 region-sectors x phi
+gva_tbl.to_csv(f"{RESULTS}/out_gva_shock_by_region_phi.csv")
+price_tbl.to_csv(f"{RESULTS}/out_price_change_by_region_phi.csv")
+sector_shock.to_csv(f"{RESULTS}/out_gva_shock_by_sector_phi.csv")     # full 650 region-sectors x phi
+price_shock.to_csv(f"{RESULTS}/out_price_change_by_sector_phi.csv")   # full 650 region-sectors x phi
 print("\nsaved: out_gva_shock_by_region_phi.csv, out_price_change_by_region_phi.csv,"
       "\n       out_gva_shock_by_sector_phi.csv, out_price_change_by_sector_phi.csv")

@@ -25,7 +25,7 @@ BETA_MIN, BETA_MAX = 0.2, 6.0          # plausibility band; outside -> proxy
 def _region_gdp():
     gdp = pd.read_csv(os.path.join(ROOT, "data", "macro",
                                    "wb_gdp_current_usd_2000_2023.csv"))
-    mapping = pd.read_csv(os.path.join(regions.D20, "region_mapping.csv"))
+    mapping = pd.read_csv(os.path.join(regions.DATA, "region_mapping.csv"))
     m = dict(zip(mapping.country, mapping.region))
     gdp = gdp.dropna(subset=["value"]).copy()
     gdp["region"] = gdp.code.map(m)
@@ -65,7 +65,7 @@ def calibrate(verbose=False):
 def betas():
     """β per region for all 20 regions (proxy where no calibration exists)."""
     cal = calibrate()
-    cm = pd.read_csv(os.path.join(regions.D20, "region_carbon_map.csv"))
+    cm = pd.read_csv(os.path.join(regions.DATA, "region_carbon_map.csv"))
     return {r: cal.get(r, (EQUITY_BETA, float("nan"), "proxy"))[0] for r in cm.region}
 
 

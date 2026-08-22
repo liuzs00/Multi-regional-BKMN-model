@@ -18,7 +18,7 @@ import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEST = os.path.join(ROOT, "data", "macro")
-D20 = os.path.join(ROOT, "DATA_20R")
+DATA = os.path.join(ROOT, "DATA_final")
 API = ("https://api.worldbank.org/v2/country/all/indicator/{ind}"
        "?date={dates}&format=json&per_page=20000&page={page}")
 
@@ -66,7 +66,7 @@ def main():
     # labour-force-weighted unemployment per 20R region
     u = unemp.dropna(subset=["value"]).set_index("code").value
     w = lf.dropna(subset=["value"]).set_index("code").value
-    mapping = pd.read_csv(os.path.join(D20, "region_mapping.csv"))
+    mapping = pd.read_csv(os.path.join(DATA, "region_mapping.csv"))
     rows = []
     for region, grp in mapping.groupby("region"):
         ws = cw = 0.0
@@ -79,7 +79,7 @@ def main():
                      "coverage_members": int(sum(c in u.index for c in grp.country)),
                      "members": len(grp)})
     out = pd.DataFrame(rows).set_index("region")
-    cm = pd.read_csv(os.path.join(D20, "region_carbon_map.csv"))
+    cm = pd.read_csv(os.path.join(DATA, "region_carbon_map.csv"))
     out = out.reindex(cm.region)
     out.to_csv(os.path.join(DEST, "unemployment_20R.csv"))
     print(out.unemployment_2022.to_string())

@@ -28,6 +28,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 SRC = r"D:\Download\2016-2022_SML\2022_SML.csv"
 SPECIAL = {"TLS", "VA", "OUT"}
 REN = {"C241_2431": "C24A", "C242_2432": "C24B", "C30X301": "C302T309"}
@@ -128,7 +130,7 @@ def main():
     mm = max(abs(mf[r] - mc[r]) for r in ANALYTIC)
     relm = max(abs(mf[r] - mc[r]) / mc[r] for r in ANALYTIC)
 
-    pd.DataFrame(rows).to_csv(os.path.join(ROOT, "out_row_sufficiency_13r.csv"),
+    pd.DataFrame(rows).to_csv(os.path.join(RESULTS, "out_row_sufficiency_13r.csv"),
                               index=False, float_format="%.5f")
     print(f"\n>>> MAX |delta| GVA shock ({len(ANALYTIC)} regions x {len(PHIS)} phi) "
           f"= {maxd:.4f} pp")

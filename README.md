@@ -1,89 +1,108 @@
 # Multi-regional BKMN model
 
-A Python reproduction of the **BKMN climate stress-testing model**
-(Berrahoui, Kenyon, Macrina, Nathanael, 2025 — *"Simple climate stress testing:
-an ensemble framework"*, SSRN-5130573).
+A multi-regional extension of the **BKMN climate stress-testing framework**
+(Berrahoui, Kenyon, Macrina and Nathanael, 2025 — *Simple climate stress
+testing: an ensemble framework*). The original develops the framework for a
+single economy; a single economy has no exchange rate, and a carbon price levied
+in one country has nowhere to leak to. This repository extends the framework to
+a system of thirteen regions built from the OECD inter-country input–output
+tables, so that both become computable.
 
-It takes the two outputs of government climate models — **temperature** and
-**CO2e price** — and runs them through an ensemble of simple models to produce
-sector, macro and financial-market climate stresses (rates, inflation, credit,
-equity, operational risk).
+It takes the two outputs of policy-level climate models — a **temperature path**
+and a **CO₂e price** — and runs them through a short chain of individually
+auditable relations to produce value-added, macroeconomic and financial-market
+stresses: inflation, policy rates, the yield curve, equity, credit, operational
+risk and, the object of the extension, **exchange rates**.
+
+---
 
 ## Quick start
 
 ```bash
-py -3 run_bkmn.py          # validate Table 4 + print a Table-11 style output
-py -3 tests/check_table4.py  # full Table 4 reproduction check
+pip install -r requirements.txt
+
+py -3 -m bkmn.run_extensions      # full pipeline -> results/*.csv
+py -3 tools/make_figures.py       # figures/*.png (reads results/, no re-run)
+py -3 tests/test_validation.py    # 44 structural gates
 ```
 
-Requires `numpy` and `pandas` (see `requirements.txt`).
-
-## What is validated vs. simulated
-
-The paper provides all the **UK structural/calibration data** but **not** the
-climate scenario term-structures or the market curves. The reproduction is
-therefore split:
-
-| Block | Status | Basis |
-|---|---|---|
-| Input-Output carbon-tax → sector GVA shocks (**Table 4**) | ✅ **Validated** (max error 0.04pp) | Tables 2, 3 + Eq. 8/10 |
-| Physical risk (GDP damage + vulnerability) | ✅ Implemented per Eq. 11 / Prop. 1 | Tables 2, 6 |
-| Inflation, Taylor rule, HW1F rates, CDS/equity, op-risk | ⚙️ Implemented per Sec. 2.6–2.11 | Tables 8, 9, 10 + paper constants |
-| SSP/RCP Bayesian mixture + transition matrix | ⚙️ Implemented per Eq. 1, 18–21 | paper priors |
-| **Temperature & CO2e price paths** | ✅ **REAL** | MESSAGE-GLOBIOM SSP2 marker (IIASA SSP DB): World MAGICC6 temp + R5.2OECD carbon price |
-| **GBP yield + inflation curves** | ✅ **REAL** | Bank of England GLC snapshot 2026-06-11 (nominal + implied-inflation spot) |
-| **Carbon-pricing scope (Ω_XCE), HW1F σ** | 🔶 **ASSUMED** | scope=1.0 (paper gives no value); σ unused (shift is σ-independent) |
-
-> The Table 4 block is a like-for-like reproduction (max error 0.04pp). Climate
-> and market inputs are now real (`data/*.csv`, ingested from the supplied Excel
-> by `tools/ingest_data.py`). The model reports both climate *shifts* and
-> *absolute stressed levels* (base curve + shift). The rates/inflation/credit/
-> equity figures still differ from the paper's Tables 11–14 because the paper used
-> much *flatter* carbon/temperature paths than the MESSAGE marker (see the paper's
-> own §3.3 note that "IPCC data shows minimal variation... a flat trend"). The only
-> remaining assumed input is carbon-pricing scope; all non-paper values are tagged
-> in [`bkmn/assumptions.py`](bkmn/assumptions.py).
+The committed `results/` and `DATA_final/` mean nothing has to be rebuilt to
+reproduce a figure or check a number.
 
 ## Layout
 
-```
-bkmn/
-  data.py         paper tables (IO matrix, carbon intensity, vulnerability,
-                  CDS↔GVA map, regression betas, op-risk betas, std-devs)
-  assumptions.py  every value NOT in the paper, tagged [PAPER]/[DATA]/[ASSUMED]
-  economy.py      Input-Output core, transition risk (Table 4), physical risk
-  climate.py      REAL temperature & CO2e-price term structures per RCP (data/*.csv)
-  curves.py       REAL BoE nominal + inflation spot curves (data/*.csv)
-  scenarios.py    SSP/RCP priors, transition matrix (Eq 1), mixture evolution
-  markets.py      inflation, Taylor rule, Hull-White 1F, CDS/equity, op-risk
-  model.py        orchestrator → shifts + absolute stressed levels (RCP-weighted)
-data/             ingested CSVs (temperature, carbon price, nominal & inflation curves)
-tools/
-  ingest_data.py  ETL: Excel sources -> data/*.csv
-  inspect_xlsx.py  structure inspector for the Excel sources
-run_bkmn.py       entry point
-tests/check_table4.py  validation against Table 4
-```
+| | |
+|---|---|
+| `bkmn/` | the model — one module per channel, plus the two drivers `run_extensions.py` and `run_fx.py` |
+| `DATA_final/` | the thirteen-region calibration: ICIO flows, Scope-1 emissions, carbon intensities, region maps |
+| `data/` | upstream sources — NGFS scenarios, GHG footprints, ND-GAIN, World Bank macro, equity indices |
+| `results/` | every output table, 117 CSVs, committed so results are reproducible without a re-run |
+| `figures/` | 17 publication figures, all drawn from `results/` |
+| `docs/` | method write-ups and the dissertation chapters |
+| `tests/` | the gate suites |
+| `tools/` | builders, downloaders, sweeps and the figure script |
 
-## Refreshing the data
+## The chain
 
-The CSVs in `data/` were produced from the supplied Excel sources by:
+Each link is one published relation, and each can be checked on its own.
+
+1. **Transition risk** — a carbon price becomes an ad-valorem cost on each
+   sector's Scope-1 emissions and propagates through the multi-regional Leontief
+   price dual, so a charge levied in one region reaches every other.
+2. **Physical risk** — a temperature path becomes a global output loss through a
+   quadratic damage function, allocated across region–industry pairs by
+   vulnerability, conserving the global total exactly.
+3. **Macro-financial transmission** — the resulting value-added shock drives
+   inflation, a Taylor rule, the Hull–White term structure, and the market
+   prices of equity, credit and operational-loss exposure.
+4. **Foreign exchange** — the difference between two economies' yield-curve
+   changes, separating into a spot leg under relative purchasing-power parity
+   and a forward leg under covered interest parity. No new parameter enters.
+5. **Tariffs** — a trade measure is the same object as a carbon charge placed on
+   different blocks of the same matrix, so it needs no new machinery.
+
+Scenario uncertainty is handled by treating the seven NGFS narratives as
+components of a Dirichlet-categorical mixture rather than as competing
+forecasts, with four priors carried so that conclusions depending on a view
+about climate policy can be separated from those that do not.
+
+## Validation
+
+A climate stress test cannot be backtested — there is no realised 2040 — so the
+model is checked structurally instead, on synthetic economies whose answers are
+known in advance.
 
 ```bash
-py -3 tools/ingest_data.py   # reads D:\Download\{Temperature,price-carbon}.xlsx
-                             #   and the BoE GLC yield-curve workbooks
+py -3 tests/test_validation.py       # 44 gates: isolation, symmetry, reduction, signs
+py -3 tests/test_chapter_results.py  # 532 checks: every number quoted in the write-ups
+py -3 tests/test_extensions.py       # 94 gates: mixture, tariffs, CBAM, stress band
+py -3 tests/test_fx.py               # 9 gates: parities, triangular consistency
 ```
 
-## To make it a true reproduction
+`docs/GATES.md` explains what each gate asserts and how to read its output;
+`docs/CHAPTER_VALIDATION.md` sets out why this is the right form of test and
+what it cannot establish. The suite is itself tested by mutation
+(`tools/mutation_test.py`), which found that gates built on symmetry are
+sign-blind — a model asserting the reverse of the economics passed all of them.
 
-Replace the 🔶 simulated inputs with real data:
+> On a non-UTF-8 console the suites can die on a minus sign in their output.
+> Use `PYTHONIOENCODING=utf-8 py -3 tests/...`.
 
-1. **Temperature paths** — IPCC AR6 WG1 (Table SPM.1 / climate-emulator output),
-   per SSP/RCP, as incremental change from the start year.
-2. **CO2e price paths** — IIASA SSP Scenario Database (`Price|Carbon`), converted
-   USD2005 → GBP, per SSP/RCP marker.
-3. **GBP yield + inflation curves** — observed market curves for the base date;
-   calibrate Hull-White (`a`, `σ`).
+## Rebuilding from source
 
-These are wired through `bkmn/climate.py` and `bkmn/assumptions.py`, so swapping
-them in does not touch the model logic.
+Not required for normal use. `tools/build_data_final.py` regenerates
+`DATA_final/` from the raw ICIO and emissions files, `tools/build_aux_final.py`
+the vulnerability and macro auxiliaries, and the `tools/download_*.py` scripts
+fetch the upstream sources. These need the ingestion extras in
+`requirements.txt`.
+
+## Documentation
+
+The method write-ups in `docs/` carry the derivations and the audit trail:
+`CHAPTER_MRIO.md` for the input–output apparatus, `TRANSITION_METHOD.md` and
+`CHAPTER_PHYSICAL.md` for the two shocks, `CHAPTER_MACRO_MARKETS.md` and
+`CHAPTER_FX.md` for transmission, `CHAPTER_REGION_SELECTION.md` for how the
+thirteen regions are derived rather than asserted, `TARIFF_METHOD.md` and
+`TARIFF_CALIBRATION.md` for the trade extension, and `PAPER_AUDIT.md` for every
+deviation from the single-region original with its justification.
+`docs/REFERENCES.md` is the consolidated reference list.

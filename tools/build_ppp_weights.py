@@ -1,5 +1,5 @@
 """
-Build the `ppp_gdp_weight` column of DATA_20R/region_carbon_map.csv from World
+Build the `ppp_gdp_weight` column of DATA_final/region_carbon_map.csv from World
 Bank PPP GDP (2022).
 
 These are welfare-relevant aggregation weights for the **physical-damage**
@@ -24,8 +24,8 @@ import urllib.request
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D20 = os.path.join(ROOT, "DATA_20R")
-CARBON_MAP = os.path.join(D20, "region_carbon_map.csv")
+DATA = os.path.join(ROOT, "DATA_final")
+CARBON_MAP = os.path.join(DATA, "region_carbon_map.csv")
 YEAR = 2022
 INDICATOR = "NY.GDP.MKTP.PP.CD"
 API = (f"https://api.worldbank.org/v2/country/all/indicator/{INDICATOR}"
@@ -49,7 +49,7 @@ def fetch_ppp() -> dict:
 
 def market_gdp_shares() -> dict:
     """Region market-GDP shares from the ICIO VA row (for the printed contrast)."""
-    icio = pd.read_csv(os.path.join(D20, f"ICIO2025_20R_{YEAR}.csv"), index_col=0)
+    icio = pd.read_csv(os.path.join(DATA, f"ICIO2025_20R_{YEAR}.csv"), index_col=0)
     va = icio.loc["VA"]
     fd = {"HFCE", "NPISH", "GGFC", "GFCF", "INVNT", "DPABR"}
     reg = {}
@@ -67,7 +67,7 @@ def market_gdp_shares() -> dict:
 def main():
     ppp = fetch_ppp()
     world = ppp["WLD"]
-    mapping = pd.read_csv(os.path.join(D20, "region_mapping.csv"))
+    mapping = pd.read_csv(os.path.join(DATA, "region_mapping.csv"))
 
     named = mapping[mapping.region != "ROW"]
     missing = [c for c in named.country if c not in ppp]

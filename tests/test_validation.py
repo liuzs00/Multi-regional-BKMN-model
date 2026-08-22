@@ -25,6 +25,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
 sys.path.insert(0, ROOT)
 
 from bkmn import fx, macro, synthetic, transition   # noqa: E402
@@ -303,7 +304,7 @@ _sc = _cm.carbon_scope.astype(float)
 check("F8 EU27 has the highest carbon-pricing scope in the set",
       all(_sc[r] < _sc["EU27"] for r in _fx),
       f"EU27 {_sc['EU27']:.3f} vs max other {max(_sc[r] for r in _fx):.3f}")
-_spot = pd.read_csv(f"{ROOT}/out_fx_spot_ppp.csv")
+_spot = pd.read_csv(f"{RESULTS}/out_fx_spot_ppp.csv")
 _nz = _spot[_spot.scenario.str.startswith("Net Zero")].set_index("region")
 check("F8b ... so every analytical currency appreciates on spot",
       all(float(_nz.loc[r, "2040"]) < 0 for r in _fx),

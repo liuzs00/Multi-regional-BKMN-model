@@ -25,7 +25,7 @@ def kappa():
     """Okun slope per region; regions absent from the table take the default."""
     k = pd.read_csv(os.path.join(ROOT, "data", "macro", "okun_kappa.csv"),
                     index_col=0)["kappa"]
-    cm = pd.read_csv(os.path.join(regions.D20, "region_carbon_map.csv"))
+    cm = pd.read_csv(os.path.join(regions.DATA, "region_carbon_map.csv"))
     return pd.Series({r: float(k.get(r, KAPPA_DEFAULT)) for r in cm.region})
 
 

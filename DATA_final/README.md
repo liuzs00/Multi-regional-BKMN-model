@@ -5,7 +5,7 @@
 algorithm rather than asserted — see
 [`docs/CHAPTER_REGION_SELECTION.md`](../docs/CHAPTER_REGION_SELECTION.md) for the
 method and [`tools/select_regions_threshold.py`](../tools/select_regions_threshold.py)
-for the code. Supersedes the 20-region build in [`DATA_20R/`](../DATA_20R/), which
+for the code. Supersedes the earlier 20-region build, since removed, which
 was chosen by argument.
 
 Produced by [`tools/build_data_final.py`](../tools/build_data_final.py), which
@@ -63,9 +63,9 @@ linkage (the same weighted by carbon intensity).
 - **ROW** — AUS BLR CAN IDN ISL JPN KAZ KHM LAO MMR NOR NZL PAK UKR + the ICIO's
   own unallocated residual
 
-## What changed from DATA_20R
+## What changed from the earlier 20-region build
 
-| | DATA_20R | DATA_final |
+| | 20-region build | DATA_final |
 |---|---|---|
 | Regions | 20, chosen by argument | 13, derived by rule |
 | Switzerland | inside ROW at an assumed \$2/t | **own region**, CHF 120/t (≈\$133) |
@@ -89,7 +89,7 @@ not from any judgement about FX, and is the main trade-off in adopting this set.
   13×50 industries + `TLS`/`VA`/`OUT`; columns = 13×50 industry + 13×6
   final-demand + `OUT`. Current USD millions. World gross output **\$199.69 T**,
   value added **\$93.81 T**, intermediate flows **\$103.41 T** — all identical to
-  DATA_20R, as they must be: a different partition of the same world.
+  the 20-region build, as they must be: a different partition of the same world.
 - `GHG_S1_13R_2022.csv` — Scope-1 GHG (Mt CO₂e), 50 industries × 13 regions;
   world total **44.2 Gt**.
 - `CARBON_INTENSITY_13R_2022.csv` — `CI = Scope-1 / gross output`, tonnes CO₂e
@@ -99,7 +99,7 @@ not from any judgement about FX, and is the main trade-off in adopting this set.
   regime, CBAM role, physical-vulnerability tier, PPP-GDP welfare weight,
   carbon-pricing scope, applied carbon price (carbon/scenario layer).
 - `industries.csv`, `industry_mapping.csv` — the 50 ISIC Rev.4 codes and the
-  crosswalk to GHGFP activity codes (region-independent; copied from DATA_20R).
+  crosswalk to GHGFP activity codes (region-independent; carried over unchanged).
 
 ## Units & conventions
 
@@ -143,13 +143,14 @@ py -3 tools/build_data_final.py
 Needs `D:\2016-2022_SML\2022_SML.csv`, `data/ghgfp/SCOPE/2022.csv.gz`,
 `data/scope/owid_carbon_price_coverage.csv`, and network access for the World
 Bank PPP series. If the World Bank API is unreachable the script leaves
-`ppp_gdp_weight` **blank for every region** rather than carrying DATA_20R's
+`ppp_gdp_weight` **blank for every region** rather than carrying the 20-region
 values, which would be wrong here because the groupings differ.
 
 ## Status
 
-**Data only.** Nothing downstream has been re-pointed at this folder: the model
-pipeline, results and documentation still run on `DATA_20R`. Adopting this set
-means rebuilding the per-region inputs that live outside this folder
-(`data/scope/`, `data/physical/`, `data/macro/`, equity betas) and re-baselining
-the regression gates.
+**In force.** This is the only calibration the model runs on. `bkmn.regions`
+loads it, every table in `results/` and every figure is computed from it, and
+the gate suites are baselined against it. The earlier 20-region build has been
+removed; the per-region inputs outside this folder (`data/scope/`,
+`data/physical/`, `data/macro/`, equity betas) were rebuilt for this region set
+when it was adopted.

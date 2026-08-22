@@ -2,7 +2,7 @@
 Build DATA_final/ -- the calibration tables at the 13 regions the selection
 algorithm chooses.
 
-Same structure as DATA_20R, produced from the same sources, but the region
+Same structure as DATA_final, produced from the same sources, but the region
 definition is IMPORTED from `tools/select_regions_threshold.py` and re-derived
 at build time rather than transcribed, so the data cannot drift from the method
 that justifies it.
@@ -18,8 +18,8 @@ Inputs
   D:\\2016-2022_SML\\2022_SML.csv          OECD ICIO 2025 (81 economies x 50 ind.)
   data/ghgfp/SCOPE/2022.csv.gz            GHGFP 2025 Scope-1
   data/scope/owid_carbon_price_coverage.csv   OWID carbon-price coverage
-  DATA_20R/industry_mapping.csv           industry code crosswalk (region-free)
-  DATA_20R/region_carbon_map.csv          qualitative columns to carry over
+  DATA_final/industry_mapping.csv           industry code crosswalk (region-free)
+  DATA_final/region_carbon_map.csv          qualitative columns to carry over
   World Bank API (optional)               PPP GDP 2022 for welfare weights
 
 Outputs (DATA_final/)
@@ -47,7 +47,7 @@ from tools.select_regions_threshold import (CANDIDATES, group,  # noqa: E402
 
 SRC_DIR = r"D:\2016-2022_SML"
 OUT_DIR = os.path.join(ROOT, "DATA_final")
-D20 = os.path.join(ROOT, "DATA_20R")
+DATA = os.path.join(ROOT, "DATA_final")
 YEAR = 2022
 TAG = "13R"
 
@@ -55,12 +55,12 @@ FD_CATS = ["HFCE", "NPISH", "GGFC", "GFCF", "INVNT", "DPABR"]
 SPECIAL_ROWS = ["TLS", "VA", "OUT"]
 
 # Presentation order: base region, then single economies by linkage, then the
-# structural aggregates, then the closure -- the DATA_20R convention.
+# structural aggregates, then the closure -- the DATA_final convention.
 ORDER = ["EU27", "CHN", "USA", "GBR", "CHE", "RUS", "IND", "TUR",
          "RASIA", "LAM", "MEA", "AFR", "ROW"]
 
 # Columns of region_carbon_map that are judgements rather than measurements.
-# Carried over unchanged from DATA_20R where the region is unchanged; the two
+# Carried over unchanged from DATA_final where the region is unchanged; the two
 # new regions are stated here.
 CARBON_MAP_QUAL = {
     "CHE": dict(currency="CHF", fx_role="analytical", scenario_zone="R5.2OECD",
@@ -216,7 +216,7 @@ def ppp_weights(members):
     except Exception as exc:                       # offline build
         print(f"  *** WARNING: World Bank API unavailable ({exc}). "
               f"ppp_gdp_weight left BLANK for every region -- re-run when "
-              f"online; do not copy the DATA_20R column, the groupings differ.")
+              f"online; do not copy the DATA_final column, the groupings differ.")
         return None
     ppp = {row["countryiso3code"]: float(row["value"]) for row in payload[1]
            if row.get("countryiso3code") and row.get("value") is not None}
@@ -228,7 +228,7 @@ def ppp_weights(members):
 
 
 def build_carbon_map(members, scope, ppp):
-    old = pd.read_csv(os.path.join(D20, "region_carbon_map.csv")).set_index("region")
+    old = pd.read_csv(os.path.join(DATA, "region_carbon_map.csv")).set_index("region")
     cols = ["currency", "fx_role", "scenario_zone", "carbon_price_regime",
             "cbam_role", "phys_vuln_tier", "ppp_gdp_weight", "carbon_scope",
             "applied_price_usd"]
@@ -239,7 +239,7 @@ def build_carbon_map(members, scope, ppp):
         rec.update({c: base.get(c) for c in cols})
         rec.update(CARBON_MAP_QUAL.get(r, {}))
         rec["carbon_scope"] = scope.loc[r, "carbon_scope"]
-        # PPP weights are region-composition dependent, so a DATA_20R value is
+        # PPP weights are region-composition dependent, so a DATA_final value is
         # WRONG here even where the region name is unchanged (LAM gained Chile,
         # ROW lost most of its members).  Blank the whole column rather than
         # carry a plausible-looking wrong number if the API was unreachable.
@@ -267,7 +267,7 @@ def main():
                  ).to_csv(os.path.join(OUT_DIR, "region_mapping.csv"), index=False)
     pd.Series(inds, name="industry").to_csv(
         os.path.join(OUT_DIR, "industries.csv"), index=False)
-    shutil.copy(os.path.join(D20, "industry_mapping.csv"),
+    shutil.copy(os.path.join(DATA, "industry_mapping.csv"),
                 os.path.join(OUT_DIR, "industry_mapping.csv"))
     print(f"  wrote region_mapping.csv ({len(c2r)} economies), "
           f"industries.csv ({len(inds)}), industry_mapping.csv")

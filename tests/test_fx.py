@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
 sys.path.insert(0, ROOT)
 
 from bkmn import fx, macro, transition          # noqa: E402
@@ -29,7 +30,7 @@ def check(name, cond, detail=""):
 
 
 # --- Gate 1: reduction test — flat XCE=70 reproduces the committed CSV ------
-ref = pd.read_csv(f"{ROOT}/out_gva_shock_by_region_phi.csv", index_col=0)
+ref = pd.read_csv(f"{RESULTS}/out_gva_shock_by_region_phi.csv", index_col=0)
 for phi, col in [(0.0, "0%"), (0.5, "50%"), (1.0, "100%")]:
     M = transition.gva_operator(m, phi)
     got = transition.region_gdp_shock(m, M, {r: 70.0 for r in m.regions_order})

@@ -30,6 +30,8 @@ from .run_fx import (BASE, CONSISTENT_INTENSITY, HORIZONS, OPRISK_INPUT, PHI,
 from .scenarios import Scenarios
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 
 # The warming baseline and the Taylor output-gap choice live in run_fx.py,
 # which this module imports, so the two orchestrators cannot diverge.
@@ -164,17 +166,17 @@ def main():
 
     # --- per-scenario channel tables ---------------------------------------
     allreg = m.regions_order
-    table(chains, "trans", allreg, 100).to_csv(f"{ROOT}/out_ext_gdp_transition.csv")
-    table(chains, "phys", allreg, 100).to_csv(f"{ROOT}/out_ext_gdp_physical.csv")
-    table(chains, "dY", allreg, 100).to_csv(f"{ROOT}/out_ext_gdp_total.csv")
-    table(chains, "dr", allreg, 1e4).to_csv(f"{ROOT}/out_ext_rate_shift.csv")
+    table(chains, "trans", allreg, 100).to_csv(f"{RESULTS}/out_ext_gdp_transition.csv")
+    table(chains, "phys", allreg, 100).to_csv(f"{RESULTS}/out_ext_gdp_physical.csv")
+    table(chains, "dY", allreg, 100).to_csv(f"{RESULTS}/out_ext_gdp_total.csv")
+    table(chains, "dr", allreg, 1e4).to_csv(f"{RESULTS}/out_ext_rate_shift.csv")
     spot = table(dv, "spot", fxregs, 100)
     fwd = table(dv, "fwd5", fxregs, 100)
-    spot.to_csv(f"{ROOT}/out_ext_fx_spot.csv")
-    fwd.to_csv(f"{ROOT}/out_ext_fx_forward_5y.csv")
-    table(dv, "equity", allreg, 100).to_csv(f"{ROOT}/out_ext_equity.csv")
-    table(dv, "opConduct", allreg, 100).to_csv(f"{ROOT}/out_ext_oprisk_conduct.csv")
-    table(dv, "opExecution", allreg, 100).to_csv(f"{ROOT}/out_ext_oprisk_execution.csv")
+    spot.to_csv(f"{RESULTS}/out_ext_fx_spot.csv")
+    fwd.to_csv(f"{RESULTS}/out_ext_fx_forward_5y.csv")
+    table(dv, "equity", allreg, 100).to_csv(f"{RESULTS}/out_ext_equity.csv")
+    table(dv, "opConduct", allreg, 100).to_csv(f"{RESULTS}/out_ext_oprisk_conduct.csv")
+    table(dv, "opExecution", allreg, 100).to_csv(f"{RESULTS}/out_ext_oprisk_execution.csv")
 
     # --- 2.9 credit: CDS spread shift, scenario x region x index -------------
     crows = {}
@@ -185,7 +187,7 @@ def main():
                                        for t in HORIZONS}
     cdf = pd.DataFrame(crows).T
     cdf.index.names = ["scenario", "region", "index"]
-    cdf.to_csv(f"{ROOT}/out_ext_credit_spread.csv")
+    cdf.to_csv(f"{RESULTS}/out_ext_credit_spread.csv")
 
     # --- §2.8 long-rate term structure (Prop 2), paper Table 11 layout -------
     rows = {}
@@ -198,7 +200,7 @@ def main():
     rt = pd.DataFrame(rows).T
     rt.index = pd.MultiIndex.from_tuples(rt.index,
                                         names=["scenario", "region", "tenor"])
-    rt[HORIZONS].to_csv(f"{ROOT}/out_ext_rate_term_structure.csv")
+    rt[HORIZONS].to_csv(f"{RESULTS}/out_ext_rate_term_structure.csv")
 
     # --- Phase M: mixture over scenarios ------------------------------------
     # `consensus` is the citable prior (UNEP/CAT current-policy warming anchor);
@@ -227,13 +229,13 @@ def main():
     for prior, shape in priors.items():
         for name, tbl in channels.items():
             mixture.expected(tbl, shape).to_csv(
-                f"{ROOT}/out_mix_{name}_{prior}.csv")
+                f"{RESULTS}/out_mix_{name}_{prior}.csv")
         # keep the legacy FX filename, which the figures and docs already use
         mixture.expected(fwd, shape).to_csv(
-            f"{ROOT}/out_ext_fx_expected_{prior}.csv")
-    mixture.quantile(fwd, 0.95, "uniform").to_csv(f"{ROOT}/out_ext_fx_q95_scen.csv")
+            f"{RESULTS}/out_ext_fx_expected_{prior}.csv")
+    mixture.quantile(fwd, 0.95, "uniform").to_csv(f"{RESULTS}/out_ext_fx_q95_scen.csv")
     pd.DataFrame({p: mixture.weights(s, scenarios=list(sc.names))
-                  for p, s in priors.items()}).to_csv(f"{ROOT}/out_mix_weights.csv")
+                  for p, s in priors.items()}).to_csv(f"{RESULTS}/out_mix_weights.csv")
 
     # --- Sensitivity: scenario drift under the Eq-1 transition matrix --------
     # NOT part of the headline: it needs two assumptions the static mixture does
@@ -242,13 +244,13 @@ def main():
     for lam in (5.0, 2.0, 0.5):
         for prior in mixture.PRIORS:
             mixture.expected_drift(fwd, coords, prior, lam=lam, base_year=BASE) \
-                   .to_csv(f"{ROOT}/out_sens_fx_drift_{prior}_lam{lam:g}.csv")
+                   .to_csv(f"{RESULTS}/out_sens_fx_drift_{prior}_lam{lam:g}.csv")
 
     # --- Sensitivity: dynamic carbon-pricing scope (§2.6 dOmega reading) -----
     dyn = {s_: derive(m, chain(m, sc, s_, M, scope, vl, dynamic_scope=True),
                       fxregs, betas, kap, u0) for s_ in sc.names}
-    table(dyn, "spot", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv")
-    table(dyn, "fwd5", fxregs, 100).to_csv(f"{ROOT}/out_sens_fx_forward_dynscope.csv")
+    table(dyn, "spot", fxregs, 100).to_csv(f"{RESULTS}/out_sens_fx_spot_dynscope.csv")
+    table(dyn, "fwd5", fxregs, 100).to_csv(f"{RESULTS}/out_sens_fx_forward_dynscope.csv")
 
     # --- Tariff shocks carried through to FX (project stretch goal) ----------
     # Same chain as the carbon tax: tariff -> ct -> GVA + prices -> Taylor -> FX.
@@ -314,9 +316,9 @@ def main():
         for r in allreg:
             gvarows[(name, r)] = {"gva_pct": c["tariff"][r][2040] * 100}
     pd.DataFrame(fxrows).T.rename_axis(["shock", "region"]).to_csv(
-        f"{ROOT}/out_sens_tariff_fx.csv")
+        f"{RESULTS}/out_sens_tariff_fx.csv")
     pd.DataFrame(gvarows).T.rename_axis(["shock", "region"]).to_csv(
-        f"{ROOT}/out_sens_tariff_gva.csv")
+        f"{RESULTS}/out_sens_tariff_gva.csv")
 
     # --- Sensitivity: CBAM as a carbon tariff (project stretch goal) ---------
     # Needs no new data: MRIO gives bilateral trade, CARBON_INTENSITY gives
@@ -334,7 +336,7 @@ def main():
                    for r in allreg},
                 "revenue_bn": cbam.revenue(m, A, prices) / 1e3}
     pd.DataFrame(rows).T.rename_axis(["prices", "incidence"]).to_csv(
-        f"{ROOT}/out_sens_cbam_gva.csv")
+        f"{RESULTS}/out_sens_cbam_gva.csv")
     # ad-valorem rates by origin x covered sector
     tau = cbam.tariff_rate(m, applied)
     cov = [k for k in range(len(tau)) if m.industry_of[k] in cbam.COVERED
@@ -342,7 +344,7 @@ def main():
     pd.DataFrame({"region": [m.region_of[k] for k in cov],
                   "industry": [m.industry_of[k] for k in cov],
                   "carbon_intensity_t_per_musd": [m.ci[k] for k in cov],
-                  "cbam_rate_pct": [tau[k] * 100 for k in cov]})       .sort_values("cbam_rate_pct", ascending=False)       .to_csv(f"{ROOT}/out_sens_cbam_rates.csv", index=False)
+                  "cbam_rate_pct": [tau[k] * 100 for k in cov]})       .sort_values("cbam_rate_pct", ascending=False)       .to_csv(f"{RESULTS}/out_sens_cbam_rates.csv", index=False)
 
     # --- Phase V: volatility band (95th pct of inputs, Net Zero) -------------
     # Stress every narrative, not just Net Zero: the chapter reports the tail
@@ -369,17 +371,17 @@ def main():
         his[s] = derive(m, chain(m, sc, s, M, scope, vl, xce_hi, dT_hi),
                         fxregs, betas, kap, u0)
     q95 = table(his, "fwd5", fxregs, 100)
-    q95.to_csv(f"{ROOT}/out_ext_fx_forward_q95.csv")
+    q95.to_csv(f"{RESULTS}/out_ext_fx_forward_q95.csv")
     # the spot leg too: the stress perturbs the carbon price and the temperature
     # at once, and those reach the forward through different terms, so the two
     # legs are needed to say which one drives the tail under a given narrative
     q95s = table(his, "spot", fxregs, 100)
-    q95s.to_csv(f"{ROOT}/out_ext_fx_spot_q95.csv")
+    q95s.to_csv(f"{RESULTS}/out_ext_fx_spot_q95.csv")
     for prior in priors:
         mixture.expected(q95, priors[prior]).to_csv(
-            f"{ROOT}/out_mix_fx_forward_q95_{prior}.csv")
+            f"{RESULTS}/out_mix_fx_forward_q95_{prior}.csv")
         mixture.expected(q95s, priors[prior]).to_csv(
-            f"{ROOT}/out_mix_fx_spot_q95_{prior}.csv")
+            f"{RESULTS}/out_mix_fx_spot_q95_{prior}.csv")
 
     # --- report --------------------------------------------------------------
     pd.set_option("display.width", 200, "display.float_format", lambda v: f"{v:7.2f}")

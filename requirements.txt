@@ -1,3 +1,9 @@
+# Core — required to run the model, the tests and the figures.
 numpy>=1.24
 pandas>=2.0
-openpyxl>=3.1   # reading the supplied .xlsx sources in tools/ingest_data.py
+matplotlib>=3.7      # tools/make_figures.py
+
+# Data ingestion only — needed to rebuild DATA_final and data/ from source,
+# not to run the model against the committed datasets.
+openpyxl>=3.1        # tools/ingest_data.py, reading the supplied .xlsx sources
+pyam-iamc>=2.0       # tools/download_ngfs.py, NGFS Scenario Explorer client

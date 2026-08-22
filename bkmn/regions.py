@@ -11,7 +11,6 @@ per-region auxiliary files (physical vulnerability, unemployment, equity) resolv
 them through `aux()` so a single switch moves the whole pipeline:
 
     DATASET = "DATA_final"   13 regions, derived by the selection algorithm
-    DATASET = "DATA_20R"     20 regions, the earlier hand-chosen set
 
 Override without editing the file:  set BKMN_DATASET in the environment.
 """
@@ -25,8 +24,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 YEAR = 2022
 
 DATASET = os.environ.get("BKMN_DATASET", "DATA_final")
-TAG = {"DATA_20R": "20R", "DATA_final": "13R"}[DATASET]
-D20 = os.path.join(ROOT, DATASET)          # kept as D20 for call-site stability
+TAG = {"DATA_final": "13R"}[DATASET]
+DATA = os.path.join(ROOT, DATASET)
 
 
 def aux(*parts) -> str:
@@ -58,7 +57,7 @@ class Model20R:
 
 
 def load() -> Model20R:
-    ic = pd.read_csv(os.path.join(D20, f"ICIO2025_{TAG}_{YEAR}.csv"), index_col=0)
+    ic = pd.read_csv(os.path.join(DATA, f"ICIO2025_{TAG}_{YEAR}.csv"), index_col=0)
     ri = [r for r in ic.index if r not in ("TLS", "VA", "OUT")]
     Z = ic.loc[ri, ri].to_numpy(float)
     x = ic.loc["OUT", ri].to_numpy(float)
@@ -68,18 +67,18 @@ def load() -> Model20R:
 
     # final demand by destination region (6 FD categories summed)
     fd_cats = ("HFCE", "NPISH", "GGFC", "GFCF", "INVNT", "DPABR")
-    cm0 = pd.read_csv(os.path.join(D20, "region_carbon_map.csv"))
+    cm0 = pd.read_csv(os.path.join(DATA, "region_carbon_map.csv"))
     fd = np.column_stack([
         ic.loc[ri, [f"{r}_{c}" for c in fd_cats if f"{r}_{c}" in ic.columns]]
           .to_numpy(float).sum(axis=1)
         for r in cm0.region])
 
-    ci_tbl = pd.read_csv(os.path.join(D20, f"CARBON_INTENSITY_{TAG}_{YEAR}.csv"),
+    ci_tbl = pd.read_csv(os.path.join(DATA, f"CARBON_INTENSITY_{TAG}_{YEAR}.csv"),
                          index_col=0)
     ci = np.array([ci_tbl.loc[j, r] for j, r in zip(industry_of, region_of)],
                   float)
 
-    cm = pd.read_csv(os.path.join(D20, "region_carbon_map.csv"))
+    cm = pd.read_csv(os.path.join(DATA, "region_carbon_map.csv"))
     return Model20R(regions_order=list(cm.region), sectors=ri,
                     region_of=region_of, industry_of=industry_of,
                     Z=Z, x=x, gva=gva, ci=ci, fd=fd, carbon_map=cm)

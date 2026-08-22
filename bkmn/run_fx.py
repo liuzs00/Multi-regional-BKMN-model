@@ -27,6 +27,8 @@ from .regions import load
 from .scenarios import Scenarios
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 BASE = 2022
 HORIZONS = [2025, 2030, 2035, 2040, 2045]
 PHI = 0.5
@@ -139,11 +141,11 @@ def main():
 
     results = {s: run_scenario(m, sc, s, M, scope, fxregs) for s in sc.names}
 
-    _tbl(results, "spotfx", fxregs, 100).to_csv(f"{ROOT}/out_fx_spot_ppp.csv")
-    _tbl(results, "fwd5", fxregs, 100).to_csv(f"{ROOT}/out_fx_forward_5y.csv")
-    _tbl(results, "dr", m.regions_order, 1e4).to_csv(f"{ROOT}/out_rate_shift.csv")
-    _tbl(results, "dPi", m.regions_order, 1e4).to_csv(f"{ROOT}/out_inflation_shift.csv")
-    _tbl(results, "dY", m.regions_order, 100).to_csv(f"{ROOT}/out_gdp_shock_fx.csv")
+    _tbl(results, "spotfx", fxregs, 100).to_csv(f"{RESULTS}/out_fx_spot_ppp.csv")
+    _tbl(results, "fwd5", fxregs, 100).to_csv(f"{RESULTS}/out_fx_forward_5y.csv")
+    _tbl(results, "dr", m.regions_order, 1e4).to_csv(f"{RESULTS}/out_rate_shift.csv")
+    _tbl(results, "dPi", m.regions_order, 1e4).to_csv(f"{RESULTS}/out_inflation_shift.csv")
+    _tbl(results, "dY", m.regions_order, 100).to_csv(f"{RESULTS}/out_gdp_shock_fx.csv")
 
     pd.set_option("display.width", 200, "display.float_format", lambda v: f"{v:6.2f}")
     for s in HEADLINE:
