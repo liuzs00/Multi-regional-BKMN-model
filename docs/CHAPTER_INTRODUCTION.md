@@ -20,15 +20,17 @@ are treated not as competing forecasts but as components of a
 Dirichlet-categorical mixture, over which four priors are carried.
 
 The main finding is that transition risk is a policy choice while physical risk,
-at this horizon, is not. The mean transition cost varies by a factor of
-thirty-seven across the seven narratives; physical damage varies by eight per
-cent. That asymmetry divides the financial channels into those which cannot be
-reported without a view on climate policy and those which can. Three further
-results follow that a single-region model cannot produce. Currency appreciation
-is a symptom of harm rather than of resilience. Ranking regions by exchange rate,
-policy rate, credit spread and equity gives four different answers from the same
-two shocks. And a pegged economy carries a wedge of some twenty-five basis points
-between the policy rate its own damage calls for and the one its anchor delivers.
+at this horizon, is not: the narratives disagree sharply about the carbon price
+and hardly at all about warming to 2040, which is largely determined by emissions
+already made. That asymmetry divides the financial channels into those which
+cannot be reported without a view on climate policy and those which can. Three
+further results follow that a single-region model cannot produce. Currency
+appreciation turns out to be a symptom of harm rather than of resilience.
+Ranking regions by exchange rate, policy rate, credit spread and equity gives
+four different answers from the same two shocks, so climate exposure is not one
+quantity. And an economy pegged to a foreign currency bears a measurable gap
+between the policy rate its own damage calls for and the one its anchor
+delivers.
 
 **Keywords:** climate stress testing; multi-regional input–output analysis;
 foreign exchange; covered interest parity; NGFS scenarios; Dirichlet-categorical
