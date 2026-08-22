@@ -45,6 +45,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 sys.path.insert(0, ROOT)
 
 from bkmn import cbam, equity, oprisk, physical, tariff, transition     # noqa: E402
@@ -200,10 +202,10 @@ def main():
     px["carbon+tariff (CP)"] = px[f"carbon ({SCENARIO})"] + px["tariffs total"]
     px["carbon+tariff (NZ)"] = px["carbon (Net Zero 2050)"] + px["tariffs total"]
 
-    gva.to_csv(f"{ROOT}/out_stack_gva.csv", float_format="%.6f")
-    spot.to_csv(f"{ROOT}/out_stack_fx.csv", float_format="%.6f")
-    rev.to_csv(f"{ROOT}/out_stack_decomp.csv", float_format="%.6f")
-    px.to_csv(f"{ROOT}/out_stack_prices.csv", float_format="%.6f")
+    gva.to_csv(f"{RESULTS}/out_stack_gva.csv", float_format="%.6f")
+    spot.to_csv(f"{RESULTS}/out_stack_fx.csv", float_format="%.6f")
+    rev.to_csv(f"{RESULTS}/out_stack_decomp.csv", float_format="%.6f")
+    px.to_csv(f"{RESULTS}/out_stack_prices.csv", float_format="%.6f")
 
     pd.set_option("display.width", 200)
     print(f"\n=== revenue and consumer prices ({YEAR}, phi={PHI}, theta=1) ===")

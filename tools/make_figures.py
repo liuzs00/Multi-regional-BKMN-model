@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
 FIG = os.path.join(ROOT, "figures")
 NZ, CP = "Net Zero 2050", "Current Policies"
 NDC = "Nationally Determined Contributions (NDCs)"
@@ -99,7 +100,7 @@ def pick_regions(wanted, available, need=4):
 
 
 def load(name, idx=(0, 1)):
-    d = pd.read_csv(os.path.join(ROOT, f"{name}.csv"), index_col=list(idx))
+    d = pd.read_csv(os.path.join(RESULTS, f"{name}.csv"), index_col=list(idx))
     return d
 
 
@@ -511,7 +512,7 @@ def fig_term_structure():
 
 # --- 11. CBAM ---------------------------------------------------------------
 def fig_cbam():
-    rates = pd.read_csv(os.path.join(ROOT, "out_sens_cbam_rates.csv"))
+    rates = pd.read_csv(os.path.join(RESULTS, "out_sens_cbam_rates.csv"))
     g = load("out_sens_cbam_gva", idx=(0, 1))
     fig, axes = plt.subplots(1, 2, figsize=(11, 5.2))
 
@@ -551,7 +552,7 @@ def fig_cbam():
                  fontsize=12.5, fontweight="600", x=0.012, ha="left", y=1.075)
     # read the price and revenue from the data rather than hardcoding them, so
     # the caption cannot drift from the bars when the calibration changes
-    eu_px = pd.read_csv(os.path.join(ROOT, "DATA_20R/region_carbon_map.csv"),
+    eu_px = pd.read_csv(os.path.join(ROOT, "DATA_final/region_carbon_map.csv"),
                         index_col="region").loc["EU27", "applied_price_usd"]
     rev = g.loc[("applied-divergence", "theta=1"), "revenue_bn"]
     fig.text(0.012, 1.012,

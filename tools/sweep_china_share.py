@@ -31,6 +31,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 sys.path.insert(0, ROOT)
 
 from bkmn import equity, oprisk, physical, tariff, transition          # noqa: E402
@@ -98,7 +100,7 @@ def main():
             "CHN_gva_pct": c["tariff"]["CHN"][YEAR] * 100,
         }
     out = pd.DataFrame(rows).T.rename_axis("china_share_pct")
-    out.to_csv(f"{ROOT}/out_sens_china_share.csv")
+    out.to_csv(f"{RESULTS}/out_sens_china_share.csv")
     print(f"s_table = {s_table*100:.1f}%   (2022 ICIO, all industries)\n")
     print(out.round(3).to_string())
     rng = out.max() - out.min()

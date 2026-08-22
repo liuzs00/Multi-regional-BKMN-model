@@ -33,6 +33,8 @@ import sys
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 sys.path.insert(0, ROOT)
 
 from tools.select_regions import (EU27, economy_attributes,  # noqa: E402
@@ -297,7 +299,7 @@ def main():
     residuals = ["ROW"]
     final = group(d, members)
     final = final[final.n > 0]
-    final.to_csv(f"{ROOT}/out_region_selection_final.csv")
+    final.to_csv(f"{RESULTS}/out_region_selection_final.csv")
     n_named = len(final) - len(residuals) - 1
     print(f"\nFINAL SET -- {len(final)} regions "
           f"(EU27 + {n_named} named + {len(residuals)} residual)")

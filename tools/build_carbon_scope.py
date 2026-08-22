@@ -23,7 +23,7 @@ Caveats (documented, acceptable at this stage):
     narratives may widen scope over time (a Phase-2 modelling choice).
 
 Outputs: data/scope/carbon_scope_20R.csv (region, scope, n_covered, source year)
-         and updates the `carbon_scope` column in DATA_20R/region_carbon_map.csv.
+         and updates the `carbon_scope` column in DATA_final/region_carbon_map.csv.
 
 Usage: py -3 tools/build_carbon_scope.py
 """
@@ -32,7 +32,7 @@ import os
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D20 = os.path.join(ROOT, "DATA_20R")
+DATA = os.path.join(ROOT, "DATA_final")
 OWID = os.path.join(ROOT, "data", "scope", "owid_carbon_price_coverage.csv")
 COVER_COL = "co2_with_tax_or_ets_as_share_of_co2"
 
@@ -44,7 +44,7 @@ def main():
            .dropna(subset=["code"])
            .set_index("code")[COVER_COL] / 100.0)   # percent -> fraction
 
-    mapping = pd.read_csv(os.path.join(D20, "region_mapping.csv"))
+    mapping = pd.read_csv(os.path.join(DATA, "region_mapping.csv"))
 
     # per-economy Scope-1 emissions (tonnes) as weights, from GHGFP 2022
     gf = pd.read_csv(os.path.join(ROOT, "data", "ghgfp", "SCOPE", "2022.csv.gz"))
@@ -69,18 +69,18 @@ def main():
                      "owid_year": year})
 
     out = pd.DataFrame(rows).set_index("region")
-    cm = pd.read_csv(os.path.join(D20, "region_carbon_map.csv"))
+    cm = pd.read_csv(os.path.join(DATA, "region_carbon_map.csv"))
     out = out.reindex(cm.region)
     out.to_csv(os.path.join(ROOT, "data", "scope", "carbon_scope_20R.csv"))
 
     cm["carbon_scope"] = cm.region.map(out.carbon_scope)
-    cm.to_csv(os.path.join(D20, "region_carbon_map.csv"), index=False,
+    cm.to_csv(os.path.join(DATA, "region_carbon_map.csv"), index=False,
               float_format="%.3f")
 
     print(f"OWID coverage year: {year}")
     print(out.to_string())
     print(f"\nwrote data/scope/carbon_scope_20R.csv and updated "
-          f"DATA_20R/region_carbon_map.csv (carbon_scope column)")
+          f"DATA_final/region_carbon_map.csv (carbon_scope column)")
 
 
 if __name__ == "__main__":

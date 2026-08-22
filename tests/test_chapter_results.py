@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
 sys.path.insert(0, ROOT)
 from bkmn import mixture as mx                # noqa: E402
 from bkmn import equity, oprisk, regions      # noqa: E402
@@ -53,12 +54,12 @@ sc = Scenarios(m.carbon_map)
 
 
 def M(ch, p=HEAD, idx=0):
-    return pd.read_csv(os.path.join(ROOT, f"out_mix_{ch}_{p}.csv"),
+    return pd.read_csv(os.path.join(RESULTS, f"out_mix_{ch}_{p}.csv"),
                        index_col=0 if idx == 0 else list(range(idx + 1)))
 
 
 def S(n, i=(0, 1)):
-    return pd.read_csv(os.path.join(ROOT, f"{n}.csv"), index_col=list(i))
+    return pd.read_csv(os.path.join(RESULTS, f"{n}.csv"), index_col=list(i))
 
 
 def credit(p=HEAD, regs=None):
@@ -73,7 +74,7 @@ chk("world output $tn", round(m.x.sum() / 1e6, 1), 199.7)
 chk("world VA $tn", round(m.gva.sum() / 1e6, 1), 93.8)
 
 print("1.2 prior weights")
-w = pd.read_csv(os.path.join(ROOT, "out_mix_weights.csv"), index_col=0) * 100
+w = pd.read_csv(os.path.join(RESULTS, "out_mix_weights.csv"), index_col=0) * 100
 NZ, CP = "Net Zero 2050", [s for s in w.index if s.startswith("Current")][0]
 B2 = [s for s in w.index if s.startswith("Below")][0]
 NDC = [s for s in w.index if s.startswith("Nationally")][0]

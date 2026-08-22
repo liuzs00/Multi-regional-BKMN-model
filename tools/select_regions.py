@@ -38,6 +38,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
+os.makedirs(RESULTS, exist_ok=True)
 sys.path.insert(0, ROOT)
 
 SRC = r"D:\2016-2022_SML\2022_SML.csv"
@@ -218,7 +220,7 @@ def main():
         d[c] = d[c].fillna(d[c].median())
     d["log_ci"] = (d.log_ci - d.log_ci.mean()) / d.log_ci.std()
     d["vuln_z"] = (d.vuln - d.vuln.mean()) / d.vuln.std()
-    d.to_csv(f"{ROOT}/out_region_attributes.csv")
+    d.to_csv(f"{RESULTS}/out_region_attributes.csv")
 
     print("\ntop EU linkages (share of EU-final-demand footprint):")
     tot_e, tot_c = d.link_econ.sum(), d.link_carbon.sum()
@@ -227,7 +229,7 @@ def main():
     print(top[["pe", "pc"]].head(12).round(2).to_string())
 
     order, groups = ward_merge(d)
-    order.to_csv(f"{ROOT}/out_region_merge_order.csv", index=False)
+    order.to_csv(f"{RESULTS}/out_region_merge_order.csv", index=False)
     print(f"\nmerge order written ({len(order)} merges).")
 
     print("\nstopping rules -- does the biggest group dominate either linkage?")

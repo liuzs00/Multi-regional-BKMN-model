@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS = os.path.join(ROOT, "results")
 sys.path.insert(0, ROOT)
 
 from bkmn import equity, mixture, oprisk, physical, transition, volatility  # noqa: E402
@@ -55,8 +56,8 @@ check("vulnerable regions hit harder", d1["AFR"] < d1["CHE"],
 
 # --- 2.8 long-rate term structure (Prop 2) -----------------------------------
 from bkmn import rates as _rates                                            # noqa: E402
-_rt = pd.read_csv(f"{ROOT}/out_ext_rate_term_structure.csv", index_col=[0, 1, 2])
-_dr = pd.read_csv(f"{ROOT}/out_ext_rate_shift.csv", index_col=[0, 1])
+_rt = pd.read_csv(f"{RESULTS}/out_ext_rate_term_structure.csv", index_col=[0, 1, 2])
+_dr = pd.read_csv(f"{RESULTS}/out_ext_rate_shift.csv", index_col=[0, 1])
 _k = ("Net Zero 2050", "EU27")
 check("term-structure 1D shift equals the short-rate shift",
       abs(_rt.loc[_k + ("1D",), "2040"] - _dr.loc[_k, "2040"]) < 0.5,
@@ -100,14 +101,14 @@ check("scope_at monotone in the carbon price",
       all(_macro.scope_at(0.2, a) <= _macro.scope_at(0.2, b)
           for a, b in [(0, 10), (10, 100), (100, 400)]))
 check("zero-scope regions are no longer indistinguishable",
-      abs(pd.read_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv", index_col=[0, 1])
+      abs(pd.read_csv(f"{RESULTS}/out_sens_fx_spot_dynscope.csv", index_col=[0, 1])
           .xs("Net Zero 2050", level=0).loc["IND", "2040"]
-          - pd.read_csv(f"{ROOT}/out_sens_fx_spot_dynscope.csv", index_col=[0, 1])
+          - pd.read_csv(f"{RESULTS}/out_sens_fx_spot_dynscope.csv", index_col=[0, 1])
           .xs("Net Zero 2050", level=0).loc["TUR", "2040"]) > 1e-4,
       "IND vs TUR differ under dynamic scope (identical under static)")
 
 # --- Phase M: mixture --------------------------------------------------------
-tbl = pd.read_csv(f"{ROOT}/out_ext_fx_forward_5y.csv", index_col=[0, 1])
+tbl = pd.read_csv(f"{RESULTS}/out_ext_fx_forward_5y.csv", index_col=[0, 1])
 tbl.columns = [int(c) for c in tbl.columns]
 scen = list(tbl.index.get_level_values(0).unique())
 for prior in mixture.PRIORS:
@@ -206,7 +207,7 @@ check("phase-in scales CBAM revenue linearly",
       abs(_cb.revenue(m, _A, _ap, year=2030)
           - 0.485 * _cb.revenue(m, _A, _ap)) < 1e-6)
 
-_g = pd.read_csv(f"{ROOT}/out_sens_cbam_gva.csv", index_col=[0, 1])
+_g = pd.read_csv(f"{RESULTS}/out_sens_cbam_gva.csv", index_col=[0, 1])
 _rev_div = _g.loc[("applied-divergence", "theta=1"), "revenue_bn"]
 _rev_uni = _g.loc[("ngfs-uniform", "theta=1"), "revenue_bn"]
 check("CBAM shrinks when carbon prices converge", _rev_uni < _rev_div,
@@ -248,7 +249,7 @@ check("final-demand imports raise revenue",
       f"${_tf.revenue(m,_A,_t1,False)/1e3:,.1f}bn intermediate-only")
 
 # --- tariff reaches the FX chain ---------------------------------------------
-_tfx = pd.read_csv(f"{ROOT}/out_sens_tariff_fx.csv", index_col=[0, 1])
+_tfx = pd.read_csv(f"{RESULTS}/out_sens_tariff_fx.csv", index_col=[0, 1])
 _glob = _tfx.xs("Global 10% on all imports", level=0)
 check("a tariff moves FX through the price level (it once stopped at GVA)",
       float(_glob.spot_pct.abs().max()) > 0.1,
@@ -285,7 +286,7 @@ check("calibrated schedule reproduces the published US effective rate",
 
 # China-share sweep: the calibration constraint must hold at every point, the
 # headline FX number must be robust to it, and the attribution must not be.
-_cs = pd.read_csv(f"{ROOT}/out_sens_china_share.csv", index_col=0)
+_cs = pd.read_csv(f"{RESULTS}/out_sens_china_share.csv", index_col=0)
 check("sweep reproduces the published 7.2% at every China share",
       float((_cs.effective_pct - 7.2).abs().max()) < 1e-4)
 check("revenue is invariant to the China share (the total is pinned)",
@@ -319,7 +320,7 @@ check("every figure scenario label resolves against the data",
 # spot is near-perfectly a rescaled carbon-pricing scope vector, because 20
 # regions map onto only 5 NGFS R5 zones.  Gated so the claim cannot silently
 # become false (or be quoted as an exact 1.000) if the zone mapping changes.
-_spf = pd.read_csv(f"{ROOT}/out_fx_spot_ppp.csv",
+_spf = pd.read_csv(f"{RESULTS}/out_fx_spot_ppp.csv",
                    index_col=[0, 1]).xs("Net Zero 2050", level=0)["2045"]
 _cmf = m.carbon_map.set_index("region")
 _scf = _cmf.loc[list(_spf.index), "carbon_scope"].astype(float)
@@ -340,16 +341,16 @@ check("damage uses warming vs pre-industrial, not since the base year",
               - float(_sc2.temp.loc[2040, "Net Zero 2050"])) < 1e-12,
       f"dT(2040) = {warming(_sc2,'Net Zero 2050',2040):.3f} K vs 1850-1900")
 # the rate shift must reconstruct from dPi and the PHYSICAL shock alone
-_rs = pd.read_csv(f"{ROOT}/out_ext_rate_shift.csv", index_col=[0, 1])
-_pi2 = pd.read_csv(f"{ROOT}/out_inflation_shift.csv", index_col=[0, 1])
-_ph2 = pd.read_csv(f"{ROOT}/out_ext_gdp_physical.csv", index_col=[0, 1])
+_rs = pd.read_csv(f"{RESULTS}/out_ext_rate_shift.csv", index_col=[0, 1])
+_pi2 = pd.read_csv(f"{RESULTS}/out_inflation_shift.csv", index_col=[0, 1])
+_ph2 = pd.read_csv(f"{RESULTS}/out_ext_gdp_physical.csv", index_col=[0, 1])
 _kk = ("Net Zero 2050", "CHN")
 _pred = 0.5 * _pi2.loc[_kk, "2040"] + 0.5 * _ph2.loc[_kk, "2040"] * 100
 check("rate shift reconstructs from inflation + physical damage only",
       abs(_rs.loc[_kk, "2040"] - _pred) < 0.05,
       f"{_rs.loc[_kk,'2040']:.2f} bp vs {_pred:.2f} bp predicted")
 # and must NOT reconstruct if the transition shock were included
-_tr2 = pd.read_csv(f"{ROOT}/out_ext_gdp_transition.csv", index_col=[0, 1])
+_tr2 = pd.read_csv(f"{RESULTS}/out_ext_gdp_transition.csv", index_col=[0, 1])
 check("the transition shock is absent from the rate shift",
       abs(_rs.loc[_kk, "2040"]
           - (_pred + 0.5 * _tr2.loc[_kk, "2040"] * 100)) > 100.0,
@@ -366,8 +367,8 @@ from bkmn.run_fx import OPRISK_INPUT                                  # noqa: E4
 check("op-risk takes the same output measure as the Taylor rule",
       OPRISK_INPUT == TAYLOR_OUTPUT_GAP == "physical",
       "a tax wedge destroys no output, so it drives no unemployment")
-_opc = pd.read_csv(f"{ROOT}/out_ext_oprisk_conduct.csv", index_col=[0, 1])
-_ope = pd.read_csv(f"{ROOT}/out_ext_oprisk_execution.csv", index_col=[0, 1])
+_opc = pd.read_csv(f"{RESULTS}/out_ext_oprisk_conduct.csv", index_col=[0, 1])
+_ope = pd.read_csv(f"{RESULTS}/out_ext_oprisk_execution.csv", index_col=[0, 1])
 # it must reconstruct from the PHYSICAL shock alone
 _pred_op = (OPRISK_BETA["Conduct"] * (oprisk.kappa()["CHN"]
                                       * _ph2.loc[_kk, "2040"] / 100)
@@ -479,8 +480,8 @@ check("Net Zero GDP shock is now the order of NGFS's own macro estimates",
       f"worst region {min(_cons.values())*100:.2f}% (was {min(_stat.values())*100:.2f}%)")
 
 # --- the worked illustration in docs/TARIFF_METHOD.md 5 -----------------------
-_ig = pd.read_csv(f"{ROOT}/out_illus_eu_tariff_gva.csv", index_col=0)
-_if = pd.read_csv(f"{ROOT}/out_illus_eu_tariff_fx.csv", index_col=0)
+_ig = pd.read_csv(f"{RESULTS}/out_illus_eu_tariff_gva.csv", index_col=0)
+_if = pd.read_csv(f"{RESULTS}/out_illus_eu_tariff_fx.csv", index_col=0)
 check("illustration: a tariff weakens the currency that levies it",
       bool((_if.spot_pct < 0).all()),
       f"all {len(_if)} currencies strengthen vs EUR "
@@ -502,7 +503,7 @@ check("temperature σ > 0", float(ts.loc[2040, "Net Zero 2050"]) > 0,
 check("carbon-price σ > 0 (cross-model)",
       float(ps.loc[2040, ("Net Zero 2050", "R5.2OECD")]) > 0,
       f"σ_XCE 2040 OECD = ${ps.loc[2040,('Net Zero 2050','R5.2OECD')]:.0f}/t")
-q95 = pd.read_csv(f"{ROOT}/out_ext_fx_forward_q95.csv", index_col=[0, 1])
+q95 = pd.read_csv(f"{RESULTS}/out_ext_fx_forward_q95.csv", index_col=[0, 1])
 cen = tbl.xs("Net Zero 2050", level=0)
 q95c = q95.xs("Net Zero 2050", level=0)
 q95c.columns = [int(c) for c in q95c.columns]
@@ -521,8 +522,8 @@ check("q95 band wider than central",
 # pass through zero under stress and end up smaller in absolute terms without
 # the stress being any milder.  What must hold everywhere is that the stress
 # spreads the cross-section, which is what the chapter claims of it.
-_q = pd.read_csv(f"{ROOT}/out_ext_fx_forward_q95.csv", index_col=[0, 1])["2040"]
-_c = pd.read_csv(f"{ROOT}/out_ext_fx_forward_5y.csv", index_col=[0, 1])["2040"]
+_q = pd.read_csv(f"{RESULTS}/out_ext_fx_forward_q95.csv", index_col=[0, 1])["2040"]
+_c = pd.read_csv(f"{RESULTS}/out_ext_fx_forward_5y.csv", index_col=[0, 1])["2040"]
 _tight = [s for s in _c.index.get_level_values(0).unique()
           if (_q.xs(s, level=0).max() - _q.xs(s, level=0).min())
           <= (_c.xs(s, level=0).max() - _c.xs(s, level=0).min())]
@@ -542,7 +543,7 @@ check("stressed warming exceeds central warming", not _bad,
       f"{len(_sc.names)*3} scenario-years checked")
 
 # --- non-regression: transition core untouched -------------------------------
-ref = pd.read_csv(f"{ROOT}/out_gva_shock_by_region_phi.csv", index_col=0)
+ref = pd.read_csv(f"{RESULTS}/out_gva_shock_by_region_phi.csv", index_col=0)
 M = transition.gva_operator(m, 0.5)
 got = transition.region_gdp_shock(m, M, {r: 70.0 for r in m.regions_order})
 err = max(abs(got[r] * 100 - ref.loc[r, "50%"]) for r in m.regions_order)
