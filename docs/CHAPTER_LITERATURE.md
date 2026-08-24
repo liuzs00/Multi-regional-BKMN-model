@@ -11,8 +11,6 @@ frameworks that translate a scenario into economic quantities; the input–outpu
 tradition and its extension across borders; and the individual empirical
 relations by which a real shock becomes a market price.
 
-## From a speech to a supervisory practice
-
 Carney (2015) supplied the framing. Speaking at Lloyd's, he argued that climate
 change presents a *tragedy of the horizon*: its costs fall beyond the planning
 horizons of the business cycle, the political cycle and the mandate of a central
@@ -56,9 +54,8 @@ which constrains what any stress test can claim to be revealing. Desnos et al.
 stochastic climate value-at-risk on the argument that a scenario is a draw from a
 distribution rather than a state of the world.
 
-## Where the scenarios come from, and what is wrong with them
-
-Scenarios originate in integrated assessment models, and the lineage runs through
+Both strands take the scenario as given, and the scenarios themselves originate
+in integrated assessment models, whose lineage runs through
 Nordhaus's DICE, which couples a Ramsey growth model to a simple carbon cycle and
 a damage function mapping temperature to lost output (Nordhaus, 2017), most
 recently recalibrated as DICE-2023 (Barrage and Nordhaus, 2024). The damage
@@ -100,9 +97,8 @@ aggregate damage function and acute physical risk through hazard-specific models
 (NGFS, 2024). Because the macroeconomic layer is a separate model attached to the
 integrated assessment layer rather than derived from it, the published scenarios
 contain no internally consistent mapping from a carbon price to a sectoral cost.
-That absence is what every sectoral application of these scenarios must fill.
-
-## Four ways to translate a scenario into an economy
+That absence is what every sectoral application of these scenarios must fill,
+and it has been filled in four broadly different ways.
 
 The NGFS's own modelling handbook (NGFS, 2019) and the classification of Hafner
 et al. (2020) distinguish four families of macroeconomic model beyond the
@@ -146,9 +142,9 @@ financial feedback and heterogeneity each matter, each is absent from a
 fixed-coefficient input–output system, and three of the four literatures indicate
 the direction of the resulting bias is toward understatement.
 
-## The input–output tradition
-
-Leontief (1936, 1941) introduced the input–output description of an economy as a
+The input–output core that the macroeconometric family retains is older than any
+of the four and has a specifically environmental branch worth following in its
+own right. Leontief (1936, 1941) introduced the input–output description of an economy as a
 system of linear production relations in which each sector's requirement is a
 fixed combination of every other sector's output. Writing $\mathbf{A}$ for the
 matrix of technical coefficients and $\mathbf{f}$ for final demand, equilibrium
@@ -173,9 +169,9 @@ the aggregation problem, since aggregation is demonstrably not neutral and
 introduces bias whose direction depends on how heterogeneous the merged units
 are.
 
-## The multi-regional problem, and its resolution by measurement
-
-For half a century the multi-regional literature was organised around a single
+Extending that apparatus across borders proved harder than extending it across
+sectors. For half a century the multi-regional literature was organised around a
+single
 obstacle: the inter-regional flows are the object one needs and the object one
 rarely has. Isard (1951) states the exact formulation, in which $a_{ij}^{rs}$
 records how much of good $i$ from region $r$ sector $j$ in region $s$ requires.
@@ -225,9 +221,9 @@ is produced elsewhere. The consequence for any exercise ranking economies by
 climate relevance is that a ranking on trade weight and a ranking on embodied
 emissions are different orderings.
 
-## Carbon pricing: instrument, incidence and leakage
-
-The choice between taxing emissions and capping them descends from Weitzman
+What such a system is most often used to price is a carbon charge, and the design
+of that charge has a history of its own. The choice between taxing emissions and
+capping them descends from Weitzman
 (1974), whose comparison of prices and quantities under uncertainty establishes
 that the preferred instrument depends on the relative slopes of marginal cost and
 marginal benefit. The stock-pollutant case was taken up by Hoel and Karp (2002)
@@ -270,10 +266,10 @@ between five and twenty per cent, and border carbon adjustment reduces them
 without eliminating them. A border adjustment is, in that literature's terms, a
 tariff differentiated by embodied carbon.
 
-## The transmission relations
-
-The link from carbon price to consumer prices is the least settled quantity in
-the chain, and the disagreement is worth stating precisely, because a single
+A cost borne by industry becomes a financial quantity only through a further
+chain of relations, each borrowed from a separate empirical literature, and the
+first of them is the least settled of all, and the disagreement is worth
+stating precisely, because a single
 coefficient is often quoted as though it were established. Moessner (2022)
 estimates New-Keynesian Phillips curves across OECD economies over 1995–2020 and
 finds that a ten-dollar per tonne rise in the carbon price raises headline
@@ -297,8 +293,6 @@ displacement follows without calibrating a volatility surface. Sarno and Taylor
 (2002) remain the standard reference on the two exchange-rate parities and are
 candid that relative purchasing power parity performs poorly at short horizons
 while covered interest parity is close to an arbitrage identity.
-
-## The framework and the gap
 
 Berrahoui, Kenyon, Macrina and Nathanael (2025) assemble these relations into
 what they call an ensemble: a short sequence of individually simple, individually
