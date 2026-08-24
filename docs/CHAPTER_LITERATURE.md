@@ -80,23 +80,45 @@ input–output model fills.
 
 How that gap is filled is a live methodological question, and the alternatives
 are well catalogued. The NGFS's own modelling handbook (NGFS, 2019) and the
-classification of Hafner et al. (2020) distinguish four families beyond the IAMs:
-environmental computable general equilibrium models, which impose optimising
-behaviour and market clearing and are the standard tool for carbon-tax incidence;
-ecological stock-flow consistent models, which track interlocking balance sheets
-and are better suited to financial feedbacks; ecological agent-based models,
-which build from heterogeneous firms and households; and macroeconometric
-input–output models such as E3ME, which combine estimated behavioural equations
-with an input–output core and impose neither optimisation nor equilibrium. Each
-buys something at a cost. General-equilibrium models allow substitution away from
-carbon-intensive inputs, which fixed-coefficient input–output models cannot, but
-require elasticities that are themselves estimated with wide uncertainty.
-Agent-based and stock-flow consistent models represent feedback that the others
-omit, at the price of a parameter space no supervisor could audit. This
-dissertation takes the input–output route, and the reason is the one Berrahoui et
-al. (2025) give for their framework as a whole: every relation must be simple
-enough to be checked on its own by the institution being tested. That choice
-forecloses substitution, and §5 records what it costs.
+classification of Hafner et al. (2020) distinguish four families beyond the
+integrated assessment models themselves, and each has produced results that bear
+on this one.
+
+Environmental computable general equilibrium models impose optimising behaviour
+and market clearing, and are the standard tool for carbon-tax incidence; the
+twelve models compared by Böhringer, Balistreri and Rutherford (2012) are of
+this type, and their central advantage over the present framework is that they
+let firms substitute away from carbon-intensive inputs, which a
+fixed-coefficient system cannot. The price is elasticities that are themselves
+estimated with wide uncertainty, and which that study finds drive much of the
+dispersion between models. Macroeconometric input–output models retain an
+input–output core but replace optimisation with estimated behavioural equations,
+as in E3ME; Mercure et al. (2018) use it to price stranded fossil-fuel assets at
+a discounted global wealth loss of one to four trillion dollars, a result
+unobtainable from an equilibrium model because it depends on the economy not
+clearing. Ecological stock-flow consistent models track interlocking balance
+sheets so that financial feedback is explicit: Dafermos, Nikolaidi and Galanis
+(2018) show in such a model that climate damage raises defaults, deflates asset
+prices, and that the resulting financial instability reinforces the
+growth-reducing effect of the damage itself — a loop absent from every model
+discussed so far, including this one. And ecological agent-based models build
+from heterogeneous firms and households: the DSK model of Lamperti et al. (2018)
+reports damages substantially larger than standard integrated assessment models
+under comparable scenarios, with growth shifting from a self-sustaining path to
+stagnation, which is a direct challenge to the damage calibration used here.
+
+Each family therefore buys something the others lack, and the choice is not
+neutral: substitution, disequilibrium, financial feedback and heterogeneity are
+all absent from a fixed-coefficient input–output model, and three of the four
+literatures suggest their absence biases results toward understatement. This
+dissertation takes the input–output route regardless, and the reason is the one
+Berrahoui et al. (2025) give for their framework as a whole: every relation must
+be simple enough to be checked on its own by the institution being tested. An
+agent-based or stock-flow consistent model represents more of the world at the
+price of a parameter space no supervisor could audit, and Acharya et al. (2023)
+identify auditability, not realism, as what the supervisory exercises currently
+lack. That is a defensible trade rather than a costless one, and §5 records what
+it costs.
 
 Within finance, the methodological response to Carney begins with Battiston et
 al. (2017), who conduct the first climate stress test of a financial system.
@@ -347,6 +369,9 @@ Chenery, H. B. (1953). Regional analysis. In *The Structure and Growth of the
 Italian Economy*, ed. H. B. Chenery, P. G. Clark and V. Cao-Pinna. Rome: US
 Mutual Security Agency.
 
+Dafermos, Y., M. Nikolaidi and G. Galanis (2018). Climate change, financial
+stability and monetary policy. *Ecological Economics* 152, 219–234.
+
 Davis, S. J. and K. Caldeira (2010). Consumption-based accounting of CO₂
 emissions. *Proceedings of the National Academy of Sciences* 107(12), 5687–5692.
 
@@ -412,6 +437,15 @@ input–output approach. *Review of Economics and Statistics* 52(3), 262–271.
 Leontief, W. and A. Strout (1963). Multiregional input–output analysis. In
 *Structural Interdependence and Economic Development*, ed. T. Barna, 119–150.
 London: Macmillan.
+
+Mercure, J.-F., H. Pollitt, J. E. Viñuales, N. R. Edwards, P. B. Holden,
+U. Chewpreecha, P. Salas, I. Sognnaes, A. Lam and F. Knobloch (2018).
+Macroeconomic impact of stranded fossil fuel assets. *Nature Climate Change* 8,
+588–593.
+
+Lamperti, F., G. Dosi, M. Napoletano, A. Roventini and A. Sapio (2018).
+Faraway, so close: coupled climate and economic dynamics in an agent-based
+integrated assessment model. *Ecological Economics* 150, 315–339.
 
 Miller, R. E. and P. D. Blair (2022). *Input–Output Analysis: Foundations and
 Extensions*, 3rd edn. Cambridge University Press.
