@@ -1,122 +1,120 @@
 # 2 Literature Review
 
-Climate stress testing draws on two bodies of work that do not share a
-vocabulary. Climate economics produces scenarios reaching out decades; financial
-risk management produces valuations that are re-marked monthly. What follows
-traces the attempts to connect them, in five steps: how climate came to be
-treated as a prudential problem, where the scenarios come from and what is wrong
-with them, the competing ways of turning a scenario into economic quantities, the
-input–output tradition and the long struggle to extend it across borders, and the
-individual empirical relations that turn a real shock into a market price.
+Climate stress testing draws on two literatures that grew up apart. One produces
+scenarios reaching out decades; the other produces valuations re-marked monthly.
+What follows traces the attempts to join them, moving from the supervisory
+practice that created the demand, through the climate-economy models that supply
+the scenarios and the competing frameworks that translate them into economic
+quantities, to the input–output tradition, the long struggle to extend it across
+borders, and the empirical relations that turn a real shock into a market price.
 
-Carney (2015) set the terms. Speaking at Lloyd's, he called climate change a
-*tragedy of the horizon*: its costs fall beyond the planning horizons of the
-business cycle, the political cycle and a central bank's mandate, so the
-incentive to act expires before the damage becomes visible. His remedy was
-forward-looking scenario analysis in place of realised-loss accounting, and the
-decade of supervisory work that followed is largely an attempt to carry it out.
-The largest of those exercises is the European Central Bank's economy-wide
-climate stress test (ECB, 2022), and it set the pattern the others follow: take
-a scenario from outside, map it onto counterparty exposures, propagate, revalue.
+The terms were set by Carney (2015), whose address at Lloyd's named the obstacle
+a *tragedy of the horizon*: the costs of climate change fall beyond the planning
+horizons of the business cycle, the political cycle and a central bank's mandate,
+so the incentive to act expires before the damage becomes visible. His remedy —
+forward-looking scenario analysis in place of realised-loss accounting — is what
+the decade of supervisory work that followed attempted to carry out. The largest
+of those exercises, the European Central Bank's economy-wide climate stress test
+(ECB, 2022), established the shape the field has kept: a scenario taken from
+outside, mapped onto counterparty exposures, propagated, and revalued.
 
-Acharya et al. (2023) review what that decade produced, and their verdict is
-mixed. Transition risks are treated as exogenous shocks when they are really
-dynamic policy choices; feedback between climate and economy is largely missing;
-compound scenarios, in which several risks arrive at once, are rarely built. Their
-fourth objection cuts deeper than the others. The exercises are not reproducible
-by the institutions being tested, because the models are large, proprietary and
-opaque. A bank required to hold capital against a supervisory number cannot
-rebuild that number, and so cannot work out which of its exposures the number is
-about.
+Whether that shape works is assessed by Acharya et al. (2023), and their verdict
+is mixed. They find transition risk treated as an exogenous shock when it is in
+substance a dynamic policy choice, no feedback between climate and economy, and
+few compound scenarios in which several risks arrive at once. Their fourth
+objection cuts deeper than the other three. The exercises are not reproducible by
+the institutions being tested, because the models are large, proprietary and
+opaque; a bank required to hold capital against a supervisory number cannot
+rebuild that number, and so cannot discover which of its own exposures the number
+is about.
 
-Academic work on the problem starts with Battiston et al. (2017), who ran the
-first climate stress test of a financial system. Their contribution is as much
-procedural as empirical. They sort economic activities into
-climate-policy-relevant sectors, map bank and investor portfolios onto those
-sectors, and push a policy shock through the network of interbank exposures. What
-they find is that exposure arriving indirectly, through counterparties, is
-comparable in size to direct exposure, and that the affected share of bank loan
-books is of the same order as bank capital. The lesson is simple and general:
-indirect exposure cannot be inferred from direct exposure, and has to be computed
-through an explicit network.
+The academic literature that grew alongside those exercises begins with the
+network stress test of Battiston et al. (2017), whose contribution is as much
+procedural as empirical. Sorting economic activities into
+climate-policy-relevant sectors, mapping bank and investor portfolios onto them,
+and pushing a policy shock through the network of interbank exposures, they find
+that exposure arriving indirectly through counterparties is comparable in size to
+direct exposure, and that the affected share of bank loan books is of the same
+order as bank capital. The general lesson is that indirect exposure cannot be
+inferred from direct exposure and has to be computed through an explicit network.
 
-Two lines of work follow. Bolton and Kacperczyk (2023) ask whether markets have
-already priced the risk, estimating a carbon premium across roughly 14,000 firms
-in 77 countries. They find higher returns for firms with higher emissions, and a
-larger premium where domestic climate policy is stricter — which suggests
-transition risk is partly in prices already, and limits what any stress test can
-claim to be uncovering. Desnos et al. (2023) go the other way, turning a
-deterministic stress test into a stochastic climate value-at-risk on the argument
-that a scenario is a draw from a distribution, not a state of the world.
+Two lines run on from there. Whether markets have already priced the risk is
+asked by Bolton and Kacperczyk (2023), who estimate a carbon premium across some
+14,000 firms in 77 countries and find higher returns for firms with higher
+emissions, the premium larger where domestic climate policy is stricter — which
+is evidence that transition risk sits partly in prices already, and a limit on
+what any stress test can claim to be uncovering. A different move is made by
+Desnos et al. (2023), who convert a deterministic stress test into a stochastic
+climate value-at-risk on the argument that a scenario is a draw from a
+distribution rather than a state of the world.
 
-Both lines take the scenario as given. The scenarios themselves come from
-integrated assessment models, and the lineage runs through Nordhaus's DICE, which
-joins a Ramsey growth model to a simple carbon cycle and a damage function
-mapping temperature to lost output (Nordhaus, 2017), most recently recalibrated
-as DICE-2023 (Barrage and Nordhaus, 2024). Of all the components, the damage
-function rests on the least evidence, and a substantial literature says so.
+Both lines take the scenario as given, and the scenarios come from integrated
+assessment models. The lineage runs through DICE, which couples a Ramsey growth
+model to a simple carbon cycle and a quadratic damage function mapping
+temperature to lost output, recalibrated most recently by Barrage and Nordhaus
+(2024). Of the components in that structure the damage function rests on the
+least evidence, and the criticism of it is well developed. The sharpest statement
+is Pindyck's (2013): the functional forms have, on his reading, no theoretical or
+empirical basis for their curvature at high temperatures, so their outputs should
+be treated as illustrations rather than as estimates. A separate objection is
+raised by Dietz and Stern (2015), who let damage erode the capital stock and the
+growth rate rather than only the level of output and find the implied social cost
+of carbon rising sharply, supporting deeper cuts than the standard calibration
+recommends. Set against those arguments, the coefficient of Swiss Re Institute
+(2024) — roughly five times the DICE central value at any temperature — reads
+less as a rival estimate than as the other end of an unsettled range.
 
-Pindyck (2013) puts it most bluntly: the functional forms in these models have,
-on his reading, no theoretical or empirical basis for their curvature at high
-temperatures, and their outputs should be treated as illustrations rather than
-estimates. Weitzman (2012) makes the structural case, showing that a quadratic
-specification implies implausibly small losses under large warming, and adding a
-high-exponent term so that catastrophe is admitted at all. Dietz and Stern (2015)
-arrive somewhere similar from another direction: let damage erode the capital
-stock and the growth rate, rather than only the level of output, and the implied
-social cost of carbon rises sharply, supporting deeper cuts than Nordhaus's own
-calibration recommends. Seen against that argument, the coefficient of Swiss Re
-Institute (2024) — roughly five times the DICE central value at any temperature —
-looks less like a rival estimate than like the other end of an unsettled range.
+Splitting an aggregate loss across economies calls for a different instrument,
+and the one in common use is the vulnerability index of the Notre Dame Global
+Adaptation Initiative (2024), which folds exposure, sensitivity and adaptive
+capacity into a single cross-economy score. It ranks rather than measures: it can
+order economies by vulnerability, but says nothing about how much any of them
+loses. That is why work using it pairs it with a damage function instead of
+substituting it for one.
 
-Splitting an aggregate loss across economies needs a different instrument
-altogether, and the usual one is the Notre Dame Global Adaptation Initiative
-(2024) index, which folds exposure, sensitivity and adaptive capacity into a
-single cross-economy score. It ranks rather than measures: it can say which
-economies are more vulnerable, not how much any of them loses. That is why work
-using it pairs it with a damage function instead of substituting it for one.
-
-The scenario set supervisors have settled on is the Network for Greening the
-Financial System's, and its architecture decides what users must supply
-themselves. Transition pathways come from three integrated assessment models —
-GCAM, MESSAGEix-GLOBIOM and REMIND-MAgPIE — whose carbon-price and energy
-trajectories are handed to the macroeconometric model NiGEM for macroeconomic
-variables, with chronic physical risk entering through an aggregate damage
-function and acute physical risk through hazard-specific models (NGFS, 2024).
-Because the macroeconomic layer is bolted onto the integrated assessment layer
-rather than derived from it, the published scenarios carry no consistent mapping
-from a carbon price to a sectoral cost. Filling that gap is what every sectoral
-application of these scenarios has to do, and it has been done in four broadly
+The scenario set supervisors have converged on is published by the Network for
+Greening the Financial System (2024), and its architecture decides what users
+must supply for themselves. Transition pathways come from three integrated
+assessment models — GCAM, MESSAGEix-GLOBIOM and REMIND-MAgPIE — whose
+carbon-price and energy trajectories are handed to the macroeconometric model
+NiGEM for macroeconomic variables, with chronic physical risk entering through an
+aggregate damage function and acute risk through hazard-specific models. Because
+the macroeconomic layer is attached to the integrated assessment layer rather
+than derived from it, the published scenarios carry no consistent mapping from a
+carbon price to a sectoral cost. Filling that gap is what every sectoral
+application of these scenarios must do, and it has been done in four broadly
 different ways.
 
-Hafner et al. (2020) classify them. Environmental computable general equilibrium
-models impose optimising behaviour and market clearing, and are the standard
-instrument for carbon-tax incidence; the twelve models compared by Böhringer,
-Balistreri and Rutherford (2012) belong to this family, and their study says as
-much about the family as about the policy. Leakage rates cluster between five and
+A classification of the four is offered by Hafner et al. (2020). Environmental
+computable general equilibrium models impose optimising behaviour and market
+clearing, and are the conventional instrument for carbon-tax incidence; twelve of
+them are compared on common unilateral-policy and border-adjustment experiments
+by Böhringer, Balistreri and Rutherford (2012), in a study that says as much
+about the family as about the policy. Leakage rates cluster between five and
 twenty per cent, but the spread across models is driven by the substitution
-elasticities each one assumes — elasticities estimated with wide uncertainty and
+elasticities each one assumes — elasticities estimated with wide uncertainty, and
 invisible in an input–output table.
 
-Macroeconometric models keep an input–output core but replace optimisation with
+Macroeconometric models keep an input–output core and replace optimisation with
 estimated behavioural equations, which lets the economy carry persistent slack.
-Mercure et al. (2018) use E3ME in exactly this way to value stranded fossil-fuel
-assets, reaching a discounted global wealth loss of one to four trillion dollars.
-The result depends on the economy failing to clear, and could not have come out
+That capacity is used by Mercure et al. (2018) to value stranded fossil-fuel
+assets at a discounted global wealth loss of one to four trillion dollars, a
+figure that depends on the economy failing to clear and could not have come out
 of a general-equilibrium treatment of the same shock.
 
-Ecological stock-flow consistent models follow interlocking balance sheets, so
-financial feedback becomes explicit rather than assumed away. Dafermos, Nikolaidi
-and Galanis (2018) show in such a model that climate damage raises corporate
-defaults and deflates asset prices, and that the resulting instability then feeds
-back to worsen the damage. Nothing discussed so far contains that loop.
+Interlocking balance sheets are tracked instead by ecological stock-flow
+consistent models, which makes financial feedback explicit rather than assuming
+it away. Working in such a model, Dafermos, Nikolaidi and Galanis (2018) show
+climate damage raising corporate defaults and deflating asset prices, with the
+resulting instability feeding back to worsen the damage itself. Nothing discussed
+above contains that loop.
 
-Ecological agent-based models build upward from heterogeneous firms and
-households. The Dystopian Schumpeter meeting Keynes model of Lamperti et al.
-(2018) reports damages well above those of standard integrated assessment models
+Building upward from heterogeneous firms and households, ecological agent-based
+models arrive at different magnitudes altogether. Damages well above those of
+standard integrated assessment models are reported by Lamperti et al. (2018)
 under comparable scenarios, with growth tipping from a self-sustaining path into
-stagnation and volatility. That is a direct challenge to the calibrations above,
-and it suggests the smoothness of the DICE damage function matters more than its
+stagnation and volatility — a direct challenge to the calibrations above, and a
+suggestion that the smoothness of the damage function matters more than its
 coefficient.
 
 The pattern across the four is consistent. Substitution, disequilibrium,
@@ -125,160 +123,162 @@ fixed-coefficient input–output system; and three of the four literatures point
 the resulting bias in the same direction, toward understatement.
 
 The input–output core that the macroeconometric family retains is older than any
-of these, and has an environmental branch worth following on its own. Leontief
-(1936) described an economy as a system of linear production relations, each
-sector's requirement a fixed combination of every other sector's output. With
-$\mathbf{A}$ the matrix of technical coefficients and $\mathbf{f}$ final demand,
-equilibrium output solves $\mathbf{x} = \mathbf{A}\mathbf{x} + \mathbf{f}$, so
-that $\mathbf{x} = (\mathbf{I}-\mathbf{A})^{-1}\mathbf{f}$. Hawkins and Simon
-(1949) established when that inverse exists and means anything, in terms of the
-leading principal minors of $\mathbf{I}-\mathbf{A}$, turning what looks like a
-computational convenience into a statement about whether an economy is
-productive.
+of these, and it acquired an environmental branch early. An economy was first
+described as a system of linear production relations by Leontief (1936), each
+sector's requirement a fixed combination of every other sector's output, so that
+with $\mathbf{A}$ the matrix of technical coefficients and $\mathbf{f}$ final
+demand, equilibrium output solves $\mathbf{x} = \mathbf{A}\mathbf{x} + \mathbf{f}$
+and hence $\mathbf{x} = (\mathbf{I}-\mathbf{A})^{-1}\mathbf{f}$. The condition
+under which that inverse exists and means anything was established by Hawkins and
+Simon (1949) in terms of the leading principal minors of
+$\mathbf{I}-\mathbf{A}$, which turns what looks like a computational convenience
+into a statement about whether an economy is productive.
 
-The environmental extension is Leontief's too. Leontief (1970) adds pollutants as
-rows of the accounting system, so emissions are attributed to the production that
-generates them and travel with the goods. That paper begins the environmentally
-extended input–output literature and is the ancestor of the sectoral carbon
-intensities in use today. Miller and Blair (2022) give the modern synthesis, and
-three of their treatments recur throughout applied work: the price dual, which
-transposes the same matrix to ask how far prices move when costs change rather
-than how much output a demand shock requires; the inter-country generalisation,
-in which the flow matrix is blocked by region and the off-diagonal blocks hold
-trade; and the aggregation problem, since merging units is demonstrably not
-neutral and the direction of the bias depends on how unlike the merged units are.
+Pollutants were added as rows of the same accounting system by Leontief (1970),
+so that emissions are attributed to the production generating them and travel
+with the goods themselves; that paper begins the environmentally extended
+input–output literature and is the ancestor of the sectoral carbon intensities in
+use today. The modern synthesis is Miller and Blair's (2022), and three of their
+treatments recur throughout applied work: the price dual, which transposes the
+same matrix to ask how far prices move when costs change rather than how much
+output a demand shock requires; the inter-country generalisation, in which the
+flow matrix is blocked by region and the off-diagonal blocks hold trade; and the
+aggregation problem, since merging units is demonstrably not neutral and the
+direction of the bias depends on how unlike the merged units are.
 
-Extending the apparatus across borders proved harder than extending it across
+Extending that apparatus across borders proved harder than extending it across
 sectors, and for fifty years the multi-regional literature circled one obstacle:
 the inter-regional flows are the object one needs and the object one rarely has.
-Isard (1951) wrote down the exact formulation, in which $a_{ij}^{rs}$ records how
-much of good $i$ from region $r$ sector $j$ in region $s$ requires. It is also
-the least usable, because it demands a full bilateral flow matrix that
+The exact formulation was written down by Isard (1951), in which $a_{ij}^{rs}$
+records how much of good $i$ from region $r$ sector $j$ in region $s$ requires.
+It is also the least usable, since it demands a full bilateral flow matrix that
 statistical agencies do not collect.
 
-Two responses went opposite ways around the missing data. Chenery (1953) and
-Moses (1955) kept the accounting exact and gave up behavioural detail, assuming
-every user of a good within a region draws on the same mix of origins, so one
-trade coefficient serves all using sectors and
-$a_{ij}^{rs} = t_i^{rs}\,a_{ij}^{s}$. That needs only regional trade totals, at
+Two responses went opposite ways around the missing data. Exact accounting was
+preserved at the cost of behavioural detail by Chenery (1953) and Moses (1955),
+who assume that every user of a good within a region draws on the same mix of
+origins, so that one trade coefficient serves all using sectors and
+$a_{ij}^{rs} = t_i^{rs}\,a_{ij}^{s}$; that needs only regional trade totals, at
 the cost of assuming a car plant and a hospital in the same region buy their
-steel from the same places. Leontief and Strout (1963) instead estimated the
-missing flows, treating regional output as entering a national pool and
-supposing that bilateral flows obey a gravity relation,
+steel from the same places. The missing flows were instead estimated by Leontief
+and Strout (1963), who treat regional output as entering a national pool and
+suppose that bilateral flows obey a gravity relation,
 
 $$z_i^{rs} \;=\; \frac{x_i^{r}\,d_i^{s}}{x_i^{\bullet}}\;Q_i^{rs},$$
 
 with $Q_i^{rs}$ a friction term falling in transport cost. Since the frictions
 have to reproduce known row and column totals, the system is solved iteratively,
-by the biproportional fitting Stone (1961) brought into input–output work. The
+by the biproportional fitting brought into input–output work by Stone (1961). The
 cost of that elegance is that the trade pattern becomes a model output, so any
 result turning on how a shock crosses a border inherits the gravity
 specification's error on top of the model's own.
 
-The obstacle dissolved once the flows were measured instead of inferred. Tukker
-and Dietzenbacher (2013) review the programme that assembled global multi-regional
-tables from national accounts and bilateral trade statistics through the 2000s,
-which produced four major databases within a few years of each other: WIOD,
-documented by Timmer et al. (2015), alongside EXIOBASE, Eora and the GTAP-based
-compilations. Their plurality raised an obvious worry about whether findings
-depend on the database chosen. Moran and Wood (2014) tested it, harmonising
-satellite accounts and comparing consumption-based carbon accounts across
-databases, and found agreement within roughly ten per cent for most major
-economies, with what remained traceable to industry aggregation, emissions data
-and modelling assumptions. The OECD's inter-country tables (OECD, 2025) belong to
-the same generation and supply the off-diagonal blocks directly.
+The obstacle dissolved once the flows were measured instead of inferred. The
+programme that assembled global multi-regional tables from national accounts and
+bilateral trade statistics through the 2000s is reviewed by Tukker and
+Dietzenbacher (2013), and it produced four major databases within a few years of
+each other: WIOD, documented by Timmer et al. (2015), alongside EXIOBASE, Eora
+and the GTAP-based compilations. Whether findings depend on which database is
+chosen was tested by Moran and Wood (2014), who harmonise satellite accounts and
+compare consumption-based carbon accounts across them, finding agreement within
+roughly ten per cent for most major economies and attributing what remains to
+industry aggregation, emissions data and modelling assumptions. Belonging to the
+same generation, the inter-country tables of the OECD (2025) supply the
+off-diagonal blocks directly.
 
 Beyond propagation, measured inter-country tables make consumption-based
 accounting possible: attributing emissions to the final demand that occasions
-them rather than to the territory where they are released. Davis and Caldeira
-(2010) measured how wide the gap between the two accounts is, finding that much
-of what developed economies consume was produced elsewhere. For anyone ranking
-economies by climate relevance, the implication is that a ranking on trade weight
-and a ranking on embodied emissions are not the same list.
+them rather than to the territory where they are released. How wide the gap
+between the two accounts runs was measured by Davis and Caldeira (2010), who find
+that much of what developed economies consume was produced elsewhere. For anyone
+ranking economies by climate relevance, the implication is that a ranking on
+trade weight and a ranking on embodied emissions are not the same list.
 
-What such a system is usually asked to price is a carbon charge, and the design
-of that charge has a history of its own, beginning with Weitzman (1974) and the
-question of whether to tax emissions or cap them. That debate need not be settled
-here, but Green (2021) supplies a caution worth carrying: reviewing ex post
-evaluations of carbon pricing, he concludes that measured emissions reductions
-have been modest against expectations. A carbon price is a contested policy
-variable, not a fact of nature.
+What such a system is usually asked to price is a carbon charge, whose design has
+a history of its own, beginning with the comparison of prices and quantities
+under uncertainty in Weitzman (1974). That debate need not be settled here, but a
+caution from Green (2021) is worth carrying: reviewing ex post evaluations of
+carbon pricing, he concludes that measured emissions reductions have been modest
+against expectations. A carbon price is a contested policy variable rather than a
+fact of nature.
 
 Given a price, who bears it has mostly been worked out through the input–output
-price model. Kay and Jolley (2023) apply one to a carbon tax driven by the NGFS
-scenarios and find price increases of ten to thirty per cent in carbon-intensive
-industries under a two-hundred-dollar tax. Roncalli and Semet (2024) develop the
-cost-push formulation further, following a tax from the sectors it is levied on
-to the sectors that end up paying it, and separating the charge on a firm's own
-emissions from the charge embodied in what it buys. Two of their findings matter
-for anything built on the same apparatus. The indirect burden is often the larger
-of the two. And the split between what a firm absorbs and what it passes on is
-genuinely open, turning on market structure, contract length and demand
-elasticity — none of which an input–output table records.
+price model. One is applied to a carbon tax driven by the NGFS scenarios by Kay
+and Jolley (2023), who find price increases of ten to thirty per cent in
+carbon-intensive industries under a two-hundred-dollar tax, for a single economy.
+The cost-push formulation is developed further by Roncalli and Semet (2024), who
+follow a tax from the sectors it is levied on to the sectors that end up paying
+it, and separate the charge on a firm's own emissions from the charge embodied in
+what it buys. Two of their findings matter for anything built on that apparatus:
+the indirect burden is often the larger of the two, and the split between what a
+firm absorbs and what it passes on is genuinely open, turning on market
+structure, contract length and demand elasticity, none of which an input–output
+table records.
 
-The pass-through literature confirms that openness rather than closing it. RBB
-Economics (2014) survey the theory and measurement and find rates varying widely
-with market structure and with the kind of cost shock involved. Weber and Wasner
-(2023) go further, arguing that under general cost pressure firms with market
-power can pass on more than their cost increase, which makes rates above one a
-live possibility rather than an arithmetic ceiling.
+That openness is confirmed rather than closed by the pass-through literature.
+Theory and measurement are surveyed by RBB Economics (2014), who find rates
+varying widely with market structure and with the kind of cost shock involved. A
+stronger claim is made by Weber and Wasner (2023), who argue that under general
+cost pressure firms with market power can pass on more than their cost increase,
+which makes rates above one a live possibility rather than an arithmetic ceiling.
 
 Whether a unilateral price merely moves emissions elsewhere is the leakage
 question, and the literature answers it by comparing models rather than trusting
 any one, because the answer turns on trade and energy-market elasticities that no
-single framework pins down. The study of Böhringer, Balistreri and Rutherford
-(2012), already met above for what it shows about general-equilibrium models, is
-the reference point on substance too: leakage clusters between five and twenty
-per cent, and border carbon adjustment reduces it without removing it. In that
-literature's terms, a border adjustment is a tariff differentiated by embodied
-carbon.
+single framework pins down. Already met above for what it shows about
+general-equilibrium models, the study of Böhringer, Balistreri and Rutherford
+(2012) is the reference point on substance too: leakage clusters between five and
+twenty per cent, and border carbon adjustment reduces it without removing it. In
+that literature's terms, a border adjustment is a tariff differentiated by
+embodied carbon.
 
 An industrial cost becomes a financial quantity only through a further chain of
 relations, each borrowed from a separate empirical literature, and the first link
-is the shakiest. Moessner (2022) estimates New-Keynesian Phillips curves across
-OECD economies over 1995–2020 and finds that a ten-dollar rise in the carbon
-price raises headline inflation by roughly 0.08 percentage points. Konradt and
-Weder di Mauro (2023), working with carbon taxes actually implemented in Europe
-and Canada over three decades, find dynamic effects on headline inflation
-indistinguishable from zero, and read their evidence as relative price change —
-energy dearer, other things cheaper — rather than inflation. Bauer and Känzig
-(2024) only partly reconcile the two, finding that carbon pricing moves inflation
-*expectations* even where realised inflation barely moves. Adopting a point
-estimate here means taking a side in a live dispute.
+is the shakiest. New-Keynesian Phillips curves are estimated across OECD
+economies over 1995–2020 by Moessner (2022), who finds that a ten-dollar rise in
+the carbon price raises headline inflation by roughly 0.08 percentage points.
+That estimate is disputed. Working with carbon taxes actually implemented in
+Europe and Canada over three decades, Konradt and Weder di Mauro (2023) find
+dynamic effects on headline inflation indistinguishable from zero, and read their
+evidence as relative price change — energy dearer, other things cheaper — rather
+than inflation. The two are only partly reconciled by Bauer and Känzig (2024),
+who find carbon pricing moving inflation *expectations* even where realised
+inflation barely moves. Adopting a point estimate here means taking a side in a
+live dispute.
 
-The rest of the chain is firmer. Taylor (2007) supplies the monetary reaction
-function. Hull and White (1994) supply the term structure: their one-factor model
+The rest of the chain is firmer. The monetary reaction function is Taylor's
+(2007). The term structure follows Hull and White (1994), whose one-factor model
 gives the shift at maturity $\tau$ as a deterministic multiple $B(\tau)/\tau$ of
-the short-rate shift, independent of volatility, so a curve displacement follows
-without calibrating a volatility surface. Sarno and Taylor (2002) remain the
-standard reference on the two exchange-rate parities, and are candid that
+the short-rate shift, independent of volatility, so that a curve displacement
+follows without calibrating a volatility surface. On the two exchange-rate
+parities the standard reference remains Sarno and Taylor (2002), candid that
 relative purchasing power parity does badly at short horizons while covered
 interest parity is close to an arbitrage identity.
 
-Berrahoui, Kenyon, Macrina and Nathanael (2025) assemble these relations into
-what they call an ensemble: a short sequence of individually simple, individually
-auditable steps running from a climate scenario to a set of market shocks, two of
-them stated as propositions and proved — the allocation of aggregate damage
-across sectors, and the mapping of a short-rate shift onto the term structure.
-The design descends from earlier work by the same authors on pricing carbon
-consistently inside financial instruments (Kenyon, Macrina and Berrahoui, 2022).
-Its distinguishing property is the one Acharya et al. (2023) found missing from
-supervisory practice: every relation is visible, so a disagreement about the
-answer can be traced to a disagreement about one relation. Its cost is realism,
-in precisely the dimensions the four alternative model families were built to
-capture.
+Those relations are assembled into what its authors call an ensemble by
+Berrahoui, Kenyon, Macrina and Nathanael (2025): a short sequence of individually
+simple, individually auditable steps running from a climate scenario to a set of
+market shocks, two of them stated as propositions and proved — the allocation of
+aggregate damage across sectors, and the mapping of a short-rate shift onto the
+term structure. The design descends from earlier work by the same authors on
+pricing carbon consistently inside financial instruments (Kenyon, Macrina and
+Berrahoui, 2022). Its distinguishing property is the one Acharya et al. (2023)
+found missing from supervisory practice: every relation is visible, so a
+disagreement about the answer can be traced to a disagreement about one relation.
+Its cost is realism, in precisely the dimensions the four alternative model
+families were built to capture.
 
 It is also, as published, a single-economy framework calibrated on the United
 Kingdom, and that restriction has two consequences given everything above.
-Leontief (1970) and the consumption-based accounting tradition after Davis and
-Caldeira (2010) establish that emissions, and the cost of pricing them, cross
-borders through production chains; a one-country model has nowhere for that cost
-to go. And the exchange rate, the cross-currency basis and every other relative
-price are not merely harder to compute in such a model — they are undefined in
-it.
+Emissions, and the cost of pricing them, demonstrably cross borders through
+production chains — that is the finding of Leontief (1970) and of the
+consumption-based accounting tradition after Davis and Caldeira (2010) — and a
+one-country model has nowhere for that cost to go. The exchange rate, the
+cross-currency basis and every other relative price, meanwhile, are not merely
+harder to compute in such a model; they are undefined in it.
 
-The gap is therefore narrow and specific. A transparent stress-testing framework
-with proved internal relations exists for one economy (Berrahoui et al., 2025). A
+The gap is therefore narrow and specific. An auditable stress-testing chain with
+proved internal relations exists for one economy (Berrahoui et al., 2025). A
 mature multi-regional input–output apparatus exists (Miller and Blair, 2022;
 Tukker and Dietzenbacher, 2013), together with measured inter-country tables that
 remove the estimation step the Leontief–Strout tradition had to live with.
@@ -398,9 +398,6 @@ input–output analysis. *American Economic Review* 45(5), 803–826.
 Network for Greening the Financial System (2024). *NGFS Climate Scenarios for
 Central Banks and Supervisors*, Phase V, and *Technical Documentation.*
 
-Nordhaus, W. (2017). Revisiting the social cost of carbon. *Proceedings of the
-National Academy of Sciences* 114(7), 1518–1523.
-
 Notre Dame Global Adaptation Initiative (2024). *ND-GAIN Country Index.*
 
 OECD (2025). *OECD Inter-Country Input–Output Database*, 2025 edition. Paris:
@@ -438,6 +435,3 @@ can large firms hike prices in an emergency? *Review of Keynesian Economics*
 
 Weitzman, M. L. (1974). Prices vs. quantities. *Review of Economic Studies*
 41(4), 477–491.
-
-Weitzman, M. L. (2012). GHG targets as insurance against catastrophic climate
-damages. *Journal of Public Economic Theory* 14(2), 221–244.
