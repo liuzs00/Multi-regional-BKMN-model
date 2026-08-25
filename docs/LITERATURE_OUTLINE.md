@@ -11,7 +11,7 @@ dissertation. Edit here; full text follows on approval.
 Nine chains. Arrows are "this work creates the problem the next one answers".
 
 ```
-A  Carney ──> ECB / BoE ──> Acharya et al.
+A  Carney ──> ECB ──> Acharya et al.
    (why stress test)      (why the current ones fail: not auditable)
                                      │
                                      ├──────────────┐
@@ -68,8 +68,7 @@ it are credible but unauditable.
 | Work | Point taken | Where it bites |
 |---|---|---|
 | Carney (2015) | *Tragedy of the horizon* — costs fall beyond every relevant planning horizon; remedy is forward-looking scenario analysis | §1 opening motivation |
-| ECB (2022) | One of two large implementations; establishes the standard shape: external scenario → exposure map → propagate → revalue | §1; the shape our chain also follows |
-| Bank of England (2022) | The other; same shape, different jurisdiction | §1 |
+| ECB (2022) | The largest implementation; establishes the standard shape: external scenario → exposure map → propagate → revalue. Also the object Acharya et al. criticise, so it must be cited for that critique to be checkable | §1; the shape our chain also follows |
 | Acharya et al. (2023) | Four criticisms. Transition risk treated as exogenous when it is a policy choice; no climate–economy feedback; no compound scenarios; **and not reproducible by the tested institution** | §1 (why auditability matters), §5 conclusion |
 
 **Edit note:** the fourth criticism is the one that justifies the whole BKMN
@@ -232,7 +231,7 @@ folding it in.
 
 | | |
 |---|--:|
-| Works cited | 48 |
+| Works cited | 47 |
 | Strands | 9 |
 | Longest strand | F (9 works) |
 | Decades | 1930s–2020s, thinnest at 1980s (0) and 1990s (1) |

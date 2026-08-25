@@ -15,10 +15,9 @@ business cycle, the political cycle and a central bank's mandate, so the
 incentive to act expires before the damage becomes visible. His remedy was
 forward-looking scenario analysis in place of realised-loss accounting, and the
 decade of supervisory work that followed is largely an attempt to carry it out.
-The two largest exercises are the European Central Bank's economy-wide climate
-stress test (ECB, 2022) and the Bank of England's Climate Biennial Exploratory
-Scenario (Bank of England, 2022). Both work the same way: take a scenario from
-outside, map it onto counterparty exposures, propagate, revalue.
+The largest of those exercises is the European Central Bank's economy-wide
+climate stress test (ECB, 2022), and it set the pattern the others follow: take
+a scenario from outside, map it onto counterparty exposures, propagate, revalue.
 
 Acharya et al. (2023) review what that decade produced, and their verdict is
 mixed. Transition risks are treated as exogenous shocks when they are really
@@ -295,9 +294,6 @@ reach of an auditable stress test.
 Acharya, V. V., R. Berner, R. Engle, H. Jung, J. Stroebel, X. Zeng and Y. Zhao
 (2023). Climate stress testing. *Annual Review of Financial Economics* 15,
 291–326.
-
-Bank of England (2022). *Results of the 2021 Climate Biennial Exploratory
-Scenario (CBES).* May 2022.
 
 Barrage, L. and W. Nordhaus (2024). Policies, projections, and the social cost of
 carbon: results from the DICE-2023 model. *Proceedings of the National Academy of
