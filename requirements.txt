@@ -7,3 +7,8 @@ matplotlib>=3.7      # tools/make_figures.py
 # not to run the model against the committed datasets.
 openpyxl>=3.1        # tools/ingest_data.py, reading the supplied .xlsx sources
 pyam-iamc>=2.0       # tools/download_ngfs.py, NGFS Scenario Explorer client
+
+# Document rendering only - tools/md_to_pdf.py, for turning a chapter or an
+# outline into a PDF.  Not needed to run the model.
+markdown>=3.4
+xhtml2pdf>=0.2.11
