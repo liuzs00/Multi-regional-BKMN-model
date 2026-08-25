@@ -21,7 +21,7 @@ B  Battiston ──> Bolton&Kacperczyk   │        I  Kenyon et al. ──> BKM
         └──> Desnos                  │                     │
              (scenario is random)    │                     │
                                      ▼                     │
-C  Nordhaus ──> Pindyck / Weitzman / Dietz&Stern ──> SwissRe│
+C  Barrage&Nordhaus ──> Pindyck / Dietz&Stern ──> SwissRe   │
    (damage fn)   (it has no empirical basis)   (5x range)   │
         └──> ND-GAIN (ranks, does not measure)              │
         └──> NGFS (3 IAMs + NiGEM; NO price->sector map) ───┤
@@ -99,14 +99,17 @@ chain, and NGFS hands users a scenario with no sectoral cost map.
 
 | Work | Point taken | Where it bites |
 |---|---|---|
-| Nordhaus (2017) | DICE: Ramsey growth + carbon cycle + quadratic damage | §3.4 the Ω form |
-| Barrage & Nordhaus (2024) | DICE-2023 recalibration — the coefficient actually used | §3.4, §4.1 |
-| Pindyck (2013) | No theoretical or empirical basis for curvature at high T; outputs are illustrations | §5 limitation; justifies carrying two calibrations |
-| Weitzman (2012) | Quadratic implies implausibly small losses under large warming; needs a high-exponent term | §5 — our quadratic inherits this |
+| Barrage & Nordhaus (2024) | DICE itself — Ramsey growth, carbon cycle, quadratic damage — and the DICE-2023 recalibration supplying the coefficient used | §3.4 the Ω form; §4.1 |
+| Pindyck (2013) | No theoretical or empirical basis for the curvature at high T; outputs are illustrations, not estimates. Sole carrier of the functional-form criticism | §5 limitation; justifies carrying two calibrations |
 | Dietz & Stern (2015) | Damage on capital/growth rather than level → SCC far higher | §5 — our damage is a *level* effect only |
 | Swiss Re Institute (2024) | Coefficient ≈5× DICE at any temperature | §3.4 second calibration; §4 sensitivity |
 | ND-GAIN (2024) | Ranks vulnerability; does **not** measure loss — must be paired with a damage function | §3.4 σ_r; §4.1 |
 | NGFS (2024) | 3 IAMs (GCAM, MESSAGEix, REMIND) + NiGEM; prices at R5; **no carbon-price → sectoral-cost mapping** | §4.1 data; and this absence is *the reason an IO layer exists at all* |
+
+**Cut from this strand:** Nordhaus (2017), redundant with Barrage & Nordhaus,
+which is itself a DICE paper; and Weitzman (2012), which made the same
+high-temperature criticism as Pindyck in different vocabulary. Weitzman is the
+sharper of the two on the quadratic specifically — swap them if §5 is reworked.
 
 **Edit note:** the NGFS row is doing double duty — it is both a data source and
 the argument for the method. Possibly split.
@@ -231,7 +234,7 @@ folding it in.
 
 | | |
 |---|--:|
-| Works cited | 47 |
+| Works cited | 45 |
 | Strands | 9 |
 | Longest strand | F (9 works) |
 | Decades | 1930s–2020s, thinnest at 1980s (0) and 1990s (1) |
