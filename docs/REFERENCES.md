@@ -9,9 +9,6 @@ published as revisable panels and the results depend on which release was drawn.
 Bacharach, M. (1970). *Biproportional Matrices and Input–Output Change.*
 Cambridge University Press.
 
-Bank of England (2022). *Results of the 2021 Climate Biennial Exploratory
-Scenario (CBES).* May 2022.
-
 Barrage, L. and W. Nordhaus (2024). Policies, projections, and the social cost of
 carbon: results from the DICE-2023 model. *Proceedings of the National Academy of
 Sciences* 121(13).
